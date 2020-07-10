@@ -1,0 +1,312 @@
+﻿@model SMS.Models.EF.Bring_In
+@{
+    ViewBag.Title = "Approve detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+}
+
+<div class="form-horizontal">
+    <div class="card-header">
+        <h5 class="m-0 font-weight-bold text-primary">TRƯỞNG PHÒNG PIC PHÊ DUYỆT TÀI SẢN MANG VÀO</h5>
+    </div>
+    <!--Cột bên trái dành cho form đăng ký-->
+    <div class="col-md-12 row-form">
+        <div class="column form-horizontal form-left col-md-7">
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
+                <div class="col-md-3 input-group input-group-sm">
+                    <input type="hidden" id="bringInID" value="@Model.ID" />
+                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" readonly value="@Model.EmpCode" />
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <div class="col-md-10 input-group-sm">
+                    <textarea class="form-control col-md-12" style="resize: none" readonly>@Model.Reason</textarea>
+                </div>
+            </div>
+
+            <div class="form-group input-group specific-date-pick">
+                <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
+                <div class="col-3 input-group-sm">
+                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" value="@Model.EstimatedDate" readonly />
+                </div>
+                <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
+                <div class="col-2 input-group-sm">
+                    <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" value="@Model.EstimatedTime" readonly />
+                    <input type="hidden" id="txtStatus" value="@Model.Status" />
+                    <input type="hidden" id="txtCreatedBy" value="@Model.CreatedBy" />
+                    <input type="hidden" id="txtCreatedDate" value="@Model.CreatedDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="column col-md-1 col-mid"></div>
+
+
+        <!--Cột bên phải dành cho thông tin nhân viên-->
+        <div class="column form-horizontal form-right col-md-4">
+            <!--Ảnh profile-->
+            <div class="form-group col-12 profile-img">
+                <div class="img-profile">
+                    <img src="~/Assets/img/the-world.jpg" />
+                </div>
+            </div>
+            <!--Thông tin profile-->
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Họ và tên</label>
+                <input readonly class="form-control input-previous-button col-9 " id="txtFullNameBI" value="@Model.FullName" />
+            </div>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Vị trí</label>
+                <input readonly class="form-control input-previous-button col-9 " id="txtPositionBI" value="@Model.Position" />
+            </div>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Phòng ban</label>
+                <input readonly class="form-control input-previous-button col-9 " id="txtTeamBI" value="@Model.Team" />
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="note col-12">
+    <span class="control-label" style="color: dodgerblue"><u>Lưu ý</u>: <span style="color: #858796">&nbsp;Các trường <span style="color:red">(*)</span> bắt buộc phải nhập đầy đủ.</span></span>
+</div>
+<br />
+<div class="bottom">
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered" id="LE-table">
+            <!--Tiêu đề cột-->
+            <thead>
+                <tr class="table-heading">
+                    <th>Tên tài sản</th>
+                    <th>Số serial</th>
+                    <th>Số lượng</th>
+                    <th>Đơn vị</th>
+                    <th>Loại hàng hóa</th>
+                    <th colspan="2">Thời gian đem trở ra</th>
+                    <th colspan="2">Trưởng phòng phê duyệt</th>
+                    <th colspan="4">ITT/SMT phê duyệt</th>
+                    <th colspan="4">FST phê duyệt</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Bring_In_Items)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" class="itemId" value="@item.ID" />
+                            @item.Item
+                        </td>
+                        <td>@item.Serial</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Unit</td>
+                        <td>
+                            @if (item.AssetType == 0)
+                            {
+                                @:Hàng thường
+                            }
+                            else if (item.AssetType == 1)
+                            {
+                                @:Hàng IT
+                            }
+                            else
+                            {
+                                @:Hàng độc hại
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsReturn.Value)
+                            {
+                                <i class="fas fa-check-square" title="Có đem trở ra"></i>
+                            }
+                        </td>
+                        <td>@item.ReturnDate | @item.ReturnTime</td>
+                        @if (string.IsNullOrEmpty(item.ApprovedBy))
+                        {
+                            <td>
+                                <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px; color: white"></i></a>
+                            </td>
+                            <td><input class="remark remark-1 col-12" type="text" placeholder="Ghi chú..." /></td>
+                        }
+                        else
+                        {
+                            if (item.ApprovedStatus == 0)
+                            {
+                                <td><i class="fas fa-times" style="color: red" title="Không phê duyệt"></i></td>
+                            }
+                            else
+                            {
+                                <td><i class="fas fa-check-square"></i></td>
+                            }
+                            <td>@item.ApproverRemark</td>
+                        }
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.ITT))
+                            {
+                                @:@item.ITT
+                            }
+                            else if (!string.IsNullOrEmpty(item.SMT))
+                            {
+                                @:@item.SMT
+                            }
+                        </td>
+                        <td>
+                            @if (item.ITT_Date != null)
+                            {
+                                @:@item.ITT_Date
+                            }
+                            else if (item.SMT_Date != null)
+                            {
+                                @:@item.SMT_Date
+                            }
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.ITT_Remark))
+                            {
+                                @:@item.ITT_Remark
+                            }
+                            else if (!string.IsNullOrEmpty(item.SMT_Remark))
+                            {
+                                @:@item.SMT_Remark
+                            }
+                        </td>
+                        <td>
+                            @if (item.ITT_Status != null)
+                            {
+                                if (item.ITT_Status == 1)
+                                {
+                                    <i class="fas fa-check-square"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times"></i>
+                                }
+                            }
+                            else if (item.SMT_Status != null)
+                            {
+                                if (item.SMT_Status == 1)
+                                {
+                                    <i class="fas fa-check-square"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times"></i>
+                                }
+                            }
+                        </td>
+
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.FST))
+                            {
+                                @:@item.FST
+                            }
+                        </td>
+                        <td>
+                            @if (item.FST_Date != null)
+                            {
+                                @:@item.FST_Date
+                            }
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.FST_Remark))
+                            {
+                                @:@item.FST_Remark
+                            }
+                        </td>
+                        <td>
+                            @if (item.FST_Status != null)
+                            {
+                                if (item.FST_Status == 1)
+                                {
+                                    <i class="fas fa-check-square"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times"></i>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center">
+        <label id="return-approve" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
+            <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
+        </label>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script>
+        $('#return-approve').on("click", () => {
+            window.location.href = "/BringIn/Approve"
+        })
+
+        $('#LE-table').on("click", ".approve", function () {
+            var self = this;
+
+            $.confirm({
+                title: "Thông báo",
+                content: function () {
+                    var alert = this;
+                    return $.ajax({
+                        url: "/BringIn/Approve",
+                        method: "POST",
+                        data: {
+                            id: $('#bringInID').val(),
+                            itemId: $(self).closest("tr").find(".itemId").val(),
+                            remark: $(self).closest("tr").find(".remark").val(),
+                            status: 1
+                        },
+                        success: (response) => {
+                            if (response.ApprovedStatus == 1) {
+                                window.location.reload();
+                            }
+                            else {
+                                alert.setContent("Lỗi hệ thống");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+        $('#LE-table').on("click", ".unapprove", function () {
+            var self = this;
+
+            $.confirm({
+                title: "Thông báo",
+                content: function () {
+                    var alert = this;
+                    return $.ajax({
+                        url: "/BringIn/Approve",
+                        method: "POST",
+                        data: {
+                            id: $('#bringInID').val(),
+                            itemId: $(self).closest("tr").find(".itemId").val(),
+                            remark: $(self).closest("tr").find(".remark").val(),
+                            status: 0
+                        },
+                        success: (response) => {
+                            if (response.ApprovedStatus == 0) {
+                                window.location.reload();
+                            }
+                            else {
+                                alert.setContent("Lỗi hệ thống");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}

@@ -1,0 +1,83 @@
+﻿.w3-left {
+    float: left !important
+}
+
+.w3-right {
+    float: right !important
+}
+
+.mySlides {
+    display: none
+}
+
+.w3-left, .w3-right, .w3-badge {
+    cursor: pointer
+}
+
+.w3-badge {
+    height: 17px;
+    width: 12px;
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.w3-white {
+    color: #000 !important;
+    background-color: #fff !important;
+}
+
+.w3-transparent, .w3-hover-none:hover {
+    background-color: transparent;
+}
+
+.w3-border {
+    border: 1px solid #ccc !important;
+}
+
+.w3-content, .w3-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.w3-display-container {
+    position: relative;
+}
+
+.w3-text-white, .w3-hover-text-white:hover {
+    color: #fff !important;
+}
+
+.w3-section, .w3-code {
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+}
+
+.w3-center {
+    text-align: center !important;
+}
+
+.w3-large {
+    font-size: 18px !important;
+}
+
+.w3-container, .w3-panel {
+    padding: 0.01em 16px;
+}
+
+.w3-display-bottommiddle {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%,0%);
+}
+
+.w3-text-white, .w3-hover-text-white:hover {
+    color: #fff !important;
+}

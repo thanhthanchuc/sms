@@ -1,0 +1,239 @@
+﻿
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="~/Assets/css/customize.css" rel="stylesheet" />
+
+        <title>Xác nhận Khách ngước ngoài mang hàng vào - ra</title>
+    </head>
+
+    <body>
+        <div class="form-horizontal">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN KHÁCH NƯỚC NGOÀI MANG HÀNG VÀO - RA</h5>
+            </div>
+            <!--Cột bên trái dành cho form đăng ký-->
+            <div class="col-md-12 row-form">
+                <div class="column form-horizontal form-left col-md-6">
+                    <div class="form-group row-1 input-group">
+                        <label class="control-label col-md-3 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                        <div class="col-md-7 input-group">
+                            <div class="top-space">
+                                <input readonly class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" />
+                            </div>
+                            &nbsp;
+                            &nbsp;
+                            <label id="info-BI-create" class="btn-primary btn btn-get-info top-space" title="Xem thông tin CNV" style="cursor: pointer">
+                                <i class="fas fa-user"></i>&nbsp; Thông tin CNV
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Khách <span class="red">(*)</span></label>
+                        <div class="col-md-4">
+                            <select class="form-control" disabled>
+                                <option value="0" selected>Khách</option>
+                                <option value="1">Nhà thầu</option>
+                                <option value="2">Lái xe</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 checkbox top-space">
+                            <label><input disabled type="checkbox" value="" /> Khách nước ngoài</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Số thẻ khách</label>
+                        <div class="col-md-3">
+                            <input readonly class="form-control input-previous-button" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Họ tên khách <span class="red">(*)</span></label>
+                        <div class="col-md-4">
+                            <input readonly class="form-control input-previous-button" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">CMTND/Hộ chiếu</label>
+                        <div class="col-md-4">
+                            <input readonly class="form-control input-previous-button" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Visa</label>
+                        <div class="col-md-4">
+                            <input readonly class="form-control input-previous-button" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Nơi ở hiện tại</label>
+                        <div class="col-md-9">
+                            <input readonly class="form-control input-previous-button" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Công ty <span class="red">(*)</span></label>
+                        <div class="col-md-9">
+                            <input readonly class="form-control input-previous-button" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Số người <span class="red">(*)</span></label>
+                        <div class="col-md-3">
+                            <input readonly class="form-control input-previous-button" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3">Lý do <span class="red">(*)</span></label>
+                        <div class="col-md-9">
+                            <textarea readonly class="form-control col-md-12" style="resize: none"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Số xe</label>
+                        <div class="col-md-9">
+                            <input readonly class="form-control input-previous-button" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Giờ đăng ký vào <span class="red">(*)</span></label>
+                        <div class="col-md-4">
+                            <input readonly class="form-control input-previous-button" id="estimated_date_in" />
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <label class="control-label col-md-3 top-space">Giờ đăng ký ra <span class="red">(*)</span></label>
+                        <div class="col-md-4">
+                            <input readonly class="form-control input-previous-button" id="estimated_date_out" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column col-md-2 col-mid">
+                    <i class=" fas fa-play"></i>
+                </div>
+
+
+                <!--Cột bên phải dành cho thông tin nhân viên-->
+                <div class="column form-horizontal form-right col-md-4">
+                    <!--Ảnh profile-->
+                    <div class="form-group col-12 profile-img">
+                        <div class="img-profile">
+                            <img src="~/Assets/img/the-world.jpg" />
+                        </div>
+                    </div>
+                    <!--Thông tin profile-->
+                    <div class="form-group input-group profile">
+                        <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                        <input readonly class="form-control input-previous-button col-9 txtFullNameBI" />
+                        @*@Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtFullNameBI" } })
+                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger info-required" })*@
+                    </div>
+                    <div class="form-group input-group profile">
+                        <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                        <input readonly class="form-control input-previous-button col-9 txtPositionBI" />
+                        @*@Html.EditorFor(model => model.Position, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtPositionBI" } })
+                            @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger info-required" })*@
+                    </div>
+                    <div class="form-group input-group profile">
+                        <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                        <input readonly class="form-control input-previous-button col-9 txtTeamBI" />
+                        @*@Html.EditorFor(model => model.Team, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtTeamBI" } })
+                            @Html.ValidationMessageFor(model => model.Team, "", new { @class = "text-danger info-required" })*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="note col-12">
+            <span class="control-label" style="color: dodgerblue"><u>Lưu ý</u>: <span style="color: #858796">&nbsp;Các trường <span style="color:red">(*)</span> bắt buộc phải nhập đầy đủ.</span></span>
+        </div>
+        <br />
+        <div class="bottom">
+            <div style="width:100%; overflow-x:auto">
+                <!--Bảng dữ liệu Về sớm-->
+                <table class="table table-hover table-bordered" id="LE-table">
+                    <!--Tiêu đề cột-->
+                    <thead>
+                        <tr class="table-heading">
+                            <th>Tên tài sản</th>
+                            <th>Số serial</th>
+                            <th>Số lượng</th>
+                            <th>Đơn vị</th>
+                            <th>Loại hàng hóa</th>
+                            <th colspan="2">Thời gian đem trở ra</th>
+                            <th colspan="2">Người đăng ký</th>
+                            <th colspan="4">ITT phê duyệt</th>
+                            <th colspan="4">SMT phê duyệt</th>
+                            <th colspan="4">FST phê duyệt</th>
+                            <th colspan="4">Bảo vệ xác nhận mang vào</th>
+                            <th colspan="4">Bảo vệ xác nhận mang ra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Laptop dell</td>
+                            <td>123abc</td>
+                            <td>1</td>
+                            <td>Chiếc</td>
+                            <td>IT</td>
+                            <td title="Có đem trở ra"><i class="fas fa-check-square"></i></td>
+                            <td>11/06/2020 17:00:00</td>
+                            <td>42001005</td>
+                            <td>11/06/2020 08:00:00</td>
+                            <td>42001006</td>
+                            <td><i class="fas fa-check-square"></i></td>
+                            <td>11/06/2020 13:00:00</td>
+                            <td>Mang hàng vào sớm nhé!!!</td>
+                            <td><i class="fas fa-question"></i></td>
+                            <td><i class="fas fa-question"></i></td>
+                            <td><i class="fas fa-question"></i></td>
+                            <td><i class="fas fa-question"></i></td>
+                            <td><i class="fas fa-question"></i></td>
+                            <td><i class="fas fa-question"></i></td>
+                            <td><i class="fas fa-question"></i></td>
+                            <td><i class="fas fa-question"></i></td>
+                            <td>GuardIn</td>
+                            <td>
+                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            </td>
+                            <td><input class="remark col-12" type="text" placeholder="Ghi chú..." /></td>
+                            <td>GuardDateIn</td>
+                            <td>GuardOut</td>
+                            <td>
+                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            </td>
+                            <td><input class="remark col-12" type="text" placeholder="Ghi chú..." /></td>
+                            <td>GuardDateOut</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: center">
+                <label id="add-row-items" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+                    <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
+                </label>
+            </div>
+        </div>
+    </body>
+

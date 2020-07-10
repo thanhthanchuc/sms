@@ -1,0 +1,142 @@
+﻿@model SMS.Web.ViewModels.GuardViewModel
+
+@{
+    ViewBag.Title = " nhận về sớm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-horizontal">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN CÔNG NHÂN VIÊN VỀ SỚM</h5>
+    </div>
+    <!--Cột bên trái dành cho form đăng ký-->
+    <div class="col-md-12 row-form">
+        <div class="column form-horizontal form-left col-md-6">
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                <div class="col-md-7 input-group">
+                    <div class="top-space">
+                        <input type="hidden" id="leaveId" value="@Model.Leave_Early.ID" />
+                        @Html.TextBoxFor(model => model.Leave_Early.EmpCode, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Leave_Early.Reason, new { @class = "form-control col-md-12", @readonly = "readonly", @style = "resize: none" })
+                </div>
+            </div>
+        </div>
+
+        <div class="column col-md-2 col-mid">
+            <i class=" fas fa-play"></i>
+        </div>
+
+
+        <!--Cột bên phải dành cho thông tin nhân viên-->
+        <div class="column form-horizontal form-right col-md-4">
+            <!--Ảnh profile-->
+            <div class="form-group col-12 profile-img">
+                <div class="img-profile">
+                    <img src="~/Assets/img/the-world.jpg" />
+                </div>
+            </div>
+            <!--Thông tin profile-->
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                @Html.TextBoxFor(model => model.Leave_Early.FullName, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
+            </div>
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                @Html.TextBoxFor(model => model.Leave_Early.Position, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
+            </div>
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                @Html.TextBoxFor(model => model.Leave_Early.Team, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="bottom">
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered" id="LE-table">
+            <!--Tiêu đề cột-->
+            <thead>
+                <tr class="table-heading">
+                    <th>Thời gian ra ngoài</th>
+                    <th colspan="4">Bảo vệ xác nhận ra ngoài</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.EstimatedTime)</td>
+                    <td>@Html.DisplayFor(m => m.UserLogin.FullName)</td>
+                    <td>
+                        <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                        <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px; color: white"></i></a>
+                    </td>
+                    <td>
+                        <input id="remark" class="remark col-12" type="text" placeholder="Ghi chú..." />
+                    </td>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.GuardDate)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center">
+        <label id="return-approve" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+            <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
+        </label>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script>
+        $('#return-approve').on("click", () => {
+            window.location.href = "/Guard/Queue"
+        })
+
+        $('#LE-table').on("click", ".approve", function () {
+            $.ajax({
+                url: "/Guard/ApproveOut",
+                method: "POST",
+                data: {
+                    id: $('#leaveId').val(),
+                    remark: $("#remark").val(),
+                    status: 1
+                },
+                success: (response) => {
+                    window.location.href = "/Guard/Queue"
+                },
+                error: () => {
+                    alert("Lỗi hệ thống!")
+                }
+            })
+
+        })
+
+        $('#LE-table').on("click", ".unapprove", function () {
+            $.ajax({
+                url: "/Guard/ApproveOut",
+                method: "POST",
+                data: {
+                    id: $('#leaveId').val(),
+                    remark: $("#remark").val(),
+                    status: 0
+                },
+                success: (response) => {
+                    window.location.href = "/Guard/Queue"
+                },
+                error: () => {
+                    alert("Lỗi hệ thống!")
+                }
+            })
+        })
+    </script>
+}
+

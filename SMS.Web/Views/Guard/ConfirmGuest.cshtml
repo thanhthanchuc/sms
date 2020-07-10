@@ -1,0 +1,301 @@
+﻿@model SMS.Models.EF.Guest
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+}
+<div class="form-horizontal">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN KHÁCH VÀO - RA</h5>
+    </div>
+    <!--Cột bên trái dành cho form đăng ký-->
+    <div class="col-md-12 row-form">
+        <div class="column form-horizontal form-left col-md-6">
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                <div class="col-md-7 input-group">
+                    <div class="top-space">
+                        <input type="hidden" id="guestID" value="@Model.ID" />
+                        <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" readonly value="@Model.EmployeeID" />
+                        @*@Html.EditorFor(model => model.EmpCode, new { htmlAttributes = new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12" } })*@
+                        @*@Html.ValidationMessageFor(model => model.EmpCode, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <div class="col-md-10">
+                    <textarea class="form-control col-md-12" style="resize: none" readonly>@Model.Purpose</textarea>
+                    @*@Html.TextAreaFor(model => model.Reason, htmlAttributes: new { @class = "form-control col-md-12" })*@
+                    @*@Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+        </div>
+
+        <div class="column col-md-2 col-mid">
+            <i class=" fas fa-play"></i>
+        </div>
+
+
+        <!--Cột bên phải dành cho thông tin nhân viên-->
+        <div class="column form-horizontal form-right col-md-4">
+            <!--Ảnh profile-->
+            <div class="form-group col-12 profile-img">
+                <div class="img-profile">
+                    <img src="~/Assets/img/the-world.jpg" />
+                </div>
+            </div>
+            <!--Thông tin profile-->
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                <input readonly class="form-control input-previous-button col-9 txtFullNameBI" value="@Model.EmployeeName" />
+                @*@Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtFullNameBI" } })
+                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger info-required" })*@
+            </div>
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                <input readonly class="form-control input-previous-button col-9 txtPositionBI" value="@Model.Position" />
+                @*@Html.EditorFor(model => model.Position, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtPositionBI" } })
+                    @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger info-required" })*@
+            </div>
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                <input readonly class="form-control input-previous-button col-9 txtTeamBI" value="@Model.Team" />
+                @*@Html.EditorFor(model => model.Team, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtTeamBI" } })
+                    @Html.ValidationMessageFor(model => model.Team, "", new { @class = "text-danger info-required" })*@
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="bottom">
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered" id="guest-table">
+            <!--Tiêu đề cột-->
+            <thead>
+                <tr class="table-heading">
+                    <th>Khách</th>
+                    <th>Số thẻ</th>
+                    <th>Họ tên</th>
+                    <th>File đính kèm</th>
+                    <th>CMND/Hộ chiếu</th>
+                    <th>Visa</th>
+                    <th>Nơi ở hiện tại</th>
+                    <th>Công ty</th>
+                    <th>Số người</th>
+                    <th>Lí do</th>
+                    <th>Số xe</th>
+                    <th>Giờ đăng ký vào</th>
+                    <th colspan="4">Bảo vệ xác nhận vào</th>
+                    <th>Giờ đăng ký ra</th>
+                    <th colspan="4">Bảo vệ xác nhận ra</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @if (Model.Type == 0)
+                        {
+                            @: Khách
+                        }
+                        else if (Model.Type == 1)
+                        {
+                            @:Nhà thầu
+                        }
+                        else
+                        {
+                            @:Lái xe
+                        }
+                    </td>
+                    <td>@Model.KVPNo</td>
+                    <td>@Model.FullName</td>
+                    <td>
+                        <a class="btn btnDownloadFile btn-primary btn-standard" href="/Guard/GuestFileDownload?filename=@Model.FileRedirectURL" target="_blank" title="Tải danh sách khách">
+                            <i class="fas fa-download" style="margin-left:-3.5px;"></i>
+                        </a>
+                    </td>
+                    <td>@Model.IDCard</td>
+                    <td>@Model.Visa</td>
+                    <td>@Model.Hotel</td>
+                    <td>@Model.Company</td>
+                    <td>@Model.NumbersOfPerson</td>
+                    <td>@Model.Purpose</td>
+                    <td>@Model.TransportNo</td>
+                    <td>@Model.EstimatedDateIn | @Model.EstimatedTimeIn</td>
+                    @if (Model.GuardStatusIn != null)
+                    {
+                        <td>@Model.GuardIn</td>
+                        if (Model.GuardStatusIn.Value == 0)
+                        {
+                            <td><i class="fas fa-times"></i></td>
+                        }
+                        else
+                        {
+                            <td><i class="fas fa-check-square"></i></td>
+                        }
+                        <td>@Model.GuardRemarkIn</td>
+                        <td>@Model.GuardDateIn</td>
+                    }
+                    else
+                    {
+                        <td><i class="fa-question"></i></td>
+                        <td>
+                            <a class="btn btn-primary btn-standard approveIn" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                            <a class="btn btn-danger btn-standard unapproveIn" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                        </td>
+                        <td><input class="remarkIn col-12" type="text" placeholder="Ghi chú..." /></td>
+                        <td><i class="fa-question"></i></td>
+                    }
+                    @if (Model.GuardStatusOut != null)
+                    {
+                        <td>@Model.GuardOut</td>
+                        if (Model.GuardStatusOut.Value == 0)
+                        {
+                            <td><i class="fas fa-times"></i></td>
+                        }
+                        else
+                        {
+                            <td><i class="fas fa-check-square"></i></td>
+                        }
+                        <td>@Model.GuardRemarkOut</td>
+                        <td>@Model.GuardDateOut</td>
+                    }
+                    else
+                    {
+                        <td><i class="fa-question"></i></td>
+                        <td>
+                            <a class="btn btn-primary btn-standard approveOut" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                            <a class="btn btn-danger btn-standard unapproveOut" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                        </td>
+                        <td><input class="remarkOut col-12" type="text" placeholder="Ghi chú..." /></td>
+                        <td><i class="fa-question"></i></td>
+                    }
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center">
+        <label id="add-row-items" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+            <a href="/Guard/Queue" style="text-decoration: none; color: white"><i class="fas fa-arrow-left"></i>&nbsp; Trở lại</a>
+        </label>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script>
+        $(".approveIn").on("click", function () {
+            var self = this;
+
+            $.confirm({
+                title: "Thông báo",
+                content: function () {
+                    var alert = this;
+                    return $.ajax({
+                        url: "/Guard/ApproveIn",
+                        method: "POST",
+                        data: {
+                            id: $('#guestID').val(),
+                            remark: $(self).closest("tr").find(".remark").val(),
+                            status: 1
+                        },
+                        success: (response) => {
+                            if (response.GuardStatusOut == 1) {
+                                window.location.reload();
+                            }
+                            else {
+                                alert.setContent("Lỗi hệ thống");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+        $(".unapproveIn").on("click", function () {
+            var self = this;
+
+            $.confirm({
+                title: "Thông báo",
+                content: function () {
+                    var alert = this;
+                    return $.ajax({
+                        url: "/Guard/ApproveIn",
+                        method: "POST",
+                        data: {
+                            id: $('#guestID').val(),
+                            remark: $(self).closest("tr").find(".remark").val(),
+                            status: 0
+                        },
+                        success: (response) => {
+                            if (response.GuardStatusIn == 0) {
+                                window.location.reload();
+                            }
+                            else {
+                                alert.setContent("Lỗi hệ thống");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+
+        $(".approveOut").on("click", function () {
+            var self = this;
+
+            $.confirm({
+                title: "Thông báo",
+                content: function () {
+                    var alert = this;
+                    return $.ajax({
+                        url: "/Guard/ApproveOut",
+                        method: "POST",
+                        data: {
+                            id: $('#guestID').val(),
+                            remark: $(self).closest("tr").find(".remark").val(),
+                            status: 1
+                        },
+                        success: (response) => {
+                            if (response.GuardStatusOut == 1) {
+                                window.location.reload();
+                            }
+                            else {
+                                alert.setContent("Lỗi hệ thống");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+        $(".unapproveOut").on("click", function () {
+            var self = this;
+
+            $.confirm({
+                title: "Thông báo",
+                content: function () {
+                    var alert = this;
+                    return $.ajax({
+                        url: "/Guard/ApproveOut",
+                        method: "POST",
+                        data: {
+                            id: $('#guestID').val(),
+                            remark: $(self).closest("tr").find(".remark").val(),
+                            status: 0
+                        },
+                        success: (response) => {
+                            if (response.GuardStatusOut == 0) {
+                                window.location.reload();
+                            }
+                            else {
+                                alert.setContent("Lỗi hệ thống");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}

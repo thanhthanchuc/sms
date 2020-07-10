@@ -1,0 +1,401 @@
+﻿@model SMS.Models.EF.Guest
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+    <style>
+        label {
+            color: black;
+        }
+    </style>
+}
+}
+
+<div class="form-horizontal">
+    <div class="card-header">
+        <h5 class="m-0 font-weight-bold text-primary">PHÒNG ITT & SMT PHÊ DUYỆT KHÁCH MANG HÀNG VÀO RA</h5>
+    </div>
+    <!--Cột bên trái dành cho form đăng ký-->
+    <div class="col-md-12 row-form">
+        <div class="column form-horizontal form-left col-md-7">
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                <div class="col-md-3 input-group">
+                    <div class="top-space input-group-sm">
+                        <input type="hidden" value="@Model.ID" id="txtID" />
+                        <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" value="@Model.EmployeeID" readonly />
+                    </div>
+                </div>
+                <label class="control-label col-1 top-space lb">Khách</label>
+                <div class="col-md-3 input-group-sm">
+                    <select class="form-control top-space" id="txtType" disabled>
+                        <option value="0" @if (Model.Type == 0) { @: selected
+                                }>
+                            Khách
+                        </option>
+                        <option value="1" @if (Model.Type == 1) { @: selected
+                                }>
+                            Nhà thầu
+                        </option>
+                        <option value="2" @if (Model.Type == 2) { @: selected
+                                }>
+                            Lái xe
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3 checkbox top-space">
+                    <label style="margin-bottom: 0 !important; margin-top:.5rem">
+                        @if (Model.Check_Guest.Value)
+                        {
+                            <label><input type="checkbox" id="txtCheck_Guest" checked disabled /> Khách nước ngoài</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox" id="txtCheck_Guest" disabled /> Khách nước ngoài</label>
+                        }
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Số thẻ khách</label>
+                <div class="col-md-3 input-group">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtKVPNo" value="@Model.KVPNo" readonly />
+                    </div>
+                </div>
+                <label class="control-label col-md-2 top-space">Họ tên khách <span class="red">(*)</span></label>
+                <div class="col-5 input-group-sm">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtEmployeeName" value="@Model.FullName" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">CMTND/Hộ chiếu</label>
+                <div class="col-md-3 input-group">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtIDCard" value="@Model.IDCard" readonly />
+                    </div>
+                </div>
+                <label class="control-label col-md-1 top-space">Visa</label>
+                <div class="col-md-6 input-group-sm">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtVisa" value="@Model.Visa" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Nơi ở hiện tại</label>
+                <div class="col-md-10">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtHotel" value="@Model.Hotel" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Công ty <span class="red">(*)</span></label>
+                <div class="col-md-10">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtCompany" value="@Model.Company" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Số người <span class="red">(*)</span></label>
+                <div class="col-md-2 input-group">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtNumbersOfPerson" value="@Model.NumbersOfPerson" readonly />
+                    </div>
+                </div>
+                <a id="guest-multi-day" class="btn-info btn btn-sm" title="Đăng ký theo đoàn" style="color: white; cursor: pointer">
+                    <i class="fas fa-download"></i>&nbsp; Tải danh sách khách
+                </a>
+                <div class="multi_day collapse input-group-sm col-5 show">
+                    <div class="form-horizontal col-12 row-add input-group-sm" id="import_file" style="padding: 1px">
+                        <input disabled class="input-group-sm" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileRedirectUrl" placeholder="Chọn file Excel" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <div class="col-md-10">
+                    <div class="input-group-sm">
+                        <textarea class="form-control col-md-12" style="resize: none" id="txtPurpose" readonly>@Model.Purpose</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Số xe</label>
+                <div class="col-md-5">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtTransportNo" value="@Model.TransportNo" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Giờ vào <span class="red">(*)</span></label>
+                <div class="col-3 input-group-sm">
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" readonly />
+                </div>
+                <div class="col-2 input-group-sm">
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" value="@Model.EstimatedTimeIn" readonly />
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Giờ ra <span class="red">(*)</span></label>
+                <div class="col-3 input-group-sm">
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" readonly />
+                </div>
+                <div class="col-2 input-group-sm">
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.EstimatedTimeOut" readonly />
+                </div>
+            </div>
+        </div>
+
+        <div class="column col-md-1 col-mid"></div>
+
+
+        <!--Cột bên phải dành cho thông tin nhân viên-->
+        <div class="column form-horizontal form-right col-md-4">
+            <!--Ảnh profile-->
+            <div class="form-group col-12 profile-img">
+                <div class="img-profile">
+                    <img src="~/Assets/img/the-world.jpg" />
+                </div>
+            </div>
+            <!--Thông tin profile-->
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                <input readonly class="form-control input-previous-button col-9 txtFullNameBI" value="@Model.EmployeeName" />
+            </div>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                <input readonly class="form-control input-previous-button col-9 txtPositionBI" value="@Model.Position" />
+            </div>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                <input readonly class="form-control input-previous-button col-9 txtTeamBI" value="@Model.Team" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="bottom">
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered" id="LE-table" style="width: 100%">
+            <!--Tiêu đề cột-->
+            <thead>
+                <tr class="table-heading">
+                    <th>Tên tài sản</th>
+                    <th>Số serial</th>
+                    <th>Số lượng</th>
+                    <th>Đơn vị</th>
+                    <th>Loại hàng hóa</th>
+                    <th colspan="2">Thời gian đem trở ra</th>
+                    <th colspan="2">ITT/SMT phê duyệt</th>
+                    <th colspan="4">FST phê duyệt</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Guest_Item)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" class="itemID" value="@item.ID" />
+                            @item.Item
+                        </td>
+                        <td>@item.Serial</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Unit</td>
+                        <td>
+                            @if (item.AssetType == 0)
+                            {
+                                @:Hàng thường
+                            }
+                            else if (item.AssetType == 1)
+                            {
+                                @:Hàng IT
+                            }
+                            else
+                            {
+                                @:Hàng độc hại
+                            }
+                        </td>
+                        @if (item.IsReturn.Value)
+                        {
+                            <td title="Có đem trở ra"><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
+                        }
+                        else
+                        {
+                            <td title="Không đem trở ra"><i class="fas fa-times" style="color: red"></i></td>
+                        }
+                        <td>@item.ReturnDate | @item.ReturnTime</td>
+                        @if (string.IsNullOrEmpty(item.ITT) && string.IsNullOrEmpty(item.SMT))
+                        {
+                            <td>
+                                <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            </td>
+                            <td><input class="remark col-12 remark-1" type="text" placeholder="Ghi chú..." /></td>
+                        }
+                        else
+                        {
+                            if (item.ITT_Status != null)
+                            {
+                                if (item.ITT_Status == 0)
+                                {
+                                    <td><i class="fas fa-times" style="color: red"></i></td>
+                                }
+                                else
+                                {
+                                    <td><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
+                                }
+                            }
+                            else if (item.SMT_Status != null)
+                            {
+                                if (item.SMT_Status == 0)
+                                {
+                                    <td><i class="fas fa-times"></i></td>
+                                }
+                                else
+                                {
+                                    <td><i class="fas fa-check-square"></i></td>
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(item.ITT_Remark))
+                            {
+                                <td>@item.ITT_Remark</td>
+                            }
+                            else
+                            {
+                                <td>@item.SMT_Remark</td>
+                            }
+
+                        }
+
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.FST))
+                            {
+                                @:@item.FST
+                            }
+                        </td>
+                        <td>
+                            @if (item.FST_Date != null)
+                            {
+                                @:@item.FST_Date
+                            }
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.FST_Remark))
+                            {
+                                @:@item.FST_Remark
+                            }
+                        </td>
+                        <td>
+                            @if (item.FST_Status != null)
+                            {
+                                if (item.FST_Status == 1)
+                                {
+                                    <i class="fas fa-check-square"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times"></i>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center">
+        <label id="return-history" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
+            <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
+        </label>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script>
+        $("#return-history").on("click", () => {
+            window.location.href = "/Guest/ITTApprove"
+        })
+
+        $('#LE-table').on("click", ".approve", function () {
+            var self = this;
+
+            $.confirm({
+                title: "Đã đồng ý phê duyệt",
+                content: function () {
+                    var alert = this;
+                    return $.ajax({
+                        url: "/Guest/ITTApprove",
+                        method: "POST",
+                        data: {
+                            id: $('#ID').val(),
+                            itemId: $(self).closest("tr").find(".itemID").val(),
+                            remark: $(self).closest("tr").find(".remark").val(),
+                            status: 1
+                        },
+                        success: (response) => {
+                            if (response.SMT_Status == 1 || response.ITT_Status == 1) {
+                                window.location.reload();
+                            }
+                            else {
+                                alert.setContent("Lỗi hệ thống");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+        $('#LE-table').on("click", ".unapprove", function () {
+            var self = this;
+
+            $.confirm({
+                title: "Đã từ chối phê duyệt",
+                content: function () {
+                    var alert = this;
+                    return $.ajax({
+                        url: "/Guest/ITTApprove",
+                        method: "POST",
+                        data: {
+                            id: $('#ID').val(),
+                            itemId: $(self).closest("tr").find(".itemID").val(),
+                            remark: $(self).closest("tr").find(".remark").val(),
+                            status: 0
+                        },
+                        success: (response) => {
+                            if (response.SMT_Status == 0 || response.ITT_Status == 0) {
+                                window.location.reload();
+                            }
+                            else {
+                                alert.setContent("Lỗi hệ thống");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}

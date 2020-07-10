@@ -1,0 +1,579 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Security Management System</title>
+    <!-- Custom fonts for this template-->
+    <link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Assets/css/fonts-gg.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-ui.css" rel="stylesheet" />
+
+
+    <!-- Custom styles for this template-->
+    <link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="~/Assets/css/customize.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion menu-side" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")" style="height: 6.375rem">
+                <div class="sidebar-brand-icon">
+                    <img id="logo-shield" src="~/Assets/img/shield.png" />
+                </div>
+                <div class="sidebar-brand-text mx-3" style="font-size: 15px; color:#72777A"><span style="color:#4caf50">Security</span> <span style="color:#4caf50">Management</span> <span style="color: coral">System</span></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider divider">
+
+            <div class="tab-1">
+                <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseDelegate" aria-expanded="true" aria-controls="collapseDelegate">
+                    <i class="fas fa-fw fa-users fa-menu" style="color:cornflowerblue"></i>
+                    &nbsp;
+                    <span class="tab-text">Quản trị</span>
+                </a>
+                <div id="collapseDelegate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <!-- Item 1 -->
+                    <li class="nav-item sub-menu item-delegate" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                            <i class="fas fa-fw fa-user-cog fa-menu lv-3-delegate"></i>
+                            <span>Phân quyền</span>
+                        </a>
+                        <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDelegate">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Danh sách quyền</a>
+                                <a class="collapse-item grey-a-tag" href="#">Nhóm người dùng</a>
+                                <a class="collapse-item grey-a-tag" href="#">Danh sách người dùng</a>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider divider">
+
+            <div class="tab-1">
+                <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseNews" aria-expanded="true" aria-controls="collapseNews">
+                    <i class="fas fa-fw fa-newspaper fa-menu" style="color:cornflowerblue"></i>
+                    &nbsp;
+                    <span class="tab-text">Bản tin</span>
+                </a>
+                <div id="collapseNews" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <!-- Item 1 -->
+                    <li class="nav-item sub-menu item-news" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                            <i class="fas fa-fw fa-chart-line fa-menu lv-3-news"></i>
+                            <span>Item 1</span>
+                        </a>
+                        <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseNews">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Bảo mật</a>
+                                <a class="collapse-item grey-a-tag" href="#">Mẫu yêu cầu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Quyền hạn</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Item 2 -->
+                    <li class="nav-item sub-menu item-news" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                            <i class="fas fa-fw fa-address-book fa-menu lv-3-news"></i>
+                            <span>Item 2</span>
+                        </a>
+                        <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseNews">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Bảo mật</a>
+                                <a class="collapse-item grey-a-tag" href="#">Mẫu yêu cầu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Quyền hạn</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Item 1 -->
+                    <li class="nav-item sub-menu item-news" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
+                            <i class="fas fa-fw fa-align-justify fa-menu lv-3-news"></i>
+                            <span>Item 3</span>
+                        </a>
+                        <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseNews">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Bảo mật</a>
+                                <a class="collapse-item grey-a-tag" href="#">Mẫu yêu cầu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Quyền hạn</a>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider divider">
+
+            <div class="tab-1">
+                <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseInOut" aria-expanded="true" aria-controls="collapseInOut">
+                    <i class="fas fa-fw fa-clock fa-menu fa-menu" style="color:cornflowerblue"></i>
+                    &nbsp;
+                    <span>Vào - Ra</span>
+                </a>
+                <div id="collapseInOut" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <!-- Báo cáo -->
+                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
+                            <i class="fas fa-fw fa-file-invoice fa-menu lv-3-in-out"></i>
+                            <span>Báo cáo</span>
+                        </a>
+                        <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">CNV về sớm</a>
+                                <a class="collapse-item grey-a-tag" href="#">CNV ra ngoài</a>
+                                <a class="collapse-item grey-a-tag" href="#">CNV mang hàng vào</a>
+                                <a class="collapse-item grey-a-tag" href="#">CNV mang hàng ra</a>
+                                <a class="collapse-item grey-a-tag" href="#">Khách vào ra</a>
+                                <a class="collapse-item grey-a-tag" href="#">Khách mang hàng vào/ra</a>
+                                <a class="collapse-item grey-a-tag" href="#">Báo cáo sự việc</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Về sớm -->
+                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseLeaveEarly" aria-expanded="true" aria-controls="collapseLeaveEarly">
+                            <i class="fas fa-fw fa-user-clock fa-menu lv-3-in-out"></i>
+                            <span>Về sớm</span>
+                        </a>
+                        <div id="collapseLeaveEarly" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="/LeaveEarly/Create">Ðăng ký</a>
+                                <a class="collapse-item grey-a-tag" href="/LeaveEarly/Approve">Phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="/LeaveEarly/History">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Ra ngoài -->
+                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGoOut" aria-expanded="true" aria-controls="collapseGoOut">
+                            <i class="fas fa-fw fa-running fa-menu lv-3-in-out"></i>
+                            <span>Ra ngoài</span>
+                        </a>
+                        <div id="collapseGoOut" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="/GoOut/Create">Ðăng ký</a>
+                                <a class="collapse-item grey-a-tag" href="/GoOut/Approve">Phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="/GoOut/History">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Mang hàng vào -->
+                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseBringIn" aria-expanded="true" aria-controls="collapseBringIn">
+                            <i class="fas fa-fw far fa-box-open fa-menu lv-3-in-out"></i>
+                            <span>Mang hàng vào</span>
+                        </a>
+                        <div id="collapseBringIn" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="@Url.Action("Create","BringIn")" onclick="activeMenu(this)">Ðăng ký</a>
+                                <a class="collapse-item grey-a-tag" href="/BringIn/Approve">Phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="/BringIn/ITTApprove">ITT & SMT phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="/BringIn/FSTApprove">FST phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="@Url.Action("History","BringIn")">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Mang hàng ra -->
+                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseBringOut" aria-expanded="true" aria-controls="collapseBringOut">
+                            <i class="fas fa-fw fa-box fa-menu lv-3-in-out"></i>
+                            <span>Mang hàng ra</span>
+                        </a>
+                        <div id="collapseBringOut" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="/BringOut/Create">Ðăng ký</a>
+                                <a class="collapse-item grey-a-tag" href="/BringOut/Approve">Phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="/BringOut/ITTApprove">ITT & SMT phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="/BringOut/FSTApprove">FST phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="/BringOut/History">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Bảo vệ -->
+                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuard" aria-expanded="true" aria-controls="collapseGuard">
+                            <i class="fas fa-fw fa-user-shield fa-menu lv-3-in-out"></i>
+                            <span>Bảo vệ</span>
+                        </a>
+                        <div id="collapseGuard" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="/Guard/Queue">Chờ xử lý</a>
+                                <a class="collapse-item grey-a-tag" href="/Guard/History">Lịch sử</a>
+                                <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!--Khách & Nhà thầu-->
+                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuest" aria-expanded="true" aria-controls="collapseGuest">
+                            <i class="fas fa-fw fa-user-tie fa-menu lv-3-in-out"></i>
+                            <span>Khách & Nhà thầu</span>
+                        </a>
+                        <div id="collapseGuest" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="@Url.Action("Create","Guest")">Ðăng ký</a>
+                                <a class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove","Guest")">ITT & SMT phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="@Url.Action("FSTApprove","Guest")">FST Phê duyệt</a>
+                                <a class="collapse-item grey-a-tag" href="@Url.Action("","")">Hạn chế truy cập</a>
+                                <a class="collapse-item grey-a-tag" href="@Url.Action("History","Guest")">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider divider">
+
+            <div class="tab-1">
+                <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseTranning" aria-expanded="true" aria-controls="collapseTranning">
+                    <i class="fas fa-fw fa-desktop fa-menu" style="color: cornflowerblue"></i>
+                    &nbsp;
+                    <span>Đào tạo Online</span>
+                </a>
+                <div id="collapseTranning" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <!-- Item 1 -->
+                    <li class="nav-item sub-menu item-tranning" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                            <i class="fas fa-fw fa-user-graduate fa-menu lv-3-tranning"></i>
+                            <span>Item 1</span>
+                        </a>
+                        <div id="collapse4" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseTranning">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Bài kiểm tra</a>
+                                <a class="collapse-item grey-a-tag" href="#">Thống kê</a>
+                                <a class="collapse-item grey-a-tag" href="#">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Item 2 -->
+                    <li class="nav-item sub-menu item-tranning" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                            <i class="fas fa-fw fa-file-alt fa-menu lv-3-tranning"></i>
+                            <span>Item 2</span>
+                        </a>
+                        <div id="collapse5" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseTranning">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Bài kiểm tra</a>
+                                <a class="collapse-item grey-a-tag" href="#">Thống kê</a>
+                                <a class="collapse-item grey-a-tag" href="#">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Item 3 -->
+                    <li class="nav-item sub-menu item-tranning" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse6" aria-expanded="true" aria-controls="collapse6">
+                            <i class="fas fa-fw fa-comment-dots fa-menu lv-3-tranning"></i>
+                            <span>Item 3</span>
+                        </a>
+                        <div id="collapse6" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseTranning">
+                            <!-- Báo cáo -->
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Bài kiểm tra</a>
+                                <a class="collapse-item grey-a-tag" href="#">Thống kê</a>
+                                <a class="collapse-item grey-a-tag" href="#">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider divider">
+
+            <div class="tab-1">
+                <!--Documents-->
+                <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseDocuments" aria-expanded="true" aria-controls="collapseDocuments">
+                    <i class="fas fa-fw fa-folder fa-menu" style="color: cornflowerblue"></i>
+                    &nbsp;
+                    <span>Tài liệu</span>
+                </a>
+                <div id="collapseDocuments" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <!--Item 1-->
+                    <li class="nav-item sub-menu item-documents" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse7" aria-expanded="true" aria-controls="collapse7">
+                            <i class="fas fa-fw fa-folder-open fa-menu lv-3-documents"></i>
+                            <span>Item 1</span>
+                        </a>
+                        <div id="collapse7" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDocuments">
+                            <!-- Báo cáo -->
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Xem tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Thêm/Sửa tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!--Item 2-->
+                    <li class="nav-item sub-menu item-documents" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse8" aria-expanded="true" aria-controls="collapse8">
+                            <i class="fas fa-fw fa-atlas fa-menu lv-3-documents"></i>
+                            <span>Item 2</span>
+                        </a>
+                        <div id="collapse8" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDocuments">
+                            <!-- Báo cáo -->
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Xem tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Thêm/Sửa tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!--Item 3-->
+                    <li class="nav-item sub-menu item-documents" style="font-weight: 500">
+                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse9" aria-expanded="true" aria-controls="collapse9">
+                            <i class="fas fa-fw fa-download fa-menu lv-3-documents"></i>
+                            <span>Item 3</span>
+                        </a>
+                        <div id="collapse9" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDocuments">
+                            <!-- Báo cáo -->
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a class="collapse-item grey-a-tag" href="#">Xem tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Thêm/Sửa tài liệu</a>
+                                <a class="collapse-item grey-a-tag" href="#">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block" style="visibility:hidden">
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input readonly type="text" class="form-control bg-light border-0 small search-field" aria-label="Search" aria-describedby="basic-addon2">
+                        </div>
+                    </form>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw icon-notice"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" style="background-color:#cbcbcb">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small icon-notice">December 12, 2019</div>
+                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small icon-notice" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw icon-notice"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown" style="background-color:#cbcbcb">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                                        <div class="small icon-notice">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small icon-notice" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline small" id="logged_name" style="color:black"></span>
+                                <img id="logged_image" class="img-profile rounded-circle">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" style="background-color: #cbcbcb">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 icon-notice"></i>
+                                    Trang cá nhân
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 icon-notice"></i>
+                                    Cài đặt
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 icon-notice"></i>
+                                    Hoạt động
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 icon-notice"></i>
+                                    Đăng xuất
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div id="main-body">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright <span style="color:red">&copy;</span> <b style="color: darkblue">HYUNDAI KEFICO</b> Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc chắn muốn thoát phiên đăng nhập?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" href="@Url.Action("Index", "Login")">Đăng xuất</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Trở lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    @*<script src="~/Assets/vendor/jquery/jquery.min.js"></script>*@
+
+    <script src="~/Assets/js/jquery.js"></script>
+    <script src="~/Assets/js/jquery-ui.js"></script>
+    <script src="~/Assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/Assets/js/sb-admin-2.min.js"></script>
+    @*<script src="~/Assets/js/boostrap.js"></script>*@
+
+    <script>
+        function activeMenu(self) {
+            // deactive menu cũ
+            $(".bg-sub-menu").each((index, aTag) => {
+                $(aTag).find("a[class*=active]").removeClass("active");
+                /// add class
+                $(self).addClass("active");
+            })
+            ///Lấy html
+            $.ajax({
+                url: "/BringIn/Create",
+                method: "get",
+                success: function (htmlView) {
+                    $("#main-body").child().remove();
+                    $("#main-body").append(htmlView);
+                }
+            });
+        }
+    </script>
+    <style>
+        .active {
+            background: #eaecf4;
+            color: #72777A;
+        }
+    </style>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,249 @@
+﻿@model PagedList.IPagedList<SMS.Models.EF.Go_Out>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Approve";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+    <style>
+        label {
+            color: black;
+        }
+    </style>
+}
+
+@using (Html.BeginForm("Approve", "GoOut", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <!--Div chứa table dữ liệu-->
+    <div style="width:100%">
+        <div class="card-header">
+            <h5 class="m-0 font-weight-bold text-primary">PHÊ DUYỆT CNV RA NGOÀI</h5>
+        </div>
+        <div class="row dataTables_wrapper dt-bootstrap4 above-table">
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
+                &nbsp;
+                <input id="date_from" class="form-control bg-light from-date" readonly>
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+                &nbsp;
+                <input id="date_to" class="form-control bg-light to-date" readonly>
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
+                &nbsp;
+                <select class="form-control from-date">
+                    <option value="0">---Chọn---</option>
+                    <option value="1">BOM</option>
+                    <option value="2">ACT</option>
+                    <option value="3">FST</option>
+                    <option value="4">GAT</option>
+                    <option value="5">HRT</option>
+                    <option value="6">ITT</option>
+                    <option value="7">MAT</option>
+                    <option value="8">MCT</option>
+                    <option value="9">MET</option>
+                    <option value="10">MMT</option>
+                    <option value="11">MQT</option>
+                    <option value="12">MTT</option>
+                    <option value="13">PDT</option>
+                    <option value="14">PUT</option>
+                    <option value="15">QAT</option>
+                    <option value="16">SCT</option>
+                    <option value="17">SMT</option>
+                    <option value="18">SQT</option>
+                </select>
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+                &nbsp;
+                <input id="emp_code" class="form-control bg-light to-date">
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Ca làm việc</label>
+                &nbsp;
+                <select class="form-control from-date">
+                    <option value="0">Hành chính</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px">
+            <div class="button-container" style="float: left">
+                <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
+            </div>
+            <div style="float: right">
+                <form class="radio-container">
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox" checked>Tất cả
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Chưa phê duyệt
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Đã phê duyệt
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Phê duyệt thay
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Hủy bỏ
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Bảo vệ đã xác nhận
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Bảo vệ chưa xác nhận
+                    </label>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered">
+            <!--Tiêu đề cột-->
+            <tr class="table-heading">
+                <th>
+                    @Html.DisplayName("Mã")
+                </th>
+                <th colspan="2">
+                    @Html.DisplayName("Nhân viên")
+                </th>
+                <th>
+                    @Html.DisplayName("Vị trí")
+                </th>
+                <th>
+                    @Html.DisplayName("Phòng ban")
+                </th>
+                <th>
+                    @Html.DisplayName("Ca")
+                </th>
+                <th>
+                    @Html.DisplayName("Mục đích")
+                </th>
+                <th>
+                    @Html.DisplayName("Lí do")
+                </th>
+                <th>
+                    @Html.DisplayName("Thời gian ra ngoài")
+                </th>
+                <th>
+                    @Html.DisplayName("Thời gian quay lại")
+                </th>
+                <th colspan="2">
+                    @Html.DisplayName("Người tạo")
+                </th>
+                <th colspan="2">
+                    @Html.DisplayName("Phê duyệt")
+                </th>
+                <th colspan="2">
+                    @Html.DisplayName("Chỉnh sửa")
+                </th>
+                <th>In ấn</th>
+            </tr>
+            <!--Row dữ liệu bảng về sớm-->
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span>RGO</span>@Html.DisplayFor(modelItem => item.ID)@Html.DisplayFor(modelItem => item.Team)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Team)
+                    </td>
+                    <td>
+                        @if (item.Shift == 0)
+                        {
+                            <p style="display:inherit">Hành chính</p>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Shift)
+                        }
+                    </td>
+                    <td>
+                        @if (item.Purpose)
+                        {
+                            <p style="display:inherit">Công việc</p>
+                        }
+                        else
+                        {
+                            <p style="display:inherit">Cá nhân</p>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reason)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstimatedDateOut)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstimatedDateReturn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td class="approve-container">
+                        <a data-id="@item.ID" class="btn btn-primary btn-standard btn-admin-approve-GO" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                        <a data-id="@item.ID" class="btn btn-danger btn-standard btn-admin-reject-GO" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                    </td>
+                    <td>
+                        <input id="approve_@item.ID" class="remark col-12" type="text" placeholder=" Ghi chú..." />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                    </td>
+                    <td>
+                        <button class="btn-print btn-primary"><i class="fas fa-print"></i></button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div>
+        <div class="page-count" style="display:inline-block; vertical-align:middle;">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </div>
+        <div class="pagination" style="display:inline-block; vertical-align:middle; float: right">
+            @Html.PagedListPager(Model, page => Url.Action("History", new { page, @searchString = @ViewBag.SearchString, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script src="~/Assets/js/jquery.timepicker.min.js"></script>
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/go_out/common.js"></script>
+}
+

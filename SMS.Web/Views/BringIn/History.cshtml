@@ -1,0 +1,541 @@
+﻿@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+    <style>
+        label {
+            color: black;
+        }
+    </style>
+}
+
+<!--Div chứa table dữ liệu-->
+<div style="width:100%">
+    <div class="card-header">
+        <h5 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV MANG HÀNG VÀO</h5>
+    </div>
+    <div class="row dataTables_wrapper dt-bootstrap4 above-table">
+        <div class="col-2 input-group input-group-sm">
+            <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
+            &nbsp;
+            <input id="date_from" class="form-control bg-light from-date" readonly>
+        </div>
+        <div class="col-2 input-group input-group-sm">
+            <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+            &nbsp;
+            <input id="date_to" class="form-control bg-light to-date" readonly>
+        </div>
+        <div class="col-2 input-group input-group-sm">
+            <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
+            &nbsp;
+            <select class="form-control from-date">
+                <option value="0">---Chọn---</option>
+                <option value="1">BOM</option>
+                <option value="2">ACT</option>
+                <option value="3">FST</option>
+                <option value="4">GAT</option>
+                <option value="5">HRT</option>
+                <option value="6">ITT</option>
+                <option value="7">MAT</option>
+                <option value="8">MCT</option>
+                <option value="9">MET</option>
+                <option value="10">MMT</option>
+                <option value="11">MQT</option>
+                <option value="12">MTT</option>
+                <option value="13">PDT</option>
+                <option value="14">PUT</option>
+                <option value="15">QAT</option>
+                <option value="16">SCT</option>
+                <option value="17">SMT</option>
+                <option value="18">SQT</option>
+            </select>
+        </div>
+        <div class="col-2 input-group input-group-sm">
+            <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+            &nbsp;
+            <input id="emp_code" class="form-control bg-light to-date">
+        </div>
+        <div class="col-2">
+            <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
+        </div>
+    </div>
+
+    <div style="margin-top: 8px">
+        <div class="button-container" style="float: left">
+            <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
+        </div>
+        <div style="float: right">
+            <form class="radio-container">
+                <label class="checkbox-inline radio-button">
+                    <input class="radio" type="checkbox" checked>Tất cả
+                </label>
+                <label class="checkbox-inline radio-button">
+                    <input class="radio" type="checkbox">Chưa phê duyệt
+                </label>
+                <label class="checkbox-inline radio-button">
+                    <input class="radio" type="checkbox">Đã phê duyệt
+                </label>
+                <label class="checkbox-inline radio-button">
+                    <input class="radio" type="checkbox">Phê duyệt thay
+                </label>
+                <label class="checkbox-inline radio-button">
+                    <input class="radio" type="checkbox">Hủy bỏ
+                </label>
+                <label class="checkbox-inline radio-button">
+                    <input class="radio" type="checkbox">Bảo vệ đã xác nhận
+                </label>
+                <label class="checkbox-inline radio-button">
+                    <input class="radio" type="checkbox">Bảo vệ chưa xác nhận
+                </label>
+            </form>
+        </div>
+    </div>
+
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered" id="BI-table" style="border-collapse: collapse; width: 100%">
+            <!--Tiêu đề cột-->
+            <thead>
+                <tr class="table-heading">
+                    <th class="th-1">Mã</th>
+                    <th class="th-1">Nhân viên</th>
+                    <th class="th-1">Vị trí</th>
+                    <th class="th-1">Phòng ban</th>
+                    <th class="th-1">Lí do</th>
+                    <th class="th-1">Thời gian ước tính</th>
+                    <th class="th-1">Trạng thái</th>
+                    <th class="th-1">Thao tác</th>
+                    <th class="th-1">Chi tiết</th>
+                    <th class="th-1">In ấn</th>
+                    <th class="th-1">Người tạo</th>
+                    <th class="th-1">Chỉnh sửa</th>
+                </tr>
+            </thead>
+            <tbody id="tblData"></tbody>
+        </table>
+    </div>
+</div>
+<div id="pagination" class="pagination"></div>
+<!-- /.container-fluid -->
+<!-- Add Modal -->
+<div class="modal fade" aria-hidden="true" tabindex="-1" id="addModal" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title exampleModalLabel"><b>Tạo yêu cầu mang hàng vào</b></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12 row-form">
+                    <div class="column form-horizontal form-left col-8">
+                        <div class="form-group row-1 input-group input-group-sm">
+                            <label class="col-3 top-space" for="EmpCode">Mã CNV <span class="red">(*)</span></label>
+                            <input class="form-control col-4 input-previous-button" id="txtEmpCodeLE" maxlength="8" />
+                        </div>
+
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-3 top-space" for="Reason">Lí do <span class="red">(*)</span></label>
+                            <textarea rows="2" class="form-control col-10 input-previous-button" style="resize: none"></textarea>
+                        </div>
+
+                        <div class="row form-group input-group-sm specific-date-pick">
+                            <label class="col-3 top-space" for="EstimatedDateOut">Ngày vào <span class="red">(*)</span></label>
+                            <input class="form-control col-4 input-previous-button datepicker" id="estimated_date" placeholder="Ngày" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label class="top-space" for="EstimatedTimeOut">Giờ vào <span class="red">(*)</span></label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input class="form-control col-3 input-previous-button timepicker" id="estimated_time" placeholder="Giờ" />
+                        </div>
+
+                        <div class="input-group input-group-sm">
+                            <label class="col-3">
+                                <a class="btn btn-primary btn-sm" style="cursor: pointer" data-toggle="collapse" data-target=".bottom">Đăng ký tài sản</a>
+                            </label>
+                            <div class="file row col-9 input-group-sm">
+                                <label class="col-4">
+                                    <a class="btn btn-success btn-sm" style="cursor: pointer"><i class="fas fa-download"></i> Tải mẫu đăng ký</a>
+                                </label>
+                                <div class="col-8 custom-file">
+                                    <input class="form-control input-previous-button custom-file-input input-group-sm" id="temp-file" type="file" />
+                                    <label class="custom-file-label" for="temp-file">Chọn file</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--Cột bên phải dành cho thông tin nhân viên-->
+                    <div class="column form-horizontal form-right col-md-4">
+                        <!--Ảnh profile-->
+                        <div class="form-group col-12 profile-img">
+                            <div class="img-profile">
+                                <img src="~/Assets/img/the-world.jpg" />
+                            </div>
+                        </div>
+                        <!--Thông tin profile-->
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-4 top-space" for="FullName">Họ và tên</label>
+                            <input readonly class="form-control col-8 input-previous-button" id="txtFullNameBI" />
+                        </div>
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-4 top-space" for="Positon">Vị trí</label>
+                            <input readonly class="form-control col-8 input-previous-button" id="txtPositionBI" />
+                        </div>
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-4 top-space" for="Positon">Phòng ban</label>
+                            <input readonly class="form-control col-8 input-previous-button" id="txtTeamBI" />
+                        </div>
+                    </div>
+                </div>
+                <div class="note col-12">
+                    <span class="control-label" style="color: dodgerblue"><u>Lưu ý</u>: <span style="color: #858796">&nbsp;Các trường <span style="color:red">(*)</span> bắt buộc phải nhập đầy đủ.</span></span>
+                </div>
+
+                <!--Thêm hàng hóa-->
+                <div class="bottom collapse col-12 row-form">
+                    <div class="form-horizontal row-add" id="bring-in-items">
+                        <div class="items-container">
+                            <table class="table-bordered table table-hover" id="BI-items">
+                                <thead>
+                                    <tr class="table-header-items">
+                                        <th></th>
+                                        <th>Tên tài sản <span class="red">(*)</span></th>
+                                        <th>Serial <span class="red">(*)</span></th>
+                                        <th>Số lượng <span class="red">(*)</span></th>
+                                        <th>Đơn vị <span class="red">(*)</span></th>
+                                        <th>Loại tài sản <span class="red">(*)</span></th>
+                                        <th>Mang trở ra <span class="red">(*)</span></th>
+                                        <th colspan="2">Thời gian trở ra</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="2%">
+                                            <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
+                                        </td>
+                                        <td width="20%" class="input-group-sm">
+                                            <input class="form-control input-previous-button item" />
+                                        </td>
+                                        <td width="17%" class="input-group-sm">
+                                            <input class="form-control input-previous-button serial" />
+                                        </td>
+                                        <td width="4%" class="input-group-sm">
+                                            <input type="number" class="form-control input-previous-button quantity" />
+                                        </td>
+                                        <td width="9%" class="input-group-sm">
+                                            <input class="form-control input-previous-button unit" />
+                                        </td>
+                                        <td width="17%" class="input-group-sm">
+                                            <select class="form-control input-previous-button assetType">
+                                                <option value="0" selected>Hàng thường</option>
+                                                <option value="1">Hàng IT</option>
+                                                <option value="2">Hàng độc hại</option>
+                                            </select>
+                                        </td>
+                                        <td width="5%" class="input-group-sm">
+                                            <select class="form-control input-previous-button isReturn">
+                                                <option value="true" selected>Có</option>
+                                                <option value="false">Không</option>
+                                            </select>
+                                        </td>
+                                        <td width="14%" class="input-group-sm">
+                                            <input class="form-control datepicker returnDate" placeholder="Ngày" />
+                                        </td>
+                                        <td width="12%" class="input-group-sm">
+                                            <input class="form-control timepicker returnTime" placeholder="Giờ" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="text-align: center">
+                        <label id="add-row-items" class="btn-primary btn top-space btn-sm" title="Thêm hàng hóa khác" style="cursor: pointer; margin-top:8px;">
+                            <i class="fas fa-plus"></i>&nbsp; Thêm tài sản
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-primary">Đăng ký</button>
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" aria-hidden="true" tabindex="-1" id="editModal" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title exampleModalLabel"><b>Chỉnh sửa yêu cầu ra ngoài</b></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 row-form">
+                    <div class="column form-horizontal form-left col-md-8">
+
+                        <div class="form-group row-1 input-group input-group-sm">
+                            <label class="col-3 top-space" for="EmpCode">Mã CNV <span class="red">(*)</span></label>
+                            <input class="form-control col-4 input-previous-button" id="txtEmpCodeLE" maxlength="8" />
+                        </div>
+
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-3 top-space" for="Shift">Ca</label>
+                            <select class="form-control col-4 input-previous-button">
+                                <option value="0" selected>Hành chính</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group input-group input-group-sm">
+                            <label for="Purpose" class="col-3 top-space">Mục đích</label>
+                            <select class="form-control col-4 input-previous-button">
+                                <option value="1" selected>Công việc</option>
+                                <option value="0">Cá nhân</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-3 top-space" for="Reason">Mục đích <span class="red">(*)</span></label>
+                            <textarea maxlength="500" rows="2" class="form-control col-10 input-previous-button" style="resize: none"></textarea>
+                        </div>
+
+                        <div class="row form-group input-group-sm specific-date-pick">
+                            <label class="col-3 top-space" for="EstimatedDateOut">Ngày ra <span class="red">(*)</span></label>
+                            <input class="form-control col-4 input-previous-button" id="estimated_date_out" />
+                            <label class="top-space col-2" for="EstimatedTimeOut">Giờ ra <span class="red">(*)</span></label>
+                            <input class="form-control col-2 input-previous-button" id="estimated_time_out" />
+                        </div>
+
+                        <div class="row form-group input-group-sm specific-date-pick">
+                            <label class="col-3 top-space" for="EstimatedDateReturn">Ngày quay lại</label>
+                            <input class="form-control col-4 input-previous-button" id="estimated_date_return" />
+                            <label class="top-space col-2" for="EstimatedTimeReturn">Giờ quay lại</label>
+                            <input class="form-control col-2 input-previous-button" id="estimated_time_return" />
+                        </div>
+
+                        <div class="input-group form-group input-group-sm">
+                            <label class="col-3">
+                                <a class="btn btn-primary btn-sm" style="cursor: pointer" data-toggle="collapse" data-target=".file">Đăng ký nhiều người</a>
+                            </label>
+                            <div class="file row collapse col-9 input-group-sm">
+                                <label class="col-4">
+                                    <a class="btn btn-success btn-sm" style="cursor: pointer"><i class="fas fa-download"></i> Tải mẫu đăng ký</a>
+                                </label>
+                                <div class="col-8 custom-file">
+                                    <input class="form-control input-previous-button custom-file-input pointer" id="temp-file" type="file" />
+                                    <label class="custom-file-label" for="temp-file">Chọn file</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--Cột bên phải dành cho thông tin nhân viên-->
+                    <div class="column form-horizontal form-right col-md-4">
+                        <!--Ảnh profile-->
+                        <div class="form-group col-12 profile-img">
+                            <div class="img-profile">
+                                <img src="~/Assets/img/the-world.jpg" />
+                            </div>
+                        </div>
+                        <!--Thông tin profile-->
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-4 top-space" for="FullName">Họ và tên</label>
+                            <input readonly class="form-control col-8 input-previous-button" id="txtFullNameLE" />
+                        </div>
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-4 top-space" for="Positon">Vị trí</label>
+                            <input readonly class="form-control col-8 input-previous-button" id="txtPositionLE" />
+                        </div>
+                        <div class="form-group input-group input-group-sm">
+                            <label class="col-4 top-space" for="Positon">Phòng ban</label>
+                            <input readonly class="form-control col-8 input-previous-button" id="txtTeamLE" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Assets/js/jquery.timepicker.min.js"></script>
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/jquery.dataTables.min.js"></script>
+    <script>
+        var table = null;
+        $(document).ready(() => {
+            var options = {
+                "serverSide": false,
+                "searching": false,
+                "orderCellsTop": false,
+                "fixedHeader": true,
+                "processing": true,
+                "paging": true,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_"
+                },
+                "lengthMenu": [[20, 25, 50, 100, -1], [20, 25, 50, 100, "All"]],
+                "lengthChange": false,
+                "pageLength": 20,
+                "ajax": {
+                    "type": "POST",
+                    "url": "/BringIn/FetchBringInData",
+                    "dataType": "json",
+                    "contentType": 'application/json; charset=utf-8'
+                },
+                "columns": [
+                    {
+                        data: function (res) {
+                            return `<span>RBI</span>${res.ID}<span">${res.Team}</span>`;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            return `<span class="border-right" style="padding-right:10px;">${res.EmpCode}</span><span style="margin-left:10px;">${res.FullName}</span>`;
+                        }
+                    },
+                    { data: function (res) { return res.Position; } },
+                    { data: function (res) { return res.Team; } },
+                    { data: function (res) { return res.Reason; } },
+                    {
+                        data: function (res) {
+                            return `<span class="border-right" style="padding-right:10px;">${res.EstimatedDate}</span><span style="margin-left:10px;">${res.EstimatedTime}</span>`;;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            return !res.Status ? 'Đang thực hiện' : 'Đã thực hiện';
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            var html = '';
+                            if (res.Cancel) {
+                                html = "Hủy bỏ";
+                            }
+                            else {
+                                if (!res.Status) {
+                                    html = `<a class="btn btn-edit btn-standard btnEdit" title="Sửa" href="/BringIn/Edit/${res.ID}">
+                                               <i class="icon fas fa-cog" style="margin-left: -4px"></i>
+                                            </a>
+                                            <a class="btn btn-danger btn-standard btn-delete btnXoa" onclick="Delete(${res.ID})" title="Xóa">
+                                               <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
+                                            </a>`;
+                                }
+                                else {
+                                    html = `<a class="btn btn-cancel btn-danger btn-standard" id="btnCancel" onclick="Cancel(${res.ID})" title="Hủy bỏ">
+                                                 <i class="fas fa-lock" style="margin-left: -3px"></i>
+                                            </a>`;
+                                }
+                            }
+                            return html;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            var html = `<a href="/BringIn/Detail/${res.ID}" class="btn btn-standard btn-primary"><i class="fas fa-info" style="color: white"></i></a>`;
+                            return html;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            return `<a class="btn btn-print btn-primary btn-standard" id="btnPrint"  title="In báo cáo">
+                                       <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>`;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            var createdUser = "";
+                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdUser}</span>`;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
+                                return "";
+                            var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+                            return `${res.ModifiedBy} | ${modifiedDate}`;
+                        }
+                    }
+                ]
+            };
+            table = $('#BI-table').DataTable(options);
+        });
+
+        function Delete(id) {
+            $.confirm({
+                title: 'Xác nhận!',
+                content: 'Bạn có chắc muốn xóa!',
+                buttons: {
+                    confirm: async function () {
+                        await $.ajax({
+                            url: "/BringIn/Delete/" + id,
+                            method: "GET",
+                            success: function () {
+                                window.location.reload();
+                            }
+                        })
+                    },
+                    cancel: function () {
+                        //$.alert('Hủy bỏ!');
+                    }
+                }
+            });
+        }
+
+        function Cancel(id) {
+            $.confirm({
+                title: 'Xác nhận!',
+                content: 'Bạn có chắc muốn hủy!',
+                buttons: {
+                    confirm: async function () {
+                        await $.ajax({
+                            url: "/BringIn/Cancel/" + id,
+                            method: "GET",
+                            success: function () {
+                                window.location.reload();
+                            }
+                        })
+                    },
+                    cancel: function () {
+                        //$.alert('Hủy bỏ!');
+                    }
+                }
+            });
+        }
+
+        $('.datepicker, #date_from, #date_to').datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+
+        $('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
+    </script>
+
+    <script src="~/Assets/js/bring_in/common.js"></script>
+}

@@ -1,0 +1,152 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Custom styles for this page -->
+    <link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="~/Assets/css/customize.css" rel="stylesheet" />
+
+    <title>Xác nhận Khách nước ngoài vào - ra</title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN KHÁCH NƯỚC NGOÀI VÀO - RA</h5>
+        </div>
+        <!--Cột bên trái dành cho form đăng ký-->
+        <div class="col-md-12 row-form">
+            <div class="column form-horizontal form-left col-md-6">
+                <div class="form-group row-1 input-group">
+                    <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                    <div class="col-md-7 input-group">
+                        <div class="top-space">
+                            <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" readonly />
+                            @*@Html.EditorFor(model => model.EmpCode, new { htmlAttributes = new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12" } })*@
+                            @*@Html.ValidationMessageFor(model => model.EmpCode, "", new { @class = "text-danger" })*@
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group input-group">
+                    <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                    <div class="col-md-10">
+                        <textarea class="form-control col-md-12" style="resize: none" readonly></textarea>
+                        @*@Html.TextAreaFor(model => model.Reason, htmlAttributes: new { @class = "form-control col-md-12" })*@
+                        @*@Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="column col-md-2 col-mid">
+                <i class=" fas fa-play"></i>
+            </div>
+
+
+            <!--Cột bên phải dành cho thông tin nhân viên-->
+            <div class="column form-horizontal form-right col-md-4">
+                <!--Ảnh profile-->
+                <div class="form-group col-12 profile-img">
+                    <div class="img-profile">
+                        <img src="~/Assets/img/the-world.jpg" />
+                    </div>
+                </div>
+                <!--Thông tin profile-->
+                <div class="form-group input-group profile">
+                    <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                    <input readonly class="form-control input-previous-button col-9 txtFullNameBI" />
+                    @*@Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtFullNameBI" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger info-required" })*@
+                </div>
+                <div class="form-group input-group profile">
+                    <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                    <input readonly class="form-control input-previous-button col-9 txtPositionBI" />
+                    @*@Html.EditorFor(model => model.Position, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtPositionBI" } })
+                        @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger info-required" })*@
+                </div>
+                <div class="form-group input-group profile">
+                    <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                    <input readonly class="form-control input-previous-button col-9 txtTeamBI" />
+                    @*@Html.EditorFor(model => model.Team, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtTeamBI" } })
+                        @Html.ValidationMessageFor(model => model.Team, "", new { @class = "text-danger info-required" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="bottom">
+        <div style="width:100%; overflow-x:auto">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="LE-table">
+                <!--Tiêu đề cột-->
+                <thead>
+                    <tr class="table-heading">
+                        <th>Khách</th>
+                        <th>Số thẻ</th>
+                        <th>Họ tên</th>
+                        <th>File đính kèm</th>
+                        <th>CMND/Hộ chiếu</th>
+                        <th>Visa</th>
+                        <th>Nơi ở hiện tại</th>
+                        <th>Công ty</th>
+                        <th>Số người</th>
+                        <th>Lí do</th>
+                        <th>Số xe</th>
+                        <th>Giờ đăng ký vào</th>
+                        <th colspan="4">Bảo vệ xác nhận vào</th>
+                        <th>Giờ đăng ký ra</th>
+                        <th colspan="4">Bảo vệ xác nhận ra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button class="btn btn-print-LE btn-primary btn-standard" title="Tải danh sách khách">
+                                <i class="fas fa-download" style="margin-left:-3.5px;"></i>
+                            </button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>GuardIn</td>
+                        <td>
+                            <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                            <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                        </td>
+                        <td><input class="remark col-12" type="text" placeholder="Ghi chú..." /></td>
+                        <td>GuardDateIn</td>
+                        <td>GuardOut</td>
+                        <td>
+                            <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                            <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                        </td>
+                        <td><input class="remark col-12" type="text" placeholder="Ghi chú..." /></td>
+                        <td>GuardDateOut</td>
+                </tbody>
+            </table>
+        </div>
+        <div style="text-align: center">
+            <label id="add-row-items" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+                <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
+            </label>
+        </div>
+    </div>
+</body>
+</html>

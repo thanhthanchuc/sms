@@ -1,0 +1,571 @@
+﻿@model PagedList.IPagedList<SMS.Models.EF.Leave_Early>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+    <style>
+        label {
+            color: black;
+        }
+    </style>
+}
+
+@using (Html.BeginForm("History", "LeaveEarly", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <!--Div chứa table dữ liệu-->
+    <div style="width:100%">
+        <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV VỀ SỚM</h5>
+        </div>
+        <div class="row dataTables_wrapper dt-bootstrap4 above-table">
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
+                &nbsp;
+                <input id="date_from" class="form-control bg-light from-date" readonly>
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+                &nbsp;
+                <input id="date_to" class="form-control bg-light to-date" readonly>
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
+                &nbsp;
+                <select class="form-control from-date">
+                    <option value="0">---Chọn---</option>
+                    <option value="1">BOM</option>
+                    <option value="2">ACT</option>
+                    <option value="3">FST</option>
+                    <option value="4">GAT</option>
+                    <option value="5">HRT</option>
+                    <option value="6">ITT</option>
+                    <option value="7">MAT</option>
+                    <option value="8">MCT</option>
+                    <option value="9">MET</option>
+                    <option value="10">MMT</option>
+                    <option value="11">MQT</option>
+                    <option value="12">MTT</option>
+                    <option value="13">PDT</option>
+                    <option value="14">PUT</option>
+                    <option value="15">QAT</option>
+                    <option value="16">SCT</option>
+                    <option value="17">SMT</option>
+                    <option value="18">SQT</option>
+                </select>
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+                &nbsp;
+                <input id="emp_code" class="form-control bg-light to-date">
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Ca làm việc</label>
+                &nbsp;
+                <select class="form-control from-date">
+                    <option value="0">Hành chính</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px">
+            <div class="button-container" style="float: left">
+                <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
+            </div>
+            <div style="float: right">
+                <form class="radio-container">
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox" checked>Tất cả
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Chưa phê duyệt
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Đã phê duyệt
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Phê duyệt thay
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Hủy bỏ
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Bảo vệ đã xác nhận
+                    </label>
+                    <label class="checkbox-inline radio-button">
+                        <input class="radio" type="checkbox">Bảo vệ chưa xác nhận
+                    </label>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="main-data-container">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="LE-table">
+                <!--Tiêu đề cột-->
+                <tr class="table-heading">
+                    <th class="sticky-1">
+                        @Html.DisplayName("Mã")
+                    </th>
+                    <th colspan="2" class="th-1">
+                        @Html.DisplayName("Nhân viên")
+                    </th>
+                    <th class="th-1 sticky-2">
+                        @Html.DisplayName("Vị trí")
+                    </th>
+                    <th class="th-1 sticky-3">
+                        @Html.DisplayName("Phòng ban")
+                    </th>
+                    <th class="th-1 sticky-4">
+                        @Html.DisplayName("Ca")
+                    </th>
+                    <th class="th-1 sticky-5">
+                        @Html.DisplayName("Mục đích")
+                    </th>
+                    <th class="th-1 sticky-6">
+                        @Html.DisplayName("Lí do")
+                    </th>
+                    <th class="th-1 sticky-7">
+                        @Html.DisplayName("Thời gian ước tính")
+                    </th>
+                    <th colspan="2" class="th-1 sticky-8">
+                        @Html.DisplayName("Người tạo")
+                    </th>
+                    <th colspan="2" class="th-1 sticky-9">Thao tác</th>
+                    <th colspan="4" class="th-1">
+                        @Html.DisplayName("Phê duyệt")
+                    </th>
+                    <th colspan="4" class="th-1">
+                        @Html.DisplayName("Bảo vệ")
+                    </th>
+                    <th colspan="2" class="th-1">
+                        @Html.DisplayName("Chỉnh sửa")
+                    </th>
+                </tr>
+                <!--Row dữ liệu bảng về sớm-->
+                @foreach (var item in Model)
+                {
+                    <tr id="row_@item.ID">
+                        <td class="col-sticky-1">
+                            <span>REL</span>@Html.DisplayFor(modelItem => item.ID)@Html.DisplayFor(modelItem => item.Team)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpCode)
+                        </td>
+                        <td class="col-sticky-2">
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td class="col-sticky-3">
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        <td class="col-sticky-4">
+                            @Html.DisplayFor(modelItem => item.Team)
+                        </td>
+                        <td class="col-sticky-5">
+                            @if (item.Shift == 0)
+                            {
+                                <p style="display:inherit">Hành chính</p>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.Shift)
+                            }
+                        </td>
+                        <td class="col-sticky-6">
+                            @if (item.Purpose)
+                            {
+                                <p style="display:inherit">Công việc</p>
+                            }
+                            else
+                            {
+                                <p style="display:inherit">Cá nhân</p>
+                            }
+                        </td>
+                        <td class="col-sticky-7">
+                            @Html.DisplayFor(modelItem => item.Reason)
+                        </td>
+                        <td class="col-sticky-8">
+                            @Html.DisplayFor(modelItem => item.EstimatedDate) | @Html.DisplayFor(modelItem => item.EstimatedTime)
+                        </td>
+                        <td class="col-sticky-9">
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td class="col-sticky-10">
+                            @if (item.CreatedDate != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.CreatedDate.Value)
+                            }
+                        </td>
+                        <td class="col-sticky-11" style="text-align: left">
+                            @if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                            {
+                                <a class="btn btn-cancel btn-danger btn-standard" data-toggle="modal" data-target="#rejectModal" title="Hủy bỏ" onclick="cancel(@item.ID)">
+                                    <i class="fas fa-lock" style="margin-left: -3px"></i>
+                                </a>
+                            }
+                            else if (item.ApprovedStatus == null || item.ApprovedStatus == 3)
+                            {
+                                <a class="btn btn-edit btn-standard btn-white" href="/LeaveEarly/Edit/@item.ID" title="Sửa">
+                                    <i class="icon fas fa-cog" style="margin-left: -4px"></i>
+                                </a>
+                                <a class="btn btn-danger btn-standard btn-delete" data-toggle="modal" data-target="#deleteModal" title="Xóa" onclick="handleRefId(@item.ID)">
+                                    <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
+                                </a>
+                            }
+                            else if (item.ApprovedStatus == 4)
+                            {
+                                <b class="red">Hủy bỏ</b>
+                            }
+                        </td>
+                        <td class="col-sticky-12">
+                            @if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                            {
+                                <button class="btn btn-print-LE btn-primary btn-standard" title="In báo cáo">
+                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                </button>
+                            }
+                        </td>
+                        <td>
+                            @if (item.ApprovedBy != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.ApprovedBy)
+                            }
+                        </td>
+                        <td>
+                            @if (item.ApprovedBy != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.ApprovedDate)
+                            }
+
+                        </td>
+                        <td>
+                            @if (item.ApprovedStatus == 1)
+                            {
+                                <i class="fas fa-check-square" style="color:dodgerblue" title="Đã phê duyệt"></i>
+                            }
+                            else if (item.ApprovedStatus == 0)
+                            {
+                                <i class="fas fa-window-close" style="color:red" title="Không phê duyệt"></i>
+                            }
+                            else if (item.ApprovedStatus == 2)
+                            {
+                                <i class="fas fa-user-check" style="color:orange" title="Phê duyệt thay"></i>
+                            }
+                            else if (item.ApprovedStatus == 4)
+                            {
+                            }
+                            else
+                            {
+                                <i class="fas fa-question" style="color:dodgerblue" title="Chờ phê duyệt"></i>
+                            }
+                        </td>
+                        <td>
+                            @if (item.ApprovedBy != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.ApproverRemark)
+                            }
+                        </td>
+                        <td>
+                            @if (item.Guard != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.Guard)
+                            }
+                        </td>
+                        <td>
+                            @if (item.GuardStatus == 1)
+                            {
+                                <i class="fas fa-check-square" style="color:dodgerblue" title="Đã xác nhận"></i>
+                            }
+                        </td>
+                        <td>
+                            @if (item.GuardDate != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.GuardDate)
+                            }
+                        </td>
+                        <td>
+                            @if (item.GuardRemark != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.GuardRemark)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedDate)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <div class="page-count" style="display:inline-block; vertical-align:middle;">
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+        </div>
+        <div class="pagination" style="display:inline-block; vertical-align:middle; float: right">
+            @Html.PagedListPager(Model, page => Url.Action("History", new { page, @searchString = @ViewBag.SearchString, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+    </div>
+
+    <!-- Add Modal -->
+    <div class="modal fade" aria-hidden="true" tabindex="-1" id="addModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!--Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title exampleModalLabel"><b>Tạo yêu cầu về sớm</b></h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 row-form">
+                        <div class="column form-horizontal form-left col-md-8">
+
+                            <div class="form-group row-1 input-group input-group-sm">
+                                <label class="col-3 top-space" for="EmpCode">Mã CNV <span class="red">(*)</span></label>
+                                <input class="form-control col-4 input-previous-button" id="txtEmpCodeLE" maxlength="8" />
+                            </div>
+
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-3 top-space" for="Shift">Ca</label>
+                                <select class="form-control col-4 input-previous-button">
+                                    <option value="0" selected>Hành chính</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group input-group input-group-sm">
+                                <label for="Purpose" class="col-3 top-space">Mục đích</label>
+                                <select class="form-control col-4 input-previous-button">
+                                    <option value="1" selected>Công việc</option>
+                                    <option value="0">Cá nhân</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-3 top-space" for="Reason">Lí do <span class="red">(*)</span></label>
+                                <textarea maxlength="500" rows="2" class="form-control col-10 input-previous-button" style="resize: none"></textarea>
+                            </div>
+
+                            <div class="row form-group input-group-sm specific-date-pick">
+                                <label class="col-3 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
+                                <input class="form-control col-4 input-previous-button" id="estimated_date" />
+                                &nbsp;&nbsp;
+                                <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
+                                &nbsp;
+                                <input class="form-control col-3 input-previous-button" id="estimated_time" />
+                            </div>
+
+                            <div class="input-group form-group input-group-sm">
+                                <label class="col-3">
+                                    <a class="btn btn-primary btn-sm" style="cursor: pointer" data-toggle="collapse" data-target=".file">Đăng ký nhiều người</a>
+                                </label>
+                                <div class="file row collapse col-9 input-group-sm">
+                                    <label class="col-4">
+                                        <a class="btn btn-success btn-sm" style="cursor: pointer"><i class="fas fa-download"></i> Tải mẫu đăng ký</a>
+                                    </label>
+                                    <div class="col-8 custom-file">
+                                        <input class="form-control input-previous-button custom-file-input" id="temp-file" type="file" />
+                                        <label class="custom-file-label" for="temp-file">Chọn file</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!--Cột bên phải dành cho thông tin nhân viên-->
+                        <div class="column form-horizontal form-right col-md-4">
+                            <!--Ảnh profile-->
+                            <div class="form-group col-12 profile-img">
+                                <div class="img-profile">
+                                    <img src="~/Assets/img/the-world.jpg" />
+                                </div>
+                            </div>
+                            <!--Thông tin profile-->
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-4 top-space" for="FullName">Họ và tên</label>
+                                <input readonly class="form-control col-8 input-previous-button" id="txtFullNameLE" />
+                            </div>
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-4 top-space" for="Positon">Vị trí</label>
+                                <input readonly class="form-control col-8 input-previous-button" id="txtPositionLE" />
+                            </div>
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-4 top-space" for="Positon">Phòng ban</label>
+                                <input readonly class="form-control col-8 input-previous-button" id="txtTeamLE" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-primary">Thêm mới</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" aria-hidden="true" tabindex="-1" id="editModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!--Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title exampleModalLabel"><b>Chỉnh sửa yêu cầu về sớm</b></h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 row-form">
+                        <div class="column form-horizontal form-left col-md-8">
+
+                            <div class="form-group row-1 input-group input-group-sm">
+                                <label class="col-3 top-space" for="EmpCode">Mã CNV <span class="red">(*)</span></label>
+                                <input class="form-control col-4 input-previous-button" id="txtEmpCodeLE" maxlength="8" />
+                            </div>
+
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-3 top-space" for="Shift">Ca</label>
+                                <select class="form-control col-4 input-previous-button">
+                                    <option value="0" selected>Hành chính</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group input-group input-group-sm">
+                                <label for="Purpose" class="col-3 top-space">Mục đích</label>
+                                <select class="form-control col-4 input-previous-button">
+                                    <option value="1" selected>Công việc</option>
+                                    <option value="0">Cá nhân</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-3 top-space" for="Reason">Mục đích <span class="red">(*)</span></label>
+                                <textarea maxlength="500" rows="2" class="form-control col-10 input-previous-button" style="resize: none"></textarea>
+                            </div>
+
+                            <div class="row form-group input-group-sm specific-date-pick">
+                                <label class="col-3 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
+                                <input class="form-control col-4 input-previous-button" id="estimated_date" />
+                                &nbsp;&nbsp;&nbsp;
+                                <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
+                                &nbsp;
+                                <input class="form-control col-3 input-previous-button" id="estimated_time" />
+                            </div>
+
+                            <div class="input-group form-group input-group-sm">
+                                <label class="col-3">
+                                    <a class="btn btn-primary btn-sm" style="cursor: pointer" data-toggle="collapse" data-target=".file">Đăng ký nhiều người</a>
+                                </label>
+                                <div class="file row collapse col-9 input-group-sm">
+                                    <label class="col-4">
+                                        <a class="btn btn-success btn-sm" style="cursor: pointer"><i class="fas fa-download"></i> Tải mẫu đăng ký</a>
+                                    </label>
+                                    <div class="col-8 custom-file">
+                                        <input class="form-control input-previous-button custom-file-input pointer" id="temp-file" type="file" />
+                                        <label class="custom-file-label" for="temp-file">Chọn file</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!--Cột bên phải dành cho thông tin nhân viên-->
+                        <div class="column form-horizontal form-right col-md-4">
+                            <!--Ảnh profile-->
+                            <div class="form-group col-12 profile-img">
+                                <div class="img-profile">
+                                    <img src="~/Assets/img/the-world.jpg" />
+                                </div>
+                            </div>
+                            <!--Thông tin profile-->
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-4 top-space" for="FullName">Họ và tên</label>
+                                <input readonly class="form-control col-8 input-previous-button" id="txtFullNameLE" />
+                            </div>
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-4 top-space" for="Positon">Vị trí</label>
+                                <input readonly class="form-control col-8 input-previous-button" id="txtPositionLE" />
+                            </div>
+                            <div class="form-group input-group input-group-sm">
+                                <label class="col-4 top-space" for="Positon">Phòng ban</label>
+                                <input readonly class="form-control col-8 input-previous-button" id="txtTeamLE" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc chắn muốn xóa bản ghi này?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger confirm-delete-LE" id="btn-confirm-delete-LE">Xóa</a>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">Trở lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Reject Modal-->
+    <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc chắn muốn hủy bỏ yêu cầu?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <a id="btn-confirm-reject-LE" class="btn btn-primary" style="cursor:pointer; background-color: orange; border-color: orange; color: white">Hủy bỏ</a>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">Trở lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script src="~/Assets/js/jquery.timepicker.min.js"></script>
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/leave_early/common.js"></script>
+}

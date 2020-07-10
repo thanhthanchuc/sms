@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BringInDTS" targetNamespace="http://tempuri.org/BringInDTS.xsd" xmlns:mstns="http://tempuri.org/BringInDTS.xsd" xmlns="http://tempuri.org/BringInDTS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="SMSDbContext" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="SMSDbContext (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.SMSDbContext.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="BringInDTS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BringInDTS" msprop:Generator_UserDSName="BringInDTS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Bring_In" msprop:Generator_TableClassName="Bring_InDataTable" msprop:Generator_TableVarName="tableBring_In" msprop:Generator_TablePropName="Bring_In" msprop:Generator_RowDeletingName="Bring_InRowDeleting" msprop:Generator_RowChangingName="Bring_InRowChanging" msprop:Generator_RowEvHandlerName="Bring_InRowChangeEventHandler" msprop:Generator_RowDeletedName="Bring_InRowDeleted" msprop:Generator_UserTableName="Bring_In" msprop:Generator_RowChangedName="Bring_InRowChanged" msprop:Generator_RowEvArgName="Bring_InRowChangeEvent" msprop:Generator_RowClassName="Bring_InRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" minOccurs="0" />
+              <xs:element name="FullName" msprop:Generator_ColumnVarNameInTable="columnFullName" msprop:Generator_ColumnPropNameInRow="FullName" msprop:Generator_ColumnPropNameInTable="FullNameColumn" msprop:Generator_UserColumnName="FullName" type="xs:string" minOccurs="0" />
+              <xs:element name="EmpCode" msprop:Generator_ColumnVarNameInTable="columnEmpCode" msprop:Generator_ColumnPropNameInRow="EmpCode" msprop:Generator_ColumnPropNameInTable="EmpCodeColumn" msprop:Generator_UserColumnName="EmpCode" type="xs:string" minOccurs="0" />
+              <xs:element name="Team" msprop:Generator_ColumnVarNameInTable="columnTeam" msprop:Generator_ColumnPropNameInRow="Team" msprop:Generator_ColumnPropNameInTable="TeamColumn" msprop:Generator_UserColumnName="Team" type="xs:string" minOccurs="0" />
+              <xs:element name="Position" msprop:Generator_ColumnVarNameInTable="columnPosition" msprop:Generator_ColumnPropNameInRow="Position" msprop:Generator_ColumnPropNameInTable="PositionColumn" msprop:Generator_UserColumnName="Position" type="xs:string" minOccurs="0" />
+              <xs:element name="Reason" msprop:Generator_ColumnVarNameInTable="columnReason" msprop:Generator_ColumnPropNameInRow="Reason" msprop:Generator_ColumnPropNameInTable="ReasonColumn" msprop:Generator_UserColumnName="Reason" type="xs:string" minOccurs="0" />
+              <xs:element name="EstimatedDateIn" msprop:Generator_ColumnVarNameInTable="columnEstimatedDateIn" msprop:Generator_ColumnPropNameInRow="EstimatedDateIn" msprop:Generator_ColumnPropNameInTable="EstimatedDateInColumn" msprop:Generator_UserColumnName="EstimatedDateIn" type="xs:string" minOccurs="0" />
+              <xs:element name="EstimatedTimeIn" msprop:Generator_ColumnVarNameInTable="columnEstimatedTimeIn" msprop:Generator_ColumnPropNameInRow="EstimatedTimeIn" msprop:Generator_ColumnPropNameInTable="EstimatedTimeInColumn" msprop:Generator_UserColumnName="EstimatedTimeIn" type="xs:string" minOccurs="0" />
+              <xs:element name="Bring_In_items" msdata:DataType="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnBring_In_items" msprop:Generator_ColumnPropNameInRow="Bring_In_items" msprop:Generator_ColumnPropNameInTable="Bring_In_itemsColumn" msprop:Generator_UserColumnName="Bring_In_items" type="xs:anyType" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Bring_In_Items" msprop:Generator_TableClassName="Bring_In_ItemsDataTable" msprop:Generator_TableVarName="tableBring_In_Items" msprop:Generator_TablePropName="Bring_In_Items" msprop:Generator_RowDeletingName="Bring_In_ItemsRowDeleting" msprop:Generator_RowChangingName="Bring_In_ItemsRowChanging" msprop:Generator_RowEvHandlerName="Bring_In_ItemsRowChangeEventHandler" msprop:Generator_RowDeletedName="Bring_In_ItemsRowDeleted" msprop:Generator_UserTableName="Bring_In_Items" msprop:Generator_RowChangedName="Bring_In_ItemsRowChanged" msprop:Generator_RowEvArgName="Bring_In_ItemsRowChangeEvent" msprop:Generator_RowClassName="Bring_In_ItemsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Item" msprop:Generator_ColumnVarNameInTable="columnItem" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" msprop:Generator_UserColumnName="Item" type="xs:string" minOccurs="0" />
+              <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" minOccurs="0" />
+              <xs:element name="Serial" msprop:Generator_ColumnVarNameInTable="columnSerial" msprop:Generator_ColumnPropNameInRow="Serial" msprop:Generator_ColumnPropNameInTable="SerialColumn" msprop:Generator_UserColumnName="Serial" type="xs:string" minOccurs="0" />
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Unit" msprop:Generator_ColumnVarNameInTable="columnUnit" msprop:Generator_ColumnPropNameInRow="Unit" msprop:Generator_ColumnPropNameInTable="UnitColumn" msprop:Generator_UserColumnName="Unit" type="xs:string" minOccurs="0" />
+              <xs:element name="ReturnDate" msprop:Generator_ColumnVarNameInTable="columnReturnDate" msprop:Generator_ColumnPropNameInRow="ReturnDate" msprop:Generator_ColumnPropNameInTable="ReturnDateColumn" msprop:Generator_UserColumnName="ReturnDate" type="xs:string" minOccurs="0" />
+              <xs:element name="IsReturn" msprop:Generator_ColumnVarNameInTable="columnIsReturn" msprop:Generator_ColumnPropNameInRow="IsReturn" msprop:Generator_ColumnPropNameInTable="IsReturnColumn" msprop:Generator_UserColumnName="IsReturn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Approve" msprop:Generator_ColumnVarNameInTable="columnApprove" msprop:Generator_ColumnPropNameInRow="Approve" msprop:Generator_ColumnPropNameInTable="ApproveColumn" msprop:Generator_UserColumnName="Approve" type="xs:string" minOccurs="0" />
+              <xs:element name="ITT_x002F_SMTStatus" msprop:Generator_ColumnVarNameInTable="_columnITT_SMTStatus" msprop:Generator_ColumnPropNameInRow="_ITT_SMTStatus" msprop:Generator_ColumnPropNameInTable="_ITT_SMTStatusColumn" msprop:Generator_UserColumnName="ITT/SMTStatus" type="xs:int" minOccurs="0" />
+              <xs:element name="FSTStatus" msprop:Generator_ColumnVarNameInTable="columnFSTStatus" msprop:Generator_ColumnPropNameInRow="FSTStatus" msprop:Generator_ColumnPropNameInTable="FSTStatusColumn" msprop:Generator_UserColumnName="FSTStatus" type="xs:int" minOccurs="0" />
+              <xs:element name="GuardDateIn" msprop:Generator_ColumnVarNameInTable="columnGuardDateIn" msprop:Generator_ColumnPropNameInRow="GuardDateIn" msprop:Generator_ColumnPropNameInTable="GuardDateInColumn" msprop:Generator_UserColumnName="GuardDateIn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GuardIn" msprop:Generator_ColumnVarNameInTable="columnGuardIn" msprop:Generator_ColumnPropNameInRow="GuardIn" msprop:Generator_ColumnPropNameInTable="GuardInColumn" msprop:Generator_UserColumnName="GuardIn" type="xs:string" minOccurs="0" />
+              <xs:element name="GuardOut" msprop:Generator_ColumnVarNameInTable="columnGuardOut" msprop:Generator_ColumnPropNameInRow="GuardOut" msprop:Generator_ColumnPropNameInTable="GuardOutColumn" msprop:Generator_UserColumnName="GuardOut" type="xs:string" minOccurs="0" />
+              <xs:element name="GuardDateOut" msprop:Generator_ColumnVarNameInTable="columnGuardDateOut" msprop:Generator_ColumnPropNameInRow="GuardDateOut" msprop:Generator_ColumnPropNameInTable="GuardDateOutColumn" msprop:Generator_UserColumnName="GuardDateOut" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CatID" msprop:Generator_ColumnVarNameInTable="columnCatID" msprop:Generator_ColumnPropNameInRow="CatID" msprop:Generator_ColumnPropNameInTable="CatIDColumn" msprop:Generator_UserColumnName="CatID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Bring_In_Bring_In_Items" msdata:parent="Bring_In" msdata:child="Bring_In_Items" msdata:parentkey="ID" msdata:childkey="CatID" msprop:Generator_UserChildTable="Bring_In_Items" msprop:Generator_ChildPropName="GetBring_In_ItemsRows" msprop:Generator_UserRelationName="Bring_In_Bring_In_Items" msprop:Generator_ParentPropName="Bring_InRow" msprop:Generator_RelationVarName="relationBring_In_Bring_In_Items" msprop:Generator_UserParentTable="Bring_In" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>
