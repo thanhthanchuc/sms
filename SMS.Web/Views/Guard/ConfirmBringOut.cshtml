@@ -1,156 +1,228 @@
-﻿
-
+﻿@model SMS.Web.ViewModels.GuardViewModel
 @{
-    Layout = null;
+    ViewBag.Title = "Xác nhận CNV mang hàng ra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
+<div class="form-horizontal">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN CÔNG NHÂN VIÊN MANG HÀNG RA</h5>
+    </div>
+    <!--Cột bên trái dành cho form đăng ký-->
+    <div class="col-md-12 row-form">
+        <div class="column form-horizontal form-left col-md-6">
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                <div class="col-md-7 input-group">
+                    <div class="top-space">
+                        @Html.TextBoxFor(model => model.Bring_Out.EmpCode, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
 
-    <!-- Custom styles for this page -->
-    <link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="~/Assets/css/customize.css" rel="stylesheet" />
-
-    <title>Xác nhận CNV mang hàng ra</title>
-</head>
-<body>
-    <div class="form-horizontal">
-        <div class="card-header py-3">
-            <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN CÔNG NHÂN VIÊN MANG HÀNG RA</h5>
+            <div class="form-group input-group">
+                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Bring_Out.Reason, new { @class = "form-control col-md-12", @readonly = "readonly", @style = "resize: none" })
+                </div>
+            </div>
         </div>
-        <!--Cột bên trái dành cho form đăng ký-->
-        <div class="col-md-12 row-form">
-            <div class="column form-horizontal form-left col-md-6">
-                <div class="form-group row-1 input-group">
-                    <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
-                    <div class="col-md-7 input-group">
-                        <div class="top-space">
-                            <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" readonly />
-                            @*@Html.EditorFor(model => model.EmpCode, new { htmlAttributes = new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12" } })*@
-                            @*@Html.ValidationMessageFor(model => model.EmpCode, "", new { @class = "text-danger" })*@
 
-                        </div>
-                    </div>
-                </div>
+        <div class="column col-md-2 col-mid">
+            <i class=" fas fa-play"></i>
+        </div>
 
-                <div class="form-group input-group">
-                    <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
-                    <div class="col-md-10">
-                        <textarea class="form-control col-md-12" style="resize: none" readonly></textarea>
-                        @*@Html.TextAreaFor(model => model.Reason, htmlAttributes: new { @class = "form-control col-md-12" })*@
-                        @*@Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })*@
-                    </div>
+
+        <!--Cột bên phải dành cho thông tin nhân viên-->
+        <div class="column form-horizontal form-right col-md-4">
+            <!--Ảnh profile-->
+            <div class="form-group col-12 profile-img">
+                <div class="img-profile">
+                    <img src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
-
-            <div class="column col-md-2 col-mid">
-                <i class=" fas fa-play"></i>
+            <!--Thông tin profile-->
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                @Html.TextBoxFor(model => model.Bring_Out.FullName, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
             </div>
-
-
-            <!--Cột bên phải dành cho thông tin nhân viên-->
-            <div class="column form-horizontal form-right col-md-4">
-                <!--Ảnh profile-->
-                <div class="form-group col-12 profile-img">
-                    <div class="img-profile">
-                        <img src="~/Assets/img/the-world.jpg" />
-                    </div>
-                </div>
-                <!--Thông tin profile-->
-                <div class="form-group input-group profile">
-                    <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
-                    <input readonly class="form-control input-previous-button col-9 txtFullNameBI" />
-                    @*@Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtFullNameBI" } })
-                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger info-required" })*@
-                </div>
-                <div class="form-group input-group profile">
-                    <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
-                    <input readonly class="form-control input-previous-button col-9 txtPositionBI" />
-                    @*@Html.EditorFor(model => model.Position, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtPositionBI" } })
-                        @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger info-required" })*@
-                </div>
-                <div class="form-group input-group profile">
-                    <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
-                    <input readonly class="form-control input-previous-button col-9 txtTeamBI" />
-                    @*@Html.EditorFor(model => model.Team, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtTeamBI" } })
-                        @Html.ValidationMessageFor(model => model.Team, "", new { @class = "text-danger info-required" })*@
-                </div>
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                @Html.TextBoxFor(model => model.Bring_Out.Position, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
+            </div>
+            <div class="form-group input-group profile">
+                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                @Html.TextBoxFor(model => model.Bring_Out.Team, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
             </div>
         </div>
     </div>
-    <br />
-    <div class="bottom">
-        <div style="width:100%; overflow-x:auto">
-            <!--Bảng dữ liệu Về sớm-->
-            <table class="table table-hover table-bordered" id="LE-table">
-                <!--Tiêu đề cột-->
-                <thead>
-                    <tr class="table-heading">
-                        <th>Tài sản</th>
-                        <th>Thông số</th>
-                        <th>Số lượng</th>
-                        <th>Đơn vị</th>
-                        <th>Loại hàng</th>
-                        <th colspan="2">Mang trở lại</th>
-                        <th colspan="4">TM phê duyệt</th>
-                        <th colspan="4">ITT phê duyệt</th>
-                        <th colspan="4">SMT phê duyệt</th>
-                        <th colspan="4">FST phê duyệt</th>
-                        <th colspan="4">Bảo vệ xác nhận mang ra</th>
-                        <th colspan="4">Bảo vệ xác nhận mang vào</th>
-                    </tr>
-                </thead>
-                <tbody>
+</div>
+<br />
+<div class="bottom">
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered" id="LE-table">
+            <!--Tiêu đề cột-->
+            <thead>
+                <tr class="table-heading">
+                    <th>Tài sản</th>
+                    <th>Thông số</th>
+                    <th>Số lượng</th>
+                    <th>Đơn vị</th>
+                    <th>Loại hàng</th>
+                    <th colspan="2">Mang trở lại</th>
+                    <th colspan="4">TM phê duyệt</th>
+                    <th colspan="4">ITT phê duyệt</th>
+                    <th colspan="4">SMT phê duyệt</th>
+                    <th colspan="4">FST phê duyệt</th>
+                    <th colspan="4">Bảo vệ xác nhận mang ra</th>
+                    <th colspan="4">Bảo vệ xác nhận mang vào</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @foreach (var item in Model.Bring_Out_Items)
+                    {
                     <tr>
-                        <td>AssetName</td>
-                        <td>Serial</td>
-                        <td>Quantity</td>
-                        <td>Unit</td>
-                        <td>AssetType</td>
-                        <td>IsReturn</td>
-                        <td>ReturnTime</td>
-                        <td>ApprovedBy</td>
-                        <td>ApprovedStatus</td>
-                        <td>ApproverRemark</td>
-                        <td>ApprovedDate</td>
-                        <td>ITT</td>
-                        <td>ITT_Status</td>
-                        <td>ITT_Remark</td>
-                        <td>ITT_Date</td>
-                        <td>SMT</td>
-                        <td>SMT_Status</td>
-                        <td>SMT_Remark</td>
-                        <td>SMT_Date</td>
-                        <td>FST</td>
-                        <td>FST_Status</td>
-                        <td>FST_Remark</td>
-                        <td>FST_Date</td>
-                        <td>GuardOut</td>
+                        <td>@item.Item</td>
+                        <td>@item.Serial</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Unit</td>
                         <td>
-                            <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                            <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            @if (@item.AssetType == 0)
+                            {
+                                <span>Hàng thường</span>
+                            }
+                            else if (item.AssetType == 1)
+                            {
+                                <span>Hàng IT</span>
+                            }
+                            else
+                            {
+                                <span>Hàng độc hại</span>
+                            }
                         </td>
-                        <td><input class="remark col-12" type="text" placeholder="Ghi chú..." /></td>
-                        <td>GuardDateOut</td>
-                        <td>GuardReturn</td>
                         <td>
-                            <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                            <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            @if (@item.IsReturn == true)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
                         </td>
-                        <td><input class="remark col-12" type="text" placeholder="Ghi chú..." /></td>
-                        <td>GuardDateReturn</td>
+                        <td>@item.ReturnTime</td>
+                        <td>@item.ApprovedBy</td>
+                        <td>@item.ApprovedStatus</td>
+                        <td>@item.ApproverRemark</td>
+                        <td>@item.ApprovedDate</td>
+                        <td>@item.ITT</td>
+                        <td>@item.ITT_Status</td>
+                        <td>@item.ITT_Remark</td>
+                        <td>@item.ITT_Date</td>
+                        <td>@item.SMT</td>
+                        <td>@item.SMT_Status</td>
+                        <td>@item.SMT_Remark</td>
+                        <td>@item.SMT_Date</td>
+                        <td>@item.FST</td>
+                        <td>@item.FST_Status</td>
+                        <td>@item.FST_Remark</td>
+                        <td>@item.FST_Date</td>
+                        <td>@item.GuardOut</td>
+                        <td>
+                            @if (@item.GuardStatusOut == null)
+                            {
+                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveOut(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveOut(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            }
+                            else if (@item.GuardStatusOut == 1)
+                            {
+                                <i class="fas fa-check"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times"></i>
+                            }
+                        </td>
+                        <td><input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" /></td>
+                        <td>@item.GuardDateOut</td>
+                        <td>@item.GuardReturn</td>
+                        <td>
+                            @if (@item.GuardStatusReturn == null)
+                            {
+                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveReturn(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveReturn(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            }
+                            else if (@item.GuardStatusReturn == 1)
+                            {
+                                <i class="fas fa-check"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times"></i>
+                            }
+                        </td>
+                        <td><input class="remark-@item.ID-return remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkReturn" /></td>
+                        <td>@item.GuardDateReturn</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
         <div style="text-align: center">
-            <label id="add-row-items" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+            <label id="return-queue" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
                 <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
             </label>
         </div>
     </div>
-</body>
-</html>
+
+    @section scripts{
+        <script src="~/Assets/js/jquery-confirm.js"></script>
+        <script src="~/Assets/js/utils.js"></script>
+        <script>
+            $('#return-queue').on("click", () => {
+                window.location.href = "/Guard/Queue"
+            })
+
+            function handleApproveOut(id) {
+                var remarkId = "." + "remark" + "-" + id + "-" + "out"
+                handleAPI("/Guard/ApproveBringOutItem", {
+                    id,
+                    remark: $(remarkId).val(),
+                    status: 1
+                }, true)
+            }
+
+            function handleUnapproveOut(id) {
+                var remarkId = "." + "remark" + "-" + id + "-" + "out"
+                handleAPI("/Guard/ApproveBringOutItem", {
+                    id,
+                    remark: $(remarkId).val(),
+                    status: 0
+                }, true)
+            }
+
+            function handleApproveReturn(id) {
+                var remarkId = "." + "remark" + "-" + id + "-" + "return"
+                handleAPI("/Guard/ApproveBringOutItem", {
+                    id,
+                    remark: $(remarkId).val(),
+                    status: 1,
+                    ret: true
+                })
+            }
+
+            function handleUnapproveReturn(id) {
+                var remarkId = "." + "remark" + "-" + id + "-" + "return"
+                handleAPI("/Guard/ApproveBringOutItem", {
+                    id,
+                    remark: $(remarkId).val(),
+                    status: 0,
+                    ret: true
+                })
+            }
+        </script>
+    }
+

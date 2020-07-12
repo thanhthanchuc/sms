@@ -14,7 +14,8 @@ namespace SMS.Web.ViewModels
         public Leave_Early Leave_Early { get; set; }
         public Go_Out Go_Out { get; set; }
         public Bring_In Bring_In { get; set; }
-
         public ICollection<Bring_In_Items> Bring_In_Items { get; set; }
+        public Bring_Out Bring_Out { get; set; }
+        public ICollection<Bring_Out_Items> Bring_Out_Items { get; set; }
     }
 }

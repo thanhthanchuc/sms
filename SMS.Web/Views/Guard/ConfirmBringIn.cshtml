@@ -185,7 +185,7 @@
         })
 
         function handleApproveIn(id) {
-            var remarkId = "#" + "remark" + "-" + id + "-" + "in"
+            var remarkId = "." + "remark" + "-" + id + "-" + "in"
             handleAPI("/Guard/ApproveBringInItem", {
                 id,
                 remark: $(remarkId).val(),
@@ -194,7 +194,7 @@
         }
 
         function handleUnapproveIn(id) {
-            var remarkId = "#" + "remark" + "-" + id + "-" + "in"
+            var remarkId = "." + "remark" + "-" + id + "-" + "in"
             handleAPI("/Guard/ApproveBringInItem", {
                 id,
                 remark: $(remarkId).val(),
@@ -203,7 +203,7 @@
         }
 
         function handleApproveOut(id) {
-            var remarkId = "#" + "remark" + "-" + id + "-" + "out"
+            var remarkId = "." + "remark" + "-" + id + "-" + "out"
             handleAPI("/Guard/ApproveBringInItem", {
                 id,
                 remark: $(remarkId).val(),
@@ -213,7 +213,7 @@
         }
 
         function handleUnapproveOut(id) {
-            var remarkId = "#" + "remark" + "-" + id + "-" + "out"
+            var remarkId = "." + "remark" + "-" + id + "-" + "out"
             handleAPI("/Guard/ApproveBringInItem", {
                 id,
                 remark: $(remarkId).val(),
