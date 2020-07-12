@@ -38,40 +38,33 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult Create(Guest m)
         {
-            try
-            {
-                var guest = Request.Form.Get("guest");
-                var model = JsonConvert.DeserializeObject<Guest>(guest);
+            var guest = Request.Form.Get("guest");
+            var model = JsonConvert.DeserializeObject<Guest>(guest);
 
-                //file
-                if (Request.Files.Count > 0)
+            //file
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files.Get("file");
+                var fileName = Path.GetFileName(file.FileName);
+                model.FileRedirectURL = fileName;
+
+                if (!Directory.Exists(Server.MapPath("~/Files")))
                 {
-                    var file = Request.Files.Get("file");
-                    var fileName = Path.GetFileName(file.FileName);
-                    model.FileRedirectURL = fileName;
-
-                    if (!Directory.Exists(Server.MapPath("~/Files")))
-                    {
-                        Directory.CreateDirectory(Server.MapPath("~/Files"));
-                    }
-                    var filePath = Server.MapPath("~/Files/" + fileName);
-                    file.SaveAs(filePath);
+                    Directory.CreateDirectory(Server.MapPath("~/Files"));
                 }
-
-                model.CreatedDate = System.DateTime.Now;
-                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                model.CreatedBy = user.EmpCode;
-                model.Status = false;
-
-                var bringIn = dbContext.Guests.Add(model);
-                dbContext.SaveChanges();
-
-                return Content("Success");
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                file.SaveAs(filePath);
             }
-            catch (System.Exception ex)
-            {
-                return Content("Lỗi trong quá trình xử lý");
-            }
+
+            model.CreatedDate = System.DateTime.Now;
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            model.CreatedBy = user.EmpCode;
+            model.Status = false;
+
+            var bringIn = dbContext.Guests.Add(model);
+            dbContext.SaveChanges();
+
+            return Content("Success");
         }
 
         public ActionResult Detail(int id)

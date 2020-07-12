@@ -33,28 +33,28 @@ namespace SMS.Web.Controllers
             var guest_has_items = new List<Guest>();
             var foreign_guest_no_items = new List<Guest>();
             var foreign_guest_has_items = new List<Guest>();
-            foreach (var item in Guests)
+            foreach (var g in Guests)
             {
-                if(item.Check_Guest == false)
+                if(g.Check_Guest == false)
                 {
-                    if (dbcontext.Guest_Item.Where(t => t.CatID == item.ID).Count() > 0)
+                    if (dbcontext.Guest_Item.Where(t => t.CatID == g.ID && t.Item != null).Count() > 0)
                     {
-                        guest_has_items.Add(item);
+                        guest_has_items.Add(g);
                     }
                     else
                     {
-                        guest_no_items.Add(item);
+                        guest_no_items.Add(g);
                     }
                 }
                 else
                 {
-                    if (dbcontext.Guest_Item.Where(t => t.CatID == item.ID).Count() > 0)
+                    if (dbcontext.Guest_Item.Where(t => t.CatID == g.ID && t.Item != null).Count() > 0)
                     {
-                        foreign_guest_has_items.Add(item);
+                        foreign_guest_has_items.Add(g);
                     }
                     else
                     {
-                        foreign_guest_no_items.Add(item);
+                        foreign_guest_no_items.Add(g);
                     }
                 }
             }
@@ -131,13 +131,85 @@ namespace SMS.Web.Controllers
         public ActionResult ConfirmGO(int id)
         {
             var model = dbcontext.Go_Out.Find(id);
-            return View(model);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+
+            var guardViewModel = new GuardViewModel()
+            {
+                UserLogin = user,
+                Go_Out = model
+            };
+
+            return View(guardViewModel);
+        }
+        [HttpPost]
+        public ActionResult ApproveGoOut(int id, string remark, int status)
+        {
+            var data = dbcontext.Go_Out.Find(id);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            data.GuardOut = user.EmpCode;
+            data.GuardStatusOut = status;
+            data.GuardRemarkOut = remark;
+            data.GuardDateOut = DateTime.Now;
+
+            dbcontext.SaveChanges();
+            return Content(JsonConvert.SerializeObject(data), "application/json");
+        }
+        [HttpPost]
+        public ActionResult ApproveGoReturn(int id, string remark, int status)
+        {
+            var data = dbcontext.Go_Out.Find(id);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            data.GuardReturn = user.EmpCode;
+            data.GuardStatusReturn = status;
+            data.GuardRemarkReturn = remark;
+            data.GuardDateReturn = DateTime.Now;
+
+            dbcontext.SaveChanges();
+            return Content(JsonConvert.SerializeObject(data), "application/json");
         }
 
         public ActionResult ConfirmBringIn(int id)
         {
             var model = dbcontext.Bring_In.Find(id);
-            return View(model);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var items = dbcontext.Bring_In_Items.Where(i => i.CatID == model.ID).ToList();
+
+            var guardViewModel = new GuardViewModel()
+            {
+                UserLogin = user,
+                Bring_In = model,
+                Bring_In_Items = items
+            };
+
+            return View(guardViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ApproveBringInItem(int id, string remark, int status, bool ret = false)
+        {
+            if (ret)
+            {
+                var item = dbcontext.Bring_In_Items.Find(id);
+                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                item.GuardOut = user.EmpCode;
+                item.GuardStatusOut = status;
+                item.GuardRemarkOut = remark;
+                item.GuardDateOut = DateTime.Now;
+
+                dbcontext.SaveChanges();
+                return Content(JsonConvert.SerializeObject(item), "application/json");
+            } else
+            {
+                var item = dbcontext.Bring_In_Items.Find(id);
+                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                item.GuardIn = user.EmpCode;
+                item.GuardStatusIn = status;
+                item.GuardRemarkIn = remark;
+                item.GuardDateIn = DateTime.Now;
+
+                dbcontext.SaveChanges();
+                return Content(JsonConvert.SerializeObject(item), "application/json");
+            }
         }
 
         public ActionResult ConfirmBringOut(int id)

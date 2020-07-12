@@ -88,8 +88,6 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult Create(Bring_In model)
         {
-            try
-            {
                 if (!ModelState.IsValid)
                 {
                     return Content("Dữ liệu nhập vào không đúng");
@@ -118,11 +116,6 @@ namespace SMS.Web.Controllers
                 //    dbContext.SaveChanges();
                 //}
                 return Content("Success");
-            }
-            catch (System.Exception ex)
-            {
-                return Content("Lỗi trong quá trình xử lý");
-            }
         }
 
         public ActionResult Edit(int id)

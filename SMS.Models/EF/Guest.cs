@@ -38,7 +38,6 @@ namespace SMS.Models.EF
         [StringLength(300)]
         public string Hotel { get; set; }
 
-        [StringLength(250)]
         public string Purpose { get; set; }
 
         [StringLength(100)]
