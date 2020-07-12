@@ -68,38 +68,43 @@ namespace SMS.Web.Controllers
 
         public ActionResult Queue(string employee = "", string guest = "", string company = "")
         {
-            ViewBag.LeaveEarlies = dbcontext.Leave_Early.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower())) && t.GuardStatus == null).ToList();
-            ViewBag.GoOuts = dbcontext.Go_Out.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower())) && t.GuardStatusReturn == null).ToList();
-            ViewBag.BringIns = dbcontext.Bring_In.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
-            ViewBag.BringOuts = dbcontext.Bring_Out.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
+
+            ViewBag.employee = employee;
+            ViewBag.guest = guest;
+            ViewBag.company = company;
+            ViewBag.LeaveEarlies = dbcontext.Leave_Early.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower())) && t.GuardStatus == null).ToList();
+            ViewBag.GoOuts = dbcontext.Go_Out.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower())) && t.GuardStatusReturn == null).ToList();
+            ViewBag.BringIns = dbcontext.Bring_In.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+            ViewBag.BringOuts = dbcontext.Bring_Out.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
             var Guests = dbcontext.Guests.Where(t => ((string.IsNullOrEmpty(guest) || t.FullName.ToLower().Contains(guest.ToLower()))) &&
                                                 (string.IsNullOrEmpty(company) || t.Company.ToLower().Contains(company.ToLower())) && (t.GuardStatusIn == null || t.GuardStatusOut == null)).ToList();
             var guest_no_items = new List<Guest>();
             var guest_has_items = new List<Guest>();
             var foreign_guest_no_items = new List<Guest>();
             var foreign_guest_has_items = new List<Guest>();
-            foreach (var item in Guests)
+            foreach (var g in Guests)
             {
-                if (item.Check_Guest == false)
+                if (g.Check_Guest == false || g.Check_Guest == null)
                 {
-                    if (dbcontext.Guest_Item.Where(t => t.CatID == item.ID && t.Item != null).Count() > 0)
+                    if (dbcontext.Guest_Item.Where(t => t.CatID == g.ID && t.Item != null).Count() > 0)
                     {
-                        guest_has_items.Add(item);
+                        guest_has_items.Add(g);
                     }
                     else
                     {
-                        guest_no_items.Add(item);
+                        guest_no_items.Add(g);
                     }
                 }
-                else
+                
+                if (g.Check_Guest == true)
                 {
-                    if (dbcontext.Guest_Item.Where(t => t.CatID == item.ID && t.Item != null).Count() > 0)
+                    if (dbcontext.Guest_Item.Where(t => t.CatID == g.ID && t.Item != null).Count() > 0)
                     {
-                        foreign_guest_has_items.Add(item);
+                        foreign_guest_has_items.Add(g);
                     }
                     else
                     {
-                        foreign_guest_no_items.Add(item);
+                        foreign_guest_no_items.Add(g);
                     }
                 }
             }
@@ -312,7 +317,7 @@ namespace SMS.Web.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult ApproveItemIn(int id, int itemId, string remark, int status)
+        public ActionResult ApproveGuestItemIn(int id, int itemId, string remark, int status)
         {
             var guest = dbcontext.Guests.Find(id);
 
@@ -342,7 +347,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(guestItems), "application/json");
         }
         [HttpPost]
-        public ActionResult ApproveItemOut(int id, int itemId, string remark, int status)
+        public ActionResult ApproveGuestItemOut(int id, int itemId, string remark, int status)
         {
             var guest = dbcontext.Guests.Find(id);
 

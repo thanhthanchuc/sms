@@ -13,7 +13,8 @@
                 <label class="control-label col-md-3 top-space lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-7 input-group">
                     <div class="top-space">
-                        <input readonly class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" />
+                        <input type="hidden" id="gid" value="@Model.ID" />
+                        @Html.TextBoxFor(model => model.EmployeeID, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                     </div>
                     &nbsp;
                     &nbsp;
@@ -26,60 +27,56 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-3 top-space">Khách <span class="red">(*)</span></label>
                 <div class="col-md-4">
-                    <select class="form-control" disabled>
-                        <option value="0" selected>Khách</option>
-                        <option value="1">Nhà thầu</option>
-                        <option value="2">Lái xe</option>
-                    </select>
+                    @Html.TextBoxFor(model => model.Type, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-3 top-space">Số thẻ khách</label>
                 <div class="col-md-3">
-                    <input readonly class="form-control input-previous-button" />
+                    @Html.TextBoxFor(model => model.KVPNo, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-3 top-space">Họ tên khách <span class="red">(*)</span></label>
                 <div class="col-md-4">
-                    <input readonly class="form-control input-previous-button" />
+                    @Html.TextBoxFor(model => model.FullName, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-3 top-space">CMTND/Hộ chiếu</label>
                 <div class="col-md-4">
-                    <input readonly class="form-control input-previous-button" />
+                    @Html.TextBoxFor(model => model.IDCard, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-3 top-space">Visa</label>
                 <div class="col-md-4">
-                    <input readonly class="form-control input-previous-button" />
+                    @Html.TextBoxFor(model => model.Visa, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-3 top-space">Nơi ở hiện tại</label>
                 <div class="col-md-9">
-                    <input readonly class="form-control input-previous-button" />
+                    @Html.TextBoxFor(model => model.Hotel, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-3 top-space">Công ty <span class="red">(*)</span></label>
                 <div class="col-md-9">
-                    <input readonly class="form-control input-previous-button" />
+                    @Html.TextBoxFor(model => model.Company, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-3 top-space">Số người <span class="red">(*)</span></label>
                 <div class="col-md-3">
-                    <input readonly class="form-control input-previous-button" />
+                    @Html.TextBoxFor(model => model.NumbersOfPerson, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                 </div>
             </div>
 
@@ -167,50 +164,91 @@
                     <th colspan="2">Thời gian đem trở ra</th>
                     <th colspan="2">Người đăng ký</th>
                     <th colspan="4">ITT phê duyệt</th>
-                    <th colspan="4">SMT phê duyệt</th>
                     <th colspan="4">FST phê duyệt</th>
                     <th colspan="4">Bảo vệ xác nhận mang vào</th>
                     <th colspan="4">Bảo vệ xác nhận mang ra</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Laptop dell</td>
-                    <td>123abc</td>
-                    <td>1</td>
-                    <td>Chiếc</td>
-                    <td>IT</td>
-                    <td title="Có đem trở ra"><i class="fas fa-check-square"></i></td>
-                    <td>11/06/2020 17:00:00</td>
-                    <td>42001005</td>
-                    <td>11/06/2020 08:00:00</td>
-                    <td>42001006</td>
-                    <td><i class="fas fa-check-square"></i></td>
-                    <td>11/06/2020 13:00:00</td>
-                    <td>Mang hàng vào sớm nhé!!!</td>
-                    <td><i class="fas fa-question"></i></td>
-                    <td><i class="fas fa-question"></i></td>
-                    <td><i class="fas fa-question"></i></td>
-                    <td><i class="fas fa-question"></i></td>
-                    <td><i class="fas fa-question"></i></td>
-                    <td><i class="fas fa-question"></i></td>
-                    <td><i class="fas fa-question"></i></td>
-                    <td><i class="fas fa-question"></i></td>
-                    <td>GuardIn</td>
-                    <td>
-                        <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                        <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                    </td>
-                    <td><input class="remark col-12" type="text" placeholder="Ghi chú..." /></td>
-                    <td>GuardDateIn</td>
-                    <td>GuardOut</td>
-                    <td>
-                        <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                        <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                    </td>
-                    <td><input class="remark col-12" type="text" placeholder="Ghi chú..." /></td>
-                    <td>GuardDateOut</td>
-                </tr>
+                @foreach (var item in Model.Guest_Item)
+                {
+                    <tr>
+                        <td>@item.Item</td>
+                        <td>@item.Serial</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Unit</td>
+                        <td>
+                            @if (@item.AssetType == 0)
+                            {
+                                <span>Hàng thường</span>
+                            }
+                            else if (item.AssetType == 1)
+                            {
+                                <span>Hàng IT</span>
+                            }
+                            else
+                            {
+                                <span>Hàng độc hại</span>
+                            }
+                        </td>
+                        <td>
+                            @if (@item.IsReturn == true)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                        </td>
+                        <td>@item.ReturnTime</td>
+                        <td>@item.ITT</td>
+                        <td>@item.ITT_Status</td>
+                        <td>@item.ITT_Remark</td>
+                        <td>@item.ITT_Date</td>
+                        <td>@item.FST</td>
+                        <td>@item.FST_Status</td>
+                        <td>@item.FST_Remark</td>
+                        <td>@item.FST_Date</td>
+                        <td>@item.GuardIn</td>
+                        <td>
+                            @if (@item.GuardStatusIn == null)
+                            {
+                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveIn(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveIn(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            }
+                            else if (@item.GuardStatusIn == 1)
+                            {
+                                <i class="fas fa-check"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times"></i>
+                            }
+                        </td>
+                        <td><input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" /></td>
+                        <td>@item.GuardDateIn</td>
+                        <td>@item.GuardOut</td>
+                        <td>
+                            @if (@item.GuardStatusOut == null)
+                            {
+                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveOut(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveOut(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            }
+                            else if (@item.GuardStatusOut == 1)
+                            {
+                                <i class="fas fa-check"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times"></i>
+                            }
+
+                        </td>
+                        <td><input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" /></td>
+                        <td>@item.GuardDateOut</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -220,4 +258,54 @@
         </label>
     </div>
 </div>
+
+@section scripts{
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/utils.js"></script>
+    <script>
+        $('#return-queue').on("click", () => {
+            window.location.href = "/Guard/Queue"
+        })
+
+        function handleApproveIn(itemId) {
+            var remarkId = "." + "remark" + "-" + itemId + "-" + "in"
+            handleAPI("/Guard/ApproveGuestItemIn", {
+                id: $("#gid").val(),
+                itemId,
+                remark: $(remarkId).val(),
+                status: 1
+            }, true)
+        }
+
+        function handleUnapproveIn(itemId) {
+            var remarkId = "." + "remark" + "-" + itemId + "-" + "in"
+            handleAPI("/Guard/ApproveGuestItemIn", {
+                id: $("#gid").val(),
+                itemId,
+                remark: $(remarkId).val(),
+                status: 0
+            }, true)
+        }
+
+        function handleApproveOut(itemId) {
+            var remarkId = "." + "remark" + "-" + itemId + "-" + "out"
+            handleAPI("/Guard/ApproveGuestItemOut", {
+                id: $("#gid").val(),
+                itemId,
+                remark: $(remarkId).val(),
+                status: 1,
+            })
+        }
+
+        function handleUnapproveOut(itemId) {
+            var remarkId = "." + "remark" + "-" + itemId + "-" + "out"
+            handleAPI("/Guard/ApproveGuestItemOut", {
+                id: $("#gid").val(),
+                itemId,
+                remark: $(remarkId).val(),
+                status: 0,
+            })
+        }
+    </script>
+}
 

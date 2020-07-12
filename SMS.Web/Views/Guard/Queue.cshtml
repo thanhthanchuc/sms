@@ -21,42 +21,50 @@
     <!--Navbar lọc dữ liệu-->
     <div style="width: 100%">
         <div class="card-header">
-            <h5 class="m-0 font-weight-bold text-primary">CHỜ XỬ LÝ</h5>
+            <h5 class="m-0 font-weight-bold text-primary">@Html.ActionLink("CHỜ XỬ LÝ", "Queue", "Guard")</h5>
         </div>
-        <div class="row dataTables_wrapper dt-bootstrap4 above-table">
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
-                &nbsp;
-                <input id="date_from" class="form-control bg-light from-date" readonly>
+        @using (@Html.BeginForm("Queue", "Guard", FormMethod.Get))
+        {
+            <div class="row dataTables_wrapper dt-bootstrap4 above-table">
+
+                <div class="col-2 input-group input-group-sm">
+                    <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
+                    &nbsp;
+                    <input id="date_from" class="form-control bg-light from-date" readonly>
+                </div>
+                <div class="col-2 input-group input-group-sm">
+                    <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+                    &nbsp;
+                    <input id="date_to" class="form-control bg-light to-date" readonly>
+                </div>
+                <div class="col-2 input-group input-group-sm">
+
+                    <div class="col-12 input-group input-group-sm">
+                        <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+                        &nbsp;
+                        <input id="emp_code" class="form-control bg-light to-date" name="employee" value="@ViewBag.employee">
+                    </div>
+                </div>
+                <div class="col-2 input-group input-group-sm">
+                    <label class="no-margin-bottom" style="padding-top: 5px; margin-right: 5px;">Tên khách</label>
+                    <input id="guest" class="form-control bg-light to-date" name="guest" value="@ViewBag.guest">
+                </div>
+                <div class="col-2 input-group input-group-sm">
+                    <label class="no-margin-bottom" style="padding-top: 5px">Công ty</label>
+                    &nbsp;
+                    <input id="emp_code" class="form-control bg-light to-date" name="company" value="@ViewBag.company">
+                </div>
+                <div class="col-2">
+                    <a href="/Guest/Create" class="btn btn-sm btn-primary" id="btn-guest-register"><i class="fas fa-users"></i> Đăng ký khách</a>
+                    &nbsp;
+                    <a href="/Guard/History" class="btn btn-sm btn-info" id="btn-process" title="Chuyển sang màn hình Lịch sử"><i class="fas fa-list-alt"></i> Lịch sử</a>
+                    &nbsp;
+                    <button class="btn btn-sm btn-success" id="btn-refresh" title="Tải lại danh sách"><i class="fas fa-sync"></i></button>
+                </div>
+                <button type="submit" class="btn btn-primary" style="display: none"></button>
             </div>
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
-                &nbsp;
-                <input id="date_to" class="form-control bg-light to-date" readonly>
-            </div>
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
-                &nbsp;
-                <input id="emp_code" class="form-control bg-light to-date">
-            </div>
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Tên khách</label>
-                &nbsp;
-                <input id="emp_code" class="form-control bg-light to-date">
-            </div>
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Công ty</label>
-                &nbsp;
-                <input id="emp_code" class="form-control bg-light to-date">
-            </div>
-            <div class="col-2">
-                <a href="/Guest/Create" class="btn btn-sm btn-primary" id="btn-guest-register"><i class="fas fa-users"></i> Đăng ký khách</a>
-                &nbsp;
-                <a href="/Guard/History" class="btn btn-sm btn-info" id="btn-process" title="Chuyển sang màn hình Lịch sử"><i class="fas fa-list-alt"></i> Lịch sử</a>
-                &nbsp;
-                <button class="btn btn-sm btn-success" id="btn-refresh" title="Tải lại danh sách"><i class="fas fa-sync"></i></button>
-            </div>
-        </div>
+
+        }
     </div>
 
     <!--Div chứa table dữ liệu-->
@@ -543,7 +551,7 @@
                         </th>
                         <th>In ấn</th>
                     </tr>
-                    @foreach (var item in ViewBag.ForeignGuestHasItems)
+                    @foreach (var item in ViewBag.ForeignGuestNoItems)
                     {
                         <tr>
                             <td>@item.EstimatedDateIn | @item.EstimatedTimeIn</td>
@@ -635,7 +643,7 @@
                         </th>
                         <th>In ấn</th>
                     </tr>
-                    @foreach (var item in ViewBag.ForeignGuestNoItems)
+                    @foreach (var item in ViewBag.ForeignGuestHasItems)
                     {
                         <tr>
                             <td>@item.EstimatedDateIn | @item.EstimatedTimeIn</td>
@@ -676,7 +684,6 @@
         </div>
     </div>
 </div>
-
 
 @section scripts{
     <script src="~/Assets/js/jquery.timepicker.min.js"></script>
