@@ -347,7 +347,7 @@
             guestObject.Check_Guest = $('#txtCheck_Guest').is(':checked') ? true : false;
             guestObject.IDCard = $('#txtIDCard').val();
             guestObject.Company = $('#txtCompany').val();
-            guestObject.NumberOfPerson = $('#txtNumbersOfPerson').val();
+            guestObject.NumbersOfPerson = $('#txtNumbersOfPerson').val();
             guestObject.Visa = $('#txtVisa').val();
             guestObject.Hotel = $('#txtHotel').val();
             guestObject.Purpose = $('#txtPurpose').val();
@@ -381,7 +381,6 @@
             data.append("file", $('#fileRedirectUrl')[0].files[0]);
             //guestObject.file = $('#fileRedirectUrl')[0].files[0];
             //var file = $('#fileRedirectUrl')[0].files[0];
-            console.log(data);
             //var xhr = new XMLHttpRequest();
             //xhr.open('POST', '/Guest/Create');
             //xhr.send(data);
@@ -390,6 +389,7 @@
             //        alert(xhr.responseText);
             //    }
             //}
+
             $.confirm({
                 title: "Thông báo",
                 content: function () {

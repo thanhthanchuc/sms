@@ -264,17 +264,32 @@ namespace SMS.Web.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult ApproveIn(int id, string remark, int status)
+        public ActionResult ApproveGuest(int id, string remark, int status, bool gout = false)
         {
-            var guest = dbcontext.Guests.Find(id);
-            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            guest.GuardIn = user.EmpCode;
-            guest.GuardStatusIn = status;
-            guest.GuardRemarkIn = remark;
-            guest.GuardDateIn = DateTime.Now;
+            if(gout)
+            {
+                var guest = dbcontext.Guests.Find(id);
+                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                guest.GuardOut = user.EmpCode;
+                guest.GuardStatusOut = status;
+                guest.GuardRemarkOut = remark;
+                guest.GuardDateOut = DateTime.Now;
 
-            dbcontext.SaveChanges();
-            return Content(JsonConvert.SerializeObject(guest), "application/json");
+                dbcontext.SaveChanges();
+                return Content(JsonConvert.SerializeObject(guest), "application/json");
+            } 
+            else
+            {
+                var guest = dbcontext.Guests.Find(id);
+                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                guest.GuardIn = user.EmpCode;
+                guest.GuardStatusIn = status;
+                guest.GuardRemarkIn = remark;
+                guest.GuardDateIn = DateTime.Now;
+
+                dbcontext.SaveChanges();
+                return Content(JsonConvert.SerializeObject(guest), "application/json");
+            }
         }
         [HttpPost]
         public ActionResult ApproveOut(int id, string remark, int status)

@@ -19,10 +19,7 @@
                 <div class="col-md-7 input-group">
                     <div class="top-space">
                         <input type="hidden" id="guestID" value="@Model.ID" />
-                        <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" readonly value="@Model.EmployeeID" />
-                        @*@Html.EditorFor(model => model.EmpCode, new { htmlAttributes = new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12" } })*@
-                        @*@Html.ValidationMessageFor(model => model.EmpCode, "", new { @class = "text-danger" })*@
-
+                        @Html.TextBoxFor(model => model.EmployeeID, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                     </div>
                 </div>
             </div>
@@ -30,9 +27,7 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
                 <div class="col-md-10">
-                    <textarea class="form-control col-md-12" style="resize: none" readonly>@Model.Purpose</textarea>
-                    @*@Html.TextAreaFor(model => model.Reason, htmlAttributes: new { @class = "form-control col-md-12" })*@
-                    @*@Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })*@
+                    @Html.TextAreaFor(model => model.Purpose, new { @class = "form-control col-md-12", @readonly = "readonly", @style = "resize: none" })
                 </div>
             </div>
         </div>
@@ -54,20 +49,14 @@
             <div class="form-group input-group profile">
                 <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
                 <input readonly class="form-control input-previous-button col-9 txtFullNameBI" value="@Model.EmployeeName" />
-                @*@Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtFullNameBI" } })
-                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger info-required" })*@
             </div>
             <div class="form-group input-group profile">
                 <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
                 <input readonly class="form-control input-previous-button col-9 txtPositionBI" value="@Model.Position" />
-                @*@Html.EditorFor(model => model.Position, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtPositionBI" } })
-                    @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger info-required" })*@
             </div>
             <div class="form-group input-group profile">
                 <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
                 <input readonly class="form-control input-previous-button col-9 txtTeamBI" value="@Model.Team" />
-                @*@Html.EditorFor(model => model.Team, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtTeamBI" } })
-                    @Html.ValidationMessageFor(model => model.Team, "", new { @class = "text-danger info-required" })*@
             </div>
         </div>
     </div>
@@ -196,7 +185,7 @@
                 content: function () {
                     var alert = this;
                     return $.ajax({
-                        url: "/Guard/ApproveIn",
+                        url: "/Guard/ApproveGuest",
                         method: "POST",
                         data: {
                             id: $('#guestID').val(),
@@ -223,7 +212,7 @@
                 content: function () {
                     var alert = this;
                     return $.ajax({
-                        url: "/Guard/ApproveIn",
+                        url: "/Guard/ApproveGuest",
                         method: "POST",
                         data: {
                             id: $('#guestID').val(),
@@ -251,12 +240,13 @@
                 content: function () {
                     var alert = this;
                     return $.ajax({
-                        url: "/Guard/ApproveOut",
+                        url: "/Guard/ApproveGuest",
                         method: "POST",
                         data: {
                             id: $('#guestID').val(),
                             remark: $(self).closest("tr").find(".remark").val(),
-                            status: 1
+                            status: 1,
+                            gout: true,
                         },
                         success: (response) => {
                             if (response.GuardStatusOut == 1) {
@@ -278,12 +268,13 @@
                 content: function () {
                     var alert = this;
                     return $.ajax({
-                        url: "/Guard/ApproveOut",
+                        url: "/Guard/ApproveGuest",
                         method: "POST",
                         data: {
                             id: $('#guestID').val(),
                             remark: $(self).closest("tr").find(".remark").val(),
-                            status: 0
+                            status: 0,
+                            gout: true,
                         },
                         success: (response) => {
                             if (response.GuardStatusOut == 0) {
