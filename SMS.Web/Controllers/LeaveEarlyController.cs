@@ -195,12 +195,6 @@ namespace SMS.Web.Controllers
             return strs[1] + "/" + strs[0] + "/" + strs[2];
         }
 
-        private string FormatDate(string date)
-        {
-            var strs = date.Split('/');
-            return strs[1] + "/" + strs[0] + "/" + strs[2];
-        }
-
         /// <summary>
         /// Phương thức phê duyệt cho Admin, TM, GL
         /// </summary>

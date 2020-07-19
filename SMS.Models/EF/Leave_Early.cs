@@ -79,11 +79,7 @@
             {
                 yield return
                  new ValidationResult("Vui lòng điền đúng ngày và giờ ra ngoài",
-<<<<<<< HEAD
                                       new[] { "EstimatedDate" });
-=======
-                                      new[] { "EstimatedDateOut" });
->>>>>>> thanh
             }
         }
     }
