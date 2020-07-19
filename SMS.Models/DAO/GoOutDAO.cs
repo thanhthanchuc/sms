@@ -106,12 +106,12 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool ApproveForAdmin(int id, string remark)
+        public bool ApproveForAdmin(int id, string remark, string approvedBy)
         {
             try
             {
                 var goOut = dbContext.Go_Out.Find(id);
-                goOut.ApprovedBy = "42001005 | Lưu Văn Phúc";
+                goOut.ApprovedBy = approvedBy;
                 goOut.ApprovedDate = DateTime.Now;
                 //Chia case cho TM và GL
                 goOut.ApprovedStatus = 1;
@@ -131,12 +131,12 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool RejectForAdmin(int id, string remark)
+        public bool RejectForAdmin(int id, string remark, string approvedBy)
         {
             try
             {
                 var leaveEarly = dbContext.Go_Out.Find(id);
-                leaveEarly.ApprovedBy = "42001005";
+                leaveEarly.ApprovedBy = approvedBy;
                 leaveEarly.ApprovedDate = DateTime.Now;
                 //Chia case cho TM và GL
                 leaveEarly.ApprovedStatus = 0;

@@ -113,14 +113,14 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool ApproveForAdmin(int id, string remark)
+        public bool ApproveForAdmin(int id, string remark, string approveBy)
         {
             try
             {
                 var leaveEarly = dbContext.Leave_Early.Find(id);
                 leaveEarly.ApprovedDate = DateTime.Now;
                 //Chia case cho TM và GL
-                leaveEarly.ApprovedBy = "42001005 | Lưu Văn Phúc";
+                leaveEarly.ApprovedBy = approveBy;
                 leaveEarly.ApprovedStatus = 1;
                 leaveEarly.ApproverRemark = remark;
                 dbContext.SaveChanges();
@@ -137,14 +137,14 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool RejectForAdmin(int id, string remark)
+        public bool RejectForAdmin(int id, string remark, string approveBy)
         {
             try
             {
                 var leaveEarly = dbContext.Leave_Early.Find(id);
                 leaveEarly.ApprovedDate = DateTime.Now;
                 //Chia case cho TM và GL
-                leaveEarly.ApprovedBy = "42001005 | Lưu Văn Phúc";
+                leaveEarly.ApprovedBy = approveBy;
                 leaveEarly.ApprovedStatus = 0;
                 leaveEarly.ApproverRemark = remark;
                 dbContext.SaveChanges();

@@ -110,6 +110,12 @@ namespace SMS.Web.Controllers
             return View(model);
         }
 
+        private string FormatDate(string date)
+        {
+            var strs = date.Split('/');
+            return strs[1] + "/" + strs[0] + "/" + strs[2];
+        }
+
         /// <summary>
         /// Phương thức phê duyệt cho Admin, TM, GL
         /// </summary>
@@ -118,7 +124,8 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public JsonResult ApproveForAdmin(int id, string remark)
         {
-            var res = new GoOutDAO().ApproveForAdmin(id, remark);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var res = new GoOutDAO().ApproveForAdmin(id, remark, user.EmpCode + "|" + user.FullName);
             return Json(new
             {
                 status = res
@@ -133,7 +140,8 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public JsonResult RejectForAdmin(int id, string remark)
         {
-            var res = new GoOutDAO().RejectForAdmin(id, remark);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var res = new GoOutDAO().RejectForAdmin(id, remark, user.EmpCode + "|" + user.FullName);
             return Json(new
             {
                 status = res

@@ -91,11 +91,13 @@
                         <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
                         <div class="col-3 input-group-sm">
                             @Html.EditorFor(model => model.EstimatedDate, new { htmlAttributes = new { @id = "estimated_date", @class = "form-control input-previous-button", @readonly = "readonly" } })
+
                         </div>
                         <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
                         <div class="col-2 input-group-sm">
                             @Html.EditorFor(model => model.EstimatedTime, new { htmlAttributes = new { @id = "estimated_time", @class = "form-control input-previous-button", @readonly = "readonly" } })
                         </div>
+                        @Html.ValidationMessageFor(model => model.EstimatedDate, "", new { @class = "text-danger" })
                         @Html.ValidationMessageFor(model => model.EstimatedTime, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group input-group input-group-sm" style="display:flex">

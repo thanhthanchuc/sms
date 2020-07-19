@@ -18,5 +18,6 @@ namespace SMS.Web.ViewModels
         public Bring_Out Bring_Out { get; set; }
         public ICollection<Bring_Out_Items> Bring_Out_Items { get; set; }
         public Guest Guest { get; set; }
+        public ICollection<Guest_Item> Guest_Item { get; set; }
     }
 }

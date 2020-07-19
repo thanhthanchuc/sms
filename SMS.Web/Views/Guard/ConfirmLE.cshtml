@@ -11,13 +11,23 @@
     </div>
     <!--Cột bên trái dành cho form đăng ký-->
     <div class="col-md-12 row-form">
-        <div class="column form-horizontal form-left col-md-6">
+        <div class="column form-horizontal form-left col-md-7">
             <div class="form-group row-1 input-group">
                 <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-7 input-group">
                     <div class="top-space">
                         <input type="hidden" id="leaveId" value="@Model.Leave_Early.ID" />
                         @Html.TextBoxFor(model => model.Leave_Early.EmpCode, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space lb">Ca</label>
+                <div class="col-md-7 input-group">
+                    <div class="top-space">
+                        <input type="hidden" id="leaveId" value="@Model.Leave_Early.ID" />
+                        @Html.TextBoxFor(model => model.Leave_Early.Shift, new { @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                     </div>
                 </div>
             </div>
@@ -30,8 +40,7 @@
             </div>
         </div>
 
-        <div class="column col-md-2 col-mid">
-            <i class=" fas fa-play"></i>
+        <div class="column col-md-1 col-mid">
         </div>
 
 
@@ -45,15 +54,15 @@
             </div>
             <!--Thông tin profile-->
             <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Họ và tên</label>
                 @Html.TextBoxFor(model => model.Leave_Early.FullName, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
             </div>
             <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Vị trí</label>
                 @Html.TextBoxFor(model => model.Leave_Early.Position, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
             </div>
             <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Phòng ban</label>
                 @Html.TextBoxFor(model => model.Leave_Early.Team, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
             </div>
         </div>
@@ -73,16 +82,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>@Html.DisplayFor(model => model.Leave_Early.EstimatedTime)</td>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.EstimatedDate) | @Html.DisplayFor(model => model.Leave_Early.EstimatedTime)</td>
                     <td>@Html.DisplayFor(m => m.UserLogin.FullName)</td>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.GuardDate)</td>
                     <td>
                         <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
                         <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px; color: white"></i></a>
                     </td>
                     <td>
-                        <input id="remark" class="remark col-12" type="text" placeholder="Ghi chú..." />
+                        <input id="remark" class="remark col-12 remark-1" type="text" placeholder="Ghi chú..." />
                     </td>
-                    <td>@Html.DisplayFor(model => model.Leave_Early.GuardDate)</td>
                 </tr>
             </tbody>
         </table>
