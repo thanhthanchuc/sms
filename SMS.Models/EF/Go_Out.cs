@@ -7,11 +7,7 @@
     using System.Data.Entity.Spatial;
     using Utils;
 
-<<<<<<< HEAD
     public partial class Go_Out : IValidatableObject
-=======
-    public partial class Go_Out: IValidatableObject
->>>>>>> thanh
     {
         public int ID { get; set; }
 
