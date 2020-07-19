@@ -68,7 +68,7 @@ namespace SMS.Web.Controllers
 
             model.CreatedDate = System.DateTime.Now;
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            model.CreatedBy = user.EmpCode + "|" + user.FullName;
+            model.CreatedBy = user.EmpCode;
             model.Status = false;
 
             var bringIn = dbContext.Guests.Add(model);
@@ -121,7 +121,7 @@ namespace SMS.Web.Controllers
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
 
                 var guest = dbContext.Guests.FirstOrDefault(t => t.ID == model.ID);
-                guest.ModifiedBy = user.EmpCode + "|" + user.FullName;
+                guest.ModifiedBy = user.EmpCode;
                 guest.ModifiedDate = DateTime.Now;
 
                 guest.Type = model.Type;
@@ -152,21 +152,26 @@ namespace SMS.Web.Controllers
                 var listItemIDs = new List<int>();
                 foreach (var item in model.Guest_Item)
                 {
+                    if (item.ID == 0)
+                    {
+                        dbContext.Guest_Item.Add(item);
+                    }
+                    else
+                    {
+                        listItemIDs.Add(item.ID);
+                        var bringItem = dbContext.Guest_Item.FirstOrDefault(t => t.ID == item.ID);
 
-                    listItemIDs.Add(item.ID);
-                    var bringItem = dbContext.Guest_Item.FirstOrDefault(t => t.ID == item.ID);
-
-                    bringItem.Item = item.Item;
-                    bringItem.Serial = item.Serial;
-                    bringItem.Quantity = item.Quantity;
-                    bringItem.Unit = item.Unit;
-                    bringItem.AssetType = item.AssetType;
-                    bringItem.IsReturn = item.IsReturn;
-                    bringItem.ReturnDate = item.ReturnDate;
-                    bringItem.ReturnTime = item.ReturnTime;
-                    bringItem.ModifiedBy = user.EmpCode;
-                    bringItem.ModifiedDate = DateTime.Now;
-
+                        bringItem.Item = item.Item;
+                        bringItem.Serial = item.Serial;
+                        bringItem.Quantity = item.Quantity;
+                        bringItem.Unit = item.Unit;
+                        bringItem.AssetType = item.AssetType;
+                        bringItem.IsReturn = item.IsReturn;
+                        bringItem.ReturnDate = item.ReturnDate;
+                        bringItem.ReturnTime = item.ReturnTime;
+                        bringItem.ModifiedBy = user.EmpCode;
+                        bringItem.ModifiedDate = DateTime.Now;
+                    }
                 }
                 var itemsDelete = dbContext.Guest_Item.Where(t => !listItemIDs.Contains(t.ID) && t.CatID == guest.ID);
                 dbContext.Guest_Item.RemoveRange(itemsDelete);

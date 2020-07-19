@@ -103,8 +103,6 @@ $('#estimated_date, #date_from, #date_to').datepicker({
     dateFormat: 'dd/mm/yy'
 });
 
-$('#estimated_date, #date_from, #date_to').datepicker().datepicker("setDate", new Date());
-
 $('.timepicker, #estimated_time').timepicker({
     timeFormat: 'h:mm p',
     interval: 5,

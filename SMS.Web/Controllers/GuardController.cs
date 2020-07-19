@@ -66,6 +66,7 @@ namespace SMS.Web.Controllers
             return View();
         }
 
+
         public ActionResult Queue(string employee = "", string guest = "", string company = "")
         {
 
@@ -74,8 +75,14 @@ namespace SMS.Web.Controllers
             ViewBag.company = company;
             ViewBag.LeaveEarlies = dbcontext.Leave_Early.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower())) && t.GuardStatus == null).ToList();
             ViewBag.GoOuts = dbcontext.Go_Out.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower())) && t.GuardStatusReturn == null).ToList();
-            ViewBag.BringIns = dbcontext.Bring_In.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
-            ViewBag.BringOuts = dbcontext.Bring_Out.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+
+            var bringIns = dbcontext.Bring_In.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+            var bringInItems = dbcontext.Bring_In_Items.ToList();
+
+            ViewBag.BringIns = bringIns.Where(b => bringInItems.Where(i => i.CatID == b.ID && (i.GuardStatusIn == null || i.GuardStatusOut == null)).Count() != 0);
+
+            ViewBag.BringOuts = dbcontext.Bring_Out.Where(b => dbcontext.Bring_Out_Items.Any(i => i.CatID == b.ID && (i.GuardStatusOut == null || i.GuardStatusReturn == null)));
+
             var Guests = dbcontext.Guests.Where(t => ((string.IsNullOrEmpty(guest) || t.FullName.ToLower().Contains(guest.ToLower()))) &&
                                                 (string.IsNullOrEmpty(company) || t.Company.ToLower().Contains(company.ToLower())) && (t.GuardStatusIn == null || t.GuardStatusOut == null)).ToList();
             var guest_no_items = new List<Guest>();

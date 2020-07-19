@@ -1,19 +1,29 @@
 ﻿using ExcelLibrary.BinaryFileFormat;
+using PagedList;
 using SMS.Models.DAO;
 using SMS.Models.EF;
 using SMS.Web.Common;
 using SMS.Web.Models;
+using SMS.Web.ViewModels;
 using System;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace SMS.Web.Controllers
 {
     public class LeaveEarlyController : BaseController
     {
+        private SMSDbContext _dbContext;
+
+        public LeaveEarlyController()
+        {
+            _dbContext = new SMSDbContext();
+        }
         // GET: LeaveEarly
         public ActionResult History(string searchString, int page = 1, int pageSize = 20)
         {
@@ -130,11 +140,59 @@ namespace SMS.Web.Controllers
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public ActionResult Approve(string searchString, int page = 1, int pageSize = 20)
+        public ActionResult Approve(int? from, int? to, string team, string empcode, int? shift, int page = 1, int pageSize = 20)
         {
-            var dao = new LeaveEarlyDAO();
-            var model = dao.ListApprove(searchString, page, pageSize);
-            return View(model);
+            var res = _dbContext.Leave_Early.ToList();
+
+            string new_from = null;
+            string new_to = null;
+
+            if (from != null)
+            {
+                res = res.Where(t => ((DateTimeOffset)DateTime.Parse(FormatDate(t.EstimatedDate))).ToUnixTimeSeconds() >= from).ToList();
+                new_from = DateTimeOffset.FromUnixTimeSeconds((long)from).UtcDateTime.ToString("dd/MM/yyyy");
+            }
+
+            if (to != null)
+            {
+                res = res.Where(t => ((DateTimeOffset)DateTime.Parse(FormatDate(t.EstimatedDate))).ToUnixTimeSeconds() <= to).ToList();
+                new_to = DateTimeOffset.FromUnixTimeSeconds((long)to).UtcDateTime.Date.ToString("dd/MM/yyyy");
+            }
+
+            if (shift != null)
+            {
+                res = res.Where(t => t.Shift == shift).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(team))
+            {
+                res = res.Where(t => t.Team.Contains(team)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(empcode))
+            {
+                res = res.Where(t => t.EmpCode.Contains(empcode)).ToList();
+            }
+
+            var model = res.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+
+            var viewModel = new LeaveEarlyViewModel()
+            {
+                Leave_Early = model,
+                from = new_from,
+                to = new_to,
+                empcode = empcode,
+                shift = shift,
+                team = team
+            };
+
+            return View(viewModel);
+        }
+
+        private string FormatDate(string date)
+        {
+            var strs = date.Split('/');
+            return strs[1] + "/" + strs[0] + "/" + strs[2];
         }
 
         private string FormatDate(string date)

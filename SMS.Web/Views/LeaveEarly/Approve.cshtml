@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<SMS.Models.EF.Leave_Early>
+﻿@model SMS.Web.ViewModels.LeaveEarlyViewModel
 @using PagedList.Mvc;
 
 @{
@@ -30,26 +30,28 @@
                 <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
                 &nbsp;
                 <input id="date_from" class="form-control bg-light from-date" readonly>
+                <input id="hidden_date_from" readonly type="hidden" value="@Model.from">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
                 &nbsp;
                 <input id="date_to" class="form-control bg-light to-date" readonly>
+                <input id="hidden_date_to" readonly type="hidden" value="@Model.to">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
                 &nbsp;
-                <input id="team" class="form-control bg-light to-date">
+                <input id="team" class="form-control bg-light to-date" value="@Model.team">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
                 &nbsp;
-                <input id="emp_code" class="form-control bg-light to-date">
+                <input id="emp_code" class="form-control bg-light to-date" value="@Model.empcode">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Ca làm việc</label>
                 &nbsp;
-                <select class="form-control from-date">
+                <select id="shift" class="form-control from-date" value="@Model.shift">
                     <option value="0">Hành chính</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -57,7 +59,7 @@
                 </select>
             </div>
             <div class="col-2">
-                <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
+                <button class="btn btn-sm btn-primary" id="btn-search" onclick="handleSearch()" type="button"><i class="fas fa-search"></i> Tìm kiếm</button>
             </div>
         </div>
 
@@ -134,7 +136,7 @@
                 </th>
             </tr>
             <!--Row dữ liệu bảng về sớm-->
-            @foreach (var item in Model)
+            @foreach (var item in Model.Leave_Early)
             {
                 <tr>
                     <td>
@@ -176,7 +178,7 @@
                         @Html.DisplayFor(modelItem => item.Reason)
                     </td>
                     <td>
-                        <span>@Html.DisplayFor(modelItem => item.EstimatedDate)</span><span> | </span><span>@Html.DisplayFor(modelItem => item.EstimatedTime)</span>
+                        @Html.DisplayFor(modelItem => item.EstimatedDate)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedBy)
@@ -203,10 +205,10 @@
     </div>
     <div>
         <div class="page-count" style="display:inline-block; vertical-align:middle;">
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            Page @(Model.Leave_Early.PageCount < Model.Leave_Early.PageNumber ? 0 : Model.Leave_Early.PageNumber) of @Model.Leave_Early.PageCount
         </div>
         <div class="pagination" style="display:inline-block; vertical-align:middle; float: right">
-            @Html.PagedListPager(Model, page => Url.Action("Approve", new { page, @searchString = @ViewBag.SearchString, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+            @Html.PagedListPager(Model.Leave_Early, page => Url.Action("Approve", new { page, @searchString = @ViewBag.SearchString, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         </div>
     </div>
 }
@@ -216,12 +218,23 @@
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/leave_early/common.js"></script>
     <script>
-        $("#LE").removeClass('collapse');
-        $("#LE").removeClass('collapsed');
-        $("#LE").attr("aria-expanded", "true");
-        $("#LEApprove").addClass('active');
-        $("#collapseLeaveEarly").addClass('show');
-        $("#collapseInOut").removeClass('collapse');
+        function handleSearch() {
+            const from = $("#date_from").val() ? new Date(preprocess($("#date_from").val())).getTime() / 1000 : null
+            const to = $("#date_to").val() ? new Date(preprocess($("#date_to").val())).getTime() / 1000 : null
+            const team = $('#team').val()
+            const empcode = $('#emp_code').val()
+            const shift = $('#shift').val()
+
+            window.location.href = "/LeaveEarly/Approve?" + `from=${from}` + `&to=${to}` + `&team=${team}` + `&empcode=${empcode}` + `&shift=${shift}`;
+        }
+
+        function preprocess(datestr) {
+            const strs = datestr.split('/')
+            return strs[1] + "/" + strs[0] + "/" + strs[2]
+        }
+
+        $("#date_from").datepicker().datepicker("setDate", $("#hidden_date_from").val());
+        $("#date_to").datepicker().datepicker("setDate", $("#hidden_date_to").val());
     </script>
 }
 

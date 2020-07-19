@@ -224,7 +224,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BringInController.cs" />
     <Compile Include="Controllers\BringOutController.cs" />
-    <Compile Include="Controllers\DelegateController.cs" />
     <Compile Include="Controllers\GoOutController.cs" />
     <Compile Include="Controllers\GuardController.cs" />
     <Compile Include="Controllers\GuestController.cs" />
@@ -274,6 +273,7 @@
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\GuardViewModel.cs" />
+    <Compile Include="ViewModels\LeaveEarlyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DBForReport.mdf" />
@@ -2284,8 +2284,6 @@
     <Content Include="Views\LeaveEarly\LEReport.cshtml" />
     <Content Include="Views\GoOut\GOReport.cshtml" />
     <Content Include="Views\BringIn\BIReport.cshtml" />
-    <Content Include="Views\Delegate\ListEmployee.cshtml" />
-    <Content Include="Views\Delegate\Delegate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />

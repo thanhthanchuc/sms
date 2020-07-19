@@ -7,7 +7,11 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+<<<<<<< HEAD
     public partial class Leave_Early : IValidatableObject
+=======
+    public partial class Leave_Early: IValidatableObject
+>>>>>>> thanh
     {
         public int ID { get; set; }
 
@@ -79,7 +83,11 @@
             {
                 yield return
                  new ValidationResult("Vui lòng điền đúng ngày và giờ ra ngoài",
+<<<<<<< HEAD
                                       new[] { "EstimatedDate" });
+=======
+                                      new[] { "EstimatedDateOut" });
+>>>>>>> thanh
             }
         }
     }

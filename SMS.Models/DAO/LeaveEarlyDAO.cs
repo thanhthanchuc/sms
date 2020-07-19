@@ -49,6 +49,7 @@ namespace SMS.Models.DAO
             {
                 model = model.Where(x => x.EmpCode.Contains(searchString.ToLower()) || x.FullName.Contains(searchString.ToLower()) || x.Team.Contains(searchString.ToLower()));
             }
+
             return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }
 

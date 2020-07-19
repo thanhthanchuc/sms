@@ -226,7 +226,7 @@
                                 <i class="fas fa-times"></i>
                             }
                         </td>
-                        <td><input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" /></td>
+                        <td><input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" disabled="@(item.GuardStatusOut != null)" /></td>
                         <td>@item.GuardDateIn</td>
                         <td>@item.GuardOut</td>
                         <td>
@@ -245,7 +245,7 @@
                             }
 
                         </td>
-                        <td><input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" /></td>
+                        <td><input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" disabled="@(item.GuardStatusOut != null)" /></td>
                         <td>@item.GuardDateOut</td>
                     </tr>
                 }
