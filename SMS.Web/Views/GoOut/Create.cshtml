@@ -97,6 +97,7 @@
                             @Html.EditorFor(model => model.EstimatedTimeOut, new { htmlAttributes = new { @id = "estimated_time_out", @class = "form-control input-previous-button", @readonly = "readonly" } })
                         </div>
                         @Html.ValidationMessageFor(model => model.EstimatedTimeOut, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.EstimatedDateOut, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group input-group specific-date-pick">
@@ -109,6 +110,7 @@
                             @Html.EditorFor(model => model.EstimatedTimeReturn, new { htmlAttributes = new { @id = "estimated_time_return", @class = "form-control input-previous-button", @readonly = "readonly" } })
                         </div>
                         @Html.ValidationMessageFor(model => model.EstimatedTimeReturn, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.EstimatedDateReturn, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group input-group input-group-sm" style="display:flex">

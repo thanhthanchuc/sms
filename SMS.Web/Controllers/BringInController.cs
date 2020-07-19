@@ -46,7 +46,6 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringInApproveData(string name, int? from, int? to, string team = "", string empcode = "")
         {
-            var model = dbContext.Bring_In.OrderByDescending(x => x.CreatedDate).ToList();
             var assetType = 0;
             switch (name.ToLower().Trim())
             {
@@ -57,34 +56,36 @@ namespace SMS.Web.Controllers
                     assetType = 2;
                     break;
             }
-            foreach(var item in model)
-            {
-                item.Bring_In_Items = dbContext.Bring_In_Items.Where(t => t.CatID == item.ID && t.AssetType == assetType).ToList();
-            }
-            var res = model.Where(t => t.Bring_In_Items.Count > 0);
+
+            var res = dbContext.Bring_In
+                .Where(bi => dbContext.Bring_In_Items.Any(i => i.CatID == bi.ID && i.AssetType == assetType && i.ApprovedStatus == null))
+                .OrderByDescending(x => x.CreatedDate)
+                .ToList();
+
+            var recordNumber = dbContext.Bring_In.Count();
 
             //filter theo tiêu chí
             if(from != null)
             {
-                res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() >= from);
+                res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() >= from).ToList();
             }
 
             if (to != null)
             {
-                res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() <= to);
+                res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() <= to).ToList();
             }
 
             if (!string.IsNullOrEmpty(team))
             {
-                res = res.Where(t => t.Team.Contains(team));
+                res = res.Where(t => t.Team.Contains(team)).ToList();
             }
 
             if (!string.IsNullOrEmpty(empcode))
             {
-                res = res.Where(t => t.EmpCode.Contains(empcode));
+                res = res.Where(t => t.EmpCode.Contains(empcode)).ToList();
             }
 
-            return Json(new { data = res, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
+            return Json(new { data = res, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = recordNumber });
         }
 
         public ActionResult Detail(int id)
@@ -238,7 +239,7 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.ApprovedBy = user.EmpCode + "|" + user.FullName;
+            bringinItems.ApprovedBy = user.EmpCode;
             bringinItems.ApprovedDate = DateTime.Now;
             bringinItems.ApproverRemark = remark;
             bringinItems.ApprovedStatus = status;
@@ -283,10 +284,11 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.ITT = user.EmpCode + "|" + user.FullName;
+            bringinItems.ITT = user.EmpCode;
             bringinItems.ITT_Date = DateTime.Now;
             bringinItems.ITT_Remark = remark;
             bringinItems.ITT_Status = status;
+            bringinItems.ApprovedStatus = status;
 
             var bringStatus = false;
             foreach(var item in dbContext.Bring_In_Items.Where(t=>t.CatID == id))
@@ -328,10 +330,11 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.FST = user.EmpCode + "|" + user.FullName;
+            bringinItems.FST = user.EmpCode;
             bringinItems.FST_Date = DateTime.Now;
             bringinItems.FST_Remark = remark;
             bringinItems.FST_Status = status;
+            bringinItems.ApprovedStatus = status;
 
             var bringStatus = false;
             foreach (var item in dbContext.Bring_In_Items.Where(t => t.CatID == id))

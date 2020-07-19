@@ -5,8 +5,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Utils;
 
-    public partial class Go_Out
+    public partial class Go_Out: IValidatableObject
     {
         public int ID { get; set; }
 
@@ -52,6 +53,7 @@
 
         public string ApproverRemark { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? ApprovedDate { get; set; }
 
         [StringLength(50)]
@@ -76,5 +78,22 @@
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (DateTime.Parse(Util.FormatDate(EstimatedDateOut) + ' ' + EstimatedTimeOut) < DateTime.Now)
+            {
+                yield return
+                 new ValidationResult("Vui lòng điền đúng ngày và giờ ra ngoài",
+                                      new[] { "EstimatedDateOut" });
+            }
+
+            if (DateTime.Parse(Util.FormatDate(EstimatedDateOut) + ' ' + EstimatedTimeOut) > DateTime.Parse(Util.FormatDate(EstimatedDateReturn) + ' ' + EstimatedTimeReturn))
+            {
+                yield return
+                  new ValidationResult("Vui lòng điền đúng ngày và giờ trở lại",
+                                       new[] { "EstimatedDateReturn" });
+            }
+        }
     }
 }

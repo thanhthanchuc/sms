@@ -198,11 +198,8 @@
                     },
                     {
                         data: function (res) {
-                            if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
-                                return "";
-                            var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
-                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
+                            var createdUser = "";
+                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdUser}</span><span style="margin-left:10px;">${res.CreatedDate}</span>`;
                         }
                     },
                     {
@@ -210,8 +207,9 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+                            return `${res.ModifiedBy} | ${modifiedDate}`;
                         }
                     }
                 ]
@@ -227,27 +225,6 @@
                     confirm: async function () {
                         await $.ajax({
                             url: "/BringOut/Delete/" + id,
-                            method: "GET",
-                            success: function () {
-                                window.location.reload();
-                            }
-                        })
-                    },
-                    cancel: function () {
-                        //$.alert('Hủy bỏ!');
-                    }
-                }
-            });
-        }
-
-        function Cancel(id) {
-            $.confirm({
-                title: 'Xác nhận!',
-                content: 'Bạn có chắc muốn hủy!',
-                buttons: {
-                    confirm: async function () {
-                        await $.ajax({
-                            url: "/BringOut/Cancel/" + id,
                             method: "GET",
                             success: function () {
                                 window.location.reload();

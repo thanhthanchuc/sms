@@ -133,11 +133,7 @@
                     { data: function (res) { return res.Position; } },
                     { data: function (res) { return res.Team; } },
                     { data: function (res) { return res.Reason; } },
-                    {
-                        data: function (res) {
-                            return `<span class="border-right" style="padding-right:10px;">${res.EstimatedDate}</span><span style="margin-left:10px;">${res.EstimatedTime}</span>`;
-                        }
-                    },
+                    { data: function (res) { return res.EstimatedDate; } },
                     {
                         data: function (res) {
                             return !res.Status ? 'Đang thực hiện' : 'Đã thực hiện';
@@ -151,11 +147,16 @@
                     },
                     {
                         data: function (res) {
-                            if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
-                                return "";
-                            var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
-                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
+                            var createdUser = "";
+                            //$.ajax({
+                            //    url: '/User/GetUserByCode?empCode=' + res.CreatedBy,
+                            //    type: "GET",
+                            //    dataType: 'json',
+                            //    success: (reponse) => {
+                            //        createdUser = reponse.data.FullName;
+                            //    }
+                            //});
+                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdUser}</span>`;
                         }
                     },
                     {
@@ -163,8 +164,9 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+                            return `${res.ModifiedBy} | ${modifiedDate}`;
                         }
                     }
                 ]
@@ -185,5 +187,6 @@
         $("#collapseBringOut").addClass('show');
         $("#collapseInOut").removeClass('collapse');
     </script>
+
 }
 

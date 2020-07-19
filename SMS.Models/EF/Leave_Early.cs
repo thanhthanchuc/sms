@@ -1,12 +1,13 @@
 ﻿namespace SMS.Models.EF
 {
+    using SMS.Models.Utils;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Leave_Early
+    public partial class Leave_Early: IValidatableObject
     {
         public int ID { get; set; }
 
@@ -41,6 +42,7 @@
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreatedDate { get; set; }
 
         [StringLength(50)]
@@ -50,6 +52,7 @@
 
         public string ApproverRemark { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? ApprovedDate { get; set; }
 
         [StringLength(50)]
@@ -60,11 +63,24 @@
         [StringLength(250)]
         public string GuardRemark { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? GuardDate { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? ModifiedDate { get; set; }
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+
+            if (DateTime.Parse(Util.FormatDate(EstimatedDate) + ' ' + EstimatedTime) <= DateTime.Now)
+            {
+                yield return
+                 new ValidationResult("Vui lòng điền đúng ngày và giờ ra ngoài",
+                                      new[] { "EstimatedDateOut" });
+            }
+        }
     }
 }

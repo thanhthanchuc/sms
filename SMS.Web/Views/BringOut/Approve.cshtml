@@ -33,7 +33,27 @@
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
             &nbsp;
-            <input id="team" class="form-control bg-light to-date">
+            <select class="form-control from-date">
+                <option value="0">---All---</option>
+                <option value="1">BOM</option>
+                <option value="2">ACT</option>
+                <option value="3">FST</option>
+                <option value="4">GAT</option>
+                <option value="5">HRT</option>
+                <option value="6">ITT</option>
+                <option value="7">MAT</option>
+                <option value="8">MCT</option>
+                <option value="9">MET</option>
+                <option value="10">MMT</option>
+                <option value="11">MQT</option>
+                <option value="12">MTT</option>
+                <option value="13">PDT</option>
+                <option value="14">PUT</option>
+                <option value="15">QAT</option>
+                <option value="16">SCT</option>
+                <option value="17">SMT</option>
+                <option value="18">SQT</option>
+            </select>
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
@@ -152,11 +172,8 @@
                     },
                     {
                         data: function (res) {
-                            if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
-                                return "";
-                            var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
-                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
+                            var createdUser = "";
+                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdUser}</span>`;
                         }
                     },
                     {
@@ -164,8 +181,9 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+                            return `${res.ModifiedBy} | ${modifiedDate}`;
                         }
                     }
                 ]

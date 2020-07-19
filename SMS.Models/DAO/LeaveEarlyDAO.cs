@@ -49,6 +49,7 @@ namespace SMS.Models.DAO
             {
                 model = model.Where(x => x.EmpCode.Contains(searchString.ToLower()) || x.FullName.Contains(searchString.ToLower()) || x.Team.Contains(searchString.ToLower()));
             }
+
             return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }
 
@@ -113,14 +114,14 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool ApproveForAdmin(int id, string remark)
+        public bool ApproveForAdmin(int id, string remark, string approveBy)
         {
             try
             {
                 var leaveEarly = dbContext.Leave_Early.Find(id);
                 leaveEarly.ApprovedDate = DateTime.Now;
                 //Chia case cho TM và GL
-                leaveEarly.ApprovedBy = "42001005 | Lưu Văn Phúc";
+                leaveEarly.ApprovedBy = approveBy;
                 leaveEarly.ApprovedStatus = 1;
                 leaveEarly.ApproverRemark = remark;
                 dbContext.SaveChanges();
