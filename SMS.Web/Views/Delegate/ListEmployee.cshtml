@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "ListEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+    <style>
+        label {
+            color: black;
+        }
+    </style>
+}
+
+<!--Div chứa table dữ liệu-->
+<div style="width:100%">
+    <div class="card-header">
+        <h5 class="m-0 font-weight-bold text-primary">DANH SÁCH CÔNG - NHÂN VIÊN</h5>
+    </div>
+    <div class="row dataTables_wrapper dt-bootstrap4 above-table">
+        <div class="col-2 input-group input-group-sm">
+            <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
+            &nbsp;
+            <input id="team" class="form-control bg-light to-date">
+        </div>
+        <div class="col-2 input-group input-group-sm">
+            <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+            &nbsp;
+            <input id="emp_code" class="form-control bg-light to-date">
+        </div>
+        <div class="col-2">
+            <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
+        </div>
+    </div>
+
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+            <!--Tiêu đề cột-->
+            <thead>
+                <tr class="table-heading">
+                    <th class="th-1">Mã</th>
+                    <th class="th-1">Nhân viên</th>
+                    <th class="th-1">Vị trí</th>
+                    <th class="th-1">Phòng ban</th>
+                    <th class="th-1">Trạng thái</th>
+                    <th class="th-1">Email</th>
+                    <th class="th-1">Cellphone</th>
+                </tr>
+            </thead>
+            <tbody id="tblData"></tbody>
+        </table>
+    </div>
+</div>
+<div id="pagination" class="pagination"></div>
+<!-- /.container-fluid -->
+
+@section scripts {
+    <script src="~/Assets/js/jquery.timepicker.min.js"></script>
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        var table = null;
+        $(document).ready(() => {
+            var options = {
+                "serverSide": false,
+                "searching": false,
+                "orderCellsTop": false,
+                "fixedHeader": true,
+                "processing": true,
+                "paging": true,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_"
+                },
+                "lengthMenu": [[20, 25, 50, 100, -1], [20, 25, 50, 100, "All"]],
+                "lengthChange": false,
+                "pageLength": 20,
+                "ajax": {
+                    "type": "POST",
+                    "url": "/Delegate/FetchDataEmployee",
+                    "dataType": "json",
+                    "contentType": 'application/json; charset=utf-8'
+                },
+                "columns": [
+                    {
+                        data: function (res) {
+                            return res.ID;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            return `<span class="border-right" style="padding-right:10px;">${res.EmpCode}</span><span style="margin-left:10px;">${res.FullName}</span>`;
+                        }
+                    },
+                    { data: function (res) { return res.Position; } },
+                    { data: function (res) { return res.Team; } },
+                    {
+                        data: function (res) {
+                            return !res.Status ? 'Đang hoạt động' : '';
+                        }
+                    },
+                    { data: function (res) { return res.Email; } },
+                    { data: function (res) { return res.Cellphone; } },
+                ]
+            };
+            table = $('#Emp-table').DataTable(options);
+        });
+    </script>
+
+    <script>
+        $("#DL").removeClass('collapse');
+        $("#DL").removeClass('collapsed');
+        $("#DL").attr("aria-expanded", "true");
+        $("#ListEmp").addClass('active');
+        $("#collapseDelegateTab").addClass('show');
+        $("#collapseDelegate").removeClass('collapse');
+    </script>
+}

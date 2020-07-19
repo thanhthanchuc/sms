@@ -163,7 +163,14 @@
     <script>
         $("#return-history").on("click", () => {
             window.location.href = "/BringOut/History"
-        })
+        });
+
+        $("#BO").removeClass('collapse');
+        $("#BO").removeClass('collapsed');
+        $("#BO").attr("aria-expanded", "true");
+        $("#BOHistory").addClass('active');
+        $("#collapseBringOut").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }
 

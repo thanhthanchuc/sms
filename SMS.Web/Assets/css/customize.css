@@ -286,7 +286,7 @@ td {
 }
 
 .input-previous-button {
-    border-radius: 5px !important;
+    border-radius: .2rem !important;
 }
 
 .exampleModalLabel {

@@ -39,27 +39,7 @@
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
                 &nbsp;
-                <select class="form-control from-date">
-                    <option value="0">---Chọn---</option>
-                    <option value="1">BOM</option>
-                    <option value="2">ACT</option>
-                    <option value="3">FST</option>
-                    <option value="4">GAT</option>
-                    <option value="5">HRT</option>
-                    <option value="6">ITT</option>
-                    <option value="7">MAT</option>
-                    <option value="8">MCT</option>
-                    <option value="9">MET</option>
-                    <option value="10">MMT</option>
-                    <option value="11">MQT</option>
-                    <option value="12">MTT</option>
-                    <option value="13">PDT</option>
-                    <option value="14">PUT</option>
-                    <option value="15">QAT</option>
-                    <option value="16">SCT</option>
-                    <option value="17">SMT</option>
-                    <option value="18">SQT</option>
-                </select>
+                <input id="team" class="form-control bg-light to-date">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
@@ -83,7 +63,7 @@
 
         <div style="margin-top: 8px">
             <div class="button-container" style="float: left">
-                <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
+                <a class="btn btn-sm btn-success btn-reload"><i class="fas fa-sync"></i> Tải lại</a>
             </div>
             <div style="float: right">
                 <form class="radio-container">
@@ -234,9 +214,9 @@
                         <td class="col-sticky-12">
                             @if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
                             {
-                                <button class="btn btn-print-LE btn-primary btn-standard" title="In báo cáo">
+                                <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print-LE btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             }
                         </td>
                         <td>
@@ -267,10 +247,6 @@
                             }
                             else if (item.ApprovedStatus == 4)
                             {
-                            }
-                            else
-                            {
-                                <i class="fas fa-question" style="color:dodgerblue" title="Chờ phê duyệt"></i>
                             }
                         </td>
                         <td>
@@ -323,210 +299,6 @@
         </div>
     </div>
 
-    <!-- Add Modal -->
-    <div class="modal fade" aria-hidden="true" tabindex="-1" id="addModal" role="dialog">
-        <div class="modal-dialog modal-xl">
-            <!--Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title exampleModalLabel"><b>Tạo yêu cầu về sớm</b></h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12 row-form">
-                        <div class="column form-horizontal form-left col-md-8">
-
-                            <div class="form-group row-1 input-group input-group-sm">
-                                <label class="col-3 top-space" for="EmpCode">Mã CNV <span class="red">(*)</span></label>
-                                <input class="form-control col-4 input-previous-button" id="txtEmpCodeLE" maxlength="8" />
-                            </div>
-
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-3 top-space" for="Shift">Ca</label>
-                                <select class="form-control col-4 input-previous-button">
-                                    <option value="0" selected>Hành chính</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group input-group input-group-sm">
-                                <label for="Purpose" class="col-3 top-space">Mục đích</label>
-                                <select class="form-control col-4 input-previous-button">
-                                    <option value="1" selected>Công việc</option>
-                                    <option value="0">Cá nhân</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-3 top-space" for="Reason">Lí do <span class="red">(*)</span></label>
-                                <textarea maxlength="500" rows="2" class="form-control col-10 input-previous-button" style="resize: none"></textarea>
-                            </div>
-
-                            <div class="row form-group input-group-sm specific-date-pick">
-                                <label class="col-3 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
-                                <input class="form-control col-4 input-previous-button" id="estimated_date" />
-                                &nbsp;&nbsp;
-                                <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
-                                &nbsp;
-                                <input class="form-control col-3 input-previous-button" id="estimated_time" />
-                            </div>
-
-                            <div class="input-group form-group input-group-sm">
-                                <label class="col-3">
-                                    <a class="btn btn-primary btn-sm" style="cursor: pointer" data-toggle="collapse" data-target=".file">Đăng ký nhiều người</a>
-                                </label>
-                                <div class="file row collapse col-9 input-group-sm">
-                                    <label class="col-4">
-                                        <a class="btn btn-success btn-sm" style="cursor: pointer"><i class="fas fa-download"></i> Tải mẫu đăng ký</a>
-                                    </label>
-                                    <div class="col-8 custom-file">
-                                        <input class="form-control input-previous-button custom-file-input" id="temp-file" type="file" />
-                                        <label class="custom-file-label" for="temp-file">Chọn file</label>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!--Cột bên phải dành cho thông tin nhân viên-->
-                        <div class="column form-horizontal form-right col-md-4">
-                            <!--Ảnh profile-->
-                            <div class="form-group col-12 profile-img">
-                                <div class="img-profile">
-                                    <img src="~/Assets/img/the-world.jpg" />
-                                </div>
-                            </div>
-                            <!--Thông tin profile-->
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-4 top-space" for="FullName">Họ và tên</label>
-                                <input readonly class="form-control col-8 input-previous-button" id="txtFullNameLE" />
-                            </div>
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-4 top-space" for="Positon">Vị trí</label>
-                                <input readonly class="form-control col-8 input-previous-button" id="txtPositionLE" />
-                            </div>
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-4 top-space" for="Positon">Phòng ban</label>
-                                <input readonly class="form-control col-8 input-previous-button" id="txtTeamLE" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm btn-primary">Thêm mới</button>
-                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Đóng</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Modal -->
-    <div class="modal fade" aria-hidden="true" tabindex="-1" id="editModal" role="dialog">
-        <div class="modal-dialog modal-xl">
-            <!--Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title exampleModalLabel"><b>Chỉnh sửa yêu cầu về sớm</b></h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12 row-form">
-                        <div class="column form-horizontal form-left col-md-8">
-
-                            <div class="form-group row-1 input-group input-group-sm">
-                                <label class="col-3 top-space" for="EmpCode">Mã CNV <span class="red">(*)</span></label>
-                                <input class="form-control col-4 input-previous-button" id="txtEmpCodeLE" maxlength="8" />
-                            </div>
-
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-3 top-space" for="Shift">Ca</label>
-                                <select class="form-control col-4 input-previous-button">
-                                    <option value="0" selected>Hành chính</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group input-group input-group-sm">
-                                <label for="Purpose" class="col-3 top-space">Mục đích</label>
-                                <select class="form-control col-4 input-previous-button">
-                                    <option value="1" selected>Công việc</option>
-                                    <option value="0">Cá nhân</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-3 top-space" for="Reason">Mục đích <span class="red">(*)</span></label>
-                                <textarea maxlength="500" rows="2" class="form-control col-10 input-previous-button" style="resize: none"></textarea>
-                            </div>
-
-                            <div class="row form-group input-group-sm specific-date-pick">
-                                <label class="col-3 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
-                                <input class="form-control col-4 input-previous-button" id="estimated_date" />
-                                &nbsp;&nbsp;&nbsp;
-                                <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
-                                &nbsp;
-                                <input class="form-control col-3 input-previous-button" id="estimated_time" />
-                            </div>
-
-                            <div class="input-group form-group input-group-sm">
-                                <label class="col-3">
-                                    <a class="btn btn-primary btn-sm" style="cursor: pointer" data-toggle="collapse" data-target=".file">Đăng ký nhiều người</a>
-                                </label>
-                                <div class="file row collapse col-9 input-group-sm">
-                                    <label class="col-4">
-                                        <a class="btn btn-success btn-sm" style="cursor: pointer"><i class="fas fa-download"></i> Tải mẫu đăng ký</a>
-                                    </label>
-                                    <div class="col-8 custom-file">
-                                        <input class="form-control input-previous-button custom-file-input pointer" id="temp-file" type="file" />
-                                        <label class="custom-file-label" for="temp-file">Chọn file</label>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!--Cột bên phải dành cho thông tin nhân viên-->
-                        <div class="column form-horizontal form-right col-md-4">
-                            <!--Ảnh profile-->
-                            <div class="form-group col-12 profile-img">
-                                <div class="img-profile">
-                                    <img src="~/Assets/img/the-world.jpg" />
-                                </div>
-                            </div>
-                            <!--Thông tin profile-->
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-4 top-space" for="FullName">Họ và tên</label>
-                                <input readonly class="form-control col-8 input-previous-button" id="txtFullNameLE" />
-                            </div>
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-4 top-space" for="Positon">Vị trí</label>
-                                <input readonly class="form-control col-8 input-previous-button" id="txtPositionLE" />
-                            </div>
-                            <div class="form-group input-group input-group-sm">
-                                <label class="col-4 top-space" for="Positon">Phòng ban</label>
-                                <input readonly class="form-control col-8 input-previous-button" id="txtTeamLE" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
-                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Đóng</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Delete Modal-->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -568,4 +340,12 @@
     <script src="~/Assets/js/jquery.timepicker.min.js"></script>
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/leave_early/common.js"></script>
+    <script>
+        $("#LE").removeClass('collapse');
+        $("#LE").removeClass('collapsed');
+        $("#LE").attr("aria-expanded", "true");
+        $("#LEHistory").addClass('active');
+        $("#collapseLeaveEarly").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
+    </script>
 }

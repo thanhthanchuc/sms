@@ -21,6 +21,11 @@ namespace SMS.Web.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// Hàm show lịch sử
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult FetchBringInData()
         {
@@ -29,8 +34,17 @@ namespace SMS.Web.Controllers
             return Json(new { data = model, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
 
+        /// <summary>
+        /// Show danh sách phê duyệt cho TM, ITT, FST
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="team"></param>
+        /// <param name="empcode"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult FetchBringInApproveData(string name,DateTime from, DateTime to, string team, string empcode)
+        public ActionResult FetchBringInApproveData(string name, int? from, int? to, string team = "", string empcode = "")
         {
             var model = dbContext.Bring_In.OrderByDescending(x => x.CreatedDate).ToList();
             var assetType = 0;
@@ -49,24 +63,26 @@ namespace SMS.Web.Controllers
             }
             var res = model.Where(t => t.Bring_In_Items.Count > 0);
 
-            //filter
+            //filter theo tiêu chí
             if(from != null)
             {
-                res = res.Where(t => DateTime.Compare(t.CreatedDate.Value, from) <= 0);
+                res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() >= from);
             }
+
             if (to != null)
             {
-                res = res.Where(t => DateTime.Compare(t.CreatedDate.Value, to) >= 0);
+                res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() <= to);
             }
+
             if (!string.IsNullOrEmpty(team))
             {
                 res = res.Where(t => t.Team.Contains(team));
             }
+
             if (!string.IsNullOrEmpty(empcode))
             {
                 res = res.Where(t => t.EmpCode.Contains(empcode));
             }
-            //
 
             return Json(new { data = res, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
@@ -93,9 +109,9 @@ namespace SMS.Web.Controllers
                     return Content("Dữ liệu nhập vào không đúng");
                 }
 
-                model.CreatedDate = System.DateTime.Now;
+                model.CreatedDate = DateTime.Now;
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                model.CreatedBy = user.EmpCode;
+                model.CreatedBy = user.EmpCode + "|" + user.FullName;
                 model.Status = false;
 
                 var bringIn = dbContext.Bring_In.Add(model);
@@ -139,7 +155,7 @@ namespace SMS.Web.Controllers
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
 
                 var bringin = dbContext.Bring_In.FirstOrDefault(t => t.ID == model.ID);
-                bringin.ModifiedBy = user.EmpCode;
+                bringin.ModifiedBy = user.EmpCode + "|" + user.FullName;
                 bringin.ModifiedDate = DateTime.Now;
                 bringin.Reason = model.Reason;
                 bringin.EstimatedDate = model.EstimatedDate;
@@ -196,22 +212,16 @@ namespace SMS.Web.Controllers
         [HttpGet]
         public ActionResult Cancel(int id)
         {
-            //var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id).ToList();
-            //dbContext.Bring_In_Items.RemoveRange(bringinItems);
-
             var bringin = dbContext.Bring_In.FirstOrDefault(t => t.ID == id);
             bringin.Cancel = true;
-            //dbContext.Bring_In.Remove(bringin);
-
             dbContext.SaveChanges();
-
             return Content("Success");
         }
 
         public ActionResult ApproveDetail(int id)
         {
             var bringin = dbContext.Bring_In.Find(id);
-            var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id && t.AssetType == 0).OrderByDescending(t=>t.ID).ToList();
+            var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id && t.AssetType == 0).OrderByDescending(t=>t.CreatedDate).ToList();
             bringin.Bring_In_Items = bringinItems;
             return View(bringin);
         }
@@ -228,7 +238,7 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.ApprovedBy = user.EmpCode;
+            bringinItems.ApprovedBy = user.EmpCode + "|" + user.FullName;
             bringinItems.ApprovedDate = DateTime.Now;
             bringinItems.ApproverRemark = remark;
             bringinItems.ApprovedStatus = status;
@@ -273,7 +283,7 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.ITT = user.EmpCode;
+            bringinItems.ITT = user.EmpCode + "|" + user.FullName;
             bringinItems.ITT_Date = DateTime.Now;
             bringinItems.ITT_Remark = remark;
             bringinItems.ITT_Status = status;
@@ -318,7 +328,7 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.FST = user.EmpCode;
+            bringinItems.FST = user.EmpCode + "|" + user.FullName;
             bringinItems.FST_Date = DateTime.Now;
             bringinItems.FST_Remark = remark;
             bringinItems.FST_Status = status;
@@ -340,6 +350,11 @@ namespace SMS.Web.Controllers
 
             dbContext.SaveChanges();
             return Content(JsonConvert.SerializeObject(bringinItems), "application/json");
+        }
+
+        public ActionResult BIReport()
+        {
+            return View();
         }
     }
 }

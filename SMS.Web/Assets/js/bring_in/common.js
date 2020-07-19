@@ -38,6 +38,10 @@
 }
 _userBI.init();
 
+$(".btn-reload").off('click').on('click', function (e) {
+    location.reload();
+});
+
 //Create
 $('#register').on("click", (event) => {
     event.preventDefault();

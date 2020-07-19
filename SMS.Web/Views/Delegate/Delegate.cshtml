@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Delegate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-horizontal">
+    <div class="card-header">
+        <h5 class="m-0 font-weight-bold text-primary">CẤP QUYỀN TRUY CẬP</h5>
+    </div>
+    <!--Cột bên trái dành cho form đăng ký-->
+    <div class="col-md-12 row-form">
+        <div class="column form-horizontal form-left col-md-7">
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
+                <div class="col-md-3 input-group input-group-sm">
+                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" maxlength="8" />
+                </div>
+            </div>
+
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 lb">Quyền hạn</label>
+                <div class="col-md-10">
+                    <form class="radio-container">
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">Admin
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">Sub Admin
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">PIC
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">ITT Team Manager
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">SMT Team Manager
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">FST Team Manager
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">PIC Team Manager
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">Group Leader
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">Bảo vệ
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox">Chỉ đọc
+                        </label>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group input-group-sm row col-12">
+                <div class="col-2"></div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-sm btn-primary" title="Cấp quyền" value="Create"><i class="fas fa-edit"></i> Cấp quyền</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="column col-1 col-mid"></div>
+
+        <!--Cột bên phải dành cho thông tin nhân viên-->
+        <div class="column form-horizontal form-right col-md-4">
+            <!--Ảnh profile-->
+            <div class="form-group col-12 profile-img">
+                <div class="img-profile">
+                    <img src="~/Assets/img/the-world.jpg" />
+                </div>
+            </div>
+            <!--Thông tin profile-->
+            <div class="form-group input-group input-group-sm">
+                <label class="col-3 top-space" for="FullName">Họ và tên</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtFullNameBI" />
+            </div>
+            <div class="form-group input-group input-group-sm">
+                <label class="col-3 top-space" for="Positon">Vị trí</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtPositionBI" />
+            </div>
+            <div class="form-group input-group input-group-sm">
+                <label class="col-3 top-space" for="Positon">Phòng ban</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtTeamBI" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="row col-12">
+    <div class="col-6 form-horizontal">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH ADMIN & SUB ADMIN</h6>
+        </div>
+        <div style="width:100%; overflow-x:auto">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+                <!--Tiêu đề cột-->
+                <thead>
+                    <tr class="table-heading">
+                        <th class="th-1">Mã</th>
+                        <th class="th-1">Nhân viên</th>
+                        <th class="th-1">Vị trí</th>
+                        <th class="th-1">Phòng ban</th>
+                        <th class="th-1">Quyền hạn</th>
+                        <th class="th-1">Trạng thái</th>
+                        <th class="th-1">Email</th>
+                        <th class="th-1">Cellphone</th>
+                    </tr>
+                </thead>
+                <tbody id="tblData"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6 form-horizontal">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH PIC</h6>
+        </div>
+        <div style="width:100%; overflow-x:auto">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+                <!--Tiêu đề cột-->
+                <thead>
+                    <tr class="table-heading">
+                        <th class="th-1">Mã</th>
+                        <th class="th-1">Nhân viên</th>
+                        <th class="th-1">Vị trí</th>
+                        <th class="th-1">Phòng ban</th>
+                        <th class="th-1">Trạng thái</th>
+                        <th class="th-1">Email</th>
+                        <th class="th-1">Cellphone</th>
+                    </tr>
+                </thead>
+                <tbody id="tblData"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6 form-horizontal">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH GROUP LEADER</h6>
+        </div>
+        <div style="width:100%; overflow-x:auto">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+                <!--Tiêu đề cột-->
+                <thead>
+                    <tr class="table-heading">
+                        <th class="th-1">Mã</th>
+                        <th class="th-1">Nhân viên</th>
+                        <th class="th-1">Vị trí</th>
+                        <th class="th-1">Phòng ban</th>
+                        <th class="th-1">Trạng thái</th>
+                        <th class="th-1">Email</th>
+                        <th class="th-1">Cellphone</th>
+                    </tr>
+                </thead>
+                <tbody id="tblData"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6 form-horizontal">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH PIC TEAM MANAGER</h6>
+        </div>
+        <div style="width:100%; overflow-x:auto">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+                <!--Tiêu đề cột-->
+                <thead>
+                    <tr class="table-heading">
+                        <th class="th-1">Mã</th>
+                        <th class="th-1">Nhân viên</th>
+                        <th class="th-1">Vị trí</th>
+                        <th class="th-1">Phòng ban</th>
+                        <th class="th-1">Trạng thái</th>
+                        <th class="th-1">Email</th>
+                        <th class="th-1">Cellphone</th>
+                    </tr>
+                </thead>
+                <tbody id="tblData"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $("#DL").removeClass('collapse');
+        $("#DL").removeClass('collapsed');
+        $("#DL").attr("aria-expanded", "true");
+        $("#EditDelegate").addClass('active');
+        $("#collapseDelegateTab").addClass('show');
+        $("#collapseDelegate").removeClass('collapse');
+    </script>
+}

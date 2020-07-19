@@ -98,12 +98,12 @@ namespace SMS.Models.DAO
                 leaveEarly.EstimatedDate = entity.EstimatedDate;
                 leaveEarly.EstimatedTime = entity.EstimatedTime;
                 leaveEarly.ModifiedDate = DateTime.Now;
+                leaveEarly.ModifiedBy = entity.ModifiedBy;
                 dbContext.SaveChanges();
                 return true;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -120,7 +120,7 @@ namespace SMS.Models.DAO
                 var leaveEarly = dbContext.Leave_Early.Find(id);
                 leaveEarly.ApprovedDate = DateTime.Now;
                 //Chia case cho TM và GL
-                leaveEarly.ApprovedBy = "TMCode | TMName";
+                leaveEarly.ApprovedBy = "42001005 | Lưu Văn Phúc";
                 leaveEarly.ApprovedStatus = 1;
                 leaveEarly.ApproverRemark = remark;
                 dbContext.SaveChanges();
@@ -144,7 +144,7 @@ namespace SMS.Models.DAO
                 var leaveEarly = dbContext.Leave_Early.Find(id);
                 leaveEarly.ApprovedDate = DateTime.Now;
                 //Chia case cho TM và GL
-                leaveEarly.ApprovedBy = "TMCode | TMName";
+                leaveEarly.ApprovedBy = "42001005 | Lưu Văn Phúc";
                 leaveEarly.ApprovedStatus = 0;
                 leaveEarly.ApproverRemark = remark;
                 dbContext.SaveChanges();

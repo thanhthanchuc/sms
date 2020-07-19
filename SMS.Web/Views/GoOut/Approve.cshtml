@@ -39,27 +39,7 @@
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
                 &nbsp;
-                <select class="form-control from-date">
-                    <option value="0">---Chọn---</option>
-                    <option value="1">BOM</option>
-                    <option value="2">ACT</option>
-                    <option value="3">FST</option>
-                    <option value="4">GAT</option>
-                    <option value="5">HRT</option>
-                    <option value="6">ITT</option>
-                    <option value="7">MAT</option>
-                    <option value="8">MCT</option>
-                    <option value="9">MET</option>
-                    <option value="10">MMT</option>
-                    <option value="11">MQT</option>
-                    <option value="12">MTT</option>
-                    <option value="13">PDT</option>
-                    <option value="14">PUT</option>
-                    <option value="15">QAT</option>
-                    <option value="16">SCT</option>
-                    <option value="17">SMT</option>
-                    <option value="18">SQT</option>
-                </select>
+                <input id="team" class="form-control bg-light to-date">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
@@ -83,7 +63,7 @@
 
         <div style="margin-top: 8px">
             <div class="button-container" style="float: left">
-                <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
+                <a class="btn btn-sm btn-success btn-reload"><i class="fas fa-sync"></i> Tải lại</a>
             </div>
             <div style="float: right">
                 <form class="radio-container">
@@ -155,7 +135,6 @@
                 <th colspan="2">
                     @Html.DisplayName("Chỉnh sửa")
                 </th>
-                <th>In ấn</th>
             </tr>
             <!--Row dữ liệu bảng về sớm-->
             @foreach (var item in Model)
@@ -224,9 +203,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ModifiedDate)
                     </td>
-                    <td>
-                        <button class="btn-print btn-primary"><i class="fas fa-print"></i></button>
-                    </td>
                 </tr>
             }
         </table>
@@ -245,5 +221,14 @@
     <script src="~/Assets/js/jquery.timepicker.min.js"></script>
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/go_out/common.js"></script>
+
+    <script>
+        $("#GO").removeClass('collapse');
+        $("#GO").removeClass('collapsed');
+        $("#GO").attr("aria-expanded", "true");
+        $("#GOApprove").addClass('active');
+        $("#collapseGoOut").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
+    </script>
 }
 

@@ -96,7 +96,7 @@
                     <th>Loại hàng hóa</th>
                     <th colspan="2">Thời gian đem trở ra</th>
                     <th colspan="4">Phê duyệt</th>
-                    <th colspan="2">ITT/SMT phê duyệt</th>
+                    <th colspan="4">ITT/SMT phê duyệt</th>
                     <th colspan="4">FST phê duyệt</th>
                 </tr>
             </thead>
@@ -159,13 +159,15 @@
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times" style="color:red"></i>
                                 }
                             }
                         </td>
 
                         @if (string.IsNullOrEmpty(item.ITT) && string.IsNullOrEmpty(item.SMT))
                         {
+                            <td>@item.ITT</td>
+                            <td>@item.ITT_Date</td>
                             <td>
                                 <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
                                 <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
@@ -174,11 +176,13 @@
                         }
                         else
                         {
+                            <td>@item.ITT</td>
+                            <td>@item.ITT_Date</td>
                             if (item.ITT_Status != null)
                             {
                                 if (item.ITT_Status == 0)
                                 {
-                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-times" style="color:red"></i></td>
                                 }
                                 else
                                 {
@@ -189,7 +193,7 @@
                             {
                                 if (item.SMT_Status == 0)
                                 {
-                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-times" style="color:red"></i></td>
                                 }
                                 else
                                 {
@@ -234,7 +238,7 @@
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times" style="color:red"></i>
                                 }
                             }
                         </td>
@@ -311,6 +315,13 @@
                     })
                 }
             })
-        })
+        });
+
+        $("#BI").removeClass('collapse');
+        $("#BI").removeClass('collapsed');
+        $("#BI").attr("aria-expanded", "true");
+        $("#BIitt").addClass('active');
+        $("#collapseBringIn").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

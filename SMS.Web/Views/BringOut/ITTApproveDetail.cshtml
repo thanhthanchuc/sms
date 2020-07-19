@@ -95,7 +95,6 @@
                     <th>Đơn vị</th>
                     <th>Loại hàng hóa</th>
                     <th colspan="2">Thời gian đem trở ra</th>
-                    <th colspan="2">Người đăng ký</th>
                     <th colspan="4">Phê duyệt</th>
                     <th colspan="2">ITT/SMT phê duyệt</th>
                     <th colspan="4">FST phê duyệt</th>
@@ -137,8 +136,6 @@
                             }
                         </td>
                         <td>@item.ReturnDate</td>
-                        <td>@item.ApprovedBy</td>
-                        <td>@item.ApprovedDate</td>
                         <td>
                             @if (!string.IsNullOrEmpty(item.ApprovedBy))
                             {
@@ -319,6 +316,13 @@
                     })
                 }
             })
-        })
+        });
+
+        $("#BO").removeClass('collapse');
+        $("#BO").removeClass('collapsed');
+        $("#BO").attr("aria-expanded", "true");
+        $("#BOitt").addClass('active');
+        $("#collapseBringOut").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

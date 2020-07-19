@@ -33,26 +33,7 @@
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
             &nbsp;
-            <select class="form-control from-date">
-                <option value="0">BOM</option>
-                <option value="1">ACT</option>
-                <option value="2">FST</option>
-                <option value="3">GAT</option>
-                <option value="4">HRT</option>
-                <option value="5">ITT</option>
-                <option value="6">MAT</option>
-                <option value="7">MCT</option>
-                <option value="8">MET</option>
-                <option value="9">MMT</option>
-                <option value="10">MQT</option>
-                <option value="11">MTT</option>
-                <option value="12">PDT</option>
-                <option value="13">PUT</option>
-                <option value="14">QAT</option>
-                <option value="15">SCT</option>
-                <option value="16">SMT</option>
-                <option value="17">SQT</option>
-            </select>
+            <input id="team" class="form-control bg-light to-date">
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
@@ -111,7 +92,6 @@
                 <th class="th-1">Thời gian ước tính</th>
                 <th class="th-1">Trạng thái</th>
                 <th class="th-1">Chi tiết</th>
-                <th class="th-1">In ấn</th>
                 <th class="th-1">Người tạo</th>
                 <th class="th-1">Chỉnh sửa</th>
             </tr>
@@ -172,15 +152,11 @@
                     },
                     {
                         data: function (res) {
-                            return `<button class="btn btn-print btn-primary btn-standard" id="btnPrint" title="In báo cáo">
-                                                                <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                                            </button>`;
-                        }
-                    },
-                    {
-                        data: function (res) {
-                            var createdUser = "";
-                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdUser}</span>`;
+                            if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
+                                return "";
+                            var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
+                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
                         }
                     },
                     {
@@ -188,9 +164,8 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
-                            return `${res.ModifiedBy} | ${modifiedDate}`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
                         }
                     }
                 ]
@@ -203,6 +178,13 @@
         });
 
         $('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
+
+        $("#BO").removeClass('collapse');
+        $("#BO").removeClass('collapsed');
+        $("#BO").attr("aria-expanded", "true");
+        $("#BOApprove").addClass('active');
+        $("#collapseBringOut").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }
 

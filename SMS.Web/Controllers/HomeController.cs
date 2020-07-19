@@ -24,6 +24,8 @@ namespace SMS.Web.Controllers
         }
         public ActionResult Index()
         {
+            var userSession = new UserLogin();
+            ViewBag.userSS = userSession.FullName;
             return View();
         }
         //public ActionResult ViewReport(int id)

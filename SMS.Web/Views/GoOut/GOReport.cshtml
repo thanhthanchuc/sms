@@ -1,0 +1,141 @@
+﻿@model SMS.Models.EF.Go_Out
+
+@{
+    ViewBag.Title = "GOReport";
+}
+
+<link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="~/Assets/css/fonts-gg.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="~/Assets/css/customize.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+<style>
+    body {
+        color: black !important;
+    }
+
+    .table-bordered td, .table-bordered th {
+        border: 1px solid black !important;
+    }
+
+    label {
+        color: black;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .normal {
+        font-size: 18px;
+    }
+</style>
+
+@using (Html.BeginForm("GOReport", "GoOut", FormMethod.Post))
+{
+    <div style="width:100%">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div style="text-align: center; color: black">
+            <img style="width: 200px; position: absolute; left:9%; top:2%" src="~/Assets/img/logo.png" />
+            <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">GIẤY XÁC NHẬN RA NGOÀI</h5>
+        </div>
+        <div class="center">
+            <span class="normal">GOING OUT CONFIRMATION</span>
+        </div>
+        <div class="center">
+            <span class="normal">Mã đăng ký (ID): </span>
+        </div>
+        <div class="center">
+            <span class="normal">Ngày đăng ký (Created Date): </span>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-1"></div>
+            <ul style="list-style-type: disc">
+                <li><u class="normal">THÔNG TIN NHÂN VIÊN (<i>Employee Information</i>):</u></li>
+            </ul>
+        </div>
+        <br />
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-7"><span class="normal">Tên nhân viên (<i>Employee Name</i>): </span></div>
+            <div class="col-3"><span class="normal">Vị trí (<i>Position</i>): </span></div>
+            <div class="col-1"></div>
+        </div>
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-7"><span class="normal">Mã nhân viên (<i>Employee Code</i>): </span></div>
+            <div class="col-3"><span class="normal">Phòng ban (<i>Team</i>): </span></div>
+            <div class="col-1"></div>
+        </div>
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-10"><span class="normal">Mục đích (<i>Purpose</i>): </span></div>
+            <div class="col-1"></div>
+        </div>
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-5"><span class="normal">Thời gian ra (<i>Estimated Date Out</i>): </span></div>
+            <div class="col-5"><span class="normal">Thời gian quay lại (<i>Estimated Date Return</i>): </span></div>
+            <div class="col-1"></div>
+        </div>
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-5"><span class="normal">Thời gian ra thực tế (<i>Guard Out</i>): </span></div>
+            <div class="col-5"><span class="normal">Thời gian quay lại thực tế (<i>Guard Return</i>): </span></div>
+            <div class="col-1"></div>
+        </div>
+        <br />
+        <div class="row col-12">
+            <div class="col-1"></div>
+            <ul style="list-style-type: disc">
+                <li class="normal">Khai báo đầy đủ, trung thực các thông tin yêu cầu</li>
+                <span style="font-size: 18px" class="nomarl"><i>Register all required informations</i></span>
+            </ul>
+        </div>
+        <br />
+        <div class="col-12 row" style="width: 500px">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <table class="table table-bordered" style="border: 1px solid black !important">
+                    <tr>
+                        <th height="80">Người đăng ký<br />(Created by)</th>
+                        <th>TM xác nhận <br />(Approved by)</th>
+                        <th colspan="2">Bảo vệ xác nhận (Guard) (Ra/Out)</th>
+                    </tr>
+                    <tr>
+                        <td height="100">CreatedBy + SESSION.FullName</td>
+                        <td height="100">ApprovedStatus + ApprovedBy + SESSION.FullName</td>
+                        <td height="100">GuardOutStatus + GuardOut + SESSION.FullName</td>
+                        <td height="100">GuardReturnStatus + GuardReturn + SESSION.FullName</td>
+                    </tr>
+                    <tr>
+                        <td style="border-top: none !important" height="160"></td>
+                        <td style="border-top: none !important" height="160"></td>
+                        <td style="border-top: none !important" height="160"></td>
+                        <td style="border-top: none !important" height="160"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <br />
+        <div class="row col-12">
+            <div class="col-1"></div>
+            <ul style="list-style-type: disc">
+                <li class="normal"><u>PHẦN DÀNH CHO BẢO VỆ:</u></li>
+                <span style="font-size: 18px" class="nomarl">.......................................................................................................................................</span>
+            </ul>
+        </div>
+    </div>
+}
+
+
+
+

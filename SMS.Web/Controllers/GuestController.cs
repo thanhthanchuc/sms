@@ -31,10 +31,20 @@ namespace SMS.Web.Controllers
             return Json(new { data = model, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
 
+        /// <summary>
+        /// Load view tạo mới
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
+
+        /// <summary>
+        /// Tạo mới
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Create(Guest m)
         {
@@ -58,7 +68,7 @@ namespace SMS.Web.Controllers
 
             model.CreatedDate = System.DateTime.Now;
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            model.CreatedBy = user.EmpCode;
+            model.CreatedBy = user.EmpCode + "|" + user.FullName;
             model.Status = false;
 
             var bringIn = dbContext.Guests.Add(model);
@@ -111,7 +121,7 @@ namespace SMS.Web.Controllers
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
 
                 var guest = dbContext.Guests.FirstOrDefault(t => t.ID == model.ID);
-                guest.ModifiedBy = user.EmpCode;
+                guest.ModifiedBy = user.EmpCode + "|" + user.FullName;
                 guest.ModifiedDate = DateTime.Now;
 
                 guest.Type = model.Type;
@@ -142,26 +152,21 @@ namespace SMS.Web.Controllers
                 var listItemIDs = new List<int>();
                 foreach (var item in model.Guest_Item)
                 {
-                    if (item.ID == 0)
-                    {
-                        dbContext.Guest_Item.Add(item);
-                    }
-                    else
-                    {
-                        listItemIDs.Add(item.ID);
-                        var bringItem = dbContext.Guest_Item.FirstOrDefault(t => t.ID == item.ID);
 
-                        bringItem.Item = item.Item;
-                        bringItem.Serial = item.Serial;
-                        bringItem.Quantity = item.Quantity;
-                        bringItem.Unit = item.Unit;
-                        bringItem.AssetType = item.AssetType;
-                        bringItem.IsReturn = item.IsReturn;
-                        bringItem.ReturnDate = item.ReturnDate;
-                        bringItem.ReturnTime = item.ReturnTime;
-                        bringItem.ModifiedBy = user.EmpCode;
-                        bringItem.ModifiedDate = DateTime.Now;
-                    }
+                    listItemIDs.Add(item.ID);
+                    var bringItem = dbContext.Guest_Item.FirstOrDefault(t => t.ID == item.ID);
+
+                    bringItem.Item = item.Item;
+                    bringItem.Serial = item.Serial;
+                    bringItem.Quantity = item.Quantity;
+                    bringItem.Unit = item.Unit;
+                    bringItem.AssetType = item.AssetType;
+                    bringItem.IsReturn = item.IsReturn;
+                    bringItem.ReturnDate = item.ReturnDate;
+                    bringItem.ReturnTime = item.ReturnTime;
+                    bringItem.ModifiedBy = user.EmpCode;
+                    bringItem.ModifiedDate = DateTime.Now;
+
                 }
                 var itemsDelete = dbContext.Guest_Item.Where(t => !listItemIDs.Contains(t.ID) && t.CatID == guest.ID);
                 dbContext.Guest_Item.RemoveRange(itemsDelete);

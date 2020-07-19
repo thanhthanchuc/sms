@@ -108,12 +108,15 @@ $('#estimated_date_out, #estimated_date_return, #date_from, #date_to').datepicke
 
 $('.timepicker, #estimated_time_out, #estimated_time_return').timepicker({
     timeFormat: 'h:mm p',
-    interval: 15,
-    defaultTime: new Date().getHours().toString(),
+    interval: 5,
     startTime: '00:00',
     dynamic: false,
     dropdown: true,
     scrollbar: true
+});
+
+$(".btn-reload").off('click').on('click', function (e) {
+    location.reload();
 });
 
 function handleRefId(leaveId) {

@@ -15,7 +15,6 @@
         }
     </style>
 }
-}
 
 <div class="form-horizontal">
     <div class="card-header">
@@ -217,38 +216,51 @@
             <tbody>
                 @foreach (var item in Model.Guest_Item)
                 {
-                    <tr>
-                        <td>
-                            <input type="hidden" class="itemID" value="@item.ID" />
-                            @item.Item
-                        </td>
-                        <td>@item.Serial</td>
-                        <td>@item.Quantity</td>
-                        <td>@item.Unit</td>
-                        <td>
-                            @if (item.AssetType == 0)
-                            {
-                                @:Hàng thường
-                            }
-                            else if (item.AssetType == 1)
-                            {
-                                @:Hàng IT
-                            }
-                            else
-                            {
-                                @:Hàng độc hại
-                            }
-                        </td>
-                        @if (item.IsReturn.Value)
+                <tr>
+                    <td>
+                        <input type="hidden" class="itemID" value="@item.ID" />
+                        @item.Item
+                    </td>
+                    <td>@item.Serial</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Unit</td>
+                    <td>
+                        @if (item.AssetType == 0)
                         {
-                            <td title="Có đem trở ra"><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
+                            @:Hàng thường
                         }
-                        else
+                        else if (item.AssetType == 1)
                         {
-                            <td title="Không đem trở ra"><i class="fas fa-times" style="color: red"></i></td>
+                            @:Hàng IT
                         }
+                        else if (item.AssetType == 2)
+                        {
+                            @:Hàng độc hại
+                        }
+                    </td>
+                    @if (item.IsReturn == true)
+                    {
+                        <td title="Có đem trở ra"><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
+                    }
+                    else if (item.IsReturn == false)
+                    {
+                        <td title="Không đem trở ra"><i class="fas fa-times" style="color: red"></i></td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (item.IsReturn == true)
+                    {
                         <td>@item.ReturnDate | @item.ReturnTime</td>
-                        @if (string.IsNullOrEmpty(item.ITT) && string.IsNullOrEmpty(item.SMT))
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (item.Item != null)
+                    {
+                        if (string.IsNullOrEmpty(item.ITT) && string.IsNullOrEmpty(item.SMT))
                         {
                             <td>
                                 <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
@@ -273,11 +285,11 @@
                             {
                                 if (item.SMT_Status == 0)
                                 {
-                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-times" style="color: red"></i></td>
                                 }
                                 else
                                 {
-                                    <td><i class="fas fa-check-square"></i></td>
+                                    <td><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
                                 }
                             }
                             if (!string.IsNullOrEmpty(item.ITT_Remark))
@@ -290,39 +302,39 @@
                             }
 
                         }
-
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.FST))
+                    }
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.FST))
+                        {
+                            @:@item.FST
+                        }
+                    </td>
+                    <td>
+                        @if (item.FST_Date != null)
+                        {
+                            @:@item.FST_Date
+                        }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.FST_Remark))
+                        {
+                            @:@item.FST_Remark
+                        }
+                    </td>
+                    <td>
+                        @if (item.FST_Status != null)
+                        {
+                            if (item.FST_Status == 1)
                             {
-                                @:@item.FST
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
                             }
-                        </td>
-                        <td>
-                            @if (item.FST_Date != null)
+                            else
                             {
-                                @:@item.FST_Date
+                                <i class="fas fa-times" style="color: red"></i>
                             }
-                        </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.FST_Remark))
-                            {
-                                @:@item.FST_Remark
-                            }
-                        </td>
-                        <td>
-                            @if (item.FST_Status != null)
-                            {
-                                if (item.FST_Status == 1)
-                                {
-                                    <i class="fas fa-check-square"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times"></i>
-                                }
-                            }
-                        </td>
-                    </tr>
+                        }
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -396,6 +408,13 @@
                     })
                 }
             })
-        })
+        });
+
+        $("#guest").removeClass('collapse');
+        $("#guest").removeClass('collapsed');
+        $("#guest").attr("aria-expanded", "true");
+        $("#guest-itt").addClass('active');
+        $("#collapseGuest").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

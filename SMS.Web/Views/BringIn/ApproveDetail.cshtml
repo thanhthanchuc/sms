@@ -91,7 +91,7 @@
                     <th>Đơn vị</th>
                     <th>Loại hàng hóa</th>
                     <th colspan="2">Thời gian đem trở ra</th>
-                    <th colspan="2">Trưởng phòng phê duyệt</th>
+                    <th colspan="4">Trưởng phòng phê duyệt</th>
                     <th colspan="4">ITT/SMT phê duyệt</th>
                     <th colspan="4">FST phê duyệt</th>
                 </tr>
@@ -126,10 +126,21 @@
                             {
                                 <i class="fas fa-check-square" title="Có đem trở ra"></i>
                             }
+                            else
+                            {
+                                <i class="fas fa-times" style="color: red" title="Không đem trở ra"></i>
+                            }
                         </td>
-                        <td>@item.ReturnDate | @item.ReturnTime</td>
+                        <td>
+                            @if (item.IsReturn.Value)
+                            {
+                                <span>@item.ReturnDate | @item.ReturnTime</span>
+                            }
+                        </td>
                         @if (string.IsNullOrEmpty(item.ApprovedBy))
                         {
+                            <td>@item.ApprovedBy</td>
+                            <td>@item.ApprovedDate</td>
                             <td>
                                 <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
                                 <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px; color: white"></i></a>
@@ -138,6 +149,8 @@
                         }
                         else
                         {
+                            <td>@item.ApprovedBy</td>
+                            <td>@item.ApprovedDate</td>
                             if (item.ApprovedStatus == 0)
                             {
                                 <td><i class="fas fa-times" style="color: red" title="Không phê duyệt"></i></td>
@@ -187,7 +200,7 @@
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times" style="color:red"></i>
                                 }
                             }
                             else if (item.SMT_Status != null)
@@ -198,7 +211,7 @@
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times" style="color:red"></i>
                                 }
                             }
                         </td>
@@ -230,7 +243,7 @@
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times" style="color:red"></i>
                                 }
                             }
                         </td>
@@ -307,6 +320,13 @@
                     })
                 }
             })
-        })
+        });
+
+        $("#BI").removeClass('collapse');
+        $("#BI").removeClass('collapsed');
+        $("#BI").attr("aria-expanded", "true");
+        $("#BIApprove").addClass('active');
+        $("#collapseBringIn").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

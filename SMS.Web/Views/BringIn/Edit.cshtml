@@ -20,7 +20,7 @@
                 <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group input-group-sm">
                     <input type="hidden" id="txtID" value="@Model.ID" />
-                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" value="@Model.EmpCode" readonly />
+                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" value="@Model.EmpCode" />
                 </div>
             </div>
 
@@ -42,22 +42,6 @@
                     <input type="hidden" id="txtStatus" value="@Model.Status" />
                     <input type="hidden" id="txtCreatedBy" value="@Model.CreatedBy" />
                     <input type="hidden" id="txtCreatedDate" value="@Model.CreatedDate" />
-                </div>
-            </div>
-
-            <div class="input-group input-group-sm">
-                <div class="col-2"></div>
-                <label class="col-2">
-                    <a class="btn btn-primary btn-sm" style="cursor: pointer" data-toggle="collapse" data-target=".bottom">Đăng ký tài sản</a>
-                </label>
-                <div class="file row col-8 input-group-sm">
-                    <label class="col-4">
-                        <a class="btn btn-success btn-sm" style="cursor: pointer"><i class="fas fa-download"></i> Tải mẫu đăng ký</a>
-                    </label>
-                    <div class="col-8 custom-file">
-                        <input class="form-control input-previous-button custom-file-input input-group-sm" id="temp-file" type="file" />
-                        <label class="custom-file-label" for="temp-file">Chọn file</label>
-                    </div>
                 </div>
             </div>
         </div>
@@ -98,7 +82,7 @@
 
 <br />
 
-<div class="bottom collapse show">
+<div class="bottom">
     <div class="form-horizontal col-12 row-add" id="bring-in-items" style="width: 100%">
         <div class="items-container">
             <table class="table-bordered table table-hover" id="BI-items">
@@ -179,13 +163,15 @@
             <i class="fas fa-plus"></i>&nbsp; Thêm tài sản
         </label>
         <button id="register" class="btn-success btn btn-sm" type="submit" title="Đăng ký mang hàng vào" style="cursor: pointer">
-            <i class="fas fa-edit"></i>&nbsp; Đăng ký
+            <i class="fas fa-edit"></i>&nbsp; Cập nhật
         </button>
     </div>
 </div>
 @section scripts{
     <script src="~/Assets/js/jquery.timepicker.min.js"></script>
     <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/bring_in/common.js"></script>
+
     <script>
         $("#add-row-items").off('click').on('click', function (e) {
             var html = `<tr class="row-items">
@@ -236,7 +222,7 @@
 
             $('.timepicker').timepicker({
                 timeFormat: 'h:mm p',
-                interval: 15,
+                interval: 5,
                 startTime: '00:00',
                 dynamic: false,
                 dropdown: true,
@@ -254,7 +240,7 @@
 
         $('.timepicker').timepicker({
             timeFormat: 'h:mm p',
-            interval: 15,
+            interval: 5,
             startTime: '00:00',
             dynamic: false,
             dropdown: true,
@@ -264,7 +250,7 @@
         //Edit
         $('#register').on("click", (event) => {
             event.preventDefault();
-            var bringInObject = {}; 
+            var bringInObject = {};
             bringInObject.ID = $('#txtID').val();
             bringInObject.EmpCode = $('#txtEmpCodeBI').val();
             bringInObject.Reason = $('#reason').val();
@@ -316,8 +302,24 @@
                 }
             })
 
-        })
+        });
+        $('#txtEmpCodeBI').keyup(function () {
+            var count = $('#txtEmpCodeBI').val().length;
+            if (count == 8) {
+                _userBI.getUserBI();
+            } else {
+                $('#txtFullNameBI').val("");
+                $('#txtPositionBI').val("");
+                $('#txtTeamBI').val("");
+            }
+        });
 
+        $("#BI").removeClass('collapse');
+        $("#BI").removeClass('collapsed');
+        $("#BI").attr("aria-expanded", "true");
+        $("#BIHistory").addClass('active');
+        $("#collapseBringIn").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }
 

@@ -19,7 +19,7 @@
                 <label class="control-label col-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group">
                     <div class="top-space input-group-sm">
-                        <input class="form-control input-previous-button col-md-12" id="txtEmployeeID" />
+                        <input class="form-control input-previous-button col-md-12" id="txtEmployeeID" maxlength="8"/>
                     </div>
                 </div>
                 <label class="control-label col-1 top-space lb">Khách</label>
@@ -151,15 +151,15 @@
             </div>
             <!--Thông tin profile-->
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Họ và tên</label>
                 <input readonly class="form-control input-previous-button col-9" id="txtFullNameBI" />
             </div>
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Vị trí</label>
                 <input readonly class="form-control input-previous-button col-9" id="txtPositionBI" />
             </div>
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Phòng ban</label>
                 <input readonly class="form-control input-previous-button col-9" id="txtTeamBI" />
             </div>
         </div>
@@ -277,7 +277,6 @@
         $('.timepicker').timepicker({
             timeFormat: 'h:mm p',
             interval: 5,
-            defaultTime: new Date().getHours().toString(),
             startTime: '00:00',
             dynamic: false,
             dropdown: true,
@@ -412,6 +411,13 @@
                     })
                 }
             })
-        })
+        });
+
+        $("#guest").removeClass('collapse');
+        $("#guest").removeClass('collapsed');
+        $("#guest").attr("aria-expanded", "true");
+        $("#guest-create").addClass('active');
+        $("#collapseGuest").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

@@ -45,7 +45,7 @@ namespace SMS.Models.DAO
             authencationContext.Password = password;
           
 
-            if (check)
+            if (!check)
             {
                 if (authencationContext.IsValid())
                 {

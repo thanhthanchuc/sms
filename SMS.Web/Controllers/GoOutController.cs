@@ -81,7 +81,9 @@ namespace SMS.Web.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new GoOutDAO();
-                var res = dao.Update(go_Out);
+                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                go_Out.ModifiedBy = user.EmpCode + "|" + user.FullName;
+                var res = dao.Update(go_Out, user.EmpCode);
                 if (res /*&& (go_Out.EstimatedDateReturn >= go_Out.EstimatedDateOut)*/)
                 {
                     return RedirectToAction("History", "GoOut");
@@ -158,6 +160,11 @@ namespace SMS.Web.Controllers
         {
             new GoOutDAO().Cancel(id);
             return RedirectToAction("History");
+        }
+
+        public ActionResult GOReport()
+        {
+            return View();
         }
 
         /// <summary>

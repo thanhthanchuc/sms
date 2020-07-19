@@ -59,11 +59,11 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Bring_In>()
                 .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             //modelBuilder.Entity<Bring_In>()
             //    .HasMany(e => e.Bring_In_Items)
@@ -81,35 +81,35 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Bring_In_Items>()
                 .Property(e => e.ApprovedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In_Items>()
                 .Property(e => e.GuardIn)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In_Items>()
                 .Property(e => e.GuardOut)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In_Items>()
                 .Property(e => e.SMT)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In_Items>()
                 .Property(e => e.ITT)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In_Items>()
                 .Property(e => e.FST)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In_Items>()
                 .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In_Items>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out>()
                 .Property(e => e.EmpCode)
@@ -125,11 +125,11 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Bring_Out>()
                 .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             //modelBuilder.Entity<Bring_Out>()
             //    .HasMany(e => e.Bring_Out_Items)
@@ -147,35 +147,35 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Bring_Out_Items>()
                 .Property(e => e.ApprovedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out_Items>()
                 .Property(e => e.GuardOut)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out_Items>()
                 .Property(e => e.GuardReturn)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out_Items>()
                 .Property(e => e.SMT)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out_Items>()
                 .Property(e => e.ITT)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out_Items>()
                 .Property(e => e.FST)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out_Items>()
                 .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out_Items>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Go_Out>()
                 .Property(e => e.EmpCode)
@@ -191,23 +191,23 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Go_Out>()
                 .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Go_Out>()
                 .Property(e => e.ApprovedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Go_Out>()
                 .Property(e => e.GuardOut)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Go_Out>()
                 .Property(e => e.GuardReturn)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Go_Out>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<GroupUser>()
                 .HasMany(e => e.Users)
@@ -232,19 +232,19 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Guest>()
                 .Property(e => e.GuardIn)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest>()
                 .Property(e => e.GuardOut)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest>()
                 .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             //modelBuilder.Entity<Guest>()
             //    .HasMany(e => e.Guest_Item)
@@ -262,31 +262,31 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Guest_Item>()
                 .Property(e => e.SMT)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest_Item>()
                 .Property(e => e.ITT)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest_Item>()
                 .Property(e => e.FST)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest_Item>()
                 .Property(e => e.GuardIn)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest_Item>()
                 .Property(e => e.GuardOut)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest_Item>()
                 .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Guest_Item>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Leave_Early>()
                 .Property(e => e.EmpCode)
@@ -302,19 +302,19 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Leave_Early>()
                 .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Leave_Early>()
                 .Property(e => e.ApprovedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Leave_Early>()
                 .Property(e => e.Guard)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Leave_Early>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Role>()
                 .HasMany(e => e.GroupUsers)

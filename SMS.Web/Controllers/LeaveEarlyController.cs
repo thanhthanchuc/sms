@@ -7,6 +7,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Web.Mvc;
 
 namespace SMS.Web.Controllers
@@ -65,6 +66,22 @@ namespace SMS.Web.Controllers
         }
 
         /// <summary>
+        /// Xuất báo cáo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult LEReport(int id)
+        {
+            var leaveEarly = new LeaveEarlyDAO().ViewDetail(id);
+            return View(leaveEarly);
+        }
+
+        public ActionResult SummaryLE()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// Phương thức load view sửa
         /// </summary>
         /// <returns></returns>
@@ -100,7 +117,7 @@ namespace SMS.Web.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Thêm mới thất bại");
+                ModelState.AddModelError("", "Cập nhật thất bại");
                 return View("Edit");
             }
             return RedirectToAction("History");
@@ -128,6 +145,7 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public JsonResult ApproveForAdmin(int id, string remark)
         {
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var res = new LeaveEarlyDAO().ApproveForAdmin(id, remark);
             return Json(new
             {

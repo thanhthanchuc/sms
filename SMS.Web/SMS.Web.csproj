@@ -224,6 +224,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BringInController.cs" />
     <Compile Include="Controllers\BringOutController.cs" />
+    <Compile Include="Controllers\DelegateController.cs" />
     <Compile Include="Controllers\GoOutController.cs" />
     <Compile Include="Controllers\GuardController.cs" />
     <Compile Include="Controllers\GuestController.cs" />
@@ -319,7 +320,6 @@
     <Content Include="Assets\js\jquery.datetimepicker.full.min.js" />
     <Content Include="Assets\js\jquery.timepicker.min.js" />
     <Content Include="Assets\js\leave_early\common.js" />
-    <Content Include="Assets\js\leave_early\report.js" />
     <Content Include="Assets\js\moment-with-locales.js" />
     <Content Include="Assets\js\moment.min.js" />
     <Content Include="Assets\js\plugins\jquery.twbsPagination.min.js" />
@@ -2281,6 +2281,11 @@
     <Content Include="Views\Guard\ConfirmGuest.cshtml" />
     <Content Include="Views\Guard\ConfirmGuestItem.cshtml" />
     <Content Include="Views\Guard\ConfirmLE.cshtml" />
+    <Content Include="Views\LeaveEarly\LEReport.cshtml" />
+    <Content Include="Views\GoOut\GOReport.cshtml" />
+    <Content Include="Views\BringIn\BIReport.cshtml" />
+    <Content Include="Views\Delegate\ListEmployee.cshtml" />
+    <Content Include="Views\Delegate\Delegate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />

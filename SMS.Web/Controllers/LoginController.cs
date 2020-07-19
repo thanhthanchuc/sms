@@ -25,7 +25,6 @@ namespace SMS.Web.Controllers
             {
                 var userDAO = new UserDAO();
 
-               
                 if (loginModel.Check)
                 {
                     var res = userDAO.Login(loginModel.EmpCode, Encryptor.MD5Hash(loginModel.Password), loginModel.Check);
@@ -36,10 +35,11 @@ namespace SMS.Web.Controllers
                         userSession.EmpCode = user.EmpCode;
                         userSession.ID = user.ID;
                         userSession.FullName = user.FullName;
+                        ViewBag.userSS = userSession.FullName;
                         //userSession.RoleName = userDAO.GetRoleName(user.RoleId);
                         Session["Login"] = user.EmpCode;
                         Session.Add(CommonConstants.USER_SESSION, userSession);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Queue", "Guard");
                     }
                     else if (res == 0)
                     {
@@ -53,11 +53,12 @@ namespace SMS.Web.Controllers
                 else
                 {
                     // sua o day
-                    var res = userDAO.Login(loginModel.EmpCode, Encryptor.MD5Hash(loginModel.Password), loginModel.Check);
+                    var res = userDAO.Login(loginModel.EmpCode, loginModel.Password, loginModel.Check);
                     if (res == 1)
                     {
                         var userSession = new UserLogin();
                         var user = userDAO.GetByCode(loginModel.EmpCode);
+                        ViewBag.userSS = (UserLogin)Session[CommonConstants.USER_SESSION];
                         userSession.EmpCode = user.EmpCode;
                         userSession.ID = user.ID;
                         userSession.FullName = user.FullName;

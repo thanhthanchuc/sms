@@ -174,15 +174,15 @@
             </div>
             <!--Thông tin profile-->
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Họ và tên</label>
                 <input readonly class="form-control input-previous-button col-9" id="txtFullNameBI" value="@Model.EmployeeName" />
             </div>
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Vị trí</label>
                 <input readonly class="form-control input-previous-button col-9" id="txtPositionBI" value="@Model.Position" />
             </div>
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Phòng ban</label>
                 <input readonly class="form-control input-previous-button col-9" id="txtTeamBI" value="@Model.Team" />
             </div>
         </div>
@@ -432,6 +432,13 @@
                     })
                 }
             })
-        })
+        });
+
+        $("#guest").removeClass('collapse');
+        $("#guest").removeClass('collapsed');
+        $("#guest").attr("aria-expanded", "true");
+        $("#guest-history").addClass('active');
+        $("#collapseGuest").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

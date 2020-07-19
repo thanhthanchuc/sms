@@ -39,27 +39,7 @@
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
                 &nbsp;
-                <select class="form-control from-date">
-                    <option value="0">---Chọn---</option>
-                    <option value="1">BOM</option>
-                    <option value="2">ACT</option>
-                    <option value="3">FST</option>
-                    <option value="4">GAT</option>
-                    <option value="5">HRT</option>
-                    <option value="6">ITT</option>
-                    <option value="7">MAT</option>
-                    <option value="8">MCT</option>
-                    <option value="9">MET</option>
-                    <option value="10">MMT</option>
-                    <option value="11">MQT</option>
-                    <option value="12">MTT</option>
-                    <option value="13">PDT</option>
-                    <option value="14">PUT</option>
-                    <option value="15">QAT</option>
-                    <option value="16">SCT</option>
-                    <option value="17">SMT</option>
-                    <option value="18">SQT</option>
-                </select>
+                <input id="team" class="form-control bg-light to-date">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
@@ -79,24 +59,11 @@
             <div class="col-2">
                 <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
             </div>
-
-            @*<div class="row col-sm-12 col-md-4">
-                <div class="col-md-8"></div>
-                <div class="dataTable_filter_search input-group col-md-4">
-                    <label class="no-margin-bottom" style="padding-top: 8px">Tìm kiếm</label> &nbsp;&nbsp;
-                    <input id="txtSearch" onkeyup="search()" name="searchString" type="search" class="form-control bg-light small" placeholder="Nhập mã, họ tên...">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-                </div>*@
         </div>
 
         <div style="margin-top: 8px">
             <div class="button-container" style="float: left">
-                <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
+                <a class="btn btn-sm btn-success btn-reload"><i class="fas fa-sync"></i> Tải lại</a>
             </div>
             <div style="float: right">
                 <form class="radio-container">
@@ -165,7 +132,6 @@
                 <th colspan="2">
                     @Html.DisplayName("Chỉnh sửa")
                 </th>
-                <th>In ấn</th>
             </tr>
             <!--Row dữ liệu bảng về sớm-->
             @foreach (var item in Model)
@@ -210,7 +176,7 @@
                         @Html.DisplayFor(modelItem => item.Reason)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.EstimatedDate)
+                        <span>@Html.DisplayFor(modelItem => item.EstimatedDate)</span><span> | </span><span>@Html.DisplayFor(modelItem => item.EstimatedTime)</span>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedBy)
@@ -231,9 +197,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ModifiedDate)
                     </td>
-                    <td>
-                        <button class="btn-print btn-primary"><i class="fas fa-print"></i></button>
-                    </td>
                 </tr>
             }
         </table>
@@ -252,6 +215,14 @@
     <script src="~/Assets/js/jquery.timepicker.min.js"></script>
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/leave_early/common.js"></script>
+    <script>
+        $("#LE").removeClass('collapse');
+        $("#LE").removeClass('collapsed');
+        $("#LE").attr("aria-expanded", "true");
+        $("#LEApprove").addClass('active');
+        $("#collapseLeaveEarly").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
+    </script>
 }
 
 

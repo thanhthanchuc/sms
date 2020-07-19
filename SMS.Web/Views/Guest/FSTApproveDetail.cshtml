@@ -208,113 +208,127 @@
             <tbody>
                 @foreach (var item in Model.Guest_Item)
                 {
-                <tr>
-                    <td>
-                        <input type="hidden" class="itemID" value="@item.ID" />
-                        @item.Item
-                    </td>
-                    <td>@item.Serial</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.Unit</td>
-                    <td>
-                        @if (item.AssetType == 0)
-                        {
-                            @:Hàng thường
-                        }
-                        else if (item.AssetType == 1)
-                        {
-                            @:Hàng IT
-                        }
-                        else
-                        {
-                            @:Hàng độc hại
-                        }
-                    </td>
-                    @if (item.IsReturn.Value)
-                    {
-                        <td title="Có đem trở ra"><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
-                    }
-                    else
-                    {
-                        <td title="Không đem trở ra"><i class="fas fa-times" style="color: red"></i></td>
-                    }
-                    <td>@item.ReturnDate | @item.ReturnTime</td>
-                    <td>
-                        @if (!string.IsNullOrEmpty(item.ITT))
-                        {
-                            @:@item.ITT
-                        }
-                        else if (!string.IsNullOrEmpty(item.SMT))
-                        {
-                            @:@item.SMT
-                        }
-                    </td>
-                    <td>
-                        @if (item.ITT_Date != null)
-                        {
-                            @:@item.ITT_Date
-                        }
-                        else if (item.SMT_Date != null)
-                        {
-                            @:@item.SMT_Date
-                        }
-                    </td>
-                    <td>
-                        @if (!string.IsNullOrEmpty(item.ITT_Remark))
-                        {
-                            @:@item.ITT_Remark
-                        }
-                        else if (!string.IsNullOrEmpty(item.SMT_Remark))
-                        {
-                            @:@item.SMT_Remark
-                        }
-                    </td>
-                    <td>
-                        @if (item.ITT_Status != null)
-                        {
-                            if (item.ITT_Status == 1)
-                            {
-                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                            }
-                            else
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        }
-                        else if (item.SMT_Status != null)
-                        {
-                            if (item.SMT_Status == 1)
-                            {
-                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                            }
-                            else
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        }
-                    </td>
-
-                    @if (string.IsNullOrEmpty(item.FST))
-                    {
+                    <tr>
                         <td>
-                            <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                            <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                            <input type="hidden" class="itemID" value="@item.ID" />
+                            @item.Item
                         </td>
-                        <td><input class="remark col-12 remark-1" type="text" placeholder="Ghi chú..." /></td>
-                    }
-                    else
-                    {
-                        if (item.FST_Status == null)
+                        <td>@item.Serial</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Unit</td>
+                        <td>
+                            @if (item.AssetType == 0)
+                            {
+                                @:Hàng thường
+                            }
+                            else if (item.AssetType == 1)
+                            {
+                                @:Hàng IT
+                            }
+                            else if (item.AssetType == 2)
+                            {
+                                @:Hàng độc hại
+                            }
+                        </td>
+                        @if (item.IsReturn == true)
                         {
-                            <td><i class="fas fa-times" style="color: red"></i></td>
+                            <td title="Có đem trở ra"><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
+                        }
+                        else if (item.IsReturn == false)
+                        {
+                            <td title="Không đem trở ra"><i class="fas fa-times" style="color: red"></i></td>
                         }
                         else
                         {
-                            <td><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
+                            <td></td>
                         }
-                        <td>@item.FST_Remark</td>
-                    }
-                </tr>
+                        @if (item.IsReturn == true)
+                        {
+                            <td>@item.ReturnDate | @item.ReturnTime</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.ITT))
+                            {
+                                @:@item.ITT
+                            }
+                            else if (!string.IsNullOrEmpty(item.SMT))
+                            {
+                                @:@item.SMT
+                            }
+                        </td>
+                        <td>
+                            @if (item.ITT_Date != null)
+                            {
+                                @:@item.ITT_Date
+                            }
+                            else if (item.SMT_Date != null)
+                            {
+                                @:@item.SMT_Date
+                            }
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.ITT_Remark))
+                            {
+                                @:@item.ITT_Remark
+                            }
+                            else if (!string.IsNullOrEmpty(item.SMT_Remark))
+                            {
+                                @:@item.SMT_Remark
+                            }
+                        </td>
+                        <td>
+                            @if (item.ITT_Status != null)
+                            {
+                                if (item.ITT_Status == 1)
+                                {
+                                    <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times" style="color: red"></i>
+                                }
+                            }
+                            else if (item.SMT_Status != null)
+                            {
+                                if (item.SMT_Status == 1)
+                                {
+                                    <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times" style="color: red"></i>
+                                }
+                            }
+                        </td>
+
+                        @if (item.Item != null)
+                        {
+                            if (string.IsNullOrEmpty(item.FST))
+                            {
+                                <td>
+                                    <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                                    <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                                </td>
+                                <td><input class="remark col-12 remark-1" type="text" placeholder="Ghi chú..." /></td>
+                            }
+                            else
+                            {
+                                if (item.FST_Status == null)
+                                {
+                                    <td><i class="fas fa-times" style="color: red"></i></td>
+                                }
+                                else
+                                {
+                                    <td><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
+                                }
+                                <td>@item.FST_Remark</td>
+                            }
+                        }
+                    </tr>
                 }
             </tbody>
         </table>
@@ -388,5 +402,12 @@
                 }
             })
         })
+
+        $("#guest").removeClass('collapse');
+        $("#guest").removeClass('collapsed');
+        $("#guest").attr("aria-expanded", "true");
+        $("#guest-fst").addClass('active');
+        $("#collapseGuest").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

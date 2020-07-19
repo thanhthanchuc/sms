@@ -1,0 +1,162 @@
+﻿@model SMS.Models.EF.Leave_Early
+
+@{
+    ViewBag.Title = "LEReport";
+}
+
+<link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="~/Assets/css/fonts-gg.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="~/Assets/css/customize.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+<style>
+    body {
+        color: black !important;
+    }
+
+    .table-bordered td, .table-bordered th {
+        border: 1px solid black !important;
+    }
+
+    label {
+        color: black;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .normal {
+        font-size: 18px;
+    }
+</style>
+
+@using (Html.BeginForm("LEReport", "LeaveEarly", FormMethod.Post))
+{
+    <div style="width:100%">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div style="text-align: center; color: black">
+            <img style="width: 200px; position: absolute; left:9%; top:2%" src="~/Assets/img/logo.png" />
+            <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">GIẤY XÁC NHẬN VỀ SỚM</h5>
+        </div>
+        <div class="center">
+            <span class="normal">EARLY LEAVE CONFIRMATION</span>
+        </div>
+        <div class="center">
+            <span class="normal">Mã đăng ký (ID): </span>&nbsp;<b class="normal"><span>RLE</span><span>@Html.DisplayFor(model => model.ID)</span><span>@Html.DisplayFor(model => model.Team)</span></b>
+        </div>
+        <div class="center">
+            <span class="normal">Ngày đăng ký (Created Date): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.CreatedDate)</b>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-1"></div>
+            <ul style="list-style-type: disc">
+                <li><u class="normal">THÔNG TIN NHÂN VIÊN (<i>Employee Information</i>):</u></li>
+            </ul>
+        </div>
+        <br />
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-7"><span class="normal">Tên nhân viên (<i>Employee Name</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.FullName)</b></div>
+            <div class="col-3"><span class="normal">Vị trí (<i>Position</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Position)</b></div>
+            <div class="col-1"></div>
+        </div>
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-7"><span class="normal">Mã nhân viên (<i>Employee Code</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EmpCode)</b></div>
+            <div class="col-3"><span class="normal">Phòng ban (<i>Team</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Team)</b></div>
+            <div class="col-1"></div>
+        </div>
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <span class="normal">Mục đích (<i>Purpose</i>): </span>
+                @if (Model.Purpose)
+                {
+                    <b class="normal">Công việc</b>
+                }
+                else
+                {
+                    <b class="normal">Cá nhân</b>
+                }
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-10"><span class="normal">Thời gian dự kiến (<i>Estimated Date</i>): </span>&nbsp;<b class="normal"><span>@Html.DisplayFor(model => model.EstimatedDate)</span>&nbsp;<span>@Html.DisplayFor(model => model.EstimatedTime)</span></b></div>
+            <div class="col-1"></div>
+        </div>
+        <br />
+        <div class="row col-12">
+            <div class="col-1"></div>
+            <ul style="list-style-type: disc">
+                <li class="normal">Khai báo đầy đủ, trung thực các thông tin yêu cầu</li>
+                <span style="font-size: 18px" class="nomarl"><i>Register all required informations</i></span>
+            </ul>
+        </div>
+        <br />
+        <div class="col-12 row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <table class="table table-bordered" style="border: 1px solid black !important">
+                    <tr>
+                        <th height="80">Người đăng ký<br />(Created by)</th>
+                        <th>TM xác nhận <br />(Approved by)</th>
+                        <th>Bảo vệ xác nhận (Guard) (Ra/Out)</th>
+                    </tr>
+                    <tr>
+                        <td height="100">&nbsp;<b class="normal">@Html.DisplayFor(model => model.CreatedBy)</b></td>
+                        <td height="100">
+                            &nbsp;<b class="normal">
+                                @if (Model.ApprovedStatus == 1)
+                                {
+                                    <i class="fa fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else if (Model.ApprovedStatus == 0)
+                                {
+                                    <i class="fa-xs fa-times" style="color: red"></i>
+                                }
+                                <br />@Html.DisplayFor(model => model.ApprovedBy)<br />@Html.DisplayFor(model => model.ApprovedDate)
+                            </b>
+                        </td>
+                        <td height="100">
+                            &nbsp;<b class="normal">
+                                @if (Model.GuardStatus == 1)
+                                {
+                                    <i class="fa fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else if (Model.GuardStatus == 0)
+                                {
+                                    <i class="fa-xs fa-times" style="color: red"></i>
+                                }
+                                <br />@Html.DisplayFor(model => model.Guard)<br />@Html.DisplayFor(model => model.GuardDate)
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-top: none !important" height="160"></td>
+                        <td style="border-top: none !important" height="160"></td>
+                        <td style="border-top: none !important" height="160"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <br />
+        <div class="row col-12">
+            <div class="col-1"></div>
+            <ul style="list-style-type: disc">
+                <li class="normal"><u>PHẦN DÀNH CHO BẢO VỆ:</u></li>
+                <span style="font-size: 18px" class="nomarl">.............................................................................................................................................................................................</span>
+            </ul>
+        </div>
+    </div>
+}

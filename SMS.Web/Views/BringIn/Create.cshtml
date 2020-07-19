@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -18,7 +20,7 @@
             <div class="form-group row-1 input-group">
                 <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group input-group-sm">
-                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" maxlength="8"/>
+                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" maxlength="8" />
                 </div>
             </div>
 
@@ -39,19 +41,6 @@
                     <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" readonly />
                 </div>
             </div>
-
-            <div class="input-group input-group-sm">
-                <div class="col-2"></div>
-                <div class="file row col-10 input-group-sm">
-                    <label class="col-3">
-                        <a class="btn btn-success btn-sm" style="cursor: pointer"><i class="fas fa-download"></i> Tải mẫu đăng ký</a>
-                    </label>
-                    <div class="col-8 custom-file">
-                        <input class="form-control input-previous-button custom-file-input input-group-sm" id="temp-file" type="file" />
-                        <label class="custom-file-label" for="temp-file">Chọn file</label>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="column col-1 col-mid"></div>
@@ -66,16 +55,16 @@
             </div>
             <!--Thông tin profile-->
             <div class="form-group input-group input-group-sm">
-                <label class="col-4 top-space" for="FullName">Họ và tên</label>
-                <input readonly class="form-control col-8 input-previous-button" id="txtFullNameBI" />
+                <label class="col-3 top-space" for="FullName">Họ và tên</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtFullNameBI" />
             </div>
             <div class="form-group input-group input-group-sm">
-                <label class="col-4 top-space" for="Positon">Vị trí</label>
-                <input readonly class="form-control col-8 input-previous-button" id="txtPositionBI" />
+                <label class="col-3 top-space" for="Positon">Vị trí</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtPositionBI" />
             </div>
             <div class="form-group input-group input-group-sm">
-                <label class="col-4 top-space" for="Positon">Phòng ban</label>
-                <input readonly class="form-control col-8 input-previous-button" id="txtTeamBI" />
+                <label class="col-3 top-space" for="Positon">Phòng ban</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtTeamBI" />
             </div>
         </div>
     </div>
@@ -86,6 +75,8 @@
 <div class="note col-12">
     <span class="control-label" style="color: dodgerblue"><u>Lưu ý</u>: <span style="color: #858796">&nbsp;Các trường <span style="color:red">(*)</span> bắt buộc phải nhập đầy đủ.</span></span>
 </div>
+
+<br />
 
 <div class="bottom collapse show">
     <div class="form-horizontal row-add" id="bring-in-items" style="width:100%">
@@ -128,7 +119,7 @@
                             </select>
                         </td>
                         <td class="input-group-sm">
-                            <select class="form-control input-previous-button isReturn">
+                            <select id="return" class="form-control input-previous-button isReturn">
                                 <option value="true" selected>Có</option>
                                 <option value="false">Không</option>
                             </select>
@@ -157,44 +148,45 @@
 @section scripts{
     <script src="~/Assets/js/jquery.timepicker.min.js"></script>
     <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/bring_in/common.js"></script>
     <script>
         $("#add-row-items").off('click').on('click', function (e) {
             var html = `<tr class="row-items">
-                            <td>
-                                <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button item" />
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button serial" />
-                            </td>
-                            <td class="input-group-sm">
-                                <input type="number" class="form-control input-previous-button quantity" />
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button unit" />
-                            </td>
-                            <td class="input-group-sm">
-                                <select class="form-control input-previous-button assetType">
-                                    <option value="0" selected>Hàng thường</option>
-                                    <option value="1">Hàng IT</option>
-                                    <option value="2">Hàng độc hại</option>
-                                </select>
-                            </td>
-                            <td class="input-group-sm">
-                                <select class="form-control input-previous-button isReturn">
-                                    <option value="true" selected>Có</option>
-                                    <option value="false">Không</option>
-                                </select>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" readonly />
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control timepicker returnTime" placeholder="Giờ" readonly />
-                            </td>
-                        </tr>`;
+                                <td>
+                                    <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button item" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button serial" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input type="number" class="form-control input-previous-button quantity" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button unit" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <select class="form-control input-previous-button assetType">
+                                        <option value="0" selected>Hàng thường</option>
+                                        <option value="1">Hàng IT</option>
+                                        <option value="2">Hàng độc hại</option>
+                                    </select>
+                                </td>
+                                <td class="input-group-sm">
+                                    <select class="form-control input-previous-button isReturn">
+                                        <option value="true" selected>Có</option>
+                                        <option value="false">Không</option>
+                                    </select>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control datepicker returnDate" placeholder="Ngày" readonly />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control timepicker returnTime" placeholder="Giờ" readonly />
+                                </td>
+                            </tr>`;
             $('#BI-items > tbody:last-child').append(html);
 
             $('.datepicker, #estimated_date, .returnDate').datepicker({
@@ -202,8 +194,7 @@
             });
             $('.timepicker').timepicker({
                 timeFormat: 'h:mm p',
-                interval: 15,
-                defaultTime: new Date().getHours().toString(),
+                interval: 5,
                 startTime: '00:00',
                 dynamic: false,
                 dropdown: true,
@@ -223,8 +214,7 @@
 
         $('.timepicker').timepicker({
             timeFormat: 'h:mm p',
-            interval: 15,
-            defaultTime: new Date().getHours().toString(),
+            interval: 5,
             startTime: '00:00',
             dynamic: false,
             dropdown: true,
@@ -240,6 +230,12 @@
                 $('#txtTeamBI').val("");
             }
         });
+
+        $("#BI").removeClass('collapse');
+        $("#BI").removeClass('collapsed');
+        $("#BI").attr("aria-expanded", "true");
+        $("#BICreate").addClass('active');
+        $("#collapseBringIn").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
-    <script src="~/Assets/js/bring_in/common.js"></script>
 }

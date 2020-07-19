@@ -57,7 +57,7 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool Update(Go_Out entity)
+        public bool Update(Go_Out entity, string modifiedBy)
         {
             try
             {
@@ -111,11 +111,10 @@ namespace SMS.Models.DAO
             try
             {
                 var goOut = dbContext.Go_Out.Find(id);
-                goOut.ApprovedBy = "42001005";
+                goOut.ApprovedBy = "42001005 | Lưu Văn Phúc";
                 goOut.ApprovedDate = DateTime.Now;
                 //Chia case cho TM và GL
                 goOut.ApprovedStatus = 1;
-
                 goOut.ApproverRemark = remark;
                 dbContext.SaveChanges();
                 return true;
