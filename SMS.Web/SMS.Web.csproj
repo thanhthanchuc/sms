@@ -224,6 +224,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BringInController.cs" />
     <Compile Include="Controllers\BringOutController.cs" />
+    <Compile Include="Controllers\DelegateController.cs" />
     <Compile Include="Controllers\GoOutController.cs" />
     <Compile Include="Controllers\GuardController.cs" />
     <Compile Include="Controllers\GuestController.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Authorization.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ReportParams.cs" />
     <Compile Include="Models\Report\BringInItemRPModel.cs" />
@@ -2182,6 +2184,9 @@
     <Content Include="Reports\DBSET\DTSet.xsc">
       <DependentUpon>DTSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Files\Book1.xlsx" />
+    <Content Include="Files\Book2.xlsx" />
+    <Content Include="Files\Khách cty A.xlsx" />
     <None Include="Reports\DBSET\DTSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -2284,6 +2289,8 @@
     <Content Include="Views\LeaveEarly\LEReport.cshtml" />
     <Content Include="Views\GoOut\GOReport.cshtml" />
     <Content Include="Views\BringIn\BIReport.cshtml" />
+    <Content Include="Views\Delegate\Delegate.cshtml" />
+    <Content Include="Views\Delegate\ListEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />

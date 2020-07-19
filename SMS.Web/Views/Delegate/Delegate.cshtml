@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<SMS.Models.EF.User>
+
+@{
     ViewBag.Title = "Delegate";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -13,7 +15,7 @@
             <div class="form-group row-1 input-group">
                 <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group input-group-sm">
-                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" maxlength="8" />
+                    <input class="form-control input-previous-button col-md-12" id="txtEmployeeID" maxlength="8" />
                 </div>
             </div>
 
@@ -22,34 +24,34 @@
                 <div class="col-md-10">
                     <form class="radio-container">
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">Admin
+                            <input class="radio" type="checkbox" id="admin">Admin
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">Sub Admin
+                            <input class="radio" type="checkbox" id="sub_admin">Sub Admin
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">PIC
+                            <input class="radio" type="checkbox" id="pic">PIC
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">ITT Team Manager
+                            <input class="radio" type="checkbox" id="itt_team_manager">ITT Team Manager
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">SMT Team Manager
+                            <input class="radio" type="checkbox" id="smt_team_manager">SMT Team Manager
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">FST Team Manager
+                            <input class="radio" type="checkbox" id="fst_team_manager">FST Team Manager
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">PIC Team Manager
+                            <input class="radio" type="checkbox" id="pic_team_manager">PIC Team Manager
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">Group Leader
+                            <input class="radio" type="checkbox" id="group_leader">Group Leader
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">Bảo vệ
+                            <input class="radio" type="checkbox" id="guard">Bảo vệ
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox">Chỉ đọc
+                            <input class="radio" type="checkbox" id="read_only">Chỉ đọc
                         </label>
                     </form>
                 </div>
@@ -57,7 +59,7 @@
             <div class="form-group input-group-sm row col-12">
                 <div class="col-2"></div>
                 <div class="col-2">
-                    <button type="submit" class="btn btn-sm btn-primary" title="Cấp quyền" value="Create"><i class="fas fa-edit"></i> Cấp quyền</button>
+                    <button type="button" class="btn btn-sm btn-primary" title="Cấp quyền" value="Create" onclick="handleSubmit()"><i class="fas fa-edit"></i> Cấp quyền</button>
                 </div>
             </div>
         </div>
@@ -112,7 +114,23 @@
                         <th class="th-1">Cellphone</th>
                     </tr>
                 </thead>
-                <tbody id="tblData"></tbody>
+                <tbody>
+                    @{ 
+                        foreach(var model in Model.FindAll(m => m.Admin == true || m.SubAdmin == true))
+                        {
+                                        <tr>
+                                            <td>@(model.EmpCode)</td>
+                                            <td>@(model.FullName)</td>
+                                            <td>@(model.Position)</td>
+                                            <td>@(model.Team)</td>
+                                            <td>@(model.Admin == true ? "Admin" : "Sub Admin")</td>
+                                            <td>@(model.Status)</td>
+                                            <td>@(model.Email)</td>
+                                            <td></td>
+                                        </tr>
+                        }
+                    }
+                </tbody>
             </table>
         </div>
     </div>
@@ -135,7 +153,21 @@
                         <th class="th-1">Cellphone</th>
                     </tr>
                 </thead>
-                <tbody id="tblData"></tbody>
+                @{
+                    foreach (var model in Model.FindAll(m => m.PIC == true))
+                    {
+                        <tr>
+                            <td>@(model.EmpCode)</td>
+                            <td>@(model.FullName)</td>
+                            <td>@(model.Position)</td>
+                            <td>@(model.Team)</td>
+                            <td>PIC</td>
+                            <td>@(model.Status)</td>
+                            <td>@(model.Email)</td>
+                            <td></td>
+                        </tr>
+                    }
+                }
             </table>
         </div>
     </div>
@@ -158,7 +190,23 @@
                         <th class="th-1">Cellphone</th>
                     </tr>
                 </thead>
-                <tbody id="tblData"></tbody>
+                <tbody id="tblData">
+                    @{
+                        foreach (var model in Model.FindAll(m => m.Group_Leader == true))
+                        {
+                            <tr>
+                                <td>@(model.EmpCode)</td>
+                                <td>@(model.FullName)</td>
+                                <td>@(model.Position)</td>
+                                <td>@(model.Team)</td>
+                                <td>Group Leader</td>
+                                <td>@(model.Status)</td>
+                                <td>@(model.Email)</td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
             </table>
         </div>
     </div>
@@ -181,7 +229,23 @@
                         <th class="th-1">Cellphone</th>
                     </tr>
                 </thead>
-                <tbody id="tblData"></tbody>
+                <tbody id="tblData">
+                    @{
+                        foreach (var model in Model.FindAll(m => m.PIC_TM == true))
+                        {
+                            <tr>
+                                <td>@(model.EmpCode)</td>
+                                <td>@(model.FullName)</td>
+                                <td>@(model.Position)</td>
+                                <td>@(model.Team)</td>
+                                <td>PIC Team Manager</td>
+                                <td>@(model.Status)</td>
+                                <td>@(model.Email)</td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
             </table>
         </div>
     </div>
@@ -195,5 +259,115 @@
         $("#EditDelegate").addClass('active');
         $("#collapseDelegateTab").addClass('show');
         $("#collapseDelegate").removeClass('collapse');
+
+        function handleSubmit() {
+            $.ajax({
+                url: "/User/UpdateRole",
+                method: "POST",
+                data: {
+                    EmpCode: $("#txtEmployeeID").val(),
+                    Admin: $('#admin').is(':checked'),
+                    SubAdmin: $('#sub_admin').is(':checked'),
+                    PIC: $('#pic').is(':checked'),
+                    ITT_TM: $('#itt_team_manager').is(':checked'),
+                    SMT_TM: $('#smt_team_manager').is(':checked'),
+                    FST_TM: $('#fst_team_manager').is(':checked'),
+                    Group_Leader: $('#group_leader').is(':checked'),
+                    Guard: $('#guard').is(':checked'),
+                    Read_Only: $('#read_only').is(':checked'),
+                    PIC_TM: $('#pic_team_manager').is(':checked'),
+                },
+                success: () => {
+                        window.location.reload()
+                },
+                error: () => {
+                    alert("Lỗi hệ thống!")
+                }
+            })
+        }
+
+
+        var _userBI = {
+            init: function () {
+                _userBI.registerEvent();
+            },
+            registerEvent: function () {
+                $("#info-BI-create").click(function () {
+                    _userBI.getUserBI();
+                });
+            },
+            getUserBI: function () {
+                var empCode = $("#txtEmployeeID").val();
+                $.ajax({
+                    url: '/User/GetUserByCode?empCode=' + empCode,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (reponse) {
+                        console.log(reponse.data);
+                        if (reponse.status) {
+                            $('#txtFullNameBI').val(reponse.data.FullName);
+                            $('#txtPositionBI').val(reponse.data.Position);
+                            $('#txtTeamBI').val(reponse.data.Team);
+                            $('#admin').attr("checked", reponse.data.Admin == 1);
+                            $('#sub_admin').attr("checked", reponse.data.SubAdmin == 1);
+                            $('#pic').attr("checked", reponse.data.PIC == 1);
+                            $('#itt_team_manager').attr("checked", reponse.data.ITT_TM == 1);
+                            $('#smt_team_manager').attr("checked", reponse.data.SMT_TM == 1);
+                            $('#fst_team_manager').attr("checked", reponse.data.FST_TM == 1);
+                            $('#group_leader').attr("checked", reponse.data.Group_Leader == 1);
+                            $('#guard').attr("checked", reponse.data.Guard == 1);
+                            $('#read_only').attr("checked", reponse.data.Read_Only == 1);
+                            $('#pic_team_manager').attr("checked", reponse.data.PIC_TM == 1);
+                        } else {
+                            alert("Mã nhân viên không tồn tại");
+                            $('#txtFullNameBI').val("");
+                            $('#txtPositionBI').val(reponse.data.Position);
+                            $('#txtTeamBI').val(reponse.data.Team);
+                            $('#admin').attr("checked", false);
+                            $('#sub_admin').attr("checked",  false);
+                            $('#pic').attr("checked", false);
+                            $('#itt_team_manager').attr("checked",  false);
+                            $('#smt_team_manager').attr("checked",  false);
+                            $('#fst_team_manager').attr("checked",  false);
+                            $('#group_leader').attr("checked",  false);
+                            $('#guard').attr("checked",  false);
+                            $('#read_only').attr("checked",  false);
+                            $('#pic_team_manager').attr("checked",  false);
+                        }
+                    },
+                    error: function () {
+                        $('#txtFullNameBI').val("Không tồn tại");
+                        $('#txtPositionBI').val("?");
+                        $('#txtTeamBI').val("?");
+                        $('#admin').attr("checked", false);
+                        $('#sub_admin').attr("checked", false);
+                        $('#pic').attr("checked", false);
+                        $('#itt_team_manager').attr("checked", false);
+                        $('#smt_team_manager').attr("checked", false);
+                        $('#fst_team_manager').attr("checked", false);
+                        $('#group_leader').attr("checked", false);
+                        $('#guard').attr("checked", false);
+                        $('#read_only').attr("checked", false);
+                        $('#pic_team_manager').attr("checked", false);
+                    }
+                });
+            }
+        }
+        _userBI.init();
+
+        $('#txtEmployeeID').keyup(function () {
+            var count = $('#txtEmployeeID').val().length;
+            if (count == 1 || count == 8) {
+                _userBI.getUserBI();
+            } else {
+                $('#txtFullNameBI').val("");
+                $('#txtPositionBI').val("");
+                $('#txtTeamBI').val("");
+            }
+        });
+
+        $(".btn-reload").off('click').on('click', function (e) {
+            location.reload();
+        });
     </script>
 }

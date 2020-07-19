@@ -10,11 +10,11 @@ namespace SMS.Web.Controllers
     public class DelegateController : BaseController
     {
 
-        private SMSDbContext dbContext;
+        private SMSDbContext _context;
 
         public DelegateController()
         {
-            dbContext = new SMSDbContext();
+            _context = new SMSDbContext();
         }
 
         // GET: Delegate
@@ -26,14 +26,15 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchDataEmployee()
         {
-            var model = dbContext.Users.OrderByDescending(x => x.ID).ToList();
+            var model = _context.Users.OrderByDescending(x => x.ID).ToList();
 
-            return Json(new { data = model, recordsTotal = dbContext.Users.Count(), recordsFiltered = model.Count() });
+            return Json(new { data = model, recordsTotal = _context.Users.Count(), recordsFiltered = model.Count() });
         }
 
         public ActionResult Delegate()
         {
-            return View();
+            var user = _context.Users.ToList();
+            return View(user);
         }
     }
 }

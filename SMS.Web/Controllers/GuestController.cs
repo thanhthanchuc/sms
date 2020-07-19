@@ -80,7 +80,7 @@ namespace SMS.Web.Controllers
         public ActionResult Detail(int id)
         {
             var guest = dbContext.Guests.Find(id);
-            var guestitems = dbContext.Guest_Item.Where(t => t.CatID == id).ToList();
+            var guestitems = dbContext.Guest_Item.Where(t => t.CatID == id && t.Quantity != null && t.Item != null).ToList();
             guest.Guest_Item = guestitems;
             return View(guest);
         }
