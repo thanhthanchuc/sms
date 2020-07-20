@@ -36,6 +36,9 @@ namespace SMS.Models.EF
         [StringLength(50)]
         public string Email { get; set; }
 
+        [StringLength(20)]
+        public string Cellphone { get; set; }
+
         public int RoleId { get; set; }
 
         public bool? Admin { get; set; }

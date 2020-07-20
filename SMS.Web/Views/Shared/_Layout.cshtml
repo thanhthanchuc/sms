@@ -52,14 +52,14 @@
                 <div id="collapseDelegate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <!-- Item 1 -->
                     <li class="nav-item sub-menu item-delegate" style="font-weight: 500">
-                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                        <a id="DL" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="true" aria-controls="collapseAdmin">
                             <i class="fas fa-fw fa-user-cog fa-menu lv-3-delegate"></i>
                             <span>Phân quyền</span>
                         </a>
-                        <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDelegate">
+                        <div id="collapseAdmin" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDelegate">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a class="collapse-item grey-a-tag" href="/Delegate/Delegate">Cấp quyền</a>
-                                <a class="collapse-item grey-a-tag" href="/Delegate/ListEmployee">Danh sách người dùng</a>
+                                <a id="delegate_tab" class="collapse-item grey-a-tag" href="/Delegate/Delegate">Cấp quyền</a>
+                                <a id="list_emp" class="collapse-item grey-a-tag" href="/Delegate/ListEmployee">Danh sách người dùng</a>
                             </div>
                         </div>
                     </li>
@@ -90,34 +90,6 @@
                             </div>
                         </div>
                     </li>
-                    <!-- Item 2 -->
-                    <li class="nav-item sub-menu item-news" style="font-weight: 500">
-                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
-                            <i class="fas fa-fw fa-address-book fa-menu lv-3-news"></i>
-                            <span>Item 2</span>
-                        </a>
-                        <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseNews">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a class="collapse-item grey-a-tag" href="#">Bảo mật</a>
-                                <a class="collapse-item grey-a-tag" href="#">Mẫu yêu cầu</a>
-                                <a class="collapse-item grey-a-tag" href="#">Quyền hạn</a>
-                            </div>
-                        </div>
-                    </li>
-                    <!-- Item 1 -->
-                    <li class="nav-item sub-menu item-news" style="font-weight: 500">
-                        <a class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
-                            <i class="fas fa-fw fa-align-justify fa-menu lv-3-news"></i>
-                            <span>Item 3</span>
-                        </a>
-                        <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseNews">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a class="collapse-item grey-a-tag" href="#">Bảo mật</a>
-                                <a class="collapse-item grey-a-tag" href="#">Mẫu yêu cầu</a>
-                                <a class="collapse-item grey-a-tag" href="#">Quyền hạn</a>
-                            </div>
-                        </div>
-                    </li>
                 </div>
             </div>
 
@@ -139,7 +111,7 @@
                         </a>
                         <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="LEReport" class="collapse-item grey-a-tag" href="#">CNV về sớm</a>
+                                <a id="LEReport" class="collapse-item grey-a-tag" href="/LeaveEarly/SummaryLE" target="_blank">CNV về sớm</a>
                                 <a id="GOReport" class="collapse-item grey-a-tag" href="#">CNV ra ngoài</a>
                                 <a id="BIReport" class="collapse-item grey-a-tag" href="#">CNV mang hàng vào</a>
                                 <a id="BOReport" class="collapse-item grey-a-tag" href="#">CNV mang hàng ra</a>

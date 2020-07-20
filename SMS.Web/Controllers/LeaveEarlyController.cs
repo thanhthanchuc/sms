@@ -86,6 +86,10 @@ namespace SMS.Web.Controllers
             return View(leaveEarly);
         }
 
+        /// <summary>
+        /// Xuất báo cáo tổng thể
+        /// </summary>
+        /// <returns></returns>
         public ActionResult SummaryLE()
         {
             return View();

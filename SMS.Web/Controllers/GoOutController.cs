@@ -171,9 +171,10 @@ namespace SMS.Web.Controllers
             return RedirectToAction("History");
         }
 
-        public ActionResult GOReport()
+        public ActionResult GOReport(int id)
         {
-            return View();
+            var goOut = new GoOutDAO().ViewDetail(id);
+            return View(goOut);
         }
 
         /// <summary>

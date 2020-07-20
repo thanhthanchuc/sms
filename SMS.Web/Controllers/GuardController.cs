@@ -158,7 +158,7 @@ namespace SMS.Web.Controllers
         {
             var data = dbcontext.Go_Out.Find(id);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            data.GuardOut = user.EmpCode;
+            data.GuardOut = user.EmpCode + "|" + user.FullName; 
             data.GuardStatusOut = status;
             data.GuardRemarkOut = remark;
             data.GuardDateOut = DateTime.Now;
@@ -171,7 +171,7 @@ namespace SMS.Web.Controllers
         {
             var data = dbcontext.Go_Out.Find(id);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            data.GuardReturn = user.EmpCode;
+            data.GuardReturn = user.EmpCode + "|" + user.FullName;
             data.GuardStatusReturn = status;
             data.GuardRemarkReturn = remark;
             data.GuardDateReturn = DateTime.Now;
@@ -203,7 +203,7 @@ namespace SMS.Web.Controllers
             {
                 var item = dbcontext.Bring_In_Items.Find(id);
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                item.GuardOut = user.EmpCode;
+                item.GuardOut = user.EmpCode + "|" + user.FullName;
                 item.GuardStatusOut = status;
                 item.GuardRemarkOut = remark;
                 item.GuardDateOut = DateTime.Now;
@@ -214,7 +214,7 @@ namespace SMS.Web.Controllers
             {
                 var item = dbcontext.Bring_In_Items.Find(id);
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                item.GuardIn = user.EmpCode;
+                item.GuardIn = user.EmpCode + "|" + user.FullName;
                 item.GuardStatusIn = status;
                 item.GuardRemarkIn = remark;
                 item.GuardDateIn = DateTime.Now;
@@ -247,7 +247,7 @@ namespace SMS.Web.Controllers
             {
                 var item = dbcontext.Bring_Out_Items.Find(id);
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                item.GuardReturn = user.EmpCode;
+                item.GuardReturn = user.EmpCode + "|" + user.FullName;
                 item.GuardStatusReturn = status;
                 item.GuardRemarkReturn = remark;
                 item.GuardDateReturn = DateTime.Now;
@@ -259,7 +259,7 @@ namespace SMS.Web.Controllers
             {
                 var item = dbcontext.Bring_Out_Items.Find(id);
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                item.GuardOut = user.EmpCode;
+                item.GuardOut = user.EmpCode + "|" + user.FullName;
                 item.GuardStatusOut = status;
                 item.GuardRemarkOut = remark;
                 item.GuardDateOut = DateTime.Now;
@@ -282,7 +282,7 @@ namespace SMS.Web.Controllers
             {
                 var guest = dbcontext.Guests.Find(id);
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                guest.GuardOut = user.EmpCode;
+                guest.GuardOut = user.EmpCode + "|" + user.FullName;
                 guest.GuardStatusOut = status;
                 guest.GuardRemarkOut = remark;
                 guest.GuardDateOut = DateTime.Now;
@@ -294,7 +294,7 @@ namespace SMS.Web.Controllers
             {
                 var guest = dbcontext.Guests.Find(id);
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                guest.GuardIn = user.EmpCode;
+                guest.GuardIn = user.EmpCode + "|" + user.FullName;
                 guest.GuardStatusIn = status;
                 guest.GuardRemarkIn = remark;
                 guest.GuardDateIn = DateTime.Now;
@@ -308,7 +308,7 @@ namespace SMS.Web.Controllers
         {
             var leave = dbcontext.Leave_Early.Find(id);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            leave.Guard = user.EmpCode;
+            leave.Guard = user.EmpCode + "|" + user.FullName;
             leave.GuardStatus = status;
             leave.GuardRemark = remark;
             leave.GuardDate = DateTime.Now;
@@ -330,7 +330,7 @@ namespace SMS.Web.Controllers
 
             var guestItems = dbcontext.Guest_Item.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            guestItems.GuardIn = user.EmpCode;
+            guestItems.GuardIn = user.EmpCode + "|" + user.FullName;
             guestItems.GuardDateIn = DateTime.Now;
             guestItems.GuardRemarkIn = remark;
             guestItems.GuardStatusIn = status;

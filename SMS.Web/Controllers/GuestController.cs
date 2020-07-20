@@ -68,7 +68,7 @@ namespace SMS.Web.Controllers
 
             model.CreatedDate = System.DateTime.Now;
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            model.CreatedBy = user.EmpCode;
+            model.CreatedBy = user.EmpCode + "|" + user.FullName;
             model.Status = false;
 
             var bringIn = dbContext.Guests.Add(model);
@@ -121,7 +121,7 @@ namespace SMS.Web.Controllers
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
 
                 var guest = dbContext.Guests.FirstOrDefault(t => t.ID == model.ID);
-                guest.ModifiedBy = user.EmpCode;
+                guest.ModifiedBy = user.EmpCode + "|" + user.FullName;
                 guest.ModifiedDate = DateTime.Now;
 
                 guest.Type = model.Type;
@@ -233,7 +233,7 @@ namespace SMS.Web.Controllers
 
             var guestItems = dbContext.Guest_Item.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            guestItems.ITT = user.EmpCode;
+            guestItems.ITT = user.EmpCode + "|" + user.FullName;
             guestItems.ITT_Date = DateTime.Now;
             guestItems.ITT_Remark = remark;
             guestItems.ITT_Status = status;
@@ -278,7 +278,7 @@ namespace SMS.Web.Controllers
 
             var guestItems = dbContext.Guest_Item.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            guestItems.FST = user.EmpCode;
+            guestItems.FST = user.EmpCode + "|" + user.FullName;
             guestItems.FST_Date = DateTime.Now;
             guestItems.FST_Remark = remark;
             guestItems.FST_Status = status;
@@ -300,6 +300,14 @@ namespace SMS.Web.Controllers
 
             dbContext.SaveChanges();
             return Content(JsonConvert.SerializeObject(guestItems), "application/json");
+        }
+
+        public ActionResult GuestReport(int id)
+        {
+            var guest = dbContext.Guests.Find(id);
+            var guestItems = dbContext.Guest_Item.Where(t => t.CatID == id).ToList();
+            guest.Guest_Item = guestItems;
+            return View(guest);
         }
     }
 }

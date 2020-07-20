@@ -63,7 +63,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary" style="display: none"></button>
             </div>
-
         }
     </div>
 
@@ -97,9 +96,6 @@
                         <th>
                             @Html.DisplayName("Thời gian dự kiến")
                         </th>
-                        <th colspan="4">
-                            @Html.DisplayName("Bảo vệ")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.LeaveEarlies)
@@ -111,10 +107,6 @@
                             <td>@item.Team</td>
                             <td>@item.Reason</td>
                             <td>@item.EstimatedDate | @item.EstimatedTime</td>
-                            <td>@item.Guard</td>
-                            <td>@item.GuardStatus</td>
-                            <td>@item.GuardDate</td>
-                            <td>@item.GuardRemark</td>
                             <td>
                                 <a href="/LeaveEarly/LEReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -156,9 +148,6 @@
                         <th>
                             @Html.DisplayName("Thời gian quay lại")
                         </th>
-                        <th colspan="8">
-                            @Html.DisplayName("Bảo vệ")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.GoOuts)
@@ -171,18 +160,10 @@
                             <td>@item.Reason</td>
                             <td>@item.EstimatedDateOut | @item.EstimatedTimeOut</td>
                             <td>@item.EstimatedDateReturn | @item.EstimatedTimeReturn</td>
-                            <td>@item.GuardOut</td>
-                            <td>@item.GuardStatusOut</td>
-                            <td>@item.GuardDateOut</td>
-                            <td>@item.GuardRemarkOut</td>
-                            <td>@item.GuardReturn</td>
-                            <td>@item.GuardStatusReturn</td>
-                            <td>@item.GuardDateReturn</td>
-                            <td>@item.GuardRemarkReturn</td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/GoOut/GOReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -246,9 +227,9 @@
                                 }
                             </td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/BringIn/BIReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -308,9 +289,9 @@
                                 }
                             </td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/BringOut/BOReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }

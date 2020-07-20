@@ -165,16 +165,11 @@
                     },
                     {
                         data: function (res) {
-                            var createdUser = "";
-                            //$.ajax({
-                            //    url: '/User/GetUserByCode?empCode=' + res.CreatedBy,
-                            //    type: "GET",
-                            //    dataType: 'json',
-                            //    success: (reponse) => {
-                            //        createdUser = reponse.data.FullName;
-                            //    }
-                            //});
-                            return `${res.CreatedBy} | ${createdUser}`;
+                            if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
+                                return "";
+                            var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
+                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
                         }
                     },
                     {
@@ -182,9 +177,8 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
-                            return `${res.ModifiedBy} | ${modifiedDate}`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
                         }
                     }
                 ]

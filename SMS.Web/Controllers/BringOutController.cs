@@ -78,7 +78,7 @@ namespace SMS.Web.Controllers
 
                 model.CreatedDate = DateTime.Now;
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                model.CreatedBy = user.EmpCode;
+                model.CreatedBy = user.EmpCode + "|" + user.FullName;
                 model.Status = false;
 
                 var BringOut = dbContext.Bring_Out.Add(model);
@@ -127,7 +127,7 @@ namespace SMS.Web.Controllers
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
 
                 var BringOut = dbContext.Bring_Out.FirstOrDefault(t => t.ID == model.ID);
-                BringOut.ModifiedBy = user.EmpCode;
+                BringOut.ModifiedBy = user.EmpCode + "|" + user.FullName;
                 BringOut.ModifiedDate = DateTime.Now;
                 BringOut.Reason = model.Reason;
                 BringOut.EstimatedDate = model.EstimatedDate;
@@ -204,7 +204,7 @@ namespace SMS.Web.Controllers
 
             var BringOutItems = dbContext.Bring_Out_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            BringOutItems.ApprovedBy = user.EmpCode;
+            BringOutItems.ApprovedBy = user.EmpCode + "|" + user.FullName;
             BringOutItems.ApprovedDate = DateTime.Now;
             BringOutItems.ApproverRemark = remark;
             BringOutItems.ApprovedStatus = status;
@@ -249,7 +249,7 @@ namespace SMS.Web.Controllers
 
             var BringOutItems = dbContext.Bring_Out_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            BringOutItems.ITT = user.EmpCode;
+            BringOutItems.ITT = user.EmpCode + "|" + user.FullName;
             BringOutItems.ITT_Date = DateTime.Now;
             BringOutItems.ITT_Remark = remark;
             BringOutItems.ITT_Status = status;
@@ -294,7 +294,7 @@ namespace SMS.Web.Controllers
 
             var BringOutItems = dbContext.Bring_Out_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            BringOutItems.FST = user.EmpCode;
+            BringOutItems.FST = user.EmpCode + "|" + user.FullName;
             BringOutItems.FST_Date = DateTime.Now;
             BringOutItems.FST_Remark = remark;
             BringOutItems.FST_Status = status;
@@ -316,6 +316,14 @@ namespace SMS.Web.Controllers
 
             dbContext.SaveChanges();
             return Content(JsonConvert.SerializeObject(BringOutItems), "application/json");
+        }
+
+        public ActionResult BOReport(int id)
+        {
+            var bringout = dbContext.Bring_Out.Find(id);
+            var bringoutItems = dbContext.Bring_Out_Items.Where(t => t.CatID == id).ToList();
+            bringout.Bring_Out_Items = bringoutItems;
+            return View(bringout);
         }
     }
 }

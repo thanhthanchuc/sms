@@ -1,7 +1,7 @@
-﻿@model SMS.Models.EF.Bring_In
+﻿@model SMS.Models.EF.Guest
 
 @{
-    ViewBag.Title = "BIReport";
+    Layout = null;
 }
 
 <link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -41,10 +41,10 @@
     <br />
     <div style="text-align: center; color: black">
         <img style="width: 200px; position: absolute; left:9%; top:2%" src="~/Assets/img/logo.png" />
-        <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">GIẤY XÁC NHẬN MANG HÀNG VÀO</h5>
+        <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">GIẤY XÁC NHẬN CUỘC GẶP</h5>
     </div>
     <div class="center">
-        <span class="normal">BRING IN CONFIRMATION</span>
+        <span class="normal">VISITING CONFIRMATION</span>
     </div>
     <div class="center">
         <span class="normal">Mã đăng ký (ID): </span><b class="normal"><span>RBI</span><span>@Html.DisplayFor(model => model.ID)</span><span>@Html.DisplayFor(model => model.Team)</span></b>
@@ -97,7 +97,7 @@
                 <th>Bảo vệ<br /> (Ra/Out)</th>
             </tr>
             <tr>
-                @foreach (var item in Model.Bring_In_Items)
+                @foreach (var item in Model.Bring_Out_Items)
                 {
                 <tr class="row-items">
                     <td class="input-group-sm">@item.ID</td>
@@ -173,20 +173,6 @@
                         @item.FST_Date
                     </td>
                     <td>
-                        @if (@item.GuardStatusIn == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (@item.GuardStatusIn == 0)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                        <br />
-                        @item.GuardIn
-                        <br />
-                        @item.GuardDateIn
-                    </td>
-                    <td>
                         @if (@item.GuardStatusOut == 1)
                         {
                             <i class="fas fa-check-square" style="color: dodgerblue"></i>
@@ -200,6 +186,20 @@
                         <br />
                         @item.GuardDateOut
                     </td>
+                    <td>
+                        @if (@item.GuardStatusReturn == 1)
+                        {
+                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                        }
+                        else if (@item.GuardStatusReturn == 0)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                        <br />
+                        @item.GuardReturn
+                        <br />
+                        @item.GuardDateReturn
+                    </td>
                 </tr>
             }
 
@@ -212,9 +212,9 @@
         <ul style="list-style-type: disc">
             <li class="normal">Khai báo đầy đủ, trung thực các thông tin yêu cầu</li>
             <span style="font-size: 18px" class="nomarl"><i>Register all required informations</i></span>
-            <li class="normal">Các loại hàng IT chỉ được phép mang vào với sự đồng ý của phòng SMT hoặc ITT</li>
+            <li class="normal">Các loại hàng IT chỉ được phép mang ra với sự đồng ý của phòng SMT hoặc ITT</li>
             <span style="font-size: 18px" class="nomarl"><i>Approval of SMT are required to bring out IT goods</i></span>
-            <li class="normal">Các loại hàng nguy hiểm cần sự cho phép của phòng FST để mang vào</li>
+            <li class="normal">Các loại hàng nguy hiểm cần sự cho phép của phòng FST để mang ra</li>
             <span style="font-size: 18px" class="nomarl"><i>Approval of FST is required to bring out dangerous goods</i></span>
         </ul>
     </div>

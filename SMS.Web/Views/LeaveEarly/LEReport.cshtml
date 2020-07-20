@@ -113,22 +113,22 @@
                         <th>Bảo vệ xác nhận (Guard) (Ra/Out)</th>
                     </tr>
                     <tr>
-                        <td height="100">&nbsp;<b class="normal">@Html.DisplayFor(model => model.CreatedBy)</b></td>
+                        <td height="100"><b class="normal">@Html.DisplayFor(model => model.CreatedBy)</b></td>
                         <td height="100">
-                            &nbsp;<b class="normal">
+                            <b class="normal">
                                 @if (Model.ApprovedStatus == 1)
                                 {
                                     <i class="fa fa-check-square" style="color: dodgerblue"></i>
                                 }
                                 else if (Model.ApprovedStatus == 0)
                                 {
-                                    <i class="fa-xs fa-times" style="color: red"></i>
+                                    <i class="fas fa-times-circle" style="color: red"></i>
                                 }
                                 <br />@Html.DisplayFor(model => model.ApprovedBy)<br />@Html.DisplayFor(model => model.ApprovedDate)
                             </b>
                         </td>
                         <td height="100">
-                            &nbsp;<b class="normal">
+                            <b class="normal">
                                 @if (Model.GuardStatus == 1)
                                 {
                                     <i class="fa fa-check-square" style="color: dodgerblue"></i>

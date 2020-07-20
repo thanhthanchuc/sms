@@ -236,6 +236,15 @@
         $("#date_from").datepicker().datepicker("setDate", $("#hidden_date_from").val());
         $("#date_to").datepicker().datepicker("setDate", $("#hidden_date_to").val());
     </script>
+
+    <script>
+        $("#LE").removeClass('collapse');
+        $("#LE").removeClass('collapsed');
+        $("#LE").attr("aria-expanded", "true");
+        $("#LEApprove").addClass('active');
+        $("#collapseLeaveEarly").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
+    </script>
 }
 
 

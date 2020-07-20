@@ -21,12 +21,12 @@
     </div>
     <div class="row dataTables_wrapper dt-bootstrap4 above-table">
         <div class="col-2 input-group input-group-sm">
-            <label class="no-margin-bottom" style="padding-top: 5px" >Phòng ban</label>
+            <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
             &nbsp;
             <input class="form-control bg-light to-date" id="team" value="@ViewBag.team">
         </div>
         <div class="col-2 input-group input-group-sm">
-            <label class="no-margin-bottom" style="padding-top: 5px" >Mã nhân viên</label>
+            <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
             &nbsp;
             <input class="form-control bg-light to-date" id="empcode" value="@ViewBag.empcode">
         </div>
@@ -41,13 +41,14 @@
             <!--Tiêu đề cột-->
             <thead>
                 <tr class="table-heading">
-                    <th class="th-1">Mã</th>
-                    <th class="th-1">Nhân viên</th>
+                    <th class="th-1">ID</th>
+                    <th class="th-1">Mã nhân viên</th>
+                    <th class="th-1">Tên nhân viên</th>
                     <th class="th-1">Vị trí</th>
                     <th class="th-1">Phòng ban</th>
                     <th class="th-1">Trạng thái</th>
                     <th class="th-1">Email</th>
-                    <th class="th-1">Cellphone</th>
+                    <th class="th-1">Điện thoại</th>
                 </tr>
             </thead>
             <tbody id="tblData"></tbody>
@@ -77,7 +78,7 @@
                 },
                 "lengthMenu": [[20, 25, 50, 100, -1], [20, 25, 50, 100, "All"]],
                 "lengthChange": false,
-                "pageLength": 20,
+                "pageLength": 22,
                 "ajax": {
                     "type": "POST",
                     "url": "/Delegate/FetchDataEmployee?team=" + $('#team').val() + "&empcode=" + $('#empcode').val(),
@@ -92,9 +93,10 @@
                     },
                     {
                         data: function (res) {
-                            return `<span class="border-right" style="padding-right:10px;">${res.EmpCode}</span><span style="margin-left:10px;">${res.FullName}</span>`;
+                            return res.EmpCode;
                         }
                     },
+                    { data: function (res) { return res.FullName; } },
                     { data: function (res) { return res.Position; } },
                     { data: function (res) { return res.Team; } },
                     {
@@ -114,8 +116,8 @@
         $("#DL").removeClass('collapse');
         $("#DL").removeClass('collapsed');
         $("#DL").attr("aria-expanded", "true");
-        $("#ListEmp").addClass('active');
-        $("#collapseDelegateTab").addClass('show');
+        $("#list_emp").addClass('active');
+        $("#collapseAdmin").addClass('show');
         $("#collapseDelegate").removeClass('collapse');
 
         function handleSearch() {

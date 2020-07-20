@@ -40,8 +40,10 @@ namespace SMS.Models.EF
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? CreatedDate { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? ModifiedDate { get; set; }
 
         [StringLength(50)]

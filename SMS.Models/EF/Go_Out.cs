@@ -44,6 +44,7 @@
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? CreatedDate { get; set; }
 
         [StringLength(50)]
@@ -53,7 +54,7 @@
 
         public string ApproverRemark { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? ApprovedDate { get; set; }
 
         [StringLength(50)]
@@ -63,6 +64,7 @@
 
         public string GuardRemarkOut { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? GuardDateOut { get; set; }
 
         [StringLength(50)]
@@ -72,8 +74,10 @@
 
         public string GuardRemarkReturn { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? GuardDateReturn { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? ModifiedDate { get; set; }
 
         [StringLength(50)]
@@ -84,14 +88,14 @@
             if (DateTime.Parse(Util.FormatDate(EstimatedDateOut) + ' ' + EstimatedTimeOut) < DateTime.Now)
             {
                 yield return
-                 new ValidationResult("Vui lòng điền đúng ngày và giờ ra ngoài",
+                 new ValidationResult("Ngày giờ ra phải sau thời điểm hiện tại",
                                       new[] { "EstimatedDateOut" });
             }
 
             if (DateTime.Parse(Util.FormatDate(EstimatedDateOut) + ' ' + EstimatedTimeOut) > DateTime.Parse(Util.FormatDate(EstimatedDateReturn) + ' ' + EstimatedTimeReturn))
             {
                 yield return
-                  new ValidationResult("Vui lòng điền đúng ngày và giờ trở lại",
+                  new ValidationResult("Ngày giờ quay lại phải sau ngày giờ ra",
                                        new[] { "EstimatedDateReturn" });
             }
         }

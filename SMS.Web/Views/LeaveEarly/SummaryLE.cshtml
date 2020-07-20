@@ -1,0 +1,138 @@
+﻿@model SMS.Models.EF.Leave_Early
+
+@{
+    ViewBag.Title = "SummaryLE";
+}
+
+<link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="~/Assets/css/fonts-gg.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="~/Assets/css/customize.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+<style>
+    body {
+        color: black !important;
+    }
+
+    .table-bordered td, .table-bordered th {
+        border: 1px solid black !important;
+    }
+
+    label {
+        color: black;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .normal {
+        font-size: 18px;
+    }
+</style>
+
+@using (Html.BeginForm("SummaryLE", "LeaveEarly", FormMethod.Get))
+{
+    <div style="width: 100%">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div style="text-align: center; color: black">
+            <img style="width: 200px; position: absolute; left:9%; top:2%" src="~/Assets/img/logo.png" />
+            <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">CÔNG NHÂN VIÊN VỀ SỚM</h5>
+        </div>
+        <div class="center">
+            <span class="normal">EARLY LEAVE</span>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div>
+            <table class="table table-bordered" style="border: 1px solid black !important">
+                <tr>
+                    <th>Mã</th>
+                    <th>Nhân viên</th>
+                    <th>Phòng ban</th>
+                    <th>Mục đích</th>
+                    <th>Giờ ra</th>
+                    <th>Phê duyệt</th>
+                    <th>Giờ ra thực tế</th>
+                    <th>Bảo vệ xác nhận</th>
+                </tr>
+                @*@foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="col-sticky-1">
+                            <span>REL</span>@Html.DisplayFor(modelItem => item.ID)@Html.DisplayFor(modelItem => item.Team)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpCode)
+                        </td>
+                        <td class="col-sticky-2">
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td class="col-sticky-3">
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        <td class="col-sticky-4">
+                            @Html.DisplayFor(modelItem => item.Team)
+                        </td>
+                        <td class="col-sticky-6">
+                            @if (item.Purpose)
+                            {
+                                <p style="display:inherit">Công việc</p>
+                            }
+                            else
+                            {
+                                <p style="display:inherit">Cá nhân</p>
+                            }
+                        </td>
+                        <td class="col-sticky-8">
+                            @Html.DisplayFor(modelItem => item.EstimatedDate) | @Html.DisplayFor(modelItem => item.EstimatedTime)
+                        </td>
+                        <td>
+                            @if (item.ApprovedStatus == 1)
+                            {
+                                <i class="fas fa-check-square" style="color:dodgerblue" title="Đã phê duyệt"></i>
+                            }
+                            else if (item.ApprovedStatus == 0)
+                            {
+                                <i class="fas fa-window-close" style="color:red" title="Không phê duyệt"></i>
+                            }
+                            else if (item.ApprovedStatus == 2)
+                            {
+                                <i class="fas fa-user-check" style="color:orange" title="Phê duyệt thay"></i>
+                            }
+                            else if (item.ApprovedStatus == 4)
+                            {
+                            }
+                        </td>
+                        <td>
+                            @if (item.Guard != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.Guard)
+                            }
+                        </td>
+                        <td>
+                            @if (item.GuardStatus == 1)
+                            {
+                                <i class="fas fa-check-square" style="color:dodgerblue" title="Đã xác nhận"></i>
+                            }
+                        </td>
+                        <td>
+                            @if (item.GuardDate != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.GuardDate)
+                            }
+                        </td>
+                    </tr>
+                }*@
+            </table>
+        </div>
+    </div>
+}

@@ -42,7 +42,7 @@
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? CreatedDate { get; set; }
 
         [StringLength(50)]
@@ -52,7 +52,7 @@
 
         public string ApproverRemark { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? ApprovedDate { get; set; }
 
         [StringLength(50)]
@@ -63,10 +63,10 @@
         [StringLength(250)]
         public string GuardRemark { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? GuardDate { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? ModifiedDate { get; set; }
 
         [StringLength(50)]
@@ -78,7 +78,7 @@
             if (DateTime.Parse(Util.FormatDate(EstimatedDate) + ' ' + EstimatedTime) <= DateTime.Now)
             {
                 yield return
-                 new ValidationResult("Vui lòng điền đúng ngày và giờ ra ngoài",
+                 new ValidationResult("Ngày giờ ra ngoài phải sau thời điểm hiện tại",
                                       new[] { "EstimatedDate" });
             }
         }

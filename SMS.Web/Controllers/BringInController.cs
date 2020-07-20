@@ -239,7 +239,7 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.ApprovedBy = user.EmpCode;
+            bringinItems.ApprovedBy = user.EmpCode + "|" + user.FullName;
             bringinItems.ApprovedDate = DateTime.Now;
             bringinItems.ApproverRemark = remark;
             bringinItems.ApprovedStatus = status;
@@ -284,7 +284,7 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.ITT = user.EmpCode;
+            bringinItems.ITT = user.EmpCode + "|" + user.FullName;
             bringinItems.ITT_Date = DateTime.Now;
             bringinItems.ITT_Remark = remark;
             bringinItems.ITT_Status = status;
@@ -330,7 +330,7 @@ namespace SMS.Web.Controllers
 
             var bringinItems = dbContext.Bring_In_Items.Find(itemId);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            bringinItems.FST = user.EmpCode;
+            bringinItems.FST = user.EmpCode + "|" + user.FullName;
             bringinItems.FST_Date = DateTime.Now;
             bringinItems.FST_Remark = remark;
             bringinItems.FST_Status = status;
@@ -355,9 +355,12 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(bringinItems), "application/json");
         }
 
-        public ActionResult BIReport()
+        public ActionResult BIReport(int id)
         {
-            return View();
+            var bringin = dbContext.Bring_In.Find(id);
+            var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id).ToList();
+            bringin.Bring_In_Items = bringinItems;
+            return View(bringin);
         }
     }
 }

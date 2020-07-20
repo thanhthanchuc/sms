@@ -40,8 +40,6 @@ namespace SMS.Web.Controllers
             {
                 model = model.Where(m => m.EmpCode.ToString().Contains(empcode)).ToList();
             }    
-                
-
             return Json(new { data = model, recordsTotal = model.Count(), recordsFiltered = model.Count() });
         }
 

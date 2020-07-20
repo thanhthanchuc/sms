@@ -20,40 +20,49 @@
     <!--Navbar lọc dữ liệu-->
     <div style="width: 100%">
         <div class="card-header">
-            <h5 class="m-0 font-weight-bold text-primary">LỊCH SỬ VÀO RA</h5>
+            <h5 class="m-0 font-weight-bold text-primary">@Html.ActionLink("LỊCH SỬ VÀO RA", "History", "Guard")</h5>
         </div>
-        <div class="row dataTables_wrapper dt-bootstrap4 above-table">
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
-                &nbsp;
-                <input id="date_from" class="form-control bg-light from-date" readonly>
+        @using (@Html.BeginForm("History", "Guard", FormMethod.Get))
+        {
+            <div class="row dataTables_wrapper dt-bootstrap4 above-table">
+
+                <div class="col-2 input-group input-group-sm">
+                    <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
+                    &nbsp;
+                    <input id="date_from" class="form-control bg-light from-date" readonly>
+                </div>
+                <div class="col-2 input-group input-group-sm">
+                    <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+                    &nbsp;
+                    <input id="date_to" class="form-control bg-light to-date" readonly>
+                </div>
+                <div class="col-2 input-group input-group-sm">
+
+                    <div class="col-12 input-group input-group-sm">
+                        <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+                        &nbsp;
+                        <input id="emp_code" class="form-control bg-light to-date" name="employee" value="@ViewBag.employee">
+                    </div>
+                </div>
+                <div class="col-2 input-group input-group-sm">
+                    <label class="no-margin-bottom" style="padding-top: 5px; margin-right: 5px;">Tên khách</label>
+                    <input id="guest" class="form-control bg-light to-date" name="guest" value="@ViewBag.guest">
+                </div>
+                <div class="col-2 input-group input-group-sm">
+                    <label class="no-margin-bottom" style="padding-top: 5px">Công ty</label>
+                    &nbsp;
+                    <input id="emp_code" class="form-control bg-light to-date" name="company" value="@ViewBag.company">
+                </div>
+                <div class="col-2">
+                    <a href="/Guest/Create" class="btn btn-sm btn-primary" id="btn-guest-register"><i class="fas fa-users"></i> Đăng ký khách</a>
+                    &nbsp;
+                    <a href="/Guard/Queue" class="btn btn-sm btn-info" id="btn-process" title="Chuyển sang màn hình Chờ xử lý"><i class="fas fa-clock"></i> Chờ xử lý</a>
+                    &nbsp;
+                    <button class="btn btn-sm btn-success" id="btn-refresh" title="Tải lại danh sách"><i class="fas fa-sync"></i></button>
+                </div>
+                <button type="submit" class="btn btn-primary" style="display: none"></button>
             </div>
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
-                &nbsp;
-                <input id="date_to" class="form-control bg-light to-date" readonly>
-            </div>
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
-                &nbsp;
-                <input id="emp_code" class="form-control bg-light to-date">
-            </div>
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Tên khách</label>
-                &nbsp;
-                <input id="emp_code" class="form-control bg-light to-date">
-            </div>
-            <div class="col-2 input-group input-group-sm">
-                <label class="no-margin-bottom" style="padding-top: 5px">Công ty</label>
-                &nbsp;
-                <input id="emp_code" class="form-control bg-light to-date">
-            </div>
-            <div class="col-2">
-                <a href="/Guard/Queue" class="btn btn-sm btn-info" id="btn-process" title="Chuyển sang màn hình Chờ xử lý"><i class="fas fa-clock"></i> Chờ xử lý</a>
-                &nbsp;
-                <button class="btn btn-sm btn-success" id="btn-refresh" title="Tải lại danh sách"><i class="fas fa-sync"></i></button>
-            </div>
-        </div>
+        }
     </div>
 
     <!--Div chứa table dữ liệu-->
@@ -86,9 +95,6 @@
                         <th>
                             @Html.DisplayName("Thời gian dự kiến")
                         </th>
-                        <th colspan="4">
-                            @Html.DisplayName("Bảo vệ")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.LeaveEarlies)
@@ -100,10 +106,6 @@
                             <td>@item.Team</td>
                             <td>@item.Reason</td>
                             <td>@item.EstimatedDate | @item.EstimatedTime</td>
-                            <td>@item.Guard</td>
-                            <td>@item.GuardStatus</td>
-                            <td>@item.GuardDate</td>
-                            <td>@item.GuardRemark</td>
                             <td>
                                 <a href="/LeaveEarly/LEReport/@item.ID"  class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -145,9 +147,6 @@
                         <th>
                             @Html.DisplayName("Thời gian quay lại")
                         </th>
-                        <th colspan="8">
-                            @Html.DisplayName("Bảo vệ")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.GoOuts)
@@ -160,16 +159,8 @@
                             <td>@item.Reason</td>
                             <td>@item.EstimatedDateOut | @item.EstimatedTimeOut</td>
                             <td>@item.EstimatedDateReturn | @item.EstimatedTimeReturn</td>
-                            <td>@item.GuardOut</td>
-                            <td>@item.GuardStatusOut</td>
-                            <td>@item.GuardDateOut</td>
-                            <td>@item.GuardRemarkOut</td>
-                            <td>@item.GuardReturn</td>
-                            <td>@item.GuardStatusReturn</td>
-                            <td>@item.GuardDateReturn</td>
-                            <td>@item.GuardRemarkReturn</td>
                             <td>
-                                <a class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/GoOut/GOReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
                                 </a>
                             </td>
@@ -235,9 +226,9 @@
                                 }
                             </td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/BringIn/BIReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -297,9 +288,9 @@
                                 }
                             </td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/BringOut/BOReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -388,9 +379,9 @@
                             <td>@item.Team</td>
                             <td>@item.Position</td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -476,9 +467,9 @@
                             <td>@item.Team</td>
                             <td>@item.Position</td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }

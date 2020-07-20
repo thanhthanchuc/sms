@@ -115,19 +115,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{ 
-                        foreach(var model in Model.FindAll(m => m.Admin == true || m.SubAdmin == true))
+                    @{
+                        foreach (var model in Model.FindAll(m => m.Admin == true || m.SubAdmin == true))
                         {
-                                        <tr>
-                                            <td>@(model.EmpCode)</td>
-                                            <td>@(model.FullName)</td>
-                                            <td>@(model.Position)</td>
-                                            <td>@(model.Team)</td>
-                                            <td>@(model.Admin == true ? "Admin" : "Sub Admin")</td>
-                                            <td>@(model.Status)</td>
-                                            <td>@(model.Email)</td>
-                                            <td></td>
-                                        </tr>
+                            <tr>
+                                <td>@(model.EmpCode)</td>
+                                <td>@(model.FullName)</td>
+                                <td>@(model.Position)</td>
+                                <td>@(model.Team)</td>
+                                <td>@(model.Admin == true ? "Admin" : "Sub Admin")</td>
+                                <td>@(model.Status)</td>
+                                <td>@(model.Email)</td>
+                                <td></td>
+                            </tr>
                         }
                     }
                 </tbody>
@@ -227,6 +227,7 @@
                         <th class="th-1">Trạng thái</th>
                         <th class="th-1">Email</th>
                         <th class="th-1">Cellphone</th>
+                        <th class="th-1">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody id="tblData">
@@ -278,7 +279,7 @@
                     PIC_TM: $('#pic_team_manager').is(':checked'),
                 },
                 success: () => {
-                        window.location.reload()
+                    window.location.reload()
                 },
                 error: () => {
                     alert("Lỗi hệ thống!")
@@ -324,15 +325,15 @@
                             $('#txtPositionBI').val(reponse.data.Position);
                             $('#txtTeamBI').val(reponse.data.Team);
                             $('#admin').attr("checked", false);
-                            $('#sub_admin').attr("checked",  false);
+                            $('#sub_admin').attr("checked", false);
                             $('#pic').attr("checked", false);
-                            $('#itt_team_manager').attr("checked",  false);
-                            $('#smt_team_manager').attr("checked",  false);
-                            $('#fst_team_manager').attr("checked",  false);
-                            $('#group_leader').attr("checked",  false);
-                            $('#guard').attr("checked",  false);
-                            $('#read_only').attr("checked",  false);
-                            $('#pic_team_manager').attr("checked",  false);
+                            $('#itt_team_manager').attr("checked", false);
+                            $('#smt_team_manager').attr("checked", false);
+                            $('#fst_team_manager').attr("checked", false);
+                            $('#group_leader').attr("checked", false);
+                            $('#guard').attr("checked", false);
+                            $('#read_only').attr("checked", false);
+                            $('#pic_team_manager').attr("checked", false);
                         }
                     },
                     error: function () {
@@ -369,5 +370,12 @@
         $(".btn-reload").off('click').on('click', function (e) {
             location.reload();
         });
+
+        $("#DL").removeClass('collapse');
+        $("#DL").removeClass('collapsed');
+        $("#DL").attr("aria-expanded", "true");
+        $("#delegate_tab").addClass('active');
+        $("#collapseAdmin").addClass('show');
+        $("#collapseDelegate").removeClass('collapse');
     </script>
 }

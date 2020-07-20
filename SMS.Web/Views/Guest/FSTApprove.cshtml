@@ -94,7 +94,6 @@
                 <th class="th-1">Thời gian ra</th>
                 <th class="th-1">Trạng thái</th>
                 <th class="th-1">Chi tiết</th>
-                <th class="th-1">In ấn</th>
                 <th class="th-1">Người tạo</th>
                 <th class="th-1">Chỉnh sửa</th>
             </tr>
@@ -166,23 +165,11 @@
                     },
                     {
                         data: function (res) {
-                            return `<button class="btn btn-print btn-primary btn-standard" id="btnPrint" title="In báo cáo">
-                                                                <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                                            </button>`;
-                        }
-                    },
-                    {
-                        data: function (res) {
-                            var createdUser = "";
-                            //$.ajax({
-                            //    url: '/User/GetUserByCode?empCode=' + res.CreatedBy,
-                            //    type: "GET",
-                            //    dataType: 'json',
-                            //    success: (reponse) => {
-                            //        createdUser = reponse.data.FullName;
-                            //    }
-                            //});
-                            return `${res.CreatedBy} | ${createdUser}`;
+                            if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
+                                return "";
+                            var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
+                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
                         }
                     },
                     {
@@ -190,9 +177,8 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
-                            return `${res.ModifiedBy} | ${modifiedDate}`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
                         }
                     }
                 ]

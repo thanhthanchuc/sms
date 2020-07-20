@@ -49,60 +49,57 @@
             <span class="normal">GOING OUT CONFIRMATION</span>
         </div>
         <div class="center">
-            <span class="normal">Mã đăng ký (ID): </span>
+            <span class="normal">Mã đăng ký (ID): </span>&nbsp;<b class="normal"><span>RGO</span><span>@Html.DisplayFor(model => model.ID)</span><span>@Html.DisplayFor(model => model.Team)</span></b>
         </div>
         <div class="center">
-            <span class="normal">Ngày đăng ký (Created Date): </span>
+            <span class="normal">Ngày đăng ký (Created Date): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.CreatedDate)</b>
         </div>
         <br />
         <div class="row">
-            <div class="col-1"></div>
             <ul style="list-style-type: disc">
                 <li><u class="normal">THÔNG TIN NHÂN VIÊN (<i>Employee Information</i>):</u></li>
             </ul>
         </div>
         <br />
         <div class="col-12 row">
-            <div class="col-1"></div>
-            <div class="col-7"><span class="normal">Tên nhân viên (<i>Employee Name</i>): </span></div>
-            <div class="col-3"><span class="normal">Vị trí (<i>Position</i>): </span></div>
-            <div class="col-1"></div>
+            <div class="col-8"><span class="normal">Tên nhân viên (<i>Employee Name</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.FullName)</b></div>
+            <div class="col-4"><span class="normal">Vị trí (<i>Position</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Position)</b></div>
         </div>
         <div class="col-12 row">
-            <div class="col-1"></div>
-            <div class="col-7"><span class="normal">Mã nhân viên (<i>Employee Code</i>): </span></div>
-            <div class="col-3"><span class="normal">Phòng ban (<i>Team</i>): </span></div>
-            <div class="col-1"></div>
+            <div class="col-8"><span class="normal">Mã nhân viên (<i>Employee Code</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EmpCode)</b></div>
+            <div class="col-4"><span class="normal">Phòng ban (<i>Team</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Team)</b></div>
         </div>
         <div class="col-12 row">
-            <div class="col-1"></div>
-            <div class="col-10"><span class="normal">Mục đích (<i>Purpose</i>): </span></div>
-            <div class="col-1"></div>
+            <div class="col-12">
+                <span class="normal">Mục đích (<i>Purpose</i>): </span>
+                @if (Model.Purpose)
+                {
+                    <b class="normal">Công việc</b>
+                }
+                else
+                {
+                    <b class="normal">Cá nhân</b>
+                }
+            </div>
         </div>
         <div class="col-12 row">
-            <div class="col-1"></div>
-            <div class="col-5"><span class="normal">Thời gian ra (<i>Estimated Date Out</i>): </span></div>
-            <div class="col-5"><span class="normal">Thời gian quay lại (<i>Estimated Date Return</i>): </span></div>
-            <div class="col-1"></div>
+            <div class="col-6"><span class="normal">Thời gian ra (<i>Estimated Date Out</i>): </span>&nbsp;<b class="normal"><span>@Html.DisplayFor(model => model.EstimatedDateOut)</span>&nbsp;<span>@Html.DisplayFor(model => model.EstimatedTimeOut)</span></b></div>
+            <div class="col-6"><span class="normal">Thời gian quay lại (<i>Estimated Date Return</i>): </span>&nbsp;<b class="normal"><span>@Html.DisplayFor(model => model.EstimatedDateReturn)</span>&nbsp;<span>@Html.DisplayFor(model => model.EstimatedTimeReturn)</span></b></div>
         </div>
         <div class="col-12 row">
-            <div class="col-1"></div>
-            <div class="col-5"><span class="normal">Thời gian ra thực tế (<i>Guard Out</i>): </span></div>
-            <div class="col-5"><span class="normal">Thời gian quay lại thực tế (<i>Guard Return</i>): </span></div>
-            <div class="col-1"></div>
+            <div class="col-6"><span class="normal">Thời gian ra thực tế (<i>Guard Out</i>): </span>&nbsp;<b class="normal"><span>@Html.DisplayFor(model => model.GuardDateOut)</span></b></div>
+            <div class="col-6"><span class="normal">Thời gian quay lại thực tế (<i>Guard Return</i>): </span>&nbsp;<b class="normal"><span>@Html.DisplayFor(model => model.GuardDateReturn)</span></b></div>
         </div>
         <br />
         <div class="row col-12">
-            <div class="col-1"></div>
             <ul style="list-style-type: disc">
                 <li class="normal">Khai báo đầy đủ, trung thực các thông tin yêu cầu</li>
                 <span style="font-size: 18px" class="nomarl"><i>Register all required informations</i></span>
             </ul>
         </div>
         <br />
-        <div class="col-12 row" style="width: 500px">
-            <div class="col-1"></div>
-            <div class="col-10">
+        <div>
+            <div>
                 <table class="table table-bordered" style="border: 1px solid black !important">
                     <tr>
                         <th height="80">Người đăng ký<br />(Created by)</th>
@@ -110,10 +107,46 @@
                         <th colspan="2">Bảo vệ xác nhận (Guard) (Ra/Out)</th>
                     </tr>
                     <tr>
-                        <td height="100">CreatedBy + SESSION.FullName</td>
-                        <td height="100">ApprovedStatus + ApprovedBy + SESSION.FullName</td>
-                        <td height="100">GuardOutStatus + GuardOut + SESSION.FullName</td>
-                        <td height="100">GuardReturnStatus + GuardReturn + SESSION.FullName</td>
+                        <td height="100"><b class="normal">@Html.DisplayFor(model => model.CreatedBy)</b></td>
+                        <td height="100">
+                            <b class="normal">
+                                @if (Model.ApprovedStatus == 1)
+                                {
+                                    <i class="fa fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else if (Model.ApprovedStatus == 0)
+                                {
+                                    <i class="fas fa-times-circle" style="color: red"></i>
+                                }
+                                <br />@Html.DisplayFor(model => model.ApprovedBy)<br />@Html.DisplayFor(model => model.ApprovedDate)
+                            </b>
+                        </td>
+                        <td height="100">
+                            <b class="normal">
+                                @if (Model.GuardStatusOut == 1)
+                                {
+                                    <i class="fa fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else if (Model.GuardStatusOut == 0)
+                                {
+                                    <i class="fas fa-times-circle" style="color: red"></i>
+                                }
+                                <br />@Html.DisplayFor(model => model.GuardOut)<br />@Html.DisplayFor(model => model.GuardDateOut)
+                            </b>
+                        </td>
+                        <td height="100">
+                            <b class="normal">
+                                @if (Model.GuardStatusReturn == 1)
+                                {
+                                    <i class="fa fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else if (Model.GuardStatusReturn == 0)
+                                {
+                                    <i class="fas fa-times-circle" style="color: red"></i>
+                                }
+                                <br />@Html.DisplayFor(model => model.GuardReturn)<br />@Html.DisplayFor(model => model.GuardDateReturn)
+                            </b>
+                        </td>
                     </tr>
                     <tr>
                         <td style="border-top: none !important" height="160"></td>
@@ -123,7 +156,6 @@
                     </tr>
                 </table>
             </div>
-            <div class="col-1"></div>
         </div>
         <br />
         <div class="row col-12">
