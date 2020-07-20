@@ -155,7 +155,7 @@ namespace SMS.Web.Controllers
 
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
 
-                var bringin = dbContext.Bring_In.FirstOrDefault(t => t.ID == model.ID);
+                var bringin = dbContext.Bring_In.Find(model.ID);
                 bringin.ModifiedBy = user.EmpCode + "|" + user.FullName;
                 bringin.ModifiedDate = DateTime.Now;
                 bringin.Reason = model.Reason;
@@ -360,6 +360,20 @@ namespace SMS.Web.Controllers
             var bringin = dbContext.Bring_In.Find(id);
             var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id).ToList();
             bringin.Bring_In_Items = bringinItems;
+            return View(bringin);
+        }
+
+        public ActionResult SummaryBI( )
+        {
+            var bringin = dbContext.Bring_In.ToList();
+            var bis = dbContext.Bring_In_Items.Where(b => b.Quantity != null && b.Item != null).ToList();
+
+            for(var b = 0; b<bringin.Count(); b++)
+            {
+                var bringinItems = bis.Where(t => t.CatID == bringin[b].ID).ToList();
+                bringin[b].Bring_In_Items = bringinItems;
+            }
+
             return View(bringin);
         }
     }

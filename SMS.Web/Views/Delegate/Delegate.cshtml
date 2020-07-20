@@ -24,7 +24,7 @@
                 <div class="col-md-10">
                     <form class="radio-container">
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox" id="admin">Admin
+                            <input class="radio" type="checkbox" name="admin" id="admin">Admin
                         </label>
                         <label class="checkbox-inline radio-button">
                             <input class="radio" type="checkbox" id="sub_admin">Sub Admin
@@ -126,7 +126,7 @@
                                 <td>@(model.Admin == true ? "Admin" : "Sub Admin")</td>
                                 <td>@(model.Status)</td>
                                 <td>@(model.Email)</td>
-                                <td></td>
+                                <td>@(model.Cellphone)</td>
                             </tr>
                         }
                     }
@@ -150,7 +150,6 @@
                         <th class="th-1">Phòng ban</th>
                         <th class="th-1">Trạng thái</th>
                         <th class="th-1">Email</th>
-                        <th class="th-1">Cellphone</th>
                     </tr>
                 </thead>
                 @{
@@ -161,10 +160,8 @@
                             <td>@(model.FullName)</td>
                             <td>@(model.Position)</td>
                             <td>@(model.Team)</td>
-                            <td>PIC</td>
                             <td>@(model.Status)</td>
                             <td>@(model.Email)</td>
-                            <td></td>
                         </tr>
                     }
                 }
@@ -187,7 +184,6 @@
                         <th class="th-1">Phòng ban</th>
                         <th class="th-1">Trạng thái</th>
                         <th class="th-1">Email</th>
-                        <th class="th-1">Cellphone</th>
                     </tr>
                 </thead>
                 <tbody id="tblData">
@@ -199,10 +195,8 @@
                                 <td>@(model.FullName)</td>
                                 <td>@(model.Position)</td>
                                 <td>@(model.Team)</td>
-                                <td>Group Leader</td>
                                 <td>@(model.Status)</td>
                                 <td>@(model.Email)</td>
-                                <td></td>
                             </tr>
                         }
                     }
@@ -226,8 +220,6 @@
                         <th class="th-1">Phòng ban</th>
                         <th class="th-1">Trạng thái</th>
                         <th class="th-1">Email</th>
-                        <th class="th-1">Cellphone</th>
-                        <th class="th-1">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody id="tblData">
@@ -239,10 +231,8 @@
                                 <td>@(model.FullName)</td>
                                 <td>@(model.Position)</td>
                                 <td>@(model.Team)</td>
-                                <td>PIC Team Manager</td>
                                 <td>@(model.Status)</td>
                                 <td>@(model.Email)</td>
-                                <td></td>
                             </tr>
                         }
                     }
@@ -286,7 +276,6 @@
                 }
             })
         }
-
 
         var _userBI = {
             init: function () {
@@ -358,7 +347,7 @@
 
         $('#txtEmployeeID').keyup(function () {
             var count = $('#txtEmployeeID').val().length;
-            if (count == 1 || count == 8) {
+            if (count == 8) {
                 _userBI.getUserBI();
             } else {
                 $('#txtFullNameBI').val("");

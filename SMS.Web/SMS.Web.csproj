@@ -2290,6 +2290,7 @@
     <Content Include="Views\LeaveEarly\SummaryLE.cshtml" />
     <Content Include="Views\BringOut\BOReport.cshtml" />
     <Content Include="Views\Guest\GuestReport.cshtml" />
+    <Content Include="Views\BringIn\SummaryBI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />

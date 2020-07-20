@@ -1,0 +1,81 @@
+﻿@model List<SMS.Models.EF.Bring_In>
+
+@{
+    ViewBag.Title = "SummaryLE";
+}
+
+<link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="~/Assets/css/fonts-gg.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="~/Assets/css/customize.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+<style>
+    body {
+        color: black !important;
+    }
+
+    .table-bordered td, .table-bordered th {
+        border: 1px solid black !important;
+    }
+
+    label {
+        color: black;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .normal {
+        font-size: 18px;
+    }
+</style>
+
+@using (Html.BeginForm("SummaryLE", "LeaveEarly", FormMethod.Get))
+{
+    <div style="width: 100%">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div style="text-align: center; color: black">
+            <img style="width: 200px; position: absolute; left:9%; top:2%" src="~/Assets/img/logo.png" />
+            <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">CÔNG NHÂN VIÊN VỀ SỚM</h5>
+        </div>
+        <div class="center">
+            <span class="normal">EARLY LEAVE</span>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div>
+            <table class="table table-bordered" style="border: 1px solid black !important">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    var i = 0;
+                    foreach(var b in item.Bring_In_Items)
+                    {
+                        <tr>
+                            <td>
+                                @if (i == 0) {@item.FullName}
+                            </td>
+                            <td>@b.Item</td>
+                            <td>@b.Quantity</td>
+                        </tr>
+                        i++;
+                    }
+
+                }
+            </table>
+        </div>
+    </div>
+}

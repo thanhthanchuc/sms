@@ -55,29 +55,27 @@
     <br />
     <div class="row">
         <ul style="list-style-type: disc">
-            <li><u class="normal">THÔNG TIN NHÂN VIÊN (<i>Employee Information</i>):</u></li>
+            <li><u class="normal">THÔNG TIN KHÁCH (<i>Guest Information</i>):</u></li>
         </ul>
     </div>
     <br />
     <div class="col-12 row">
-        <div class="col-8"><span class="normal">Tên nhân viên (<i>Employee Name</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.FullName)</b></div>
-        <div class="col-4"><span class="normal">Vị trí (<i>Position</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Position)</b></div>
+        <div class="col-8"><span class="normal">Họ tên khách (<i>Visitor Name</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.FullName)</b></div>
+        <div class="col-4"><span class="normal">Số CMND/Hộ chiếu (<i>ID Number</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.IDCard)</b></div>
     </div>
     <div class="col-12 row">
-        <div class="col-8"><span class="normal">Mã nhân viên (<i>Employee Code</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EmpCode)</b></div>
-        <div class="col-4"><span class="normal">Phòng ban (<i>Team</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Team)</b></div>
+        <div class="col-8"><span class="normal">Công ty (<i>Company</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Company)</b></div>
+        <div class="col-4"><span class="normal">Số người (<i>Team</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.NumbersOfPerson)</b></div>
+    </div>
+    <div class="col-12 row">
+        <div class="col-8"><span class="normal">Mục đích (<i>Purpose</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Purpose)</b></div>
+        <div class="col-4"><span class="normal">Số xe (<i>Transport No</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.TransportNo)</b></div>
     </div>
     <br />
     <div class="row">
         <ul style="list-style-type: disc">
             <li><u class="normal">THÔNG TIN TÀI SẢN (<i>Employee Information</i>):</u></li>
         </ul>
-    </div>
-    <div class="col-12 row">
-        <div class="col-12"><span class="normal">Mục đích (<i>Purpose</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Reason)</b></div>
-    </div>
-    <div class="col-12 row">
-        <div class="col-12"><span class="normal">Thời gian dự kiến (<i>Estimated Date In</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EstimatedDate)</b>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EstimatedTime)</b></div>
     </div>
     <br />
     <div>
@@ -87,17 +85,16 @@
                 <th>Tài sản <br />(Assets Name)</th>
                 <th>Thông số <br />(Serial)</th>
                 <th>Số lượng <br />(Qty)</th>
-                <th>Đơn vị <br />(Approved by)</th>
+                <th>Đơn vị <br />(Unit)</th>
                 <th>Loại hàng <br />(Asset type)</th>
                 <th colspan="2">Mang ra<br /> (Return)</th>
-                <th>TM phê duyệt<br /> (Approved by)</th>
                 <th>ITT/SMT phê duyệt<br /> (ITT/SMT Approved)</th>
                 <th>FST phê duyệt<br /> (FST Approved)</th>
                 <th>Bảo vệ<br /> (Vào/In)</th>
                 <th>Bảo vệ<br /> (Ra/Out)</th>
             </tr>
             <tr>
-                @foreach (var item in Model.Bring_Out_Items)
+                @foreach (var item in Model.Guest_Item)
                 {
                 <tr class="row-items">
                     <td class="input-group-sm">@item.ID</td>
@@ -130,20 +127,6 @@
                         }
                     </td>
                     <td class="input-group-sm">@item.ReturnDate&nbsp;@item.ReturnTime</td>
-                    <td class="input-group-sm">
-                        @if (@item.ApprovedStatus == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (@item.ApprovedStatus == 0)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                        <br />
-                        @item.ApprovedBy
-                        <br />
-                        @item.ApprovedDate
-                    </td>
                     <td>
                         @if (@item.ITT_Status == 1)
                         {
@@ -173,6 +156,20 @@
                         @item.FST_Date
                     </td>
                     <td>
+                        @if (@item.GuardStatusIn == 1)
+                        {
+                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                        }
+                        else if (@item.GuardStatusIn == 0)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                        <br />
+                        @item.GuardIn
+                        <br />
+                        @item.GuardDateIn
+                    </td>
+                    <td>
                         @if (@item.GuardStatusOut == 1)
                         {
                             <i class="fas fa-check-square" style="color: dodgerblue"></i>
@@ -186,55 +183,70 @@
                         <br />
                         @item.GuardDateOut
                     </td>
-                    <td>
-                        @if (@item.GuardStatusReturn == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (@item.GuardStatusReturn == 0)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                        <br />
-                        @item.GuardReturn
-                        <br />
-                        @item.GuardDateReturn
-                    </td>
                 </tr>
             }
-
             </table>
         </div>
+    </div>
+    <br />
+    <div class="row">
+        <ul style="list-style-type: disc">
+            <li><u class="normal">THÔNG TIN NGƯỜI CẦN GẶP (<i>Meeting person information</i>):</u></li>
+        </ul>
+    </div>
+    <br />
+    <div class="col-12 row">
+        <div class="col-8"><span class="normal">Tên nhân viên (<i>Employee Name</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EmployeeName)</b></div>
+        <div class="col-4"><span class="normal">Vị trí (<i>Position</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Position)</b></div>
+    </div>
+    <div class="col-12 row">
+        <div class="col-8"><span class="normal">Mã nhân viên (<i>Employee Code</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EmployeeID)</b></div>
+        <div class="col-4"><span class="normal">Phòng ban (<i>Team</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Team)</b></div>
+    </div>
+    <br />
+    <div class="row">
+        <ul style="list-style-type: disc">
+            <li><u class="normal">THỜI GIAN GẶP (<i>Meeting time</i>):</u></li>
+        </ul>
+    </div>
+    <br />
+    <div class="col-12 row">
+        <div class="col-6"><span class="normal">Dự kiến giờ vào (<i>Estimated date</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EstimatedDateIn)</b>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EstimatedTimeIn)</b></div>
+        <div class="col-6"><span class="normal">Dự kiến giờ ra (<i>Estimated date</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EstimatedDateOut)</b>&nbsp;<b class="normal">@Html.DisplayFor(model => model.EstimatedTimeOut)</b></div>
+    </div>
+    <div class="col-12 row">
+        <div class="col-6"><span class="normal">Bảo vệ xác nhận vào (<i>Guard In</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.GuardDateIn)</b></div>
+        <div class="col-6"><span class="normal">Bảo vệ xác nhận ra (<i>Guard Out</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.GuardDateOut)</b></div>
     </div>
     <br />
     <div class="row col-12">
         <div class="col-1"></div>
         <ul style="list-style-type: disc">
             <li class="normal">Khai báo đầy đủ, trung thực các thông tin yêu cầu</li>
-            <span style="font-size: 18px" class="nomarl"><i>Register all required informations</i></span>
             <li class="normal">Các loại hàng IT chỉ được phép mang ra với sự đồng ý của phòng SMT hoặc ITT</li>
-            <span style="font-size: 18px" class="nomarl"><i>Approval of SMT are required to bring out IT goods</i></span>
             <li class="normal">Các loại hàng nguy hiểm cần sự cho phép của phòng FST để mang ra</li>
-            <span style="font-size: 18px" class="nomarl"><i>Approval of FST is required to bring out dangerous goods</i></span>
+            <li class="normal">Xin xác nhận của nhân viên công ty về cuộc gặp trước khi ra khỏi nhà máy</li>
+            <li class="normal">Đeo thẻ và chịu sự giám sát của công ty trong suốt thời gian có mặt tại công ty</li>
+            <li class="normal">Tuân thủ tuyệt đối các quy định của công ty về an ninh, an toàn, bảo vệ môi trường, bảo mật thông tin, ...</li>
+            <li class="normal">Không được sử dụng các thiết bị lưu trữ thông tin như máy tính, máy chụp ảnh, usb, ... mà không được sự cho phép</li>
+            <li class="normal">Với các nhà thầu phải xin giấy phép làm việc trước</li>
+            <li class="normal">Tối chấp nhận việc CÔNG TY HYUNDAI KEFICO VIETNAM lưu trữ các thông tin của tôi trên tờ khai này cho mục đích an ninh</li>
         </ul>
     </div>
     <br />
     <div>
         <table class="table table-bordered" style="border: 1px solid black !important">
             <tr>
-                <th height="80">Người đăng ký<br />(Created by)</th>
-                <th>TM xác nhận <br />(Approved by)</th>
-                <th>ITT/SMT xác nhận <br />(ITT/SMT Approved)</th>
-                <th>FST xác nhận <br />(FST Approved)</th>
-                <th colspan="2">Bảo vệ xác nhận (Guard) (Ra/Out)</th>
+                <th>Khách, Nhà thầu <br />(Guest, Contractor)</th>
+                <th height="80">Nhân viên công ty HYUNDAI KEFICO<br />(Created by)</th>
             </tr>
             <tr>
-                <td height="100"><b class="normal">@Html.DisplayFor(model => model.CreatedBy)</b></td>
-                <td height="100"></td>
-                <td height="100"></td>
-                <td height="100"></td>
-                <td height="100"></td>
-                <td height="100"></td>
+                <td height="80"><b class="normal">Công ty @Html.DisplayFor(model => model.Company)</b></td>
+                <td height="80"><b class="normal">@Html.DisplayFor(model => model.EmployeeID)</b><br /><b class="normal">@Html.DisplayFor(model => model.EmployeeName)</b></td>
+            </tr>
+            <tr>
+                <td height="120"></td>
+                <td height="120"></td>
             </tr>
         </table>
     </div>

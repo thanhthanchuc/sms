@@ -104,7 +104,7 @@
                             <input class="form-control input-previous-button serial" />
                         </td>
                         <td class="input-group-sm">
-                            <input type="number" class="form-control input-previous-button quantity" />
+                            <input type="number" min="1" class="form-control input-previous-button quantity" />
                         </td>
                         <td class="input-group-sm">
                             <input class="form-control input-previous-button unit" />
@@ -216,7 +216,7 @@
 
         $('.timepicker').timepicker({
             timeFormat: 'h:mm p',
-            interval: 15,
+            interval: 5,
             startTime: '00:00',
             dynamic: false,
             dropdown: true,

@@ -92,7 +92,8 @@ namespace SMS.Web.Controllers
         /// <returns></returns>
         public ActionResult SummaryLE()
         {
-            return View();
+            var les = _dbContext.Leave_Early.OrderByDescending(l => l.CreatedDate).ToList();
+            return View(les);
         }
 
         /// <summary>

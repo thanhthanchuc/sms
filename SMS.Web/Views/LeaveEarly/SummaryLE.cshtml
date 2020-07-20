@@ -1,4 +1,4 @@
-﻿@model SMS.Models.EF.Leave_Early
+﻿@model List<SMS.Models.EF.Leave_Early>
 
 @{
     ViewBag.Title = "SummaryLE";
@@ -64,7 +64,7 @@
                     <th>Giờ ra thực tế</th>
                     <th>Bảo vệ xác nhận</th>
                 </tr>
-                @*@foreach (var item in Model)
+                @foreach (var item in Model)
                 {
                     <tr>
                         <td class="col-sticky-1">
@@ -131,7 +131,7 @@
                             }
                         </td>
                     </tr>
-                }*@
+                }
             </table>
         </div>
     </div>

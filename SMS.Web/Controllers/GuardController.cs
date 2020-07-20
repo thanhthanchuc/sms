@@ -122,6 +122,11 @@ namespace SMS.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Xác nhận veefg s
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult ConfirmLE(int id)
         {
             var model = dbcontext.Leave_Early.FirstOrDefault(l => l.ID == id);
