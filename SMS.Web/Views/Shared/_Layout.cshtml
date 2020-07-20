@@ -1,4 +1,5 @@
 ﻿@using SMS.Web.Common;
+@using SMS.Web.Models
 
 @{
     Layout = null;
@@ -43,31 +44,35 @@
             <!-- Divider -->
             <hr class="sidebar-divider divider">
 
-            <div class="tab-1">
-                <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseDelegate" aria-expanded="true" aria-controls="collapseDelegate">
-                    <i class="fas fa-fw fa-users fa-menu" style="color:cornflowerblue"></i>
-                    &nbsp;
-                    <span class="tab-text">Quản trị</span>
-                </a>
-                <div id="collapseDelegate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <!-- Item 1 -->
-                    <li class="nav-item sub-menu item-delegate" style="font-weight: 500">
-                        <a id="DL" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="true" aria-controls="collapseAdmin">
-                            <i class="fas fa-fw fa-user-cog fa-menu lv-3-delegate"></i>
-                            <span>Phân quyền</span>
-                        </a>
-                        <div id="collapseAdmin" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDelegate">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="delegate_tab" class="collapse-item grey-a-tag" href="/Delegate/Delegate">Cấp quyền</a>
-                                <a id="list_emp" class="collapse-item grey-a-tag" href="/Delegate/ListEmployee">Danh sách người dùng</a>
+            @if ((User as CustomPrincipal).Admin == true)
+            {
+                <div class="tab-1">
+                    <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseDelegate" aria-expanded="true" aria-controls="collapseDelegate">
+                        <i class="fas fa-fw fa-users fa-menu" style="color:cornflowerblue"></i>
+                        &nbsp;
+                        <span class="tab-text">Quản trị</span>
+                    </a>
+                    <div id="collapseDelegate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <!-- Item 1 -->
+                        <li class="nav-item sub-menu item-delegate" style="font-weight: 500">
+                            <a id="DL" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="true" aria-controls="collapseAdmin">
+                                <i class="fas fa-fw fa-user-cog fa-menu lv-3-delegate"></i>
+                                <span>Phân quyền</span>
+                            </a>
+                            <div id="collapseAdmin" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDelegate">
+                                <div class="bg-sub-menu py-2 collapse-inner rounded">
+
+                                    <a id="delegate_tab" class="collapse-item grey-a-tag" href="/Delegate/Delegate">Cấp quyền</a>
+                                    <a id="list_emp" class="collapse-item grey-a-tag" href="/Delegate/ListEmployee">Danh sách người dùng</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    </div>
                 </div>
-            </div>
+                <hr class="sidebar-divider divider">
+            }
 
             <!-- Divider -->
-            <hr class="sidebar-divider divider">
 
             <div class="tab-1">
                 <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseNews" aria-expanded="true" aria-controls="collapseNews">
@@ -104,113 +109,156 @@
                 </a>
                 <div id="collapseInOut" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <!-- Báo cáo -->
-                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
-                        <a id="RP" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
-                            <i class="fas fa-fw fa-file-invoice fa-menu lv-3-in-out"></i>
-                            <span>Báo cáo</span>
-                        </a>
-                        <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="LEReport" class="collapse-item grey-a-tag" href="/LeaveEarly/SummaryLE" target="_blank">CNV về sớm</a>
-                                <a id="GOReport" class="collapse-item grey-a-tag" href="#">CNV ra ngoài</a>
-                                <a id="BIReport" class="collapse-item grey-a-tag" href="/BringIn/SummaryBI">CNV mang hàng vào</a>
-                                <a id="BOReport" class="collapse-item grey-a-tag" href="#">CNV mang hàng ra</a>
-                                <a id="Guest" class="collapse-item grey-a-tag" href="#">Khách vào ra</a>
-                                <a id="GuestItems" class="collapse-item grey-a-tag" href="#">Khách mang hàng vào/ra</a>
-                                <a id="PunishReport" class="collapse-item grey-a-tag" href="#">Báo cáo sự việc</a>
+                     @if ((User as CustomPrincipal).Guard != true)
+                    {
+                        if ((User as CustomPrincipal).Read_Only != true)
+                        {
+                            <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                                <a id="RP" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
+                                    <i class="fas fa-fw fa-file-invoice fa-menu lv-3-in-out"></i>
+                                    <span>Báo cáo</span>
+                                </a>
+                                <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                                    <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                        <a id="LEReport" class="collapse-item grey-a-tag" href="/LeaveEarly/SummaryLE" target="_blank">CNV về sớm</a>
+                                        <a id="GOReport" class="collapse-item grey-a-tag" href="#">CNV ra ngoài</a>
+                                        <a id="BIReport" class="collapse-item grey-a-tag" href="/BringIn/SummaryBI">CNV mang hàng vào</a>
+                                        <a id="BOReport" class="collapse-item grey-a-tag" href="#">CNV mang hàng ra</a>
+                                        <a id="Guest" class="collapse-item grey-a-tag" href="#">Khách vào ra</a>
+                                        <a id="GuestItems" class="collapse-item grey-a-tag" href="#">Khách mang hàng vào/ra</a>
+                                        <a id="PunishReport" class="collapse-item grey-a-tag" href="#">Báo cáo sự việc</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                        <!-- Về sớm -->
+
+                        <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                            <a id="LE" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseLeaveEarly" aria-expanded="true" aria-controls="collapseLeaveEarly">
+                                <i class="fas fa-fw fa-user-clock fa-menu lv-3-in-out"></i>
+                                <span>Về sớm</span>
+                            </a>
+                            <div id="collapseLeaveEarly" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                                <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                    @if ((User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="LECreate" class="collapse-item grey-a-tag" href="/LeaveEarly/Create">Ðăng ký</a>
+
+                                    }
+                                    @if ((User as CustomPrincipal).PIC != true && (User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="LEApprove" class="collapse-item grey-a-tag" href="/LeaveEarly/Approve">Phê duyệt</a>
+                                    }
+                                    <a id="LEHistory" class="collapse-item grey-a-tag" href="/LeaveEarly/History">Lịch sử</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <!-- Về sớm -->
-                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
-                        <a id="LE" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseLeaveEarly" aria-expanded="true" aria-controls="collapseLeaveEarly">
-                            <i class="fas fa-fw fa-user-clock fa-menu lv-3-in-out"></i>
-                            <span>Về sớm</span>
-                        </a>
-                        <div id="collapseLeaveEarly" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="LECreate" class="collapse-item grey-a-tag" href="/LeaveEarly/Create">Ðăng ký</a>
-                                <a id="LEApprove" class="collapse-item grey-a-tag" href="/LeaveEarly/Approve">Phê duyệt</a>
-                                <a id="LEHistory" class="collapse-item grey-a-tag" href="/LeaveEarly/History">Lịch sử</a>
+                        </li>
+                        <!-- Ra ngoài -->
+
+                        <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                            <a id="GO" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGoOut" aria-expanded="true" aria-controls="collapseGoOut">
+                                <i class="fas fa-fw fa-running fa-menu lv-3-in-out"></i>
+                                <span>Ra ngoài</span>
+                            </a>
+                            <div id="collapseGoOut" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                                <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                    @if ((User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="GOCreate" class="collapse-item grey-a-tag" href="/GoOut/Create">Ðăng ký</a>
+                                    }
+                                    @if ((User as CustomPrincipal).PIC != true && (User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="GOApprove" class="collapse-item grey-a-tag" href="/GoOut/Approve">Phê duyệt</a>
+                                    }
+                                    <a id="GOHistory" class="collapse-item grey-a-tag" href="/GoOut/History">Lịch sử</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <!-- Ra ngoài -->
-                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
-                        <a id="GO" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGoOut" aria-expanded="true" aria-controls="collapseGoOut">
-                            <i class="fas fa-fw fa-running fa-menu lv-3-in-out"></i>
-                            <span>Ra ngoài</span>
-                        </a>
-                        <div id="collapseGoOut" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="GOCreate" class="collapse-item grey-a-tag" href="/GoOut/Create">Ðăng ký</a>
-                                <a id="GOApprove" class="collapse-item grey-a-tag" href="/GoOut/Approve">Phê duyệt</a>
-                                <a id="GOHistory" class="collapse-item grey-a-tag" href="/GoOut/History">Lịch sử</a>
+                        </li>
+                        <!-- Mang hàng vào -->
+                        <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                            <a id="BI" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseBringIn" aria-expanded="true" aria-controls="collapseBringIn">
+                                <i class="fas fa-fw far fa-box-open fa-menu lv-3-in-out"></i>
+                                <span>Mang hàng vào</span>
+                            </a>
+                            <div id="collapseBringIn" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                                <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                    @if ((User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="BICreate" class="collapse-item grey-a-tag" href="@Url.Action("Create", "BringIn")">Ðăng ký</a>
+                                    }
+                                    @if ((User as CustomPrincipal).PIC != true && (User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="BIApprove" class="collapse-item grey-a-tag" href="/BringIn/Approve">Phê duyệt</a>
+                                        <a id="BIitt" class="collapse-item grey-a-tag" href="/BringIn/ITTApprove">ITT & SMT phê duyệt</a>
+                                        <a id="BIfst" class="collapse-item grey-a-tag" href="/BringIn/FSTApprove">FST phê duyệt</a>
+                                    }
+                                    <a id="BIHistory" class="collapse-item grey-a-tag" href="@Url.Action("History", "BringIn")">Lịch sử</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <!-- Mang hàng vào -->
-                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
-                        <a id="BI" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseBringIn" aria-expanded="true" aria-controls="collapseBringIn">
-                            <i class="fas fa-fw far fa-box-open fa-menu lv-3-in-out"></i>
-                            <span>Mang hàng vào</span>
-                        </a>
-                        <div id="collapseBringIn" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="BICreate" class="collapse-item grey-a-tag" href="@Url.Action("Create","BringIn")">Ðăng ký</a>
-                                <a id="BIApprove" class="collapse-item grey-a-tag" href="/BringIn/Approve">Phê duyệt</a>
-                                <a id="BIitt" class="collapse-item grey-a-tag" href="/BringIn/ITTApprove">ITT & SMT phê duyệt</a>
-                                <a id="BIfst" class="collapse-item grey-a-tag" href="/BringIn/FSTApprove">FST phê duyệt</a>
-                                <a id="BIHistory" class="collapse-item grey-a-tag" href="@Url.Action("History","BringIn")">Lịch sử</a>
+                        </li>
+                        <!-- Mang hàng ra -->
+                        <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                            <a id="BO" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseBringOut" aria-expanded="true" aria-controls="collapseBringOut">
+                                <i class="fas fa-fw fa-box fa-menu lv-3-in-out"></i>
+                                <span>Mang hàng ra</span>
+                            </a>
+                            <div id="collapseBringOut" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                                <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                    @if ((User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="BOCreate" class="collapse-item grey-a-tag" href="/BringOut/Create">Ðăng ký</a>
+
+                                    }
+                                    @if ((User as CustomPrincipal).PIC != true && (User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="BOApprove" class="collapse-item grey-a-tag" href="/BringOut/Approve">Phê duyệt</a>
+                                        <a id="BOitt" class="collapse-item grey-a-tag" href="/BringOut/ITTApprove">ITT & SMT phê duyệt</a>
+                                        <a id="BOfst" class="collapse-item grey-a-tag" href="/BringOut/FSTApprove">FST phê duyệt</a>
+                                    }
+                                    <a id="BOHistory" class="collapse-item grey-a-tag" href="/BringOut/History">Lịch sử</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <!-- Mang hàng ra -->
-                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
-                        <a id="BO" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseBringOut" aria-expanded="true" aria-controls="collapseBringOut">
-                            <i class="fas fa-fw fa-box fa-menu lv-3-in-out"></i>
-                            <span>Mang hàng ra</span>
-                        </a>
-                        <div id="collapseBringOut" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="BOCreate" class="collapse-item grey-a-tag" href="/BringOut/Create">Ðăng ký</a>
-                                <a id="BOApprove" class="collapse-item grey-a-tag" href="/BringOut/Approve">Phê duyệt</a>
-                                <a id="BOitt" class="collapse-item grey-a-tag" href="/BringOut/ITTApprove">ITT & SMT phê duyệt</a>
-                                <a id="BOfst" class="collapse-item grey-a-tag" href="/BringOut/FSTApprove">FST phê duyệt</a>
-                                <a id="BOHistory" class="collapse-item grey-a-tag" href="/BringOut/History">Lịch sử</a>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    }
                     <!-- Bảo vệ -->
-                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
-                        <a id="guard" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuard" aria-expanded="true" aria-controls="collapseGuard">
-                            <i class="fas fa-fw fa-user-shield fa-menu lv-3-in-out"></i>
-                            <span>Bảo vệ</span>
-                        </a>
-                        <div id="collapseGuard" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a class="collapse-item grey-a-tag" href="/Guard/Queue">Chờ xử lý</a>
-                                <a class="collapse-item grey-a-tag" href="/Guard/History">Lịch sử</a>
-                                <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
+                    @if ((User as CustomPrincipal).Guard == true && (User as CustomPrincipal).PIC != true && (User as CustomPrincipal).Read_Only != true)
+                    {
+                        <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                            <a id="guard" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuard" aria-expanded="true" aria-controls="collapseGuard">
+                                <i class="fas fa-fw fa-user-shield fa-menu lv-3-in-out"></i>
+                                <span>Bảo vệ</span>
+                            </a>
+                            <div id="collapseGuard" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                                <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                    <a class="collapse-item grey-a-tag" href="/Guard/Queue">Chờ xử lý</a>
+                                    <a class="collapse-item grey-a-tag" href="/Guard/History">Lịch sử</a>
+                                    <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    }
                     <!--Khách & Nhà thầu-->
-                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
-                        <a id="guest" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuest" aria-expanded="true" aria-controls="collapseGuest">
-                            <i class="fas fa-fw fa-user-tie fa-menu lv-3-in-out"></i>
-                            <span>Khách & Nhà thầu</span>
-                        </a>
-                        <div id="collapseGuest" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="guest-create" class="collapse-item grey-a-tag" href="@Url.Action("Create","Guest")">Ðăng ký</a>
-                                <a id="guest-itt" class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove","Guest")">ITT & SMT phê duyệt</a>
-                                <a id="guest-fst" class="collapse-item grey-a-tag" href="@Url.Action("FSTApprove","Guest")">FST Phê duyệt</a>
-                                <a id="guest-punish" class="collapse-item grey-a-tag" href="#">Hạn chế truy cập</a>
-                                <a id="guest-history" class="collapse-item grey-a-tag" href="@Url.Action("History","Guest")">Lịch sử</a>
+                    @if ((User as CustomPrincipal).Guard != true)
+                    {
+                        <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                            <a id="guest" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuest" aria-expanded="true" aria-controls="collapseGuest">
+                                <i class="fas fa-fw fa-user-tie fa-menu lv-3-in-out"></i>
+                                <span>Khách & Nhà thầu</span>
+                            </a>
+                            <div id="collapseGuest" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                                <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                    @if ((User as CustomPrincipal).Read_Only != true)
+                                    {
+                                        <a id="guest-create" class="collapse-item grey-a-tag" href="@Url.Action("Create", "Guest")">Ðăng ký</a>
+                                        <a id="guest-itt" class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove", "Guest")">ITT & SMT phê duyệt</a>
+                                        <a id="guest-fst" class="collapse-item grey-a-tag" href="@Url.Action("FSTApprove", "Guest")">FST Phê duyệt</a>
+                                        <a id="guest-punish" class="collapse-item grey-a-tag" href="#">Hạn chế truy cập</a>
+                                    }
+                                    <a id="guest-history" class="collapse-item grey-a-tag" href="@Url.Action("History", "Guest")">Lịch sử</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    }
                 </div>
             </div>
 
@@ -339,7 +387,6 @@
             </div>
         </ul>
         <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
@@ -435,7 +482,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline small" id="logged_name" style="color:black">@ViewBag.userSS</span>
-                                <img id="logged_image" class="img-profile rounded-circle">
+                                <p>@((User as CustomPrincipal).FullName)</p>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" style="background-color: #cbcbcb">
@@ -461,7 +508,6 @@
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div id="main-body">
