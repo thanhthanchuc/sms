@@ -21,17 +21,17 @@
     </div>
     <div class="row dataTables_wrapper dt-bootstrap4 above-table">
         <div class="col-2 input-group input-group-sm">
-            <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
+            <label class="no-margin-bottom" style="padding-top: 5px" >Phòng ban</label>
             &nbsp;
-            <input id="team" class="form-control bg-light to-date">
+            <input class="form-control bg-light to-date" id="team" value="@ViewBag.team">
         </div>
         <div class="col-2 input-group input-group-sm">
-            <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+            <label class="no-margin-bottom" style="padding-top: 5px" >Mã nhân viên</label>
             &nbsp;
-            <input id="emp_code" class="form-control bg-light to-date">
+            <input class="form-control bg-light to-date" id="empcode" value="@ViewBag.empcode">
         </div>
         <div class="col-2">
-            <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
+            <button class="btn btn-sm btn-primary" id="btn-search" onclick="handleSearch()"><i class="fas fa-search"></i> Tìm kiếm</button>
         </div>
     </div>
 
@@ -80,7 +80,7 @@
                 "pageLength": 20,
                 "ajax": {
                     "type": "POST",
-                    "url": "/Delegate/FetchDataEmployee",
+                    "url": "/Delegate/FetchDataEmployee?team=" + $('#team').val() + "&empcode=" + $('#empcode').val(),
                     "dataType": "json",
                     "contentType": 'application/json; charset=utf-8'
                 },
@@ -102,8 +102,8 @@
                             return !res.Status ? 'Đang hoạt động' : '';
                         }
                     },
-                    { data: function (res) { return res.Email; } },
-                    { data: function (res) { return res.Cellphone; } },
+                    { data: function (res) { return res.Email || ""; } },
+                    { data: function (res) { return res.Cellphone || ""; } },
                 ]
             };
             table = $('#Emp-table').DataTable(options);
@@ -117,5 +117,9 @@
         $("#ListEmp").addClass('active');
         $("#collapseDelegateTab").addClass('show');
         $("#collapseDelegate").removeClass('collapse');
+
+        function handleSearch() {
+            window.location.href = "/Delegate/ListEmployee?team=" + $('#team').val() + "&empcode=" + $('#empcode').val()
+        }
     </script>
 }

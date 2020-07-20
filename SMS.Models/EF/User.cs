@@ -38,6 +38,26 @@ namespace SMS.Models.EF
 
         public int RoleId { get; set; }
 
+        public bool? Admin { get; set; }
+
+        public bool? SubAdmin { get; set; }
+
+        public bool? PIC { get; set; }
+
+        public bool? ITT_TM { get; set; }
+
+        public bool? SMT_TM { get; set; }
+
+        public bool? FST_TM { get; set; }
+
+        public bool? PIC_TM { get; set; }
+
+        public bool? Group_Leader { get; set; }
+
+        public bool? Guard { get; set; }
+
+        public bool? Read_Only { get; set; }
+
         //[StringLength(20)]
         //public string Phone { get; set; }
 

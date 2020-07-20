@@ -66,7 +66,8 @@ $('#register').on("click", (event) => {
         bringInItem.ReturnDate = $(item).find('input[class*=returnDate]').val();
         bringInItem.ReturnTime = $(item).find('input[class*=returnTime]').val();
 
-        bringInObject.Bring_In_Items.push(bringInItem);
+        if (bringInItem.Item && bringInItem.Unit && bringInItem.Quantity)
+            bringInObject.Bring_In_Items.push(bringInItem);
     })
 
     console.log(bringInObject);

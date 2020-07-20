@@ -7,40 +7,8 @@ using System.Web;
 
 namespace SMS.Web.Models
 {
-    public class UserViewModel
+    public class UserViewModel : User
     {
-        public int ID { get; set; }
-
-        [StringLength(10)]
-        public string EmpCode { get; set; }
-
-        [StringLength(50)]
-        public string Password { get; set; }
-
-        [StringLength(100)]
-        public string FullName { get; set; }
-
-        [StringLength(100)]
-        public string ImgProfile { get; set; }
-
-        public int? GroupID { get; set; }
-
-        public int? Status { get; set; }
-
-        [StringLength(50)]
-        public string Position { get; set; }
-
-        [StringLength(50)]
-        public string Team { get; set; }
-
-        [StringLength(50)]
-        public string Email { get; set; }
-
-        [StringLength(20)]
-        public string Phone { get; set; }
-
-       
-
     }
     public static class Extentions
     {
@@ -52,6 +20,26 @@ namespace SMS.Web.Models
             userViewModel.Position = user.Position;
             userViewModel.Team = user.Team;
             userViewModel.Email = user.Email;
+            
+            userViewModel.Admin = user.Admin;
+
+            userViewModel.SubAdmin = user.SubAdmin;
+
+            userViewModel.PIC = user.PIC;
+
+            userViewModel.ITT_TM = user.ITT_TM;
+
+            userViewModel.SMT_TM = user.SMT_TM;
+
+            userViewModel.FST_TM = user.FST_TM;
+
+            userViewModel.PIC_TM = user.PIC_TM;
+
+            userViewModel.Group_Leader = user.Group_Leader;
+
+            userViewModel.Guard = user.Guard;
+
+            userViewModel.Read_Only = user.Read_Only;
             //userViewModel.Phone = user.Phone;
         }
     }

@@ -10,30 +10,45 @@ namespace SMS.Web.Controllers
     public class DelegateController : BaseController
     {
 
-        private SMSDbContext dbContext;
+        private SMSDbContext _context;
 
         public DelegateController()
         {
-            dbContext = new SMSDbContext();
+            _context = new SMSDbContext();
         }
 
         // GET: Delegate
-        public ActionResult ListEmployee()
+        public ActionResult ListEmployee(string team, string empcode)
         {
+            ViewBag.team = team;
+            ViewBag.empcode = empcode;
             return View();
         }
 
         [HttpPost]
-        public ActionResult FetchDataEmployee()
+        public ActionResult FetchDataEmployee(string team, string empcode)
         {
-            var model = dbContext.Users.OrderByDescending(x => x.ID).ToList();
+            _context.Configuration.ProxyCreationEnabled = false;
+            var model = _context.Users.ToList();
 
-            return Json(new { data = model, recordsTotal = dbContext.Users.Count(), recordsFiltered = model.Count() });
+            if(team != null & team != "")
+            {
+                model = model.Where(m => m.Team.ToLower().Contains(team.ToLower())).ToList();
+            }
+
+            if(empcode != null && empcode !="")
+            {
+                model = model.Where(m => m.EmpCode.ToString().Contains(empcode)).ToList();
+            }    
+                
+
+            return Json(new { data = model, recordsTotal = model.Count(), recordsFiltered = model.Count() });
         }
 
         public ActionResult Delegate()
         {
-            return View();
+            var user = _context.Users.ToList();
+            return View(user);
         }
     }
 }
