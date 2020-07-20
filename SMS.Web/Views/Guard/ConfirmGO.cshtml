@@ -171,7 +171,7 @@
                 id: $('#go_outId').val(),
                 remark: $("return_remark").val(),
                 status: 1
-            })
+            }, true)
         })
 
         $('#GO-table').on("click", ".return_unapprove", () => {
@@ -179,7 +179,7 @@
                 id: $('#go_outId').val(),
                 remark: $("return_remark").val(),
                 status: 0
-            })
+            }, true)
         })
     </script>
 }

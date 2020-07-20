@@ -191,32 +191,38 @@
                             }
                         </td>
                         <td class="col-sticky-11" style="text-align: left">
-                            @if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                            @if ((User as SMS.Web.Models.CustomPrincipal).Read_Only != true)
                             {
-                                <a class="btn btn-cancel btn-danger btn-standard" data-toggle="modal" data-target="#rejectModal" title="Hủy bỏ" onclick="cancel(@item.ID)">
-                                    <i class="fas fa-lock" style="margin-left: -3px"></i>
-                                </a>
-                            }
-                            else if (item.ApprovedStatus == null || item.ApprovedStatus == 3)
-                            {
-                                <a class="btn btn-edit btn-standard btn-white" href="/LeaveEarly/Edit/@item.ID" title="Sửa">
-                                    <i class="icon fas fa-cog" style="margin-left: -4px"></i>
-                                </a>
-                                <a class="btn btn-danger btn-standard btn-delete" data-toggle="modal" data-target="#deleteModal" title="Xóa" onclick="handleRefId(@item.ID)">
-                                    <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
-                                </a>
-                            }
-                            else if (item.ApprovedStatus == 4)
-                            {
-                                <b class="red">Hủy bỏ</b>
+                                if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                                {
+                                    <a class="btn btn-cancel btn-danger btn-standard" data-toggle="modal" data-target="#rejectModal" title="Hủy bỏ" onclick="cancel(@item.ID)">
+                                        <i class="fas fa-lock" style="margin-left: -3px"></i>
+                                    </a>
+                                }
+                                else if (item.ApprovedStatus == null || item.ApprovedStatus == 3)
+                                {
+                                    <a class="btn btn-edit btn-standard btn-white" href="/LeaveEarly/Edit/@item.ID" title="Sửa">
+                                        <i class="icon fas fa-cog" style="margin-left: -4px"></i>
+                                    </a>
+                                    <a class="btn btn-danger btn-standard btn-delete" data-toggle="modal" data-target="#deleteModal" title="Xóa" onclick="handleRefId(@item.ID)">
+                                        <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
+                                    </a>
+                                }
+                                else if (item.ApprovedStatus == 4)
+                                {
+                                    <b class="red">Hủy bỏ</b>
+                                }
                             }
                         </td>
                         <td class="col-sticky-12">
-                            @if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                            @if ((User as SMS.Web.Models.CustomPrincipal).Read_Only != true)
                             {
-                                <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print-LE btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
+                                if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                                {
+                                    <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print-LE btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                }
                             }
                         </td>
                         <td>

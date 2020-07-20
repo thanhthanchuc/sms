@@ -21,6 +21,7 @@ namespace SMS.Web.Controllers
         {
             dbcontext = new SMSDbContext();
         }
+
         public ActionResult Index()
         {
             var userSession = new UserLogin();

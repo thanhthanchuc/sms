@@ -40,6 +40,7 @@ namespace SMS.Web.Controllers
             }
         }
 
+
         [HttpPost]
         public ActionResult UpdateRole(User u)
         {
