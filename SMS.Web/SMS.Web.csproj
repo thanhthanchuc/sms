@@ -2181,8 +2181,6 @@
     <Content Include="Reports\DBSET\DTSet.xsc">
       <DependentUpon>DTSet.xsd</DependentUpon>
     </Content>
-    <Content Include="Files\Book1.xlsx" />
-    <Content Include="Files\Book2.xlsx" />
     <Content Include="Files\Khách cty A.xlsx" />
     <None Include="Reports\DBSET\DTSet.xsd">
       <SubType>Designer</SubType>
@@ -2292,6 +2290,7 @@
     <Content Include="Views\BringOut\BOReport.cshtml" />
     <Content Include="Views\Guest\GuestReport.cshtml" />
     <Content Include="Views\BringIn\SummaryBI.cshtml" />
+    <Content Include="Views\GoOut\SummaryGO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />

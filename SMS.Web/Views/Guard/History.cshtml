@@ -1,15 +1,8 @@
 ﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "History";
 }
 
-<link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="~/Assets/css/fonts-gg.css" rel="stylesheet" />
-<link href="~/Assets/css/jquery-ui.css" rel="stylesheet" />
-<link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
-<link href="~/Assets/css/customize.css" rel="stylesheet" />
-<link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
-<link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
 <style>
     label {
         color: black;
@@ -55,10 +48,10 @@
                 </div>
                 <div class="col-2">
                     <a href="/Guest/Create" class="btn btn-sm btn-primary" id="btn-guest-register"><i class="fas fa-users"></i> Đăng ký khách</a>
+                    @*&nbsp;
+                    <a href="/Guard/Queue" class="btn btn-sm btn-info" id="btn-process" title="Chuyển sang màn hình Chờ xử lý"><i class="fas fa-clock"></i> Chờ xử lý</a>*@
                     &nbsp;
-                    <a href="/Guard/Queue" class="btn btn-sm btn-info" id="btn-process" title="Chuyển sang màn hình Chờ xử lý"><i class="fas fa-clock"></i> Chờ xử lý</a>
-                    &nbsp;
-                    <button class="btn btn-sm btn-success" id="btn-refresh" title="Tải lại danh sách"><i class="fas fa-sync"></i></button>
+                    <button class="btn btn-sm btn-search btn-info" title="Tìm kiếm"><i class="fas fa-search"></i> Tìm kiếm</button>
                 </div>
                 <button type="submit" class="btn btn-primary" style="display: none"></button>
             </div>
@@ -107,7 +100,7 @@
                             <td>@item.Reason</td>
                             <td>@item.EstimatedDate | @item.EstimatedTime</td>
                             <td>
-                                <a href="/LeaveEarly/LEReport/@item.ID"  class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
                                 </a>
                             </td>
@@ -160,7 +153,7 @@
                             <td>@item.EstimatedDateOut | @item.EstimatedTimeOut</td>
                             <td>@item.EstimatedDateReturn | @item.EstimatedTimeReturn</td>
                             <td>
-                                <a href="/GoOut/GOReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/GoOut/GOReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
                                 </a>
                             </td>
@@ -226,7 +219,7 @@
                                 }
                             </td>
                             <td>
-                                <a href="/BringIn/BIReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/BringIn/BIReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
                                 </a>
                             </td>
@@ -288,7 +281,7 @@
                                 }
                             </td>
                             <td>
-                                <a href="/BringOut/BOReport/@item.ID" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/BringOut/BOReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
                                 </a>
                             </td>
@@ -379,7 +372,7 @@
                             <td>@item.Team</td>
                             <td>@item.Position</td>
                             <td>
-                                <a class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
                                 </a>
                             </td>
@@ -467,7 +460,7 @@
                             <td>@item.Team</td>
                             <td>@item.Position</td>
                             <td>
-                                <a class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
                                 </a>
                             </td>
@@ -492,9 +485,6 @@
                     <tr class="table-heading">
                         <th>
                             @Html.DisplayName("Thời điểm")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Đăng ký")
                         </th>
                         <th>
                             @Html.DisplayName("Loại khách")
@@ -561,9 +551,9 @@
                             <td>@item.Team</td>
                             <td>@item.Position</td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -584,9 +574,6 @@
                     <tr class="table-heading">
                         <th>
                             @Html.DisplayName("Thời điểm")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Đăng ký")
                         </th>
                         <th>
                             @Html.DisplayName("Loại khách")
@@ -653,9 +640,9 @@
                             <td>@item.Team</td>
                             <td>@item.Position</td>
                             <td>
-                                <button class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -676,6 +663,13 @@
         });
 
         $('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
+
+        $("#guard").removeClass('collapse');
+        $("#guard").removeClass('collapsed');
+        $("#guard").attr("aria-expanded", "true");
+        $("#guard_history").addClass('active');
+        $("#collapseGuard").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }
 

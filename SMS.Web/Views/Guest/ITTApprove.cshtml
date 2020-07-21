@@ -128,7 +128,7 @@
                     "contentType": 'application/json; charset=utf-8'
                 },
                 "columns": [
-                    { data: function (res) { return res.ID; } },
+                    { data: function (res) { return `<span>G</span><span>${res.ID}</span><span>${res.Team}</span>`; } },
                     {
                         data: function (res) {
                             return `${res.EmployeeID} | ${res.EmployeeName}`;

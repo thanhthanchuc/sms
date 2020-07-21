@@ -215,14 +215,11 @@
                             }
                         </td>
                         <td class="col-sticky-12">
-                            @if ((User as SMS.Web.Models.CustomPrincipal).Read_Only != true)
+                            @if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
                             {
-                                if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
-                                {
-                                    <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print-LE btn-primary btn-standard" title="In báo cáo">
-                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                    </a>
-                                }
+                                <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print-LE btn-primary btn-standard" title="In báo cáo">
+                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                </a>
                             }
                         </td>
                         <td>

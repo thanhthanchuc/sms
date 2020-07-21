@@ -4,12 +4,20 @@ using SMS.Web.Common;
 using SMS.Web.Models;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace SMS.Web.Controllers
 {
     public class GoOutController : BaseController
     {
+        private SMSDbContext _dbContext;
+
+        public GoOutController()
+        {
+            _dbContext = new SMSDbContext();
+        }
+
         // GET: GoOut
         public ActionResult History(string searchString, int page = 1, int pageSize = 20)
         {
@@ -175,6 +183,12 @@ namespace SMS.Web.Controllers
         {
             var goOut = new GoOutDAO().ViewDetail(id);
             return View(goOut);
+        }
+
+        public ActionResult SummaryGO()
+        {
+            var go = _dbContext.Go_Out.OrderByDescending(g => g.CreatedDate).ToList();
+            return View(go);
         }
 
         /// <summary>

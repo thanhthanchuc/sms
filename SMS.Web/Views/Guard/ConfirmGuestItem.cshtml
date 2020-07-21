@@ -1,117 +1,160 @@
 ﻿@model SMS.Models.EF.Guest
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="form-horizontal">
     <div class="card-header py-3">
         <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN KHÁCH MANG HÀNG VÀO - RA</h5>
     </div>
     <!--Cột bên trái dành cho form đăng ký-->
     <div class="col-md-12 row-form">
-        <div class="column form-horizontal form-left col-md-6">
+        <div class="column form-horizontal form-left col-md-7">
             <div class="form-group row-1 input-group">
-                <label class="control-label col-md-3 top-space lb">Mã CNV <span class="red">(*)</span></label>
-                <div class="col-md-7 input-group">
-                    <div class="top-space">
-                        <input type="hidden" id="gid" value="@Model.ID" />
-                        @Html.TextBoxFor(model => model.EmployeeID, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                <div class="col-md-3 input-group">
+                    <div class="top-space input-group-sm">
+                        <input type="hidden" value="@Model.ID" id="txtID" />
+                        <input class="form-control input-previous-button col-md-12" id="txtEmployeeID" value="@Model.EmployeeID" readonly />
                     </div>
-                    &nbsp;
-                    &nbsp;
-                    <label id="info-BI-create" class="btn-primary btn btn-get-info top-space" title="Xem thông tin CNV" style="cursor: pointer">
-                        <i class="fas fa-user"></i>&nbsp; Thông tin CNV
+                </div>
+                <label class="control-label col-1 top-space lb">Khách</label>
+                <div class="col-md-3 input-group-sm">
+                    <select class="form-control top-space" id="txtType" disabled>
+                        <option value="0" @if (Model.Type == 0) { @: selected
+                                }>
+                            Khách
+                        </option>
+                        <option value="1" @if (Model.Type == 1) { @: selected
+                                }>
+                            Nhà thầu
+                        </option>
+                        <option value="2" @if (Model.Type == 2) { @: selected
+                                }>
+                            Lái xe
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3 checkbox top-space">
+                    <label style="margin-bottom: 0 !important; margin-top:.5rem">
+                        @if (Model.Check_Guest.Value)
+                        {
+                            <label><input type="checkbox" id="txtCheck_Guest" checked disabled /> Khách nước ngoài</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox" id="txtCheck_Guest" disabled /> Khách nước ngoài</label>
+                        }
                     </label>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Khách <span class="red">(*)</span></label>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Type, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-md-2 top-space">Số thẻ khách</label>
+                <div class="col-md-3 input-group">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtKVPNo" value="@Model.KVPNo" readonly />
+                    </div>
+                </div>
+                <label class="control-label col-md-2 top-space">Họ tên khách <span class="red">(*)</span></label>
+                <div class="col-5 input-group-sm">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtEmployeeName" value="@Model.FullName" readonly />
+                    </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Số thẻ khách</label>
-                <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.KVPNo, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-md-2 top-space">CMTND/Hộ chiếu</label>
+                <div class="col-md-3 input-group">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtIDCard" value="@Model.IDCard" readonly />
+                    </div>
+                </div>
+                <label class="control-label col-md-1 top-space">Visa</label>
+                <div class="col-md-6 input-group-sm">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtVisa" value="@Model.Visa" readonly />
+                    </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Họ tên khách <span class="red">(*)</span></label>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.FullName, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-md-2 top-space">Nơi ở hiện tại</label>
+                <div class="col-md-10">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtHotel" value="@Model.Hotel" readonly />
+                    </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">CMTND/Hộ chiếu</label>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.IDCard, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-md-2 top-space">Công ty <span class="red">(*)</span></label>
+                <div class="col-md-10">
+                    <div class="input-group-sm">
+                        <input class="form-control input-previous-button" id="txtCompany" value="@Model.Company" readonly />
+                    </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Visa</label>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Visa, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-md-2 top-space">Số người <span class="red">(*)</span></label>
+                <div class="col-md-2 input-group">
+                    <div class="input-group-sm">
+                        <input type="number" class="form-control input-previous-button" id="txtNumbersOfPerson" value="@Model.NumbersOfPerson" min="1" readonly disabled />
+                    </div>
+                </div>
+                <a id="guest-multi-day" class="btn-info btn btn-sm" title="Đăng ký theo đoàn" style="color: white; cursor: pointer">
+                    <i class="fas fa-edit"></i>&nbsp; Đăng ký Khách theo đoàn
+                </a>
+                <div class="multi_day input-group-sm col-5">
+                    <div class="form-horizontal col-12 row-add input-group-sm" id="import_file" style="padding: 1px">
+                        <input disabled class="input-group-sm" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileRedirectUrl" placeholder="Chọn file Excel" />
+                    </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Nơi ở hiện tại</label>
-                <div class="col-md-9">
-                    @Html.TextBoxFor(model => model.Hotel, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <div class="col-md-10">
+                    <div class="input-group-sm">
+                        <textarea readonly class="form-control col-md-12" style="resize: none" id="txtPurpose">@Model.Purpose</textarea>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Công ty <span class="red">(*)</span></label>
-                <div class="col-md-9">
-                    @Html.TextBoxFor(model => model.Company, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-md-2 top-space">Số xe</label>
+                <div class="col-md-5">
+                    <div class="input-group-sm">
+                        <input readonly class="form-control input-previous-button" id="txtTransportNo" value="@Model.TransportNo" />
+                    </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Số người <span class="red">(*)</span></label>
-                <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.NumbersOfPerson, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                <label class="control-label col-md-2 top-space">Giờ vào <span class="red">(*)</span></label>
+                <div class="col-3 input-group-sm">
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" readonly />
+                </div>
+                <div class="col-2 input-group-sm">
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" value="@Model.EstimatedTimeIn" readonly />
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-3">Lý do <span class="red">(*)</span></label>
-                <div class="col-md-9">
-                    <textarea readonly class="form-control col-md-12" style="resize: none"></textarea>
+                <label class="control-label col-md-2 top-space">Giờ ra <span class="red">(*)</span></label>
+                <div class="col-3 input-group-sm">
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" readonly />
                 </div>
-            </div>
-
-            <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Số xe</label>
-                <div class="col-md-9">
-                    <input readonly class="form-control input-previous-button" />
-                </div>
-            </div>
-
-            <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Giờ đăng ký vào <span class="red">(*)</span></label>
-                <div class="col-md-4">
-                    <input readonly class="form-control input-previous-button" id="estimated_date_in" />
-                </div>
-            </div>
-
-            <div class="form-group input-group">
-                <label class="control-label col-md-3 top-space">Giờ đăng ký ra <span class="red">(*)</span></label>
-                <div class="col-md-4">
-                    <input readonly class="form-control input-previous-button" id="estimated_date_out" />
+                <div class="col-2 input-group-sm">
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.EstimatedTimeOut" readonly />
                 </div>
             </div>
         </div>
 
-        <div class="column col-md-2 col-mid">
-            <i class=" fas fa-play"></i>
-        </div>
+        <div class="column col-md-1 col-mid"></div>
 
 
         <!--Cột bên phải dành cho thông tin nhân viên-->
@@ -123,30 +166,20 @@
                 </div>
             </div>
             <!--Thông tin profile-->
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
-                <input readonly class="form-control input-previous-button col-9 txtFullNameBI" />
-                @*@Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtFullNameBI" } })
-                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger info-required" })*@
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Họ và tên</label>
+                <input readonly class="form-control input-previous-button col-9" id="txtFullNameBI" value="@Model.EmployeeName" />
             </div>
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
-                <input readonly class="form-control input-previous-button col-9 txtPositionBI" />
-                @*@Html.EditorFor(model => model.Position, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtPositionBI" } })
-                    @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger info-required" })*@
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Vị trí</label>
+                <input readonly class="form-control input-previous-button col-9" id="txtPositionBI" value="@Model.Position" />
             </div>
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
-                <input readonly class="form-control input-previous-button col-9 txtTeamBI" />
-                @*@Html.EditorFor(model => model.Team, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control input-previous-button col-9 txtTeamBI" } })
-                    @Html.ValidationMessageFor(model => model.Team, "", new { @class = "text-danger info-required" })*@
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Phòng ban</label>
+                <input readonly class="form-control input-previous-button col-9" id="txtTeamBI" value="@Model.Team" />
             </div>
         </div>
     </div>
-</div>
-<br />
-<div class="note col-12">
-    <span class="control-label" style="color: dodgerblue"><u>Lưu ý</u>: <span style="color: #858796">&nbsp;Các trường <span style="color:red">(*)</span> bắt buộc phải nhập đầy đủ.</span></span>
 </div>
 <br />
 <div class="bottom">
@@ -162,7 +195,6 @@
                     <th>Đơn vị</th>
                     <th>Loại hàng hóa</th>
                     <th colspan="2">Thời gian đem trở ra</th>
-                    <th colspan="2">Người đăng ký</th>
                     <th colspan="4">ITT phê duyệt</th>
                     <th colspan="4">FST phê duyệt</th>
                     <th colspan="4">Bảo vệ xác nhận mang vào</th>
@@ -192,22 +224,40 @@
                             }
                         </td>
                         <td>
-                            @if (@item.IsReturn == true)
+                            @if (item.IsReturn == true)
                             {
                                 <i class="fas fa-check-square" style="color: dodgerblue"></i>
                             }
-                            else
+                            else if (item.IsReturn == false)
                             {
                                 <i class="fas fa-times" style="color: red"></i>
                             }
                         </td>
-                        <td>@item.ReturnTime</td>
+                        <td>@item.ReturnDate @item.ReturnTime</td>
                         <td>@item.ITT</td>
-                        <td>@item.ITT_Status</td>
+                        <td>
+                            @if (item.ITT_Status == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (item.ITT_Status == 0)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                        </td>
                         <td>@item.ITT_Remark</td>
                         <td>@item.ITT_Date</td>
                         <td>@item.FST</td>
-                        <td>@item.FST_Status</td>
+                        <td>
+                            @if (item.FST_Status == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (item.FST_Status == 2)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                        </td>
                         <td>@item.FST_Remark</td>
                         <td>@item.FST_Date</td>
                         <td>@item.GuardIn</td>
@@ -219,14 +269,14 @@
                             }
                             else if (@item.GuardStatusIn == 1)
                             {
-                                <i class="fas fa-check"></i>
+                                <i class="fas fa-check-square"></i>
                             }
                             else
                             {
-                                <i class="fas fa-times"></i>
+                                <i class="fas fa-times" style="color:red"></i>
                             }
                         </td>
-                        <td><input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" disabled="@(item.GuardStatusOut != null)" /></td>
+                        <td><input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkIn" readonly="@(item.GuardStatusIn != null)" /></td>
                         <td>@item.GuardDateIn</td>
                         <td>@item.GuardOut</td>
                         <td>
@@ -237,13 +287,12 @@
                             }
                             else if (@item.GuardStatusOut == 1)
                             {
-                                <i class="fas fa-check"></i>
+                                <i class="fas fa-check-square"></i>
                             }
                             else
                             {
-                                <i class="fas fa-times"></i>
+                                <i class="fas fa-times" style="color:red"></i>
                             }
-
                         </td>
                         <td><input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" disabled="@(item.GuardStatusOut != null)" /></td>
                         <td>@item.GuardDateOut</td>
@@ -253,7 +302,7 @@
         </table>
     </div>
     <div style="text-align: center">
-        <label id="add-row-items" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+        <label id="return-queue" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
         </label>
     </div>
@@ -306,6 +355,13 @@
                 status: 0,
             }, true)
         }
+
+        $("#guard").removeClass('collapse');
+        $("#guard").removeClass('collapsed');
+        $("#guard").attr("aria-expanded", "true");
+        $("#queue").addClass('active');
+        $("#collapseGuard").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }
 

@@ -13,11 +13,11 @@
     </div>
     <!--Cột bên trái dành cho form đăng ký-->
     <div class="col-md-12 row-form">
-        <div class="column form-horizontal form-left col-md-6">
+        <div class="column form-horizontal form-left col-md-7">
             <div class="form-group row-1 input-group">
                 <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-7 input-group">
-                    <div class="top-space">
+                    <div class="top-space input-group-sm">
                         <input type="hidden" id="guestID" value="@Model.ID" />
                         @Html.TextBoxFor(model => model.EmployeeID, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                     </div>
@@ -26,16 +26,47 @@
 
             <div class="form-group input-group">
                 <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
-                <div class="col-md-10">
+                <div class="col-md-10 input-group-sm">
                     @Html.TextAreaFor(model => model.Purpose, new { @class = "form-control col-md-12", @readonly = "readonly", @style = "resize: none" })
+                </div>
+            </div>
+
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 top-space lb">Ngày vào <span class="red">(*)</span></label>
+                <div class="col-md-3 input-group">
+                    <div class="top-space input-group-sm">
+                        <input type="hidden" id="guestID" value="@Model.ID" />
+                        @Html.TextBoxFor(model => model.EstimatedDateIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    </div>
+                </div>
+                <label class="control-label top-space lb">Giờ vào <span class="red">(*)</span></label>
+                <div class="col-md-3 input-group">
+                    <div class="top-space input-group-sm">
+                        <input type="hidden" id="guestID" value="@Model.ID" />
+                        @Html.TextBoxFor(model => model.EstimatedTimeIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 top-space lb">Ngày ra <span class="red">(*)</span></label>
+                <div class="col-md-3 input-group">
+                    <div class="top-space input-group-sm">
+                        <input type="hidden" id="guestID" value="@Model.ID" />
+                        @Html.TextBoxFor(model => model.EstimatedDateOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    </div>
+                </div>
+                <label class="control-label top-space lb">Giờ ra <span class="red">(*)</span></label>
+                <div class="col-md-3 input-group">
+                    <div class="top-space input-group-sm">
+                        <input type="hidden" id="guestID" value="@Model.ID" />
+                        @Html.TextBoxFor(model => model.EstimatedTimeOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="column col-md-2 col-mid">
-            <i class=" fas fa-play"></i>
-        </div>
-
+        <div class="column col-md-1 col-mid"></div>
 
         <!--Cột bên phải dành cho thông tin nhân viên-->
         <div class="column form-horizontal form-right col-md-4">
@@ -46,16 +77,16 @@
                 </div>
             </div>
             <!--Thông tin profile-->
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Họ và tên</label>
                 <input readonly class="form-control input-previous-button col-9 txtFullNameBI" value="@Model.EmployeeName" />
             </div>
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Vị trí</label>
                 <input readonly class="form-control input-previous-button col-9 txtPositionBI" value="@Model.Position" />
             </div>
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Phòng ban</label>
                 <input readonly class="form-control input-previous-button col-9 txtTeamBI" value="@Model.Team" />
             </div>
         </div>
@@ -80,9 +111,7 @@
                     <th>Số người</th>
                     <th>Lí do</th>
                     <th>Số xe</th>
-                    <th>Giờ đăng ký vào</th>
                     <th colspan="4">Bảo vệ xác nhận vào</th>
-                    <th>Giờ đăng ký ra</th>
                     <th colspan="4">Bảo vệ xác nhận ra</th>
                 </tr>
             </thead>
@@ -116,13 +145,12 @@
                     <td>@Model.NumbersOfPerson</td>
                     <td>@Model.Purpose</td>
                     <td>@Model.TransportNo</td>
-                    <td>@Model.EstimatedDateIn | @Model.EstimatedTimeIn</td>
                     @if (Model.GuardStatusIn != null)
                     {
                         <td>@Model.GuardIn</td>
                         if (Model.GuardStatusIn.Value == 0)
                         {
-                            <td><i class="fas fa-times"></i></td>
+                            <td><i class="fas fa-times" style="color:red"></i></td>
                         }
                         else
                         {
@@ -133,20 +161,20 @@
                     }
                     else
                     {
-                        <td><i class="fa-question"></i></td>
+                        <td></td>
                         <td>
                             <a class="btn btn-primary btn-standard approveIn" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
                             <a class="btn btn-danger btn-standard unapproveIn" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
                         </td>
-                        <td><input class="remarkIn col-12" type="text" placeholder="Ghi chú..." /></td>
-                        <td><i class="fa-question"></i></td>
+                        <td><input class="remarkIn col-12 remark" type="text" placeholder="Ghi chú..." /></td>
+                        <td></td>
                     }
                     @if (Model.GuardStatusOut != null)
                     {
                         <td>@Model.GuardOut</td>
                         if (Model.GuardStatusOut.Value == 0)
                         {
-                            <td><i class="fas fa-times"></i></td>
+                            <td><i class="fas fa-times" style="color:red"></i></td>
                         }
                         else
                         {
@@ -157,19 +185,19 @@
                     }
                     else
                     {
-                        <td><i class="fa-question"></i></td>
+                        <td></td>
                         <td>
                             <a class="btn btn-primary btn-standard approveOut" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
                             <a class="btn btn-danger btn-standard unapproveOut" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
                         </td>
-                        <td><input class="remarkOut col-12" type="text" placeholder="Ghi chú..." /></td>
-                        <td><i class="fa-question"></i></td>
+                        <td><input class="remarkOut col-12 remark" type="text" placeholder="Ghi chú..." /></td>
+                        <td></td>
                     }
             </tbody>
         </table>
     </div>
     <div style="text-align: center">
-        <label id="add-row-items" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+        <label class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <a href="/Guard/Queue" style="text-decoration: none; color: white"><i class="fas fa-arrow-left"></i>&nbsp; Trở lại</a>
         </label>
     </div>
@@ -288,5 +316,12 @@
                 }
             })
         })
+
+        $("#guard").removeClass('collapse');
+        $("#guard").removeClass('collapsed');
+        $("#guard").attr("aria-expanded", "true");
+        $("#queue").addClass('active');
+        $("#collapseGuard").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

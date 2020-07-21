@@ -60,16 +60,16 @@
     </div>
     <br />
     <div class="col-12 row">
-        <div class="col-8"><span class="normal">Họ tên khách (<i>Visitor Name</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.FullName)</b></div>
-        <div class="col-4"><span class="normal">Số CMND/Hộ chiếu (<i>ID Number</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.IDCard)</b></div>
+        <div class="col-7"><span class="normal">Họ tên khách (<i>Visitor Name</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.FullName)</b></div>
+        <div class="col-5"><span class="normal">Số CMND/Hộ chiếu (<i>ID Number</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.IDCard)</b></div>
     </div>
     <div class="col-12 row">
-        <div class="col-8"><span class="normal">Công ty (<i>Company</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Company)</b></div>
-        <div class="col-4"><span class="normal">Số người (<i>Team</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.NumbersOfPerson)</b></div>
+        <div class="col-7"><span class="normal">Công ty (<i>Company</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Company)</b></div>
+        <div class="col-5"><span class="normal">Số người (<i>Number of person</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.NumbersOfPerson)</b></div>
     </div>
     <div class="col-12 row">
-        <div class="col-8"><span class="normal">Mục đích (<i>Purpose</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Purpose)</b></div>
-        <div class="col-4"><span class="normal">Số xe (<i>Transport No</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.TransportNo)</b></div>
+        <div class="col-7"><span class="normal">Mục đích (<i>Purpose</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.Purpose)</b></div>
+        <div class="col-5"><span class="normal">Số xe (<i>Transport No</i>): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.TransportNo)</b></div>
     </div>
     <br />
     <div class="row">
@@ -96,95 +96,98 @@
             <tr>
                 @foreach (var item in Model.Guest_Item)
                 {
-                <tr class="row-items">
-                    <td class="input-group-sm">@item.ID</td>
-                    <td class="input-group-sm">@item.Item</td>
-                    <td class="input-group-sm">@item.Serial</td>
-                    <td class="input-group-sm">@item.Quantity</td>
-                    <td class="input-group-sm">@item.Unit</td>
-                    <td class="input-group-sm">
-                        @if (item.AssetType == 0)
-                        {
-                            <span>Hàng thường</span>
-                        }
-                        else if (item.AssetType == 1)
-                        {
-                            <span>Hàng IT</span>
-                        }
-                        else if (item.AssetType == 2)
-                        {
-                            <span>Hàng độc hại</span>
-                        }
-                    </td>
-                    <td class="input-group-sm">
-                        @if (item.IsReturn.Value == true)
-                        {
-                            <span>Có</span>
-                        }
-                        else if (item.IsReturn == false)
-                        {
-                            <span>Không</span>
-                        }
-                    </td>
-                    <td class="input-group-sm">@item.ReturnDate&nbsp;@item.ReturnTime</td>
-                    <td>
-                        @if (@item.ITT_Status == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (@item.ITT_Status == 0)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                        <br />
-                        @item.ITT
-                        <br />
-                        @item.ITT_Date
-                    </td>
-                    <td>
-                        @if (@item.FST_Status == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (@item.FST_Status == 0)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                        <br />
-                        @item.FST
-                        <br />
-                        @item.FST_Date
-                    </td>
-                    <td>
-                        @if (@item.GuardStatusIn == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (@item.GuardStatusIn == 0)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                        <br />
-                        @item.GuardIn
-                        <br />
-                        @item.GuardDateIn
-                    </td>
-                    <td>
-                        @if (@item.GuardStatusOut == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (@item.GuardStatusOut == 0)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                        <br />
-                        @item.GuardOut
-                        <br />
-                        @item.GuardDateOut
-                    </td>
-                </tr>
-            }
+                    if (item.IsReturn != null)
+                    {
+                    <tr class="row-items">
+                        <td class="input-group-sm">@item.ID</td>
+                        <td class="input-group-sm">@item.Item</td>
+                        <td class="input-group-sm">@item.Serial</td>
+                        <td class="input-group-sm">@item.Quantity</td>
+                        <td class="input-group-sm">@item.Unit</td>
+                        <td class="input-group-sm">
+                            @if (item.AssetType == 0)
+                            {
+                                <span>Hàng thường</span>
+                            }
+                            else if (item.AssetType == 1)
+                            {
+                                <span>Hàng IT</span>
+                            }
+                            else if (item.AssetType == 2)
+                            {
+                                <span>Hàng độc hại</span>
+                            }
+                        </td>
+                        <td class="input-group-sm">
+                            @if (item.IsReturn.Value == true)
+                            {
+                                <span>Có</span>
+                            }
+                            else if (item.IsReturn == false)
+                            {
+                                <span>Không</span>
+                            }
+                        </td>
+                        <td class="input-group-sm">@item.ReturnDate<br />@item.ReturnTime</td>
+                        <td>
+                            @if (@item.ITT_Status == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (@item.ITT_Status == 0)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                            <br />
+                            @item.ITT
+                            <br />
+                            @item.ITT_Date
+                        </td>
+                        <td>
+                            @if (@item.FST_Status == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (@item.FST_Status == 0)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                            <br />
+                            @item.FST
+                            <br />
+                            @item.FST_Date
+                        </td>
+                        <td>
+                            @if (@item.GuardStatusIn == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (@item.GuardStatusIn == 0)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                            <br />
+                            @item.GuardIn
+                            <br />
+                            @item.GuardDateIn
+                        </td>
+                        <td>
+                            @if (@item.GuardStatusOut == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (@item.GuardStatusOut == 0)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                            <br />
+                            @item.GuardOut
+                            <br />
+                            @item.GuardDateOut
+                        </td>
+                    </tr>
+                }
+                }
             </table>
         </div>
     </div>
@@ -223,8 +226,6 @@
         <div class="col-1"></div>
         <ul style="list-style-type: disc">
             <li class="normal">Khai báo đầy đủ, trung thực các thông tin yêu cầu</li>
-            <li class="normal">Các loại hàng IT chỉ được phép mang ra với sự đồng ý của phòng SMT hoặc ITT</li>
-            <li class="normal">Các loại hàng nguy hiểm cần sự cho phép của phòng FST để mang ra</li>
             <li class="normal">Xin xác nhận của nhân viên công ty về cuộc gặp trước khi ra khỏi nhà máy</li>
             <li class="normal">Đeo thẻ và chịu sự giám sát của công ty trong suốt thời gian có mặt tại công ty</li>
             <li class="normal">Tuân thủ tuyệt đối các quy định của công ty về an ninh, an toàn, bảo vệ môi trường, bảo mật thông tin, ...</li>
@@ -235,7 +236,7 @@
     </div>
     <br />
     <div>
-        <table class="table table-bordered" style="border: 1px solid black !important">
+        <table class="table table-bordered" style="border: 1px solid black !important; width: 80%; margin: auto">
             <tr>
                 <th>Khách, Nhà thầu <br />(Guest, Contractor)</th>
                 <th height="80">Nhân viên công ty HYUNDAI KEFICO<br />(Created by)</th>

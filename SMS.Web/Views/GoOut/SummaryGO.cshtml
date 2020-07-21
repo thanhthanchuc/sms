@@ -1,0 +1,189 @@
+﻿@model List<SMS.Models.EF.Go_Out>
+
+@{
+    ViewBag.Title = "SummaryGO";
+}
+
+<link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="~/Assets/css/fonts-gg.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="~/Assets/css/customize.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+<link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+<style>
+    body {
+        color: black !important;
+    }
+
+    .table-bordered td, .table-bordered th {
+        border: 1px solid black !important;
+    }
+
+    label {
+        color: black;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .normal {
+        font-size: 18px;
+    }
+</style>
+
+<div class="row dataTables_wrapper dt-bootstrap4 above-table">
+    <div class="col-2 input-group">
+        <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
+        &nbsp;
+        <input id="date_from" readonly>
+    </div>
+    <div class="col-2 input-group input-group-sm">
+        <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+        &nbsp;
+        <input id="date_to" readonly>
+    </div>
+    <div class="col-2 input-group input-group-sm">
+        <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
+        &nbsp;
+        <input id="team">
+    </div>
+    <div class="col-2 input-group input-group-sm">
+        <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+        &nbsp;
+        <input id="emp_code">
+    </div>
+    <div class="col-2 input-group input-group-sm">
+        <label class="no-margin-bottom" style="padding-top: 5px">Ca làm việc</label>
+        &nbsp;
+        <select>
+            <option value="0">Hành chính</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+</div>
+
+@using (Html.BeginForm("SummaryGO", "GoOut", FormMethod.Get))
+{
+    <div style="width: 100%">
+        <br />
+        <div style="text-align: center; color: black">
+            <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">CÔNG NHÂN VIÊN RA NGOÀI</h5>
+        </div>
+        <div class="center">
+            <span class="normal">GOING OUT</span>
+        </div>
+        <br />
+        <div>
+            <br />
+            <div>
+                <table class="table table-bordered" style="border: 1px solid black !important">
+                    <tr>
+                        <th>Mã</th>
+                        <th colspan="2">Nhân viên</th>
+                        <th>Phòng ban</th>
+                        <th>Mục đích</th>
+                        <th>Giờ ra</th>
+                        <th>Giờ quay lại</th>
+                        <th>Phê duyệt</th>
+                        <th>Giờ ra thực tế</th>
+                        <th>Bảo vệ xác nhận ra</th>
+                        <th>Giờ quay lại thực tế</th>
+                        <th>Bảo vệ xác nhận quay lại</th>
+                    </tr>
+                    <tr>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td class="col-sticky-1">
+                                <span>REL</span>@Html.DisplayFor(modelItem => item.ID)@Html.DisplayFor(modelItem => item.Team)
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.EmpCode)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Team)</td>
+                            <td>
+                                @if (item.Purpose)
+                                {
+                                    <span>Công việc</span>
+                                }
+                                else
+                                {
+                                    <span>Cá nhân</span>
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.EstimatedDateOut)<br />@Html.DisplayFor(modelItem => item.EstimatedTimeOut)</td>
+                            <td>@Html.DisplayFor(modelItem => item.EstimatedDateReturn)<br />@Html.DisplayFor(modelItem => item.EstimatedTimeReturn)</td>
+                            <td>
+                                @if (item.ApprovedStatus == 1)
+                                {
+                                    <span>Y</span>
+                                }
+                                else if (item.ApprovedStatus == 0)
+                                {
+                                    <span>N</span>
+                                }
+
+                                else if (item.ApprovedStatus == 4)
+                                {
+                                }
+                            </td>
+                            <td>
+                                @if (item.GuardDateOut != null)
+                                {
+                                    @Html.DisplayFor(modelItem => item.GuardDateOut)
+                                }
+                            </td>
+                            <td>
+                                @if (item.GuardStatusOut == 1)
+                                {
+                                    <i class="fas fa-check-square" style="color:dodgerblue" title="Đã xác nhận"></i>
+                                }
+                                else if (item.GuardStatusOut == 0)
+                                {
+                                    <i class="fas fa-window-close" style="color:red" title="Không xác nhận"></i>
+                                }
+                            </td>
+                            <td>
+                                @if (item.GuardDateReturn != null)
+                                {
+                                    @Html.DisplayFor(modelItem => item.GuardDateReturn)
+                                }
+                            </td>
+                            <td>
+                                @if (item.GuardStatusReturn == 1)
+                                {
+                                    <i class="fas fa-check-square" style="color:dodgerblue" title="Đã xác nhận"></i>
+                                }
+                                else if (item.GuardStatusReturn == 0)
+                                {
+                                    <i class="fas fa-window-close" style="color:red" title="Không xác nhận"></i>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+<script>
+    $('#estimated_date_out, #estimated_date_return, #date_from, #date_to').datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+
+    $('#estimated_date_out, #estimated_date_return, #date_from, #date_to').datepicker().datepicker("setDate", new Date());
+
+    $('.timepicker, #estimated_time_out, #estimated_time_return').timepicker({
+        timeFormat: 'h:mm p',
+        interval: 5,
+        startTime: '00:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
+</script>

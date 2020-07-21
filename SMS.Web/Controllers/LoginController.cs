@@ -82,7 +82,7 @@ namespace SMS.Web.Controllers
                         //userSession.RoleName = userDAO.GetRoleName(user.RoleId);
                         Session["Login"] = user.EmpCode;
                         Session.Add(CommonConstants.USER_SESSION, userSession);
-                        return RedirectToAction("Queue", "Guard");
+                        return RedirectToAction("Index", "Home");
                     }
                     else if (res == 0)
                     {

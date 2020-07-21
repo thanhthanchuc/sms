@@ -20,7 +20,6 @@
     <link href="~/Assets/css/fonts-gg.css" rel="stylesheet" />
     <link href="~/Assets/css/jquery-ui.css" rel="stylesheet" />
 
-
     <!-- Custom styles for this template-->
     <link href="~/Assets/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="~/Assets/css/customize.css" rel="stylesheet" />
@@ -109,7 +108,7 @@
                 </a>
                 <div id="collapseInOut" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <!-- Báo cáo -->
-                     @if ((User as CustomPrincipal).Guard != true)
+                    @if ((User as CustomPrincipal).Guard != true)
                     {
                         if ((User as CustomPrincipal).Read_Only != true)
                         {
@@ -121,11 +120,11 @@
                                 <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                                     <div class="bg-sub-menu py-2 collapse-inner rounded">
                                         <a id="LEReport" class="collapse-item grey-a-tag" href="/LeaveEarly/SummaryLE" target="_blank">CNV về sớm</a>
-                                        <a id="GOReport" class="collapse-item grey-a-tag" href="#">CNV ra ngoài</a>
-                                        <a id="BIReport" class="collapse-item grey-a-tag" href="/BringIn/SummaryBI">CNV mang hàng vào</a>
-                                        <a id="BOReport" class="collapse-item grey-a-tag" href="#">CNV mang hàng ra</a>
-                                        <a id="Guest" class="collapse-item grey-a-tag" href="#">Khách vào ra</a>
-                                        <a id="GuestItems" class="collapse-item grey-a-tag" href="#">Khách mang hàng vào/ra</a>
+                                        <a id="GOReport" class="collapse-item grey-a-tag" href="/GoOut/SummaryGO" target="_blank">CNV ra ngoài</a>
+                                        <a id="BIReport" class="collapse-item grey-a-tag" href="/BringIn/SummaryBI" target="_blank">CNV mang hàng vào</a>
+                                        <a id="BOReport" class="collapse-item grey-a-tag" href="/BringOut/SummaryBO" target="_blank">CNV mang hàng ra</a>
+                                        <a id="Guest" class="collapse-item grey-a-tag" href="/Guest/SummaryGuest" target="_blank">Khách vào ra</a>
+                                        <a id="GuestItems" class="collapse-item grey-a-tag" href="/Guest/SummaryGuestItem" target="_blank">Khách mang hàng vào/ra</a>
                                         <a id="PunishReport" class="collapse-item grey-a-tag" href="#">Báo cáo sự việc</a>
                                     </div>
                                 </div>
@@ -221,7 +220,7 @@
                         </li>
                     }
                     <!-- Bảo vệ -->
-                    @if ((User as CustomPrincipal).Guard == true && (User as CustomPrincipal).PIC != true && (User as CustomPrincipal).Read_Only != true)
+                    @if ((User as CustomPrincipal).PIC != true && (User as CustomPrincipal).Read_Only != true)
                     {
                         <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
                             <a id="guard" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuard" aria-expanded="true" aria-controls="collapseGuard">
@@ -230,8 +229,8 @@
                             </a>
                             <div id="collapseGuard" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                                 <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                    <a class="collapse-item grey-a-tag" href="/Guard/Queue">Chờ xử lý</a>
-                                    <a class="collapse-item grey-a-tag" href="/Guard/History">Lịch sử</a>
+                                    <a id="queue" class="collapse-item grey-a-tag" href="/Guard/Queue">Chờ xử lý</a>
+                                    <a id="guard_history" class="collapse-item grey-a-tag" href="/Guard/History">Lịch sử</a>
                                     <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
                                 </div>
                             </div>
@@ -481,8 +480,8 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline small" id="logged_name" style="color:black">@ViewBag.userSS</span>
-                                <p>@((User as CustomPrincipal).FullName)</p>
+                                <b class="mr-2 d-none d-lg-inline" id="logged_name" style="color:black">@((User as CustomPrincipal).FullName)</b>
+                                <img id="logged_image" class="img-profile rounded-circle">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" style="background-color: #cbcbcb">

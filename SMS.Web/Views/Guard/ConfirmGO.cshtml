@@ -10,11 +10,11 @@
     </div>
     <!--Cột bên trái dành cho form đăng ký-->
     <div class="col-md-12 row-form">
-        <div class="column form-horizontal form-left col-md-6">
+        <div class="column form-horizontal form-left col-md-7">
             <div class="form-group row-1 input-group">
                 <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-7 input-group">
-                    <div class="top-space">
+                    <div class="top-space input-group-sm">
                         <input type="hidden" id="go_outId" value="@Model.Go_Out.ID" />
                         @Html.TextBoxFor(model => model.Go_Out.EmpCode, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
                     </div>
@@ -22,16 +22,27 @@
             </div>
 
             <div class="form-group input-group">
+                @Html.LabelFor(model => model.Go_Out.Shift, "Ca", htmlAttributes: new { @class = "control-label col-md-2 top-space" })
+                <div class="col-md-3 input-group-sm">
+                    @Html.DropDownListFor(model => model.Go_Out.Shift, new List<SelectListItem>()
+                    {
+                       new SelectListItem(){Selected = true, Text = "Hành chính", Value="0"},
+                       new SelectListItem(){Text = "1", Value="1"},
+                       new SelectListItem(){Text = "2", Value="2"},
+                       new SelectListItem(){Text = "3", Value="3"}
+                    }, new { @class = "form-control input-previous-button", disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="form-group input-group">
                 <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
-                <div class="col-md-10">
+                <div class="col-md-10 input-group-sm">
                     @Html.TextAreaFor(model => model.Go_Out.Reason, new { @class = "form-control col-md-12", @readonly = "readonly", @style = "resize: none" })
                 </div>
             </div>
         </div>
 
-        <div class="column col-md-2 col-mid">
-            <i class=" fas fa-play"></i>
-        </div>
+        <div class="column col-md-1 col-mid"></div>
 
 
         <!--Cột bên phải dành cho thông tin nhân viên-->
@@ -43,16 +54,16 @@
                 </div>
             </div>
             <!--Thông tin profile-->
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Họ và tên</label>
                 @Html.TextBoxFor(model => model.Go_Out.FullName, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
             </div>
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Vị trí</label>
                 @Html.TextBoxFor(model => model.Go_Out.Position, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
             </div>
-            <div class="form-group input-group profile">
-                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Phòng ban</label>
                 @Html.TextBoxFor(model => model.Go_Out.Team, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
             </div>
         </div>
@@ -74,7 +85,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>@Html.DisplayFor(m => m.Go_Out.EstimatedDateOut)</td>
+                    <td>@Html.DisplayFor(m => m.Go_Out.EstimatedDateOut) @Html.DisplayFor(m => m.Go_Out.EstimatedTimeOut)</td>
                     <td>@Html.DisplayFor(m => m.Go_Out.GuardOut)</td>
                     <td>
                         @if (Model.Go_Out.GuardStatusOut == null)
@@ -84,18 +95,18 @@
                         }
                         else if (Model.Go_Out.GuardStatusOut == 1)
                         {
-                            <i class="fas fa-check"></i>
+                            <i class="fas fa-check-square"></i>
                         }
                         else
                         {
-                            <i class="fas fa-times"></i>
+                            <i class="fas fa-times" style="color:red"></i>
                         }
                     </td>
                     <td>
-                        <input class="out_remark col-12" type="text" placeholder="Ghi chú..."  value="@Model.Go_Out.GuardRemarkOut" />
+                        <input class="out_remark col-12 remark remark-1" type="text" placeholder="Ghi chú..."  value="@Model.Go_Out.GuardRemarkOut" readonly="@Model.Go_Out.GuardStatusOut != null" />
                     </td>
                     <td>@Html.DisplayFor(m => m.Go_Out.GuardDateOut)</td>
-                    <td>@Html.DisplayFor(m => m.Go_Out.EstimatedDateReturn)</td>
+                    <td>@Html.DisplayFor(m => m.Go_Out.EstimatedDateReturn) @Html.DisplayFor(m => m.Go_Out.EstimatedTimeReturn)</td>
                     <td>@Html.DisplayFor(m => m.Go_Out.GuardReturn)</td>
                     <td>
                         @if (Model.Go_Out.GuardStatusReturn == null)
@@ -105,15 +116,15 @@
                         }
                         else if (Model.Go_Out.GuardStatusReturn == 1)
                         {
-                            <i class="fas fa-check"></i>
+                            <i class="fas fa-check-square"></i>
                         }
                         else
                         {
-                            <i class="fas fa-times"></i>
+                            <i class="fas fa-times" style="color:red"></i>
                         }
                     </td>
                     <td>
-                        <input class="return_remark col-12" type="text" placeholder="Ghi chú..." value="@Model.Go_Out.GuardRemarkReturn" />
+                        <input class="return_remark col-12 remark remark-1" type="text" placeholder="Ghi chú..." value="@Model.Go_Out.GuardRemarkReturn" readonly="@Model.Go_Out.GuardStatusReturn != null" />
                     </td>
                     <td>@Html.DisplayFor(m => m.Go_Out.GuardDateReturn)</td>
                 </tr>
@@ -121,7 +132,7 @@
         </table>
     </div>
     <div style="text-align: center">
-        <label id="return-queue" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+        <label id="return-queue" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
         </label>
     </div>
@@ -181,5 +192,12 @@
                 status: 0
             }, true)
         })
+
+        $("#guard").removeClass('collapse');
+        $("#guard").removeClass('collapsed');
+        $("#guard").attr("aria-expanded", "true");
+        $("#queue").addClass('active');
+        $("#collapseGuard").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
     </script>
 }

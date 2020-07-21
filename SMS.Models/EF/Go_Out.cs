@@ -3,11 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
     using Utils;
 
-    public partial class Go_Out : IValidatableObject
+    public partial class Go_Out
     {
         public int ID { get; set; }
 
@@ -82,22 +80,5 @@
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (DateTime.Parse(Util.FormatDate(EstimatedDateOut) + ' ' + EstimatedTimeOut) < DateTime.Now)
-            {
-                yield return
-                 new ValidationResult("Ngày giờ ra phải sau thời điểm hiện tại",
-                                      new[] { "EstimatedDateOut" });
-            }
-
-            if (DateTime.Parse(Util.FormatDate(EstimatedDateOut) + ' ' + EstimatedTimeOut) > DateTime.Parse(Util.FormatDate(EstimatedDateReturn) + ' ' + EstimatedTimeReturn))
-            {
-                yield return
-                  new ValidationResult("Ngày giờ quay lại phải sau ngày giờ ra",
-                                       new[] { "EstimatedDateReturn" });
-            }
-        }
     }
 }

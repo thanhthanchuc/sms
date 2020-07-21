@@ -1,7 +1,7 @@
 ﻿@model List<SMS.Models.EF.Bring_In>
 
 @{
-    ViewBag.Title = "SummaryLE";
+    ViewBag.Title = "SummaryBI";
 }
 
 <link href="~/Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,42 +34,175 @@
     }
 </style>
 
-@using (Html.BeginForm("SummaryLE", "LeaveEarly", FormMethod.Get))
+<div class="row dataTables_wrapper dt-bootstrap4 above-table">
+    <div class="col-2 input-group">
+        <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
+        &nbsp;
+        <input id="date_from" readonly>
+    </div>
+    <div class="col-2 input-group input-group-sm">
+        <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+        &nbsp;
+        <input id="date_to" readonly>
+    </div>
+    <div class="col-2 input-group input-group-sm">
+        <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
+        &nbsp;
+        <input id="team">
+    </div>
+    <div class="col-2 input-group input-group-sm">
+        <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+        &nbsp;
+        <input id="emp_code">
+    </div>
+    <div class="col-2 input-group input-group-sm">
+        <label class="no-margin-bottom" style="padding-top: 5px">Ca làm việc</label>
+        &nbsp;
+        <select>
+            <option value="0">Hành chính</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+</div>
+
+@using (Html.BeginForm("SummaryBI", "BringIn", FormMethod.Get))
 {
     <div style="width: 100%">
         <br />
-        <br />
-        <br />
-        <br />
+
         <div style="text-align: center; color: black">
-            <img style="width: 200px; position: absolute; left:9%; top:2%" src="~/Assets/img/logo.png" />
-            <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">CÔNG NHÂN VIÊN VỀ SỚM</h5>
+            <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">CÔNG NHÂN VIÊN MANG HÀNG VÀO</h5>
         </div>
         <div class="center">
-            <span class="normal">EARLY LEAVE</span>
+            <span class="normal">BRING IN</span>
         </div>
-        <br />
-        <br />
-        <br />
         <br />
         <div>
             <table class="table table-bordered" style="border: 1px solid black !important">
                 <tr>
-                    <th>Full Name</th>
-                    <th>Item</th>
-                    <th>Quantity</th>
+                    <th><b>Tên nhân viên</b></th>
+                    <th><b>Mã</b></th>
+                    <th><b>Phòng ban</b></th>
+                    <th><b>Vị trí</b></th>
+                    <th><b>Lí do</b></th>
+                    <th><b>Tài sản</b></th>
+                    <th><b>Số lượng</b></th>
+                    <th><b>Đơn vị</b></th>
+                    <th><b>Loại tài sản</b></th>
+                    <th><b>Dự kiến mang ra</b></th>
+                    <th><b>TM phê duyệt</b></th>
+                    <th><b>ITT/SMT phê duyệt</b></th>
+                    <th><b>FST phê duyệt</b></th>
+                    <th colspan="2"><b>Bảo vệ (Vào/In)</b></th>
+                    <th colspan="2"><b>Bảo vệ (Ra/Out)</b></th>
                 </tr>
                 @foreach (var item in Model)
                 {
                     var i = 0;
-                    foreach(var b in item.Bring_In_Items)
+                    foreach (var b in item.Bring_In_Items)
                     {
                         <tr>
                             <td>
-                                @if (i == 0) {@item.FullName}
+                                @if (i == 0)
+                                {@item.FullName}
+                            </td>
+                            <td>
+                                @if (i == 0)
+                                {@item.EmpCode}
+                            </td>
+                            <td>
+                                @if (i == 0)
+                                {@item.Team}
+                            </td>
+                            <td>
+                                @if (i == 0)
+                                {@item.Position}
+                            </td>
+                            <td>
+                                @if (i == 0)
+                                {@item.Reason}
                             </td>
                             <td>@b.Item</td>
                             <td>@b.Quantity</td>
+                            <td>@b.Unit</td>
+                            <td>
+                                @if (b.AssetType == 0)
+                                {
+                                    <span>Hàng thường</span>
+                                }
+                                else if (b.AssetType == 1)
+                                {
+                                    <span>Hàng IT</span>
+                                }
+                                else if (b.AssetType == 2)
+                                {
+                                    <span>Hàng độc hại</span>
+                                }
+                            </td>
+                            <td>
+                                @if (b.IsReturn == true)
+                                {
+                                    <span>@b.ReturnDate<br />@b.ReturnTime</span>
+                                }
+                            </td>
+                            <td>
+                                @if (b.ApprovedStatus == 1)
+                                {
+                                    <span>Y</span>
+                                }
+                                else if (b.ApprovedStatus == 0)
+                                {
+                                    <span>N</span>
+                                }
+                            </td>
+                            <td>
+                                @if (b.ITT_Status == 1)
+                                {
+                                    <span>Y</span>
+                                }
+                                else if (b.ITT_Status == 0)
+                                {
+                                    <span>N</span>
+                                }
+                            </td>
+                            <td>
+                                @if (b.FST_Status == 1)
+                                {
+                                    <span>Y</span>
+                                }
+                                else if (b.FST_Status == 0)
+                                {
+                                    <span>N</span>
+                                }
+                            </td>
+                            <td>
+                                @if (b.GuardStatusIn == 1)
+                                {
+                                    <span>Y</span>
+                                }
+                                else if (b.GuardStatusIn == 0)
+                                {
+                                    <span>N</span>
+                                }
+                            </td>
+                            <td>
+                                <span>@b.GuardDateIn</span>
+                            </td>
+                            <td>
+                                @if (b.GuardStatusOut == 1)
+                                {
+                                    <span>Y</span>
+                                }
+                                else if (b.GuardStatusOut == 0)
+                                {
+                                    <span>N</span>
+                                }
+                            </td>
+                            <td>
+                                <span>@b.GuardDateOut</span>
+                            </td>
                         </tr>
                         i++;
                     }
