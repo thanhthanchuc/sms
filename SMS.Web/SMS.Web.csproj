@@ -273,6 +273,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\GuardViewModel.cs" />
     <Compile Include="ViewModels\LeaveEarlyViewModel.cs" />
+    <Compile Include="ViewModels\UserRoleViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DBForReport.mdf" />

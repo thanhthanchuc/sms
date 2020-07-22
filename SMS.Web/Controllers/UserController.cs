@@ -44,27 +44,27 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult UpdateRole(User u)
         {
-            var user = _context.Users.SingleOrDefault(r => r.EmpCode == u.EmpCode);
+            var user = _context.Users.Where(r => r.EmpCode == u.EmpCode);
 
-            user.Admin = u.Admin;
+            //user.Admin = u.Admin;
 
-            user.SubAdmin = u.SubAdmin;
+            //user.SubAdmin = u.SubAdmin;
 
-            user.PIC = u.PIC;
+            //user.PIC = u.PIC;
 
-            user.ITT_TM = u.ITT_TM;
+            //user.ITT_TM = u.ITT_TM;
 
-            user.SMT_TM = u.SMT_TM;
+            //user.SMT_TM = u.SMT_TM;
 
-            user.FST_TM = u.FST_TM;
+            //user.FST_TM = u.FST_TM;
 
-            user.PIC_TM = u.PIC_TM;
+            //user.PIC_TM = u.PIC_TM;
 
-            user.Group_Leader = u.Group_Leader;
+            //user.Group_Leader = u.Group_Leader;
 
-            user.Guard = u.Guard;
+            //user.Guard = u.Guard;
 
-            user.Read_Only = u.Read_Only;
+            //user.Read_Only = u.Read_Only;
 
             _context.SaveChanges();
 

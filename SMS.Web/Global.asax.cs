@@ -43,27 +43,8 @@ namespace SMS.Web
                 CustomPrincipalSerializeModel serializeModel = serializer.Deserialize<CustomPrincipalSerializeModel>(authTicket.UserData);
 
                 CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
-                newUser.Id = serializeModel.Id;
                 newUser.FullName = serializeModel.FullName;
-                newUser.Admin = serializeModel.Admin;
-
-                newUser.SubAdmin = serializeModel.SubAdmin;
-
-                newUser.PIC = serializeModel.PIC;
-
-                newUser.ITT_TM = serializeModel.ITT_TM;
-
-                newUser.SMT_TM = serializeModel.SMT_TM;
-
-                newUser.FST_TM = serializeModel.FST_TM;
-
-                newUser.PIC_TM = serializeModel.PIC_TM;
-
-                newUser.Group_Leader = serializeModel.Group_Leader;
-
-                newUser.Guard = serializeModel.Guard;
-
-                newUser.Read_Only = serializeModel.Read_Only;
+                newUser.PriorityRole = serializeModel.PriorityRole;
 
                 HttpContext.Current.User = newUser;
             }

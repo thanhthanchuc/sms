@@ -75,19 +75,5 @@ namespace SMS.Models.DAO
             }
 
         }
-        public string GetRoleName(int Id)
-        {
-            var res = dbContext.Roles.SingleOrDefault(x => x.ID == Id);
-            if (res == null)
-            {
-                return "";
-            }
-            else
-            {
-                return res.RoleName;
-            }
-        }
-
-        
     }
 }

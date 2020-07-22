@@ -1,9 +1,11 @@
 ﻿using Microsoft.Ajax.Utilities;
 using SMS.Models.DAO;
+using SMS.Models.EF;
 using SMS.Web.Common;
 using SMS.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,6 +16,18 @@ namespace SMS.Web.Controllers
 {
     public class LoginController : Controller
     {
+        private SMSDbContext _context;
+
+        public LoginController()
+        {
+            _context = new SMSDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         // GET: Login
         public ActionResult Index()
         {
@@ -33,30 +47,15 @@ namespace SMS.Web.Controllers
                     if (res == 1)
                     {
                         var userSession = new UserLogin();
-                        var user = userDAO.GetByCode(loginModel.EmpCode);
+
+                        var user = _context.Users.Single(u => u.EmpCode == loginModel.EmpCode);
+                        var roles = _context.Roles.Where(r => _context.UserRoles.Any(ur => ur.RoleID == r.ID && ur.UserID == user.ID)).OrderByDescending(r => r.Priority).ToList();
 
                         CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
                         serializeModel.Id = user.EmpCode;
                         serializeModel.FullName = user.FullName;
-                        serializeModel.Admin = user.Admin;
+                        serializeModel.PriorityRole = roles[0].Priority;
 
-                        serializeModel.SubAdmin = user.SubAdmin;
-
-                        serializeModel.PIC = user.PIC;
-
-                        serializeModel.ITT_TM = user.ITT_TM;
-
-                        serializeModel.SMT_TM = user.SMT_TM;
-
-                        serializeModel.FST_TM = user.FST_TM;
-
-                        serializeModel.PIC_TM = user.PIC_TM;
-
-                        serializeModel.Group_Leader = user.Group_Leader;
-
-                        serializeModel.Guard = user.Guard;
-
-                        serializeModel.Read_Only = user.Read_Only;
 
                         JavaScriptSerializer serializer = new JavaScriptSerializer();
 
@@ -100,30 +99,13 @@ namespace SMS.Web.Controllers
                     if (res == 1)
                     {
                         var userSession = new UserLogin();
-                        var user = userDAO.GetByCode(loginModel.EmpCode);
+                        var user = _context.Users.Single(u => u.EmpCode == loginModel.EmpCode);
+                        var roles = _context.Roles.Where(r => _context.UserRoles.Any(ur => ur.RoleID == r.ID && ur.UserID == user.ID)).OrderByDescending(r => r.Priority).ToList();
 
                         CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
                         serializeModel.Id = user.EmpCode;
                         serializeModel.FullName = user.FullName;
-                        serializeModel.Admin = user.Admin;
-
-                        serializeModel.SubAdmin = user.SubAdmin;
-
-                        serializeModel.PIC = user.PIC;
-
-                        serializeModel.ITT_TM = user.ITT_TM;
-
-                        serializeModel.SMT_TM = user.SMT_TM;
-
-                        serializeModel.FST_TM = user.FST_TM;
-
-                        serializeModel.PIC_TM = user.PIC_TM;
-
-                        serializeModel.Group_Leader = user.Group_Leader;
-
-                        serializeModel.Guard = user.Guard;
-
-                        serializeModel.Read_Only = user.Read_Only;
+                        serializeModel.PriorityRole = roles[0].Priority;
 
                         JavaScriptSerializer serializer = new JavaScriptSerializer();
 
@@ -144,7 +126,6 @@ namespace SMS.Web.Controllers
 
                         ViewBag.userSS = (UserLogin)Session[CommonConstants.USER_SESSION];
                         userSession.EmpCode = user.EmpCode;
-                        userSession.ID = user.ID;
                         userSession.FullName = user.FullName;
                         //userSession.RoleName = userDAO.GetRoleName(user.RoleId);
                         Session["Login"] = user.EmpCode;

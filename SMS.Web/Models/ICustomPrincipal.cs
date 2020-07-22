@@ -11,25 +11,7 @@ namespace SMS.Web.Models
     {
         string Id { get; set; }
         string FullName { get; set; }
-        bool? Admin { get; set; }
-
-        bool? SubAdmin { get; set; }
-
-        bool? PIC { get; set; }
-
-        bool? ITT_TM { get; set; }
-
-        bool? SMT_TM { get; set; }
-
-        bool? FST_TM { get; set; }
-
-        bool? PIC_TM { get; set; }
-
-        bool? Group_Leader { get; set; }
-
-        bool? Guard { get; set; }
-
-        bool? Read_Only { get; set; }
+        int PriorityRole { get; set; }
     }
     public class CustomPrincipal : ICustomPrincipal
     {
@@ -43,25 +25,7 @@ namespace SMS.Web.Models
 
         public string Id { get; set; }
         public string FullName { get; set; }
-        public bool? Admin { get; set; }
-
-        public bool? SubAdmin { get; set; }
-
-        public bool? PIC { get; set; }
-
-        public bool? ITT_TM { get; set; }
-
-        public bool? SMT_TM { get; set; }
-
-        public bool? FST_TM { get; set; }
-
-        public bool? PIC_TM { get; set; }
-
-        public bool? Group_Leader { get; set; }
-
-        public bool? Guard { get; set; }
-
-        public bool? Read_Only { get; set; }
+        public int PriorityRole { get; set; }
     }
 
 
@@ -69,24 +33,6 @@ namespace SMS.Web.Models
     {
         public string Id { get; set; }
         public string FullName { get; set; }
-        public bool? Admin { get; set; }
-
-        public bool? SubAdmin { get; set; }
-
-        public bool? PIC { get; set; }
-
-        public bool? ITT_TM { get; set; }
-
-        public bool? SMT_TM { get; set; }
-
-        public bool? FST_TM { get; set; }
-
-        public bool? PIC_TM { get; set; }
-
-        public bool? Group_Leader { get; set; }
-
-        public bool? Guard { get; set; }
-
-        public bool? Read_Only { get; set; }
+        public int PriorityRole { get; set; }
     }
 }

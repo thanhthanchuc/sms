@@ -1,4 +1,5 @@
-﻿@model List<SMS.Models.EF.User>
+﻿@model List<SMS.Web.ViewModels.UserRoleViewModel>
+@using SMS.Models.EF
 
 @{
     ViewBag.Title = "Delegate";
@@ -116,17 +117,17 @@
                 </thead>
                 <tbody>
                     @{
-                        foreach (var model in Model.FindAll(m => m.Admin == true || m.SubAdmin == true))
+                        foreach (var model in Model.FindAll(m => m.Roles.Exists(r => r.ID == 1 || r.ID == 2)))
                         {
                             <tr>
-                                <td>@(model.EmpCode)</td>
-                                <td>@(model.FullName)</td>
-                                <td>@(model.Position)</td>
-                                <td>@(model.Team)</td>
-                                <td>@(model.Admin == true ? "Admin" : "Sub Admin")</td>
-                                <td>@(model.Status)</td>
-                                <td>@(model.Email)</td>
-                                <td>@(model.Cellphone)</td>
+                                <td>@(model.User.EmpCode)</td>
+                                <td>@(model.User.FullName)</td>
+                                <td>@(model.User.Position)</td>
+                                <td>@(model.User.Team)</td>
+                                <td>@((model.Roles.Exists(r => r.ID == 1) ? "Admin" : "Sub Admin"))</td>
+                                <td>@(model.User.Status)</td>
+                                <td>@(model.User.Email)</td>
+                                <td>@(model.User.Cellphone)</td>
                             </tr>
                         }
                     }
@@ -153,15 +154,15 @@
                     </tr>
                 </thead>
                 @{
-                    foreach (var model in Model.FindAll(m => m.PIC == true))
+                    foreach (var model in Model.FindAll(m => m.Roles.Exists(r => r.ID == 3)))
                     {
                         <tr>
-                            <td>@(model.EmpCode)</td>
-                            <td>@(model.FullName)</td>
-                            <td>@(model.Position)</td>
-                            <td>@(model.Team)</td>
-                            <td>@(model.Status)</td>
-                            <td>@(model.Email)</td>
+                            <td>@(model.User.EmpCode)</td>
+                            <td>@(model.User.FullName)</td>
+                            <td>@(model.User.Position)</td>
+                            <td>@(model.User.Team)</td>
+                            <td>@(model.User.Status)</td>
+                            <td>@(model.User.Email)</td>
                         </tr>
                     }
                 }
@@ -188,15 +189,15 @@
                 </thead>
                 <tbody id="tblData">
                     @{
-                        foreach (var model in Model.FindAll(m => m.Group_Leader == true))
+                        foreach (var model in Model.FindAll(m => m.Roles.Exists(r => r.ID == 8)))
                         {
                             <tr>
-                                <td>@(model.EmpCode)</td>
-                                <td>@(model.FullName)</td>
-                                <td>@(model.Position)</td>
-                                <td>@(model.Team)</td>
-                                <td>@(model.Status)</td>
-                                <td>@(model.Email)</td>
+                                <td>@(model.User.EmpCode)</td>
+                                <td>@(model.User.FullName)</td>
+                                <td>@(model.User.Position)</td>
+                                <td>@(model.User.Team)</td>
+                                <td>@(model.User.Status)</td>
+                                <td>@(model.User.Email)</td>
                             </tr>
                         }
                     }
@@ -224,15 +225,15 @@
                 </thead>
                 <tbody id="tblData">
                     @{
-                        foreach (var model in Model.FindAll(m => m.PIC_TM == true))
+                        foreach (var model in Model.FindAll(m => m.Roles.Exists(r => r.ID == 7)))
                         {
                             <tr>
-                                <td>@(model.EmpCode)</td>
-                                <td>@(model.FullName)</td>
-                                <td>@(model.Position)</td>
-                                <td>@(model.Team)</td>
-                                <td>@(model.Status)</td>
-                                <td>@(model.Email)</td>
+                                <td>@(model.User.EmpCode)</td>
+                                <td>@(model.User.FullName)</td>
+                                <td>@(model.User.Position)</td>
+                                <td>@(model.User.Team)</td>
+                                <td>@(model.User.Status)</td>
+                                <td>@(model.User.Email)</td>
                             </tr>
                         }
                     }
@@ -252,21 +253,24 @@
         $("#collapseDelegate").removeClass('collapse');
 
         function handleSubmit() {
+            var roles = [];
+            if ($('#admin').is(':checked')) roles.push(1);
+            if ($('#sub_admin').is(':checked')) roles.push(2);
+            if ($('#pic').is(':checked')) roles.push(3);
+            if ($('#itt_team_manager').is(':checked')) roles.push(4);
+            if ($('#smt_team_manager').is(':checked')) roles.push(5);
+            if ($('#fst_team_manager').is(':checked')) roles.push(6);
+            if ($('#pic_team_manager').is(':checked')) roles.push(7);
+            if ($('#group_leader').is(':checked')) roles.push(8);
+            if ($('#guard').is(':checked')) roles.push(9);
+            if ($('#read_only').is(':checked')) roles.push(10);
+
             $.ajax({
-                url: "/User/UpdateRole",
+                url: "/Delegate/UpdateRoles",
                 method: "POST",
                 data: {
-                    EmpCode: $("#txtEmployeeID").val(),
-                    Admin: $('#admin').is(':checked'),
-                    SubAdmin: $('#sub_admin').is(':checked'),
-                    PIC: $('#pic').is(':checked'),
-                    ITT_TM: $('#itt_team_manager').is(':checked'),
-                    SMT_TM: $('#smt_team_manager').is(':checked'),
-                    FST_TM: $('#fst_team_manager').is(':checked'),
-                    Group_Leader: $('#group_leader').is(':checked'),
-                    Guard: $('#guard').is(':checked'),
-                    Read_Only: $('#read_only').is(':checked'),
-                    PIC_TM: $('#pic_team_manager').is(':checked'),
+                    empCode: $("#txtEmployeeID").val(),
+                    roles
                 },
                 success: () => {
                     window.location.reload()
@@ -289,30 +293,32 @@
             getUserBI: function () {
                 var empCode = $("#txtEmployeeID").val();
                 $.ajax({
-                    url: '/User/GetUserByCode?empCode=' + empCode,
+                    url: '/Delegate/GetUserRole?empCode=' + empCode,
                     type: "GET",
                     dataType: 'json',
                     success: function (reponse) {
-                        console.log(reponse.data);
                         if (reponse.status) {
-                            $('#txtFullNameBI').val(reponse.data.FullName);
-                            $('#txtPositionBI').val(reponse.data.Position);
-                            $('#txtTeamBI').val(reponse.data.Team);
-                            $('#admin').attr("checked", reponse.data.Admin == 1);
-                            $('#sub_admin').attr("checked", reponse.data.SubAdmin == 1);
-                            $('#pic').attr("checked", reponse.data.PIC == 1);
-                            $('#itt_team_manager').attr("checked", reponse.data.ITT_TM == 1);
-                            $('#smt_team_manager').attr("checked", reponse.data.SMT_TM == 1);
-                            $('#fst_team_manager').attr("checked", reponse.data.FST_TM == 1);
-                            $('#group_leader').attr("checked", reponse.data.Group_Leader == 1);
-                            $('#guard').attr("checked", reponse.data.Guard == 1);
-                            $('#read_only').attr("checked", reponse.data.Read_Only == 1);
-                            $('#pic_team_manager').attr("checked", reponse.data.PIC_TM == 1);
+                            const { FullName, Position, Team, roles } = reponse.data
+
+                            const hasRole = roleID => roles.filter(r => r.ID == roleID).length > 0
+                            
+                            $('#txtFullNameBI').val(FullName);
+                            $('#txtPositionBI').val(Position);
+                            $('#txtTeamBI').val(Team);
+                            $('#admin').attr("checked", hasRole(1));
+                            $('#sub_admin').attr("checked", hasRole(2));
+                            $('#pic').attr("checked", hasRole(3));
+                            $('#itt_team_manager').attr("checked", hasRole(4));
+                            $('#smt_team_manager').attr("checked", hasRole(5));
+                            $('#fst_team_manager').attr("checked", hasRole(6));
+                            $('#group_leader').attr("checked", hasRole(8));
+                            $('#guard').attr("checked", hasRole(9));
+                            $('#read_only').attr("checked", hasRole(10));
+                            $('#pic_team_manager').attr("checked", hasRole(7));
                         } else {
-                            alert("Mã nhân viên không tồn tại");
-                            $('#txtFullNameBI').val("");
-                            $('#txtPositionBI').val(reponse.data.Position);
-                            $('#txtTeamBI').val(reponse.data.Team);
+                            $('#txtFullNameBI').val("Không tồn tại");
+                            $('#txtPositionBI').val("?");
+                            $('#txtTeamBI').val("?");
                             $('#admin').attr("checked", false);
                             $('#sub_admin').attr("checked", false);
                             $('#pic').attr("checked", false);
