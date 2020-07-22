@@ -36,18 +36,18 @@ namespace SMS.Web.Controllers
         public ActionResult FetchDataEmployee(string team, string empcode)
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            var model = _context.Users.Include(u => u.Team).ToList();
+            var user = _context.Users.Include(u => u.Team).ToList();
 
             if (team != null & team != "")
             {
-                model = model.Where(m => m.Team.Name.ToLower().Contains(team.ToLower())).ToList();
+                user = user.Where(m => m.Team.Name.ToLower().Contains(team.ToLower())).ToList();
             }
 
             if (empcode != null && empcode != "")
             {
-                model = model.Where(m => m.EmpCode.ToString().Contains(empcode)).ToList();
+                user = user.Where(m => m.EmpCode.ToString().Contains(empcode)).ToList();
             }
-            return Json(new { data = model, recordsTotal = model.Count(), recordsFiltered = model.Count() });
+            return Json(new { data = user, recordsTotal = user.Count(), recordsFiltered = user.Count() });
         }
 
         public ActionResult Delegate()

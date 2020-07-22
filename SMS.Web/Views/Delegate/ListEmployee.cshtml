@@ -98,7 +98,7 @@
                     },
                     { data: function (res) { return res.FullName; } },
                     { data: function (res) { return res.Position; } },
-                    { data: function (res) { return res.Team; } },
+                    { data: function (res) { return res.Team.Name; } },
                     {
                         data: function (res) {
                             return !res.Status ? 'Đang hoạt động' : '';
