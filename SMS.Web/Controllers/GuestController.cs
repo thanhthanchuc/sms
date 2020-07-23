@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SMS.Models.EF;
 using SMS.Web.Common;
+using SMS.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +36,8 @@ namespace SMS.Web.Controllers
         /// Load view tạo mới
         /// </summary>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 2)]
         public ActionResult Create()
         {
             return View();
@@ -45,6 +48,8 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpPost]
         public ActionResult Create(Guest m)
         {
@@ -85,6 +90,7 @@ namespace SMS.Web.Controllers
             return View(guest);
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         public ActionResult Edit(int id)
         {
             var guest = dbContext.Guests.Find(id);
@@ -93,6 +99,7 @@ namespace SMS.Web.Controllers
             return View(guest);
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpPost]
         public ActionResult Edit(Guest m)
         {
@@ -186,6 +193,7 @@ namespace SMS.Web.Controllers
             }
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -200,6 +208,7 @@ namespace SMS.Web.Controllers
             return Content("Success");
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpGet]
         public ActionResult Cancel(int id)
         {
@@ -212,6 +221,7 @@ namespace SMS.Web.Controllers
             return Content("Success");
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         //ITT
         public ActionResult ITTApproveDetail(int id)
         {
@@ -221,11 +231,13 @@ namespace SMS.Web.Controllers
             return View(guest);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult ITTApprove()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult ITTApprove(int id, int itemId, string remark, int status)
         {
@@ -257,6 +269,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(guestItems), "application/json");
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         //FST
         public ActionResult FSTApproveDetail(int id)
         {
@@ -266,11 +279,13 @@ namespace SMS.Web.Controllers
             return View(guest);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult FSTApprove()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult FSTApprove(int id, int itemId, string remark, int status)
         {

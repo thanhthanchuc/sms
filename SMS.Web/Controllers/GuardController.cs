@@ -66,7 +66,6 @@ namespace SMS.Web.Controllers
             return View();
         }
 
-
         public ActionResult Queue(string employee = "", string guest = "", string company = "")
         {
 
@@ -127,6 +126,8 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(ExceptRole = "Read Only")]
         public ActionResult ConfirmLE(int id)
         {
             var model = dbcontext.Leave_Early.FirstOrDefault(l => l.ID == id);
@@ -145,6 +146,7 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
+        [AuthorizeUser(ExceptRole = "Read Only")]
         public ActionResult ConfirmGO(int id)
         {
             var model = dbcontext.Go_Out.Find(id);
@@ -158,6 +160,8 @@ namespace SMS.Web.Controllers
 
             return View(guardViewModel);
         }
+
+        [AuthorizeUser(ExceptRole = "Read Only")]
         [HttpPost]
         public ActionResult ApproveGoOut(int id, string remark, int status)
         {
@@ -171,6 +175,8 @@ namespace SMS.Web.Controllers
             dbcontext.SaveChanges();
             return Content(JsonConvert.SerializeObject(data), "application/json");
         }
+
+        [AuthorizeUser(ExceptRole = "Read Only")]
         [HttpPost]
         public ActionResult ApproveGoReturn(int id, string remark, int status)
         {
@@ -185,6 +191,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(data), "application/json");
         }
 
+        [AuthorizeUser(ExceptRole = "Read Only")]
         public ActionResult ConfirmBringIn(int id)
         {
             var model = dbcontext.Bring_In.Find(id);
@@ -201,6 +208,7 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
+        [AuthorizeUser(ExceptRole = "Read Only")]
         [HttpPost]
         public ActionResult ApproveBringInItem(int id, string remark, int status, bool ret = false)
         {
@@ -229,6 +237,7 @@ namespace SMS.Web.Controllers
             }
         }
 
+        [AuthorizeUser(ExceptRole = "Read Only")]
         public ActionResult ConfirmBringOut(int id)
         {
             var model = dbcontext.Bring_Out.Find(id);
@@ -244,7 +253,8 @@ namespace SMS.Web.Controllers
 
             return View(guardViewModel);
         }
-        
+
+        [AuthorizeUser(ExceptRole = "Read Only")]
         [HttpPost]
         public ActionResult ApproveBringOutItem(int id, string remark, int status, bool ret = false)
         {
@@ -274,12 +284,15 @@ namespace SMS.Web.Controllers
             }
         }
 
+        [AuthorizeUser(ExceptRole = "Read Only")]
         public ActionResult ConfirmGuest(int id)
         {
             var model = dbcontext.Guests.Find(id);
             model.Guest_Item = dbcontext.Guest_Item.Where(t => t.CatID == id).ToList();
             return View(model);
         }
+
+        [AuthorizeUser(ExceptRole = "Read Only")]
         [HttpPost]
         public ActionResult ApproveGuest(int id, string remark, int status, bool gout = false)
         {
@@ -308,6 +321,8 @@ namespace SMS.Web.Controllers
                 return Content(JsonConvert.SerializeObject(guest), "application/json");
             }
         }
+
+        [AuthorizeUser(ExceptRole = "Read Only")]
         [HttpPost]
         public ActionResult ApproveOut(int id, string remark, int status)
         {
@@ -321,6 +336,8 @@ namespace SMS.Web.Controllers
             dbcontext.SaveChanges();
             return Content(JsonConvert.SerializeObject(leave), "application/json");
         }
+
+        [AuthorizeUser(ExceptRole = "Read Only")]
         public ActionResult ConfirmGuestItem(int id)
         {
             var model = dbcontext.Guests.Find(id);
@@ -328,6 +345,8 @@ namespace SMS.Web.Controllers
             model.Guest_Item = items;
             return View(model);
         }
+
+        [AuthorizeUser(ExceptRole = "Read Only")]
         [HttpPost]
         public ActionResult ApproveGuestItemIn(int id, int itemId, string remark, int status)
         {
@@ -358,6 +377,8 @@ namespace SMS.Web.Controllers
             dbcontext.SaveChanges();
             return Content(JsonConvert.SerializeObject(guestItems), "application/json");
         }
+
+        [AuthorizeUser(ExceptRole = "Read Only")]
         [HttpPost]
         public ActionResult ApproveGuestItemOut(int id, int itemId, string remark, int status)
         {

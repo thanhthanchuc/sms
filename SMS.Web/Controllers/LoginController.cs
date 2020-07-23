@@ -55,7 +55,7 @@ namespace SMS.Web.Controllers
                         serializeModel.Id = user.EmpCode;
                         serializeModel.FullName = user.FullName;
                         serializeModel.PriorityRole = roles[0].Priority;
-
+                        serializeModel.RoleName = roles[0].Name;
 
                         JavaScriptSerializer serializer = new JavaScriptSerializer();
 
@@ -106,6 +106,7 @@ namespace SMS.Web.Controllers
                         serializeModel.Id = user.EmpCode;
                         serializeModel.FullName = user.FullName;
                         serializeModel.PriorityRole = roles[0].Priority;
+                        serializeModel.RoleName = roles[0].Name;
 
                         JavaScriptSerializer serializer = new JavaScriptSerializer();
 

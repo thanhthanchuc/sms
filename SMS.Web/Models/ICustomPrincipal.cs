@@ -12,6 +12,7 @@ namespace SMS.Web.Models
         string Id { get; set; }
         string FullName { get; set; }
         int PriorityRole { get; set; }
+        string RoleName { get; set; }
     }
     public class CustomPrincipal : ICustomPrincipal
     {
@@ -26,6 +27,7 @@ namespace SMS.Web.Models
         public string Id { get; set; }
         public string FullName { get; set; }
         public int PriorityRole { get; set; }
+        public string RoleName { get; set; }
     }
 
 
@@ -34,5 +36,6 @@ namespace SMS.Web.Models
         public string Id { get; set; }
         public string FullName { get; set; }
         public int PriorityRole { get; set; }
+        public string RoleName { get; set; }
     }
 }

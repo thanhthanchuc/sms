@@ -31,6 +31,8 @@ namespace SMS.Web.Controllers
         /// Phương thức load view form tạo mới
         /// </summary>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpGet]
         public ActionResult Create()
         {
@@ -42,6 +44,8 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <param name="go_Out"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpPost]
         public ActionResult Create(Go_Out go_Out)
         {
@@ -73,6 +77,8 @@ namespace SMS.Web.Controllers
         /// Phương thức load view sửa
         /// </summary>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 2)]
         public ActionResult Edit(int id)
         {
             var goOut = new GoOutDAO().ViewDetail(id);
@@ -84,6 +90,8 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <param name="go_Out"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpPost]
         public ActionResult Edit(Go_Out go_Out)
         {
@@ -112,6 +120,8 @@ namespace SMS.Web.Controllers
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult Approve(string searchString, int page = 1, int pageSize = 20)
         {
             var dao = new GoOutDAO();
@@ -130,6 +140,8 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <param name="go_Out"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public JsonResult ApproveForAdmin(int id, string remark)
         {
@@ -146,6 +158,8 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <param name="go_Out"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public JsonResult RejectForAdmin(int id, string remark)
         {
@@ -162,6 +176,8 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 2)]
         public ActionResult Delete(int id)
         {
             new GoOutDAO().Delete(id);
@@ -173,6 +189,8 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+        [AuthorizeUser(AccessLevel = 2)]
         public ActionResult Cancel(int id)
         {
             new GoOutDAO().Cancel(id);
@@ -185,6 +203,7 @@ namespace SMS.Web.Controllers
             return View(goOut);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult SummaryGO()
         {
             var go = _dbContext.Go_Out.OrderByDescending(g => g.CreatedDate).ToList();

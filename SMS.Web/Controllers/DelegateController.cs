@@ -1,4 +1,5 @@
 ﻿using SMS.Models.EF;
+using SMS.Web.Models;
 using SMS.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace SMS.Web.Controllers
             return Json(new { data = user, recordsTotal = user.Count(), recordsFiltered = user.Count() });
         }
 
+        [AuthorizeUser(AccessLevel = 5)]
         public ActionResult Delegate()
         {
             var user = _context.Users.Include(u => u.UserRoles).ToList();
@@ -69,7 +71,7 @@ namespace SMS.Web.Controllers
             return View(userRoleViewModels);
         }
 
-
+        [AuthorizeUser(AccessLevel = 5)]
         public ActionResult GetUserRole(string empCode)
         {
             var user = _context.Users.Include(u => u.Team).Single(u => u.EmpCode == empCode);
@@ -92,6 +94,7 @@ namespace SMS.Web.Controllers
             }
         }
 
+        [AuthorizeUser(AccessLevel = 5)]
         [HttpPost]
         public ActionResult UpdateRoles(string empCode,int[] roles)
         {
@@ -107,6 +110,11 @@ namespace SMS.Web.Controllers
             _context.SaveChanges();
 
             return Content("OK");
+        }
+
+        public ActionResult Unauthorised()
+        {
+            return Content("You are not authorize this end-point!");
         }
     }
 }

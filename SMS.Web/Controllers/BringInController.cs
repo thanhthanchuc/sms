@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using SMS.Web.Models;
 
 namespace SMS.Web.Controllers
 {
@@ -96,12 +97,14 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult Create(Bring_In model)
         {
@@ -135,6 +138,7 @@ namespace SMS.Web.Controllers
             return Content("Success");
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         public ActionResult Edit(int id)
         {
             var bringin = dbContext.Bring_In.Find(id);
@@ -143,6 +147,7 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpPost]
         public ActionResult Edit(Bring_In model)
         {
@@ -196,6 +201,7 @@ namespace SMS.Web.Controllers
             }
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -210,6 +216,7 @@ namespace SMS.Web.Controllers
             return Content("Success");
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpGet]
         public ActionResult Cancel(int id)
         {
@@ -227,11 +234,13 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult Approve()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult Approve(int id, int itemId, string remark, int status)
         {
@@ -272,11 +281,13 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult ITTApprove()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult ITTApprove(int id, int itemId, string remark, int status)
         {
@@ -318,11 +329,13 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult FSTApprove()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult FSTApprove(int id, int itemId, string remark, int status)
         {
@@ -363,6 +376,7 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult SummaryBI( )
         {
             var bringin = dbContext.Bring_In.ToList();

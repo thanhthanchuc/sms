@@ -34,6 +34,7 @@ namespace SMS.Web.Controllers
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpGet]
         public ActionResult Cancel(int id)
         {
@@ -44,6 +45,7 @@ namespace SMS.Web.Controllers
 
             return Content("Success");
         }
+
         [HttpPost]
         public ActionResult FetchBringOutData()
         {
@@ -60,12 +62,14 @@ namespace SMS.Web.Controllers
             return View(BringOut);
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpPost]
         public ActionResult Create(Bring_Out model)
         {
@@ -106,6 +110,7 @@ namespace SMS.Web.Controllers
             }
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         public ActionResult Edit(int id)
         {
             var BringOut = dbContext.Bring_Out.Find(id);
@@ -114,6 +119,7 @@ namespace SMS.Web.Controllers
             return View(BringOut);
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpPost]
         public ActionResult Edit(Bring_Out model)
         {
@@ -170,6 +176,7 @@ namespace SMS.Web.Controllers
             }
         }
 
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -184,6 +191,7 @@ namespace SMS.Web.Controllers
             return Content("Success");
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult ApproveDetail(int id)
         {
             var BringOut = dbContext.Bring_Out.Find(id);
@@ -192,11 +200,13 @@ namespace SMS.Web.Controllers
             return View(BringOut);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult Approve()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult Approve(int id, int itemId, string remark, int status)
         {
@@ -228,6 +238,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(BringOutItems), "application/json");
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         //ITT
         public ActionResult ITTApproveDetail(int id)
         {
@@ -237,11 +248,13 @@ namespace SMS.Web.Controllers
             return View(BringOut);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult ITTApprove()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult ITTApprove(int id, int itemId, string remark, int status)
         {
@@ -273,6 +286,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(BringOutItems), "application/json");
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         //FST
         public ActionResult FSTApproveDetail(int id)
         {
@@ -282,11 +296,13 @@ namespace SMS.Web.Controllers
             return View(BringOut);
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult FSTApprove()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult FSTApprove(int id, int itemId, string remark, int status)
         {
@@ -325,5 +341,7 @@ namespace SMS.Web.Controllers
             bringout.Bring_Out_Items = bringoutItems;
             return View(bringout);
         }
+
+        // [AuthorizeUser(AccessLevel = 3)] => Access level for BOReport Summary
     }
 }

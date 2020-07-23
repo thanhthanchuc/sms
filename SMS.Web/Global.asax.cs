@@ -45,6 +45,7 @@ namespace SMS.Web
                 CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
                 newUser.FullName = serializeModel.FullName;
                 newUser.PriorityRole = serializeModel.PriorityRole;
+                newUser.RoleName = serializeModel.RoleName;
 
                 HttpContext.Current.User = newUser;
             }
