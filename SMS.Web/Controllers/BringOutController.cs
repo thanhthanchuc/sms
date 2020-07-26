@@ -51,7 +51,9 @@ namespace SMS.Web.Controllers
         {
             var model = dbContext.Bring_Out.OrderByDescending(x => x.CreatedDate).ToList();
 
-            return Json(new { data = model, recordsTotal = dbContext.Bring_Out.Count(), recordsFiltered = model.Count() });
+            var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
+
+            return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_Out.Count(), recordsFiltered = model.Count() });
         }
 
         public ActionResult Detail(int id)

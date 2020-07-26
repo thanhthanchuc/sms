@@ -31,8 +31,9 @@ namespace SMS.Web.Controllers
         public ActionResult FetchBringInData()
         {
             var model = dbContext.Bring_In.OrderByDescending(x => x.CreatedDate).ToList();
+            var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
 
-            return Json(new { data = model, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
+            return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
 
         /// <summary>

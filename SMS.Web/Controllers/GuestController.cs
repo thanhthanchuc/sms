@@ -29,7 +29,10 @@ namespace SMS.Web.Controllers
         public ActionResult FetchGuestData()
         {
             var model = dbContext.Guests.OrderByDescending(x => x.CreatedDate).ToList();
-            return Json(new { data = model, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
+
+            var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
+
+            return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace SMS.Web.Controllers
         /// </summary>
         /// <returns></returns>
         /// 
-        [AuthorizeUser(AccessLevel = 2)]
+        [AuthorizeUser(AccessLevel = 1)]
         public ActionResult Create()
         {
             return View();
@@ -49,7 +52,7 @@ namespace SMS.Web.Controllers
         /// <param name="m"></param>
         /// <returns></returns>
         /// 
-        [AuthorizeUser(AccessLevel = 2)]
+        [AuthorizeUser(AccessLevel = 1)]
         [HttpPost]
         public ActionResult Create(Guest m)
         {

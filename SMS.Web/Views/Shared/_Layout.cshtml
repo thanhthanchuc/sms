@@ -225,8 +225,11 @@
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
                                 <a class="collapse-item grey-a-tag" href="/Guard/Queue">Chờ xử lý</a>
                                 <a class="collapse-item grey-a-tag" href="/Guard/History">Lịch sử</a>
-                                <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
-                            </div>
+                                @if ((User as CustomPrincipal).PriorityRole >= 1)
+                                {
+                                    <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
+                                }
+                                </div>
                         </div>
                     </li>
                     <!--Khách & Nhà thầu-->

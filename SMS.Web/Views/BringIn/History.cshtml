@@ -109,6 +109,8 @@
     <script src="~/Assets/js/jquery.dataTables.min.js"></script>
     <script>
         var table = null;
+        var currentRole = null;
+
         $(document).ready(() => {
             var options = {
                 "serverSide": false,
@@ -127,8 +129,13 @@
                     "type": "POST",
                     "url": "/BringIn/FetchBringInData",
                     "dataType": "json",
-                    "contentType": 'application/json; charset=utf-8'
-                },
+                    "contentType": 'application/json; charset=utf-8',
+
+                    "dataSrc": function (res) {
+                        currentRole = res.currentRole;
+                        return res.data;
+                    }
+                }, 
                 "columns": [
                     {
                         data: function (res) {
@@ -155,6 +162,10 @@
                     },
                     {
                         data: function (res) {
+                            if (currentRole <= 1) {
+                                return ''
+                            }
+                            
                             var html = '';
                             if (res.Cancel) {
                                 html = `<span class="red">Hủy bỏ</span>`;

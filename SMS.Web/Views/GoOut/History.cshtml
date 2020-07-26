@@ -193,7 +193,7 @@
                             @Html.DisplayFor(modelItem => item.CreatedDate)
                         </td>
                         <td class="col-sticky-11" style="text-align: left">
-                            @if ((User as SMS.Web.Models.CustomPrincipal).Read_Only != true)
+                            @if ((User as SMS.Web.Models.CustomPrincipal).PriorityRole > 1)
                             {
                                 if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
                                 {
@@ -217,7 +217,7 @@
                             }
                         </td>
                         <td class="col-sticky-12">
-                            @if ((User as SMS.Web.Models.CustomPrincipal).Read_Only != true)
+                            @if ((User as SMS.Web.Models.CustomPrincipal).PriorityRole > 1)
                             {
                                 if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
                                 {

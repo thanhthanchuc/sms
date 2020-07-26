@@ -112,6 +112,7 @@
     <script src="~/Assets/js/jquery.dataTables.min.js"></script>
     <script>
         var table = null;
+        currentRole = null;
         $(document).ready(() => {
             var options = {
                 "serverSide": false,
@@ -130,7 +131,11 @@
                     "type": "POST",
                     "url": "/Guest/FetchGuestData",
                     "dataType": "json",
-                    "contentType": 'application/json; charset=utf-8'
+                    "contentType": 'application/json; charset=utf-8',
+                    "dataSrc": function (res) {
+                        currentRole = res.currentRole;
+                        return res.data;
+                    }
                 },
                 "columns": [
                     { data: function (res) { return `<span>G</span><span>${res.ID}</span><span>${res.Team}</span>`; } },
@@ -165,6 +170,10 @@
                     },
                     {
                         data: function (res) {
+                            if (currentRole <= 1) {
+                                return ''
+                            }
+
                             var html = '';
                             if (!res.Status) {
                                 html = `<a class="btn btn-edit btn-standard btnEdit" title="Sửa" href="/Guest/Edit/${res.ID}">
