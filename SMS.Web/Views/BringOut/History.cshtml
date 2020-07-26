@@ -55,38 +55,6 @@
         </div>
     </div>
 
-    <div style="margin-top: 8px">
-        <div class="button-container" style="float: left">
-            @*<a data-toggle="modal" data-target="#addModal" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Thêm mới</a>*@
-            <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
-        </div>
-        <div style="float: right">
-            <form class="radio-container">
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox" checked>Tất cả
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Chưa phê duyệt
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Đã phê duyệt
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Phê duyệt thay
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Hủy bỏ
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Bảo vệ đã xác nhận
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Bảo vệ chưa xác nhận
-                </label>
-            </form>
-        </div>
-    </div>
-
     <div style="width:100%; overflow-x:auto">
         <!--Bảng dữ liệu Về sớm-->
         <table class="table table-hover table-bordered" id="LE-table" style="border-collapse: collapse; width: 100%">
@@ -143,7 +111,7 @@
                 "columns": [
                     {
                         data: function (res) {
-                            return `<span>RBO</span>${res.ID}<span">${res.Team}</span>`;
+                            return `<span">${res.Team}</span>${res.ID}`;
                         }
                     },
                     {
@@ -156,7 +124,7 @@
                     { data: function (res) { return res.Reason; } },
                     {
                         data: function (res) {
-                            return `<span class="border-right" style="padding-right:10px;">${res.EstimatedDate}</span><span style="margin-left:10px;">${res.EstimatedTime}</span>`;;
+                            return `<span>${res.EstimatedDate}</span> <span>${res.EstimatedTime}</span>`;;
                         }
                     },
                     {
@@ -201,7 +169,7 @@
                             if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
-                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
                             return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
                         }
                     },
@@ -210,7 +178,7 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
                             return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
                         }
                     }

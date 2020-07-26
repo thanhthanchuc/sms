@@ -29,7 +29,7 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringInData()
         {
-            var model = dbContext.Bring_In.OrderByDescending(x => x.CreatedDate).ToList();
+            var model = dbContext.Bring_In.OrderByDescending(x => x.EstimatedDate).ToList();
 
             return Json(new { data = model, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
@@ -59,7 +59,7 @@ namespace SMS.Web.Controllers
 
             var res = dbContext.Bring_In
                 .Where(bi => dbContext.Bring_In_Items.Any(i => i.CatID == bi.ID && i.AssetType == assetType && i.ApprovedStatus == null))
-                .OrderByDescending(x => x.CreatedDate)
+                .OrderByDescending(x => x.EstimatedDate)
                 .ToList();
 
             var recordNumber = dbContext.Bring_In.Count();
@@ -117,21 +117,6 @@ namespace SMS.Web.Controllers
 
             var bringIn = dbContext.Bring_In.Add(model);
             dbContext.SaveChanges();
-
-            //if (bringIn.ID != 0)
-            //{
-            //    //chuẩn hóa
-            //    foreach (var item in model.Bring_In_Items)
-            //    {
-            //        //Trường này k nên có ở bảng item
-            //        item.CreatedBy = user.EmpCode;
-            //        item.CreatedDate = DateTime.Now;
-            //    }
-            //    //
-
-            //    dbContext.Bring_In_Items.AddRange(model.Bring_In_Items);
-            //    dbContext.SaveChanges();
-            //}
             return Content("Success");
         }
 
@@ -222,7 +207,7 @@ namespace SMS.Web.Controllers
         public ActionResult ApproveDetail(int id)
         {
             var bringin = dbContext.Bring_In.Find(id);
-            var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id && t.AssetType == 0).OrderByDescending(t => t.CreatedDate).ToList();
+            var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id && t.AssetType == 0).OrderByDescending(t => t.ID).ToList();
             bringin.Bring_In_Items = bringinItems;
             return View(bringin);
         }
@@ -288,7 +273,6 @@ namespace SMS.Web.Controllers
             bringinItems.ITT_Date = DateTime.Now;
             bringinItems.ITT_Remark = remark;
             bringinItems.ITT_Status = status;
-            bringinItems.ApprovedStatus = status;
 
             var bringStatus = false;
             foreach (var item in dbContext.Bring_In_Items.Where(t => t.CatID == id))
@@ -334,7 +318,6 @@ namespace SMS.Web.Controllers
             bringinItems.FST_Date = DateTime.Now;
             bringinItems.FST_Remark = remark;
             bringinItems.FST_Status = status;
-            bringinItems.ApprovedStatus = status;
 
             var bringStatus = false;
             foreach (var item in dbContext.Bring_In_Items.Where(t => t.CatID == id))

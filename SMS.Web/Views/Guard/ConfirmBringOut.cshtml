@@ -160,7 +160,7 @@
                             }
                             else if (item.SMT_Status == 0)
                             {
-                            <i class="fas fa-times" style="color: red"></i>
+                                <i class="fas fa-times" style="color: red"></i>
                             }
                         </td>
                         <td>@item.SMT_Remark</td>
@@ -194,7 +194,16 @@
                                 <i class="fas fa-times" style="color:red"></i>
                             }
                         </td>
-                        <td><input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" /></td>
+                        <td>
+                            @if (item.GuardOut == null)
+                            {
+                                <input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" />
+                            }
+                            else
+                            {
+                                <span>@item.GuardRemarkOut</span>
+                            }
+                        </td>
                         <td>@item.GuardDateOut</td>
                         <td>@item.GuardReturn</td>
                         <td>
@@ -212,7 +221,16 @@
                                 <i class="fas fa-times" style="color:red"></i>
                             }
                         </td>
-                        <td><input class="remark-@item.ID-return remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkReturn" /></td>
+                        <td>
+                            @if (item.GuardReturn == null)
+                            {
+                                <input class="remark-@item.ID-return remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkReturn" />
+                            }
+                            else
+                            {
+                                <span>@item.GuardRemarkReturn</span>
+                            }
+                        </td>
                         <td>@item.GuardDateReturn</td>
                     </tr>
                 }

@@ -50,7 +50,7 @@ namespace SMS.Models.DAO
                 model = model.Where(x => x.EmpCode.Contains(searchString.ToLower()) || x.FullName.Contains(searchString.ToLower()) || x.Team.Contains(searchString.ToLower()));
             }
 
-            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.EstimatedDate).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace SMS.Models.DAO
             {
                 model = model.Where(x => x.ApprovedStatus.Equals(null));
             }
-            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.EstimatedDate).ToPagedList(page, pageSize);
         }
 
         /// <summary>

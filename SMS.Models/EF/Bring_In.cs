@@ -16,6 +16,7 @@
         public int ID { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string EmpCode { get; set; }
 
         [StringLength(100)]
@@ -27,9 +28,13 @@
         [StringLength(10)]
         public string Team { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền lí do")]
         public string Reason { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền ngày mang vào")]
         public string EstimatedDate { get; set; }
+
+        [Required(ErrorMessage = "Bạn phải điền giờ mang vào")]
         public string EstimatedTime { get; set; }
 
         public bool? Status { get; set; }

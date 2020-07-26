@@ -1,4 +1,4 @@
-namespace SMS.Models.EF
+﻿namespace SMS.Models.EF
 {
     using System;
     using System.Collections.Generic;
@@ -13,14 +13,18 @@ namespace SMS.Models.EF
         public int? CatID { get; set; }
 
         [StringLength(250)]
+        [Required(ErrorMessage = "Bạn phải điền tên tài sản")]
         public string Item { get; set; }
 
         [StringLength(250)]
+        [Required(ErrorMessage = "Bạn phải điền số seri")]
         public string Serial { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền số lượng")]
         public decimal? Quantity { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Bạn phải điền đơn vị tính")]
         public string Unit { get; set; }
 
         public int? AssetType { get; set; }

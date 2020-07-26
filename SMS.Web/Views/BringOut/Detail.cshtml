@@ -92,61 +92,85 @@
                         <th>Số lượng <span class="red">(*)</span></th>
                         <th>Đơn vị <span class="red">(*)</span></th>
                         <th>Loại tài sản <span class="red">(*)</span></th>
-                        <th>Mang trở ra <span class="red">(*)</span></th>
-                        <th colspan="2">Thời gian trở ra</th>
+                        <th>Mang quay lại <span class="red">(*)</span></th>
+                        <th>Thời gian quay lại</th>
+                        <th colspan="4">TM Phê duyệt</th>
+                        <th colspan="4">ITT/SMT phê duyệt</th>
+                        <th colspan="4">FST phê duyệt</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Bring_Out_Items)
                     {
                         <tr class="row-items">
+                            <td class="input-group-sm"><input type="hidden" class="ItemId" value="@item.ID" />@item.Item</td>
+                            <td class="input-group-sm">@item.Serial</td>
+                            <td class="input-group-sm">@item.Quantity</td>
+                            <td class="input-group-sm">@item.Unit</td>
                             <td class="input-group-sm">
-                                <input type="hidden" class="ItemId" value="@item.ID" />
-                                <input class="form-control input-previous-button item" value="@item.Item" readonly />
+                                @if (item.AssetType == 0)
+                                {
+                                    <span>Hàng thường</span>
+                                }
+                                else if (item.AssetType == 1)
+                                {
+                                    <span>Hàng IT</span>
+                                }
+                                else if (item.AssetType == 2)
+                                {
+                                    <span>Hàng độc hại</span>
+                                }
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button serial" value="@item.Serial" readonly />
+                                @if (item.IsReturn.Value == true)
+                                {
+                                    <span>Có</span>
+                                }
+                                else if (item.IsReturn == false)
+                                {
+                                    <span>Không</span>
+                                }
                             </td>
+                            <td class="input-group-sm">@item.ReturnDate @item.ReturnTime</td>
+                            <td class="input-group-sm">@item.ApprovedBy</td>
                             <td class="input-group-sm">
-                                <input type="number" class="form-control input-previous-button quantity" value="@item.Quantity" readonly />
+                                @if (@item.ApprovedStatus == 1)
+                                {
+                                    <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else if (@item.ApprovedStatus == 0)
+                                {
+                                    <i class="fas fa-times" style="color: red"></i>
+                                }
                             </td>
+                            <td class="input-group-sm">@item.ApprovedDate</td>
+                            <td class="input-group-sm">@item.ApproverRemark</td>
+                            <td class="input-group-sm">@item.ITT</td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button unit" value="@item.Unit" readonly />
+                                @if (@item.ITT_Status == 1)
+                                {
+                                    <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else if (@item.ITT_Status == 0)
+                                {
+                                    <i class="fas fa-times" style="color: red"></i>
+                                }
                             </td>
+                            <td class="input-group-sm">@item.ITT_Date</td>
+                            <td class="input-group-sm">@item.ITT_Remark</td>
+                            <td class="input-group-sm">@item.FST</td>
                             <td class="input-group-sm">
-                                <select class="form-control input-previous-button assetType" disabled>
-                                    <option value="0" @if (item.AssetType == 0) { @: selected
-                                            }>
-                                        Hàng thường
-                                    </option>
-                                    <option value="1" @if (item.AssetType == 1) { @: selected
-                                            }>
-                                        Hàng IT
-                                    </option>
-                                    <option value="2" @if (item.AssetType == 2) { @: selected
-                                            }>
-                                        Hàng độc hại
-                                    </option>
-                                </select>
+                                @if (@item.FST_Status == 1)
+                                {
+                                    <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                                }
+                                else if (@item.FST_Status == 0)
+                                {
+                                    <i class="fas fa-times" style="color: red"></i>
+                                }
                             </td>
-                            <td class="input-group-sm">
-                                <select class="form-control input-previous-button isReturn" disabled>
-                                    <option value="1" @if (item.IsReturn.Value) { @: selected
-                                            }>
-                                        Có
-                                    </option>
-                                    <option value="0" @if (item.IsReturn.HasValue && !item.IsReturn.Value) { @: selected
-                                            }>
-                                        Không
-                                    </option>
-                                </select>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" value="@item.ReturnDate" readonly />
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control timepicker returnTime" placeholder="Giờ" value="@item.ReturnTime" readonly />
-                            </td>
+                            <td class="input-group-sm">@item.FST_Date</td>
+                            <td class="input-group-sm">@item.FST_Remark</td>
                         </tr>
                     }
                 </tbody>

@@ -47,9 +47,63 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringOutData()
         {
-            var model = dbContext.Bring_Out.OrderByDescending(x => x.CreatedDate).ToList();
+            var model = dbContext.Bring_Out.OrderByDescending(x => x.EstimatedDate).ToList();
 
             return Json(new { data = model, recordsTotal = dbContext.Bring_Out.Count(), recordsFiltered = model.Count() });
+        }
+
+        /// <summary>
+        /// Show danh sách phê duyệt cho TM, ITT, FST
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="team"></param>
+        /// <param name="empcode"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult FetchBringOutApproveData(string name, int? from, int? to, string team = "", string empcode = "")
+        {
+            var assetType = 0;
+            switch (name.ToLower().Trim())
+            {
+                case "itt":
+                    assetType = 1;
+                    break;
+                case "fst":
+                    assetType = 2;
+                    break;
+            }
+
+            var res = dbContext.Bring_Out
+                .Where(bo => dbContext.Bring_Out_Items.Any(i => i.CatID == bo.ID && i.AssetType == assetType && i.ApprovedStatus == null))
+                .OrderByDescending(x => x.EstimatedDate)
+                .ToList();
+
+            var recordNumber = dbContext.Bring_Out.Count();
+
+            //filter theo tiêu chí
+            if (from != null)
+            {
+                res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() >= from).ToList();
+            }
+
+            if (to != null)
+            {
+                res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() <= to).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(team))
+            {
+                res = res.Where(t => t.Team.Contains(team)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(empcode))
+            {
+                res = res.Where(t => t.EmpCode.Contains(empcode)).ToList();
+            }
+
+            return Json(new { data = res, recordsTotal = dbContext.Bring_Out.Count(), recordsFiltered = recordNumber });
         }
 
         public ActionResult Detail(int id)
@@ -323,6 +377,20 @@ namespace SMS.Web.Controllers
             var bringout = dbContext.Bring_Out.Find(id);
             var bringoutItems = dbContext.Bring_Out_Items.Where(t => t.CatID == id).ToList();
             bringout.Bring_Out_Items = bringoutItems;
+            return View(bringout);
+        }
+
+        public ActionResult SummaryBO()
+        {
+            var bringout = dbContext.Bring_Out.ToList();
+            var bos = dbContext.Bring_Out_Items.Where(b => b.Quantity != null && b.Item != null).ToList();
+
+            for (var b = 0; b < bringout.Count(); b++)
+            {
+                var bringoutItems = bos.Where(t => t.CatID == bringout[b].ID).ToList();
+                bringout[b].Bring_Out_Items = bringoutItems;
+            }
+
             return View(bringout);
         }
     }

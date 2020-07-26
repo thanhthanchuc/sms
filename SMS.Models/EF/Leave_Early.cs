@@ -7,7 +7,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Leave_Early
+    public partial class Leave_Early : IValidatableObject
     {
         public int ID { get; set; }
 
@@ -71,5 +71,16 @@
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+
+            if (DateTime.Parse(Util.FormatDate(EstimatedDate) + ' ' + EstimatedTime) <= DateTime.Now)
+            {
+                yield return
+                 new ValidationResult("Ngày giờ ra ngoài phải sau thời điểm hiện tại",
+                                      new[] { "EstimatedDate" });
+            }
+        }
     }
 }

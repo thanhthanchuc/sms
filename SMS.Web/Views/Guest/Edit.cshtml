@@ -393,7 +393,7 @@
             guestObject.Team = $('#txtTeamBI').val();
             guestObject.Guest_Item = [];
 
-            $(".items-container").each((index, item) => {
+            $(".row-items").each((index, item) => {
                 var guest_Item = {};
                 guest_Item.ID = $(item).find('input[class*=itemId]').val();
                 guest_Item.CatID = $('#txtID').val();

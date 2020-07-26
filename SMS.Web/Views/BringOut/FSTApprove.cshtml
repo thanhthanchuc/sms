@@ -115,7 +115,7 @@
                 "lengthChange": false,
                 "ajax": {
                     "type": "POST",
-                    "url": "/BringOut/FetchBringOutData",
+                    "url": "/BringOut/FetchBringOutApproveData?name=fst",
                     "dataType": "json",
                     "contentType": 'application/json; charset=utf-8'
                 },
@@ -133,7 +133,11 @@
                     { data: function (res) { return res.Position; } },
                     { data: function (res) { return res.Team; } },
                     { data: function (res) { return res.Reason; } },
-                    { data: function (res) { return res.EstimatedDate; } },
+                    {
+                        data: function (res) {
+                            return `<span class="border-right" style="padding-right:10px;">${res.EstimatedDate}</span><span style="margin-left:10px;">${res.EstimatedTime}</span>`;
+                        }
+                    },
                     {
                         data: function (res) {
                             return !res.Status ? 'Đang thực hiện' : 'Đã thực hiện';

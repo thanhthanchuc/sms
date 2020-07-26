@@ -1,4 +1,4 @@
-using SMS.Models.EF;
+﻿using SMS.Models.EF;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Runtime.Remoting.Lifetime;
@@ -18,13 +18,17 @@ namespace SMS.Models.EF
 
         public int? CatID { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền tên tài sản")]
         public string Item { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền số seri")]
         public string Serial { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền số lượng")]
         public decimal? Quantity { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Bạn phải điền đơn vị tính")]
         public string Unit { get; set; }
 
         public int? AssetType { get; set; }

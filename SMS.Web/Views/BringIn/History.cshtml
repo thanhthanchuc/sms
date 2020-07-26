@@ -45,37 +45,6 @@
         </div>
     </div>
 
-    <div style="margin-top: 8px">
-        <div class="button-container" style="float: left">
-            <a class="btn btn-sm btn-success btn-reload"><i class="fas fa-sync"></i> Tải lại</a>
-        </div>
-        <div style="float: right">
-            <form class="radio-container">
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox" checked>Tất cả
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Chưa phê duyệt
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Đã phê duyệt
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Phê duyệt thay
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Hủy bỏ
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Bảo vệ đã xác nhận
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Bảo vệ chưa xác nhận
-                </label>
-            </form>
-        </div>
-    </div>
-
     <div style="width:100%; overflow-x:auto">
         <!--Bảng dữ liệu Về sớm-->
         <table class="table table-hover table-bordered" id="BI-table" style="border-collapse: collapse; width: 100%">
@@ -132,7 +101,7 @@
                 "columns": [
                     {
                         data: function (res) {
-                            return `<span>RBI</span>${res.ID}<span">${res.Team}</span>`;
+                            return `<span">${res.Team}</span>${res.ID}`;
                         }
                     },
                     {
@@ -145,7 +114,7 @@
                     { data: function (res) { return res.Reason; } },
                     {
                         data: function (res) {
-                            return `<span class="border-right" style="padding-right:10px;">${res.EstimatedDate}</span><span style="margin-left:10px;">${res.EstimatedTime}</span>`;;
+                            return `<span>${res.EstimatedDate}</span> <span>${res.EstimatedTime}</span>`;
                         }
                     },
                     {

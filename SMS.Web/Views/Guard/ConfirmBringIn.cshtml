@@ -95,126 +95,144 @@
             <tbody>
                 @foreach (var item in Model.Bring_In_Items)
                 {
-                    <tr>
-                        <td>@item.Item</td>
-                        <td>@item.Serial</td>
-                        <td>@item.Quantity</td>
-                        <td>@item.Unit</td>
-                        <td>
-                            @if (@item.AssetType == 0)
-                            {
-                                <span>Hàng thường</span>
-                            }
-                            else if (item.AssetType == 1)
-                            {
-                                <span>Hàng IT</span>
-                            }
-                            else
-                            {
-                                <span>Hàng độc hại</span>
-                            }
-                        </td>
-                        <td>
-                            @if (@item.IsReturn == true)
-                            {
-                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                            }
-                            else if (@item.IsReturn == false)
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td>@item.ReturnTime</td>
-                        <td>@item.ApprovedBy</td>
-                        <td>
-                            @if (item.ApprovedStatus == 1)
-                            {
-                                <i class="fas fa-check-square"></i>
-                            }
-                            else if (item.ApprovedStatus == 0)
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td>@item.ApproverRemark</td>
-                        <td>@item.ApprovedDate</td>
-                        <td>@item.ITT</td>
-                        <td>
-                            @if (item.ITT_Status == 1)
-                            {
-                                <i class="fas fa-check-square"></i>
-                            }
-                            else if (item.ITT_Status == 0)
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td>@item.ITT_Remark</td>
-                        <td>@item.ITT_Date</td>
-                        <td>@item.SMT</td>
-                        <td>
-                            @if (item.SMT_Status == 1)
-                            {
-                                <i class="fas fa-check-square"></i>
-                            }
-                            else if(item.SMT_Status == 0)
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td>@item.SMT_Remark</td>
-                        <td>@item.SMT_Date</td>
-                        <td>@item.FST</td>
-                        <td>
-                            @if (item.FST_Status == 1)
-                            {
-                                <i class="fas fa-check-square"></i>
-                            }
-                            else if (item.FST_Status == 0)
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td>@item.FST_Remark</td>
-                        <td>@item.FST_Date</td>
-                        <td>@item.GuardIn</td>
-                        <td>
-                            @if (@item.GuardStatusIn == null)
-                            {
-                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveIn(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveIn(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                            }
-                            else if (@item.GuardStatusIn == 1)
-                            {
-                                <i class="fas fa-check-square"></i>
-                            }
-                            else 
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td><input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" /></td>
-                        <td>@item.GuardDateIn</td>
-                        <td>@item.GuardOut</td>
-                        <td>
-                            @if (@item.GuardStatusOut == null)
-                            {
-                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveOut(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveOut(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                            }
-                            else if (@item.GuardStatusOut == 1)
-                            {
-                                <i class="fas fa-check-square"></i>
-                            }
-                            else
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
+                <tr>
+                    <td>@item.Item</td>
+                    <td>@item.Serial</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Unit</td>
+                    <td>
+                        @if (@item.AssetType == 0)
+                        {
+                            <span>Hàng thường</span>
+                        }
+                        else if (item.AssetType == 1)
+                        {
+                            <span>Hàng IT</span>
+                        }
+                        else
+                        {
+                            <span>Hàng độc hại</span>
+                        }
+                    </td>
+                    <td>
+                        @if (@item.IsReturn == true)
+                        {
+                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                        }
+                        else if (@item.IsReturn == false)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>@item.ReturnTime</td>
+                    <td>@item.ApprovedBy</td>
+                    <td>
+                        @if (item.ApprovedStatus == 1)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                        else if (item.ApprovedStatus == 0)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>@item.ApproverRemark</td>
+                    <td>@item.ApprovedDate</td>
+                    <td>@item.ITT</td>
+                    <td>
+                        @if (item.ITT_Status == 1)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                        else if (item.ITT_Status == 0)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>@item.ITT_Remark</td>
+                    <td>@item.ITT_Date</td>
+                    <td>@item.SMT</td>
+                    <td>
+                        @if (item.SMT_Status == 1)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                        else if (item.SMT_Status == 0)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>@item.SMT_Remark</td>
+                    <td>@item.SMT_Date</td>
+                    <td>@item.FST</td>
+                    <td>
+                        @if (item.FST_Status == 1)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                        else if (item.FST_Status == 0)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>@item.FST_Remark</td>
+                    <td>@item.FST_Date</td>
+                    <td>@item.GuardIn</td>
+                    <td>
+                        @if (@item.GuardStatusIn == null)
+                        {
+                            <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveIn(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                            <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveIn(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                        }
+                        else if (@item.GuardStatusIn == 1)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                        else
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>
+                        @if (item.GuardIn == null)
+                        {
+                            <input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkIn" />
+                        }
+                        else
+                        {
+                            <span>@item.GuardRemarkIn</span>
+                        }
+                    </td>
+                    <td>@item.GuardDateIn</td>
+                    <td>@item.GuardOut</td>
+                    <td>
+                        @if (@item.GuardStatusOut == null)
+                        {
+                            <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveOut(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                            <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveOut(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                        }
+                        else if (@item.GuardStatusOut == 1)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                        else
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
 
-                        </td>
-                        <td><input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" /></td>
-                        <td>@item.GuardDateOut</td>
-                    </tr>
+                    </td>
+                    <td>
+                        @if (item.GuardOut == null)
+                        {
+                        <input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" />
+                        }
+                        else
+                        {
+                            <span>@item.GuardRemarkOut</span>
+                        }
+                    </td>
+                    <td>@item.GuardDateOut</td>
+                </tr>
                 }
             </tbody>
         </table>

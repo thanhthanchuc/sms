@@ -119,7 +119,7 @@
                                 </a>
                                 <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                                     <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                        <a id="LEReport" class="collapse-item grey-a-tag" href="/LeaveEarly/SummaryLE" target="_blank">CNV về sớm</a>
+                                        <a id="LEReport" class="collapse-item grey-a-tag" href="/Reports/leave_early/LEReport.aspx" target="_blank">CNV về sớm</a>
                                         <a id="GOReport" class="collapse-item grey-a-tag" href="/GoOut/SummaryGO" target="_blank">CNV ra ngoài</a>
                                         <a id="BIReport" class="collapse-item grey-a-tag" href="/BringIn/SummaryBI" target="_blank">CNV mang hàng vào</a>
                                         <a id="BOReport" class="collapse-item grey-a-tag" href="/BringOut/SummaryBO" target="_blank">CNV mang hàng ra</a>
@@ -249,9 +249,11 @@
                                     @if ((User as CustomPrincipal).Read_Only != true)
                                     {
                                         <a id="guest-create" class="collapse-item grey-a-tag" href="@Url.Action("Create", "Guest")">Ðăng ký</a>
-                                        <a id="guest-itt" class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove", "Guest")">ITT & SMT phê duyệt</a>
-                                        <a id="guest-fst" class="collapse-item grey-a-tag" href="@Url.Action("FSTApprove", "Guest")">FST Phê duyệt</a>
-                                        <a id="guest-punish" class="collapse-item grey-a-tag" href="#">Hạn chế truy cập</a>
+                                        if ((User as CustomPrincipal).PIC != true && (User as CustomPrincipal).Read_Only != true){
+                                            <a id="guest-itt" class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove", "Guest")">ITT & SMT phê duyệt</a>
+                                            <a id="guest-fst" class="collapse-item grey-a-tag" href="@Url.Action("FSTApprove", "Guest")">FST Phê duyệt</a>
+                                            <a id="guest-punish" class="collapse-item grey-a-tag" href="#">Hạn chế truy cập</a>
+                                        }
                                     }
                                     <a id="guest-history" class="collapse-item grey-a-tag" href="@Url.Action("History", "Guest")">Lịch sử</a>
                                 </div>
@@ -480,8 +482,8 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <b class="mr-2 d-none d-lg-inline" id="logged_name" style="color:black">@((User as CustomPrincipal).FullName)</b>
-                                <img id="logged_image" class="img-profile rounded-circle">
+                                <b class="mr-2 d-none d-lg-inline" id="logged_name" style="color:orangered">@((User as CustomPrincipal).FullName)</b>
+                                <img id="logged_image" class="img-profile rounded-circle" src="~/Assets/img/the-world.jpg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" style="background-color: #cbcbcb">

@@ -103,7 +103,14 @@
                         }
                     </td>
                     <td>
-                        <input class="out_remark col-12 remark remark-1" type="text" placeholder="Ghi chú..."  value="@Model.Go_Out.GuardRemarkOut" readonly="@Model.Go_Out.GuardStatusOut != null" />
+                        @if (Model.Go_Out.GuardStatusOut == null)
+                        {
+                            <input class="out_remark col-12 remark remark-1" type="text" placeholder="Ghi chú..">
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.Go_Out.GuardRemarkOut)
+                        }
                     </td>
                     <td>@Html.DisplayFor(m => m.Go_Out.GuardDateOut)</td>
                     <td>@Html.DisplayFor(m => m.Go_Out.EstimatedDateReturn) @Html.DisplayFor(m => m.Go_Out.EstimatedTimeReturn)</td>
@@ -124,7 +131,14 @@
                         }
                     </td>
                     <td>
-                        <input class="return_remark col-12 remark remark-1" type="text" placeholder="Ghi chú..." value="@Model.Go_Out.GuardRemarkReturn" readonly="@Model.Go_Out.GuardStatusReturn != null" />
+                        @if (Model.Go_Out.GuardStatusReturn == null)
+                        {
+                            <input class="return_remark col-12 remark remark-1" type="text" placeholder="Ghi chú..">
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.Go_Out.GuardRemarkReturn)
+                        }
                     </td>
                     <td>@Html.DisplayFor(m => m.Go_Out.GuardDateReturn)</td>
                 </tr>
@@ -153,7 +167,7 @@
                     if (reload)
                         window.location.reload()
                     else
-                        window.location.href = "/Guard/Queue" 
+                        window.location.href = "/Guard/Queue"
                 },
                 error: () => {
                     alert("Lỗi hệ thống!")
@@ -164,9 +178,9 @@
         $('#GO-table').on("click", ".out_approve", () => {
             handle("/Guard/ApproveGoOut", {
                 id: $('#go_outId').val(),
-                remark: $("#out_remark").val(),
+                remark: $(".out_remark").val(),
                 status: 1
-            }, true) 
+            }, true)
         })
 
         $('#GO-table').on("click", ".out_unapprove", () => {
@@ -175,8 +189,8 @@
                 remark: $("#out_remark").val(),
                 status: 0
             }, true)
-        }) 
-        
+        })
+
         $('#GO-table').on("click", ".return_approve", () => {
             handle("/Guard/ApproveGoReturn", {
                 id: $('#go_outId').val(),

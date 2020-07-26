@@ -91,190 +91,154 @@
                     <th>Đơn vị</th>
                     <th>Loại hàng hóa</th>
                     <th colspan="2">Thời gian đem trở ra</th>
-                    <th colspan="2">Người đăng ký</th>
                     <th colspan="4">Phê duyệt</th>
                     <th colspan="4">ITT/SMT phê duyệt</th>
-                    <th colspan="2">FST phê duyệt</th>
+                    <th colspan="4">FST phê duyệt</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Bring_Out_Items)
                 {
-                    <tr>
-                        <td>
-                            <input type="hidden" class="itemId" value="@item.ID" />
-                            @item.Item
-                        </td>
-                        <td>@item.Serial</td>
-                        <td>@item.Quantity</td>
-                        <td>@item.Unit</td>
-                        <td>
-                            @if (item.AssetType == 0)
-                            {
-                                @:Hàng thường
-                            }
-                            else if (item.AssetType == 1)
-                            {
-                                @:Hàng IT
-                            }
-                            else
-                            {
-                                @:Hàng độc hại
-                            }
-                        </td>
-                        <td title="Có đem trở ra">
-                            @if (item.IsReturn.Value)
+                <tr>
+                    <td>
+                        <input type="hidden" class="itemId" value="@item.ID" />
+                        @item.Item
+                    </td>
+                    <td>@item.Serial</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Unit</td>
+                    <td>
+                        @if (item.AssetType == 0)
+                        {
+                            @:Hàng thường
+                        }
+                        else if (item.AssetType == 1)
+                        {
+                            @:Hàng IT
+                        }
+                        else
+                        {
+                            @:Hàng độc hại
+                        }
+                    </td>
+                    <td title="Có đem trở ra">
+                        @if (item.IsReturn.Value)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                    </td>
+                    <td>@item.ReturnDate</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ApprovedBy))
+                        {
+                            @:@item.ApprovedBy
+                        }
+                    </td>
+                    <td>
+                        @if (item.ApprovedDate != null)
+                        {
+                            @:@item.ApprovedDate
+                        }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ApproverRemark))
+                        {
+                            @:@item.ApproverRemark
+                        }
+                    </td>
+                    <td>
+                        @if (item.ApprovedStatus != null)
+                        {
+                            if (item.ApprovedStatus == 1)
                             {
                                 <i class="fas fa-check-square"></i>
                             }
                             else
                             {
-                                <i class="fa fa-square-o"></i>
+                                <i class="fas fa-times" style="color:red"></i>
                             }
-                        </td>
-                        <td>@item.ReturnDate</td>
-                        <td>@item.ApprovedBy</td>
-                        <td>@item.ApprovedDate</td>
-
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.ApprovedBy))
-                            {
-                                @:@item.ApprovedBy
-                            }
-                            else
-                            {
-                                <i class="fas fa-question"></i>
-                            }
-                        </td>
-                        <td>
-                            @if (item.ApprovedDate != null)
-                            {
-                                @:@item.ApprovedDate
-                            }
-                            else
-                            {
-                                <i class="fas fa-question"></i>
-                            }
-                        </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.ApproverRemark))
-                            {
-                                @:@item.ApproverRemark
-                            }
-                            else
-                            {
-                                <i class="fas fa-question"></i>
-                            }
-                        </td>
-                        <td>
-                            @if (item.ApprovedStatus != null)
-                            {
-                                if (item.ApprovedStatus == 1)
-                                {
-                                    <i class="fas fa-check-square"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times"></i>
-                                }
-                            }
-                            else
-                            {
-                                <i class="fas fa-question"></i>
-                            }
-                        </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.ITT))
-                            {
-                                @:@item.ITT
-                            }
-                            else if (!string.IsNullOrEmpty(item.SMT))
-                            {
-                                @:@item.SMT
-                            }
-                            else
-                            {
-                                <i class="fas fa-question"></i>
-                            }
-                        </td>
-                        <td>
-                            @if (item.ITT_Date != null)
-                            {
-                                @:@item.ITT_Date
-                            }
-                            else if (item.SMT_Date != null)
-                            {
-                                @:@item.SMT_Date
-                            }
-                            else
-                            {
-                                <i class="fas fa-question"></i>
-                            }
-                        </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.ITT_Remark))
-                            {
-                                @:@item.ITT_Remark
-                            }
-                            else if (!string.IsNullOrEmpty(item.SMT_Remark))
-                            {
-                                @:@item.SMT_Remark
-                            }
-                            else
-                            {
-                                <i class="fas fa-question"></i>
-                            }
-                        </td>
-                        <td>
-                            @if (item.ITT_Status != null)
-                            {
-                                if (item.ITT_Status == 1)
-                                {
-                                    <i class="fas fa-check-square"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times"></i>
-                                }
-                            }
-                            else if (item.SMT_Status != null)
-                            {
-                                if (item.SMT_Status == 1)
-                                {
-                                    <i class="fas fa-check-square"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times"></i>
-                                }
-                            }
-                            else
-                            {
-                                <i class="fas fa-question"></i>
-                            }
-                        </td>
-
-                        @if (string.IsNullOrEmpty(item.FST))
-                        {
-                            <td>
-                                <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                                <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                            </td>
-                            <td><input class="remark remark-1 col-12" type="text" placeholder="Ghi chú..." /></td>
                         }
-                        else
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ITT))
                         {
-                            if (item.FST_Status == null)
+                            @:@item.ITT
+                        }
+                        else if (!string.IsNullOrEmpty(item.SMT))
+                        {
+                            @:@item.SMT
+                        }
+                    </td>
+                    <td>
+                        @if (item.ITT_Date != null)
+                        {
+                            @:@item.ITT_Date
+                        }
+                        else if (item.SMT_Date != null)
+                        {
+                            @:@item.SMT_Date
+                        }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ITT_Remark))
+                        {
+                            @:@item.ITT_Remark
+                        }
+                        else if (!string.IsNullOrEmpty(item.SMT_Remark))
+                        {
+                            @:@item.SMT_Remark
+                        }
+                    </td>
+                    <td>
+                        @if (item.ITT_Status != null)
+                        {
+                            if (item.ITT_Status == 1)
                             {
-                                <td><i class="fas fa-times"></i></td>
+                                <i class="fas fa-check-square"></i>
                             }
                             else
                             {
-                                <td><i class="fas fa-check-square"></i></td>
+                                <i class="fas fa-times" style="color: red"></i>
                             }
-                            <td>@item.FST_Remark</td>
                         }
-                    </tr>
+                        else if (item.SMT_Status != null)
+                        {
+                            if (item.SMT_Status == 1)
+                            {
+                                <i class="fas fa-check-square"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                        }
+                    </td>
+
+                    @if (string.IsNullOrEmpty(item.FST))
+                    {
+                        <td>@item.FST</td>
+                        <td>@item.FST_Date</td>
+                        <td>
+                            <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                            <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
+                        </td>
+                        <td><input class="remark remark-1 col-12" type="text" placeholder="Ghi chú..." /></td>
+                    }
+                    else
+                    {
+                        <td>@item.FST</td>
+                        <td>@item.FST_Date</td>
+                        if (item.FST_Status == 0)
+                        {
+                            <td><i class="fas fa-times" style="color: red"></i></td>
+                        }
+                        else if (item.FST_Status == 1)
+                        {
+                            <td><i class="fas fa-check-square"></i></td>
+                        }
+                        <td>@item.FST_Remark</td>
+                    }
+                </tr>
                 }
             </tbody>
         </table>

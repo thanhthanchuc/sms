@@ -93,7 +93,7 @@
                     @foreach (var item in ViewBag.LeaveEarlies)
                     {
                         <tr>
-                            <td><span>RLE</span><spna>@item.ID</spna><span>@item.Team</span></td>
+                            <td><span>RLE</span><span>@item.ID</span><span>@item.Team</span></td>
                             <td><a href="/Guard/ConfirmLE/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.Position</td>
                             <td>@item.Team</td>
@@ -145,7 +145,7 @@
                     @foreach (var item in ViewBag.GoOuts)
                     {
                         <tr>
-                            <td>@item.ID</td>
+                            <td><span>RGO</span><span>@item.ID</span><span>@item.Team</span></td>
                             <td><a href="/Guard/ConfirmGO/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.Position</td>
                             <td>@item.Team</td>
@@ -202,7 +202,7 @@
                     @foreach (var item in ViewBag.BringIns)
                     {
                         <tr>
-                            <td>@item.ID</td>
+                            <td><span>RBI</span><span>@item.ID</span><span>@item.Team</span></td>
                             <td><a href="/Guard/ConfirmBringIn/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.Position</td>
                             <td>@item.Team</td>
@@ -264,7 +264,7 @@
                     @foreach (var item in ViewBag.BringOuts)
                     {
                         <tr>
-                            <td>@item.ID</td>
+                            <td><span>RBO</span><span>@item.ID</span><span>@item.Team</span></td>
                             <td><a href="/Guard/ConfirmBringOut/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.Position</td>
                             <td>@item.Team</td>

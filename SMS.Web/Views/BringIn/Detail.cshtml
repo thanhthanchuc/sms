@@ -94,7 +94,7 @@
                         <th>Đơn vị <span class="red">(*)</span></th>
                         <th>Loại tài sản <span class="red">(*)</span></th>
                         <th>Mang trở ra <span class="red">(*)</span></th>
-                        <th colspan="2">Thời gian trở ra</th>
+                        <th>Thời gian trở ra</th>
                         <th colspan="4">TM Phê duyệt</th>
                         <th colspan="4">ITT/SMT phê duyệt</th>
                         <th colspan="4">FST phê duyệt</th>
@@ -132,8 +132,7 @@
                                 <span>Không</span>
                             }
                         </td>
-                        <td class="input-group-sm">@item.ReturnDate</td>
-                        <td class="input-group-sm">@item.ReturnTime</td>
+                        <td class="input-group-sm">@item.ReturnDate @item.ReturnTime</td>
                         <td class="input-group-sm">@item.ApprovedBy</td>
                         <td class="input-group-sm">
                             @if (@item.ApprovedStatus == 1)

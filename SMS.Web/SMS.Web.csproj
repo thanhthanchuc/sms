@@ -240,34 +240,22 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\bring_in\BringInReport.cs">
+    <Compile Include="Reports\leave_early\DetailsReport\dsLEDetails.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BringInReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
+      <DependentUpon>dsLEDetails.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Reports\bring_in\ListBringInReport.cs">
+    <Compile Include="Reports\leave_early\dsLE.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ListBringInReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
+      <DependentUpon>dsLE.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Reports\DBSET\DTSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DTSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\early_leave\ReportViewer.aspx.cs">
-      <DependentUpon>ReportViewer.aspx</DependentUpon>
+    <Compile Include="Reports\leave_early\LEReport.aspx.cs">
+      <DependentUpon>LEReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reports\early_leave\ReportViewer.aspx.designer.cs">
-      <DependentUpon>ReportViewer.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\ReportDataSet\dsReport.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsReport.xsd</DependentUpon>
+    <Compile Include="Reports\leave_early\LEReport.aspx.designer.cs">
+      <DependentUpon>LEReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
@@ -2004,7 +1992,7 @@
     <Content Include="Localization\vi.xml" />
     <Content Include="Localization\zh-CHS.xml" />
     <Content Include="Localization\zh-CHT.xml" />
-    <Content Include="Reports\early_leave\ReportViewer.aspx" />
+    <Content Include="Reports\leave_early\LEReport.aspx" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2175,28 +2163,28 @@
     <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Assets\vendor\jquery\jquery.min.map" />
     <Content Include="Assets\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Reports\ReportDataSet\dsReport.xsc">
-      <DependentUpon>dsReport.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DBSET\DTSet.xsc">
-      <DependentUpon>DTSet.xsd</DependentUpon>
-    </Content>
     <Content Include="Files\Khách cty A.xlsx" />
-    <None Include="Reports\DBSET\DTSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DTSet.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\DBSET\DTSet.xss">
-      <DependentUpon>DTSet.xsd</DependentUpon>
+    <Content Include="Reports\leave_early\dsLE.xsc">
+      <DependentUpon>dsLE.xsd</DependentUpon>
     </Content>
-    <None Include="Reports\ReportDataSet\dsReport.xsd">
+    <Content Include="Reports\leave_early\DetailsReport\dsLEDetails.xsc">
+      <DependentUpon>dsLEDetails.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\leave_early\DetailsReport\dsLEDetails.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsReport.Designer.cs</LastGenOutput>
+      <LastGenOutput>dsLEDetails.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Reports\ReportDataSet\dsReport.xss">
-      <DependentUpon>dsReport.xsd</DependentUpon>
+    <Content Include="Reports\leave_early\DetailsReport\dsLEDetails.xss">
+      <DependentUpon>dsLEDetails.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\leave_early\dsLE.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsLE.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\leave_early\dsLE.xss">
+      <DependentUpon>dsLE.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2291,8 +2279,13 @@
     <Content Include="Views\Guest\GuestReport.cshtml" />
     <Content Include="Views\BringIn\SummaryBI.cshtml" />
     <Content Include="Views\GoOut\SummaryGO.cshtml" />
+    <Content Include="Views\BringOut\SummaryBO.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Reports\bring_in\" />
+    <Folder Include="Reports\bring_out\" />
+    <Folder Include="Reports\go_out\" />
+    <Folder Include="Reports\guest\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
@@ -2311,18 +2304,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\bring_in\BringInReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>BringInReport.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\bring_in\ListBringInReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ListBringInReport.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rpt\LeaveEarlyReport.rdlc" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+    <EmbeddedResource Include="Reports\leave_early\ReportLE.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

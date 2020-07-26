@@ -39,6 +39,7 @@
     </div>
 
     <div class="form-main">
+        <div style="height:5px;"></div>
         @Html.AntiForgeryToken()
         <div class="validation-top alert-danger">
             @Html.ValidationSummary(true, "", new { @style = "color: red; list-style-type: none" })
@@ -50,7 +51,7 @@
                     <div class="form-group row-1 input-group">
                         <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
                         <div class="col-md-3 input-group input-group-sm">
-                            @Html.EditorFor(model => model.EmpCode, new { htmlAttributes = new { maxlength = "8", @id = "txtEmpCodeGO", @class = "form-control input-previous-button" } })
+                            @Html.EditorFor(model => model.EmpCode, new { htmlAttributes = new { maxlength = "8", @id = "txtEmpCodeGO", @class = "form-control input-previous-button", @readonly = "readonly" } })
                         </div>
                         @Html.ValidationMessageFor(model => model.EmpCode, "", new { @class = "text-danger" })
                     </div>
@@ -90,23 +91,24 @@
                     <div class="form-group input-group specific-date-pick">
                         <label class="col-2 top-space" for="EstimatedDate">Ngày ra <span class="red">(*)</span></label>
                         <div class="col-3 input-group-sm">
-                            @Html.EditorFor(model => model.EstimatedDateOut, new { htmlAttributes = new { @id = "estimated_date_out", @class = "form-control input-previous-button", @readonly = "readonly" } })
+                            @Html.EditorFor(model => model.EstimatedDateOut, new { htmlAttributes = new { @id = "estimated_date_out", @class = "form-control input-previous-button", @readonly = "readonly", @style = "background-color: white" } })
                         </div>
                         <label class="top-space" for="EstimatedTimeOut">Giờ ra <span class="red">(*)</span></label>
                         <div class="col-2 input-group-sm">
-                            @Html.EditorFor(model => model.EstimatedTimeOut, new { htmlAttributes = new { @id = "estimated_time_out", @class = "form-control input-previous-button", @readonly = "readonly" } })
+                            @Html.EditorFor(model => model.EstimatedTimeOut, new { htmlAttributes = new { @type = "time", @id = "estimated_time_out", @class = "form-control input-previous-button" } })
                         </div>
                         @Html.ValidationMessageFor(model => model.EstimatedTimeOut, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.EstimatedDateOut, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group input-group specific-date-pick">
                         <label class="col-2 top-space" for="EstimatedDate">Ngày quay lại <span class="red">(*)</span></label>
                         <div class="col-3 input-group-sm">
-                            @Html.EditorFor(model => model.EstimatedDateReturn, new { htmlAttributes = new { @id = "estimated_date_return", @class = "form-control input-previous-button", @readonly = "readonly" } })
+                            @Html.EditorFor(model => model.EstimatedDateReturn, new { htmlAttributes = new { @id = "estimated_date_return", @class = "form-control input-previous-button", @readonly = "readonly", @style = "background-color: white" } })
                         </div>
                         <label class="top-space" for="EstimatedTimeReturn">Giờ quay lại <span class="red">(*)</span></label>
                         <div class="col-2 input-group-sm">
-                            @Html.EditorFor(model => model.EstimatedTimeReturn, new { htmlAttributes = new { @id = "estimated_time_return", @class = "form-control input-previous-button", @readonly = "readonly" } })
+                            @Html.EditorFor(model => model.EstimatedTimeReturn, new { htmlAttributes = new { @id = "estimated_time_return", @class = "form-control input-previous-button", @type = "time"} })
                         </div>
                         @Html.ValidationMessageFor(model => model.EstimatedTimeReturn, "", new { @class = "text-danger" })
                     </div>
@@ -212,14 +214,14 @@
             dateFormat: 'dd/mm/yy'
         });
 
-        $('.timepicker, #estimated_time_out, #estimated_time_return').timepicker({
-            timeFormat: 'h:mm p',
-            interval: 5,
-            startTime: '00:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
+        //$('.timepicker, #estimated_time_out, #estimated_time_return').timepicker({
+        //    timeFormat: 'h:mm p',
+        //    interval: 5,
+        //    startTime: '00:00',
+        //    dynamic: false,
+        //    dropdown: true,
+        //    scrollbar: true
+        //});
 
         $("#GO").removeClass('collapse');
         $("#GO").removeClass('collapsed');
