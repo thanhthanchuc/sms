@@ -285,7 +285,6 @@ namespace SMS.Web.Controllers
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
         [HttpPost]
         public ActionResult FSTApprove(int id, int itemId, string remark, int status)
         {

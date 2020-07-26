@@ -376,7 +376,6 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult SummaryBI( )
         {
             var bringin = dbContext.Bring_In.ToList();

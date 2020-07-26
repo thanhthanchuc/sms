@@ -203,7 +203,6 @@ namespace SMS.Web.Controllers
             return View(goOut);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult SummaryGO()
         {
             var go = _dbContext.Go_Out.OrderByDescending(g => g.CreatedDate).ToList();

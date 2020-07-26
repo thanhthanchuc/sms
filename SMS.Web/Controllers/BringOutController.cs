@@ -341,7 +341,5 @@ namespace SMS.Web.Controllers
             bringout.Bring_Out_Items = bringoutItems;
             return View(bringout);
         }
-
-        // [AuthorizeUser(AccessLevel = 3)] => Access level for BOReport Summary
     }
 }

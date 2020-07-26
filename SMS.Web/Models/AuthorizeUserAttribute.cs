@@ -11,7 +11,9 @@ namespace SMS.Web.Models
         public int AccessLevel { get; set; }
         public string RoleName { get; set; }
 
-        public string ExceptRole { get; set; }
+        public int[] ExceptRoleLevels { get; set; }
+
+        public int[] IncludeRoleLevels { get; set; }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
@@ -20,12 +22,10 @@ namespace SMS.Web.Models
             {
                 return false;
             }
-            string roleName = (httpContext.User as CustomPrincipal).RoleName;
 
-            if (ExceptRole != null || ExceptRole != "")
-            {
-                return !roleName.Contains(ExceptRole);
-            }
+
+
+            string roleName = (httpContext.User as CustomPrincipal).RoleName;
 
             if(RoleName != null || RoleName != "")
             {
@@ -33,6 +33,17 @@ namespace SMS.Web.Models
             }
 
             int privilegeLevels = (httpContext.User as CustomPrincipal).PriorityRole; // Call another method to get rights of the user from DB
+
+            if (ExceptRoleLevels.Length != 0)
+            {
+                return !ExceptRoleLevels.Contains(privilegeLevels);
+            }
+
+            if (IncludeRoleLevels.Length != 0)
+            {
+                return IncludeRoleLevels.Contains(privilegeLevels);
+            }
+
 
             return AccessLevel >= privilegeLevels;
         }

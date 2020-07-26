@@ -127,7 +127,7 @@ namespace SMS.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         /// 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmLE(int id)
         {
             var model = dbcontext.Leave_Early.FirstOrDefault(l => l.ID == id);
@@ -146,7 +146,7 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmGO(int id)
         {
             var model = dbcontext.Go_Out.Find(id);
@@ -161,7 +161,7 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveGoOut(int id, string remark, int status)
         {
@@ -176,7 +176,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(data), "application/json");
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveGoReturn(int id, string remark, int status)
         {
@@ -191,7 +191,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(data), "application/json");
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmBringIn(int id)
         {
             var model = dbcontext.Bring_In.Find(id);
@@ -208,7 +208,7 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveBringInItem(int id, string remark, int status, bool ret = false)
         {
@@ -237,7 +237,7 @@ namespace SMS.Web.Controllers
             }
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmBringOut(int id)
         {
             var model = dbcontext.Bring_Out.Find(id);
@@ -254,7 +254,7 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveBringOutItem(int id, string remark, int status, bool ret = false)
         {
@@ -284,7 +284,7 @@ namespace SMS.Web.Controllers
             }
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmGuest(int id)
         {
             var model = dbcontext.Guests.Find(id);
@@ -292,7 +292,7 @@ namespace SMS.Web.Controllers
             return View(model);
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveGuest(int id, string remark, int status, bool gout = false)
         {
@@ -322,7 +322,7 @@ namespace SMS.Web.Controllers
             }
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveOut(int id, string remark, int status)
         {
@@ -337,7 +337,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(leave), "application/json");
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmGuestItem(int id)
         {
             var model = dbcontext.Guests.Find(id);
@@ -346,7 +346,7 @@ namespace SMS.Web.Controllers
             return View(model);
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveGuestItemIn(int id, int itemId, string remark, int status)
         {
@@ -378,7 +378,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(guestItems), "application/json");
         }
 
-        [AuthorizeUser(ExceptRole = "Read Only")]
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveGuestItemOut(int id, int itemId, string remark, int status)
         {
