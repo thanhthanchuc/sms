@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SMS.Web.Models
 {
-    public class AuthorizeUserAttribute: AuthorizeAttribute
+    public class AuthorizeUserAttribute : AuthorizeAttribute
     {
         public int AccessLevel { get; set; }
         public string RoleName { get; set; }
@@ -23,29 +23,35 @@ namespace SMS.Web.Models
                 return false;
             }
 
-
-
             string roleName = (httpContext.User as CustomPrincipal).RoleName;
 
-            if(RoleName != null || RoleName != "")
+            if (RoleName != null && RoleName != "")
             {
                 return roleName.Contains(RoleName);
             }
 
             int privilegeLevels = (httpContext.User as CustomPrincipal).PriorityRole; // Call another method to get rights of the user from DB
 
-            if (ExceptRoleLevels.Length != 0)
+            if (ExceptRoleLevels != null && ExceptRoleLevels.Length != 0)
             {
                 return !ExceptRoleLevels.Contains(privilegeLevels);
             }
 
-            if (IncludeRoleLevels.Length != 0)
+            if (IncludeRoleLevels != null && IncludeRoleLevels.Length != 0)
             {
                 return IncludeRoleLevels.Contains(privilegeLevels);
             }
 
+            for (var i = AccessLevel; i <= 5; i++)
+            {
+                if (privilegeLevels == i)
+                {
+                    return true;
+                }
+            }
 
-            return AccessLevel >= privilegeLevels;
+
+            return false;
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

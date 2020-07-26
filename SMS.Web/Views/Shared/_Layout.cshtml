@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SMS.Web.Models
+
+@{
     Layout = null;
 }
 
@@ -54,10 +56,18 @@
                             <i class="fas fa-fw fa-user-cog fa-menu lv-3-delegate"></i>
                             <span>Phân quyền</span>
                         </a>
+
                         <div id="collapseDelegateTab" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDelegate">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="EditDelegate" class="collapse-item grey-a-tag" href="/Delegate/Delegate">Cấp quyền</a>
-                                <a id="ListEmp" class="collapse-item grey-a-tag" href="/Delegate/ListEmployee">Danh sách người dùng</a>
+                                @if ((User as CustomPrincipal).PriorityRole == 5)
+                                {
+                                    <a id="EditDelegate" class="collapse-item grey-a-tag" href="/Delegate/Delegate">Cấp quyền</a>
+                                }
+
+                                @if ((User as CustomPrincipal).PriorityRole >= 4)
+                                {
+                                    <a id="ListEmp" class="collapse-item grey-a-tag" href="/Delegate/ListEmployee">Danh sách người dùng</a>
+                                }
                             </div>
                         </div>
                     </li>
@@ -127,8 +137,16 @@
                         </a>
                         <div id="collapseLeaveEarly" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="LECreate" class="collapse-item grey-a-tag" href="/LeaveEarly/Create">Ðăng ký</a>
-                                <a id="LEApprove" class="collapse-item grey-a-tag" href="/LeaveEarly/Approve">Phê duyệt</a>
+                                @if ((User as CustomPrincipal).PriorityRole >= 2)
+                                {
+                                    <a id="LECreate" class="collapse-item grey-a-tag" href="/LeaveEarly/Create">Ðăng ký</a>
+                                }
+
+                                @if ((User as CustomPrincipal).PriorityRole >= 3)
+                                {
+                                    <a id="LEApprove" class="collapse-item grey-a-tag" href="/LeaveEarly/Approve">Phê duyệt</a>
+                                }
+
                                 <a id="LEHistory" class="collapse-item grey-a-tag" href="/LeaveEarly/History">Lịch sử</a>
                             </div>
                         </div>
@@ -141,8 +159,14 @@
                         </a>
                         <div id="collapseGoOut" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="GOCreate" class="collapse-item grey-a-tag" href="/GoOut/Create">Ðăng ký</a>
-                                <a id="GOApprove" class="collapse-item grey-a-tag" href="/GoOut/Approve">Phê duyệt</a>
+                                @if ((User as CustomPrincipal).PriorityRole >= 2)
+                                {
+                                    <a id="GOCreate" class="collapse-item grey-a-tag" href="/GoOut/Create">Ðăng ký</a>
+                                }
+                                @if ((User as CustomPrincipal).PriorityRole >= 3)
+                                {
+                                    <a id="GOApprove" class="collapse-item grey-a-tag" href="/GoOut/Approve">Phê duyệt</a>
+                                }
                                 <a id="GOHistory" class="collapse-item grey-a-tag" href="/GoOut/History">Lịch sử</a>
                             </div>
                         </div>
@@ -155,10 +179,16 @@
                         </a>
                         <div id="collapseBringIn" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="BICreate" class="collapse-item grey-a-tag" href="@Url.Action("Create","BringIn")">Ðăng ký</a>
-                                <a id="BIApprove" class="collapse-item grey-a-tag" href="/BringIn/Approve">Phê duyệt</a>
-                                <a id="BIitt" class="collapse-item grey-a-tag" href="/BringIn/ITTApprove">ITT & SMT phê duyệt</a>
-                                <a id="BIfst" class="collapse-item grey-a-tag" href="/BringIn/FSTApprove">FST phê duyệt</a>
+                                @if ((User as CustomPrincipal).PriorityRole >= 2)
+                                {
+                                    <a id="BICreate" class="collapse-item grey-a-tag" href="@Url.Action("Create", "BringIn")">Ðăng ký</a>
+                                }
+                                @if ((User as CustomPrincipal).PriorityRole >= 3)
+                                {
+                                    <a id="BIApprove" class="collapse-item grey-a-tag" href="/BringIn/Approve">Phê duyệt</a>
+                                    <a id="BIitt" class="collapse-item grey-a-tag" href="/BringIn/ITTApprove">ITT & SMT phê duyệt</a>
+                                    <a id="BIfst" class="collapse-item grey-a-tag" href="/BringIn/FSTApprove">FST phê duyệt</a>
+                                }
                                 <a id="BIHistory" class="collapse-item grey-a-tag" href="@Url.Action("History","BringIn")">Lịch sử</a>
                             </div>
                         </div>
@@ -171,10 +201,16 @@
                         </a>
                         <div id="collapseBringOut" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="BOCreate" class="collapse-item grey-a-tag" href="/BringOut/Create">Ðăng ký</a>
-                                <a id="BOApprove" class="collapse-item grey-a-tag" href="/BringOut/Approve">Phê duyệt</a>
-                                <a id="BOitt" class="collapse-item grey-a-tag" href="/BringOut/ITTApprove">ITT & SMT phê duyệt</a>
-                                <a id="BOfst" class="collapse-item grey-a-tag" href="/BringOut/FSTApprove">FST phê duyệt</a>
+                                @if ((User as CustomPrincipal).PriorityRole >= 2)
+                                {
+                                    <a id="BOCreate" class="collapse-item grey-a-tag" href="/BringOut/Create">Ðăng ký</a>
+                                }
+                                @if ((User as CustomPrincipal).PriorityRole >= 3)
+                                {
+                                    <a id="BOApprove" class="collapse-item grey-a-tag" href="/BringOut/Approve">Phê duyệt</a>
+                                    <a id="BOitt" class="collapse-item grey-a-tag" href="/BringOut/ITTApprove">ITT & SMT phê duyệt</a>
+                                    <a id="BOfst" class="collapse-item grey-a-tag" href="/BringOut/FSTApprove">FST phê duyệt</a>
+                                }
                                 <a id="BOHistory" class="collapse-item grey-a-tag" href="/BringOut/History">Lịch sử</a>
                             </div>
                         </div>
@@ -201,10 +237,16 @@
                         </a>
                         <div id="collapseGuest" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="guest-create" class="collapse-item grey-a-tag" href="@Url.Action("Create","Guest")">Ðăng ký</a>
-                                <a id="guest-itt" class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove","Guest")">ITT & SMT phê duyệt</a>
-                                <a id="guest-fst" class="collapse-item grey-a-tag" href="@Url.Action("FSTApprove","Guest")">FST Phê duyệt</a>
-                                <a id="guest-punish" class="collapse-item grey-a-tag" href="#">Hạn chế truy cập</a>
+                                @if ((User as CustomPrincipal).PriorityRole >= 2)
+                                {
+                                    <a id="guest-create" class="collapse-item grey-a-tag" href="@Url.Action("Create", "Guest")">Ðăng ký</a>
+                                }
+                                @if ((User as CustomPrincipal).PriorityRole >= 3)
+                                {
+                                    <a id="guest-itt" class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove", "Guest")">ITT & SMT phê duyệt</a>
+                                    <a id="guest-fst" class="collapse-item grey-a-tag" href="@Url.Action("FSTApprove", "Guest")">FST Phê duyệt</a>
+                                    <a id="guest-punish" class="collapse-item grey-a-tag" href="#">Hạn chế truy cập</a>
+                                }
                                 <a id="guest-history" class="collapse-item grey-a-tag" href="@Url.Action("History","Guest")">Lịch sử</a>
                             </div>
                         </div>
