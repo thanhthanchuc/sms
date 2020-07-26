@@ -32,11 +32,11 @@
             <div class="form-group input-group specific-date-pick">
                 <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" readonly/>
+                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" readonly style="background:white"/>
                 </div>
                 <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" readonly/>
+                    <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" type="time"/>
                 </div>
             </div>
         </div>
@@ -53,16 +53,16 @@
             </div>
             <!--Thông tin profile-->
             <div class="form-group input-group input-group-sm">
-                <label class="col-4 top-space" for="FullName">Họ và tên</label>
-                <input readonly class="form-control col-8 input-previous-button" id="txtFullNameBO" />
+                <label class="col-3 top-space" for="FullName">Họ và tên</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtFullNameBO" />
             </div>
             <div class="form-group input-group input-group-sm">
-                <label class="col-4 top-space" for="Positon">Vị trí</label>
-                <input readonly class="form-control col-8 input-previous-button" id="txtPositionBO" />
+                <label class="col-3 top-space" for="Positon">Vị trí</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtPositionBO" />
             </div>
             <div class="form-group input-group input-group-sm">
-                <label class="col-4 top-space" for="Positon">Phòng ban</label>
-                <input readonly class="form-control col-8 input-previous-button" id="txtTeamBO" />
+                <label class="col-3 top-space" for="Positon">Phòng ban</label>
+                <input readonly class="form-control col-9 input-previous-button" id="txtTeamBO" />
             </div>
         </div>
     </div>
@@ -123,10 +123,10 @@
                             </select>
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control datepicker returnDate" placeholder="Ngày" readonly/>
+                            <input class="form-control datepicker returnDate" placeholder="Ngày" readonly style="background:white"/>
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control timepicker returnTime" placeholder="Giờ" readonly/>
+                            <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
                         </td>
                     </tr>
                 </tbody>
@@ -178,10 +178,10 @@
                                 </select>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" readonly/>
+                                <input class="form-control datepicker returnDate" placeholder="Ngày" readonly style="background:white"/>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control timepicker returnTime" placeholder="Giờ" readonly/>
+                                <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
                             </td>
                         </tr>`;
             $('#BO-items > tbody:last-child').append(html);
@@ -194,34 +194,34 @@
                 $(this).closest(".row-items").remove();
             });
 
-            $('.timepicker').timepicker({
-                timeFormat: 'h:mm p',
-                interval: 5,
-                startTime: '00:00',
-                dynamic: false,
-                dropdown: true,
-                scrollbar: true
-            });
+            //$('.timepicker').timepicker({
+            //    timeFormat: 'h:mm p',
+            //    interval: 5,
+            //    startTime: '00:00',
+            //    dynamic: false,
+            //    dropdown: true,
+            //    scrollbar: true
+            //});
         });
 
         $('.datepicker, #estimated_date, .returnDate').datepicker({
             dateFormat: 'dd/mm/yy'
         });
 
-        $('#estimated_date').datepicker().datepicker("setDate", new Date());
+        //$('#estimated_date').datepicker().datepicker("setDate", new Date());
 
         $("#BO-items").on("click", ".delete-items", function () {
             $(this).closest(".row-items").remove();
         });
 
-        $('.timepicker').timepicker({
-            timeFormat: 'h:mm p',
-            interval: 5,
-            startTime: '00:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
+        //$('.timepicker').timepicker({
+        //    timeFormat: 'h:mm p',
+        //    interval: 5,
+        //    startTime: '00:00',
+        //    dynamic: false,
+        //    dropdown: true,
+        //    scrollbar: true
+        //});
 
         $('#txtEmpCodeBO').keyup(function () {
             var count = $('#txtEmpCodeBO').val().length;

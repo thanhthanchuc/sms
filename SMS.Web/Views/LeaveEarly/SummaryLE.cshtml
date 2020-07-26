@@ -110,28 +110,24 @@
                         <td class="col-sticky-6" style="text-align:center; vertical-align: central">
                             @if (item.Purpose)
                             {
-                                <p>Công việc</p>
+                                <span>Công việc</span>
                             }
                             else
                             {
-                                <p>Cá nhân</p>
+                                <span>Cá nhân</span>
                             }
                         </td>
                         <td class="col-sticky-8">
                             @Html.DisplayFor(modelItem => item.EstimatedDate) | @Html.DisplayFor(modelItem => item.EstimatedTime)
                         </td>
                         <td>
-                            @if (item.ApprovedStatus == 1)
+                            @if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
                             {
-                                <i class="fas fa-check-square" style="color:dodgerblue" title="Đã phê duyệt"></i>
+                                <span>Y</span>
                             }
                             else if (item.ApprovedStatus == 0)
                             {
-                                <i class="fas fa-window-close" style="color:red" title="Không phê duyệt"></i>
-                            }
-                            else if (item.ApprovedStatus == 2)
-                            {
-                                <i class="fas fa-user-check" style="color:orange" title="Phê duyệt thay"></i>
+                                <span>N</span>
                             }
                             else if (item.ApprovedStatus == 4)
                             {
@@ -146,11 +142,11 @@
                         <td>
                             @if (item.GuardStatus == 1)
                             {
-                                <i class="fas fa-check-square" style="color:dodgerblue" title="Đã xác nhận"></i>
+                                <span>Y</span>
                             }
                             else if (item.GuardStatus == 0)
                             {
-                                <i class="fas fa-window-close" style="color:red" title="Không xác nhận"></i>
+                                <span>N</span>
                             }
                         </td>
                     </tr>

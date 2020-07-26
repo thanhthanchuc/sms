@@ -36,6 +36,57 @@ namespace SMS.Web.Controllers
         }
 
         /// <summary>
+        /// Show danh sách phê duyệt cho TM, ITT, FST
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="team"></param>
+        /// <param name="empcode"></param>
+        /// <returns></returns>
+        //[HttpPost]
+        //public ActionResult FetchGuestApproveData(string name, int? from, int? to, string team = "", string empcode = "")
+        //{
+        //    var assetType = 1;
+        //    switch (name.ToLower().Trim())
+        //    {
+        //        case "fst":
+        //            assetType = 2;
+        //            break;
+        //    }
+
+        //    var res = dbContext.Guests
+        //        .Where(g => dbContext.Guest_Item.Any(i => i.CatID == g.ID && i.AssetType == assetType && i.ITT_Status == null))
+        //        .OrderByDescending(x => x.CreatedDate)
+        //        .ToList();
+
+        //    var recordNumber = dbContext.Guests.Count();
+
+        //    //filter theo tiêu chí
+        //    if (from != null)
+        //    {
+        //        res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() >= from).ToList();
+        //    }
+
+        //    if (to != null)
+        //    {
+        //        res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() <= to).ToList();
+        //    }
+
+        //    if (!string.IsNullOrEmpty(team))
+        //    {
+        //        res = res.Where(t => t.Team.Contains(team)).ToList();
+        //    }
+
+        //    if (!string.IsNullOrEmpty(empcode))
+        //    {
+        //        res = res.Where(t => t.EmployeeID.Contains(empcode)).ToList();
+        //    }
+
+        //    return Json(new { data = res, recordsTotal = dbContext.Guests.Count(), recordsFiltered = recordNumber });
+        //}
+
+        /// <summary>
         /// Load view tạo mới
         /// </summary>
         /// <returns></returns>

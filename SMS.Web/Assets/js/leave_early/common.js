@@ -103,14 +103,14 @@ $('#estimated_date, #date_from, #date_to').datepicker({
     dateFormat: 'dd/mm/yy'
 });
 
-$('.timepicker, #estimated_time').timepicker({
-    timeFormat: 'h:mm p',
-    interval: 5,
-    startTime: '00:00',
-    dynamic: false,
-    dropdown: true,
-    scrollbar: true
-});
+//$('.timepicker, #estimated_time').timepicker({
+//    timeFormat: 'h:mm p',
+//    interval: 5,
+//    startTime: '00:00',
+//    dynamic: false,
+//    dropdown: true,
+//    scrollbar: true
+//});
 
 
 $(".btn-reload").off('click').on('click', function (e) {

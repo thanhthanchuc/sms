@@ -1,4 +1,4 @@
-namespace SMS.Models.EF
+﻿namespace SMS.Models.EF
 {
     using System;
     using System.Collections.Generic;
@@ -17,6 +17,7 @@ namespace SMS.Models.EF
         public int ID { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string EmpCode { get; set; }
 
         [StringLength(100)]
@@ -28,9 +29,13 @@ namespace SMS.Models.EF
         [StringLength(10)]
         public string Team { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền lí do")]
         public string Reason { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền ngày mang ra")]
         public string EstimatedDate { get; set; }
+
+        [Required(ErrorMessage = "Bạn phải điền giờ mang ra")]
         public string EstimatedTime { get; set; }
 
         public bool? Status { get; set; }

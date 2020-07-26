@@ -363,7 +363,7 @@
             guestObject.Team = $('#txtTeamBI').val();
             guestObject.Guest_Item = [];
 
-            $(".items-container").each((index, item) => {
+            $(".row-items").each((index, item) => {
                 var guest_Item = {};
                 guest_Item.Item = $(item).find('input[class*=item]').val();
                 guest_Item.Serial = $(item).find('input[class*=serial]').val();

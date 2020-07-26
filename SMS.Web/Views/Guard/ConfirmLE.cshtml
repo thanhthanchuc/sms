@@ -88,13 +88,30 @@
                     <td>@Html.DisplayFor(model => model.Leave_Early.EstimatedDate) | @Html.DisplayFor(model => model.Leave_Early.EstimatedTime)</td>
                     <td>@Html.DisplayFor(m => m.UserLogin.FullName)</td>
                     <td>@Html.DisplayFor(model => model.Leave_Early.GuardDate)</td>
-                    <td>
-                        <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                        <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px; color: white"></i></a>
-                    </td>
-                    <td>
-                        <input id="remark" class="remark col-12 remark-1" type="text" placeholder="Ghi chú..." />
-                    </td>
+                    @if (Model.Leave_Early.GuardStatus == null)
+                    {
+                        <td>
+                            <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
+                            <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px; color: white"></i></a>
+                        </td>
+                        <td>
+                            <input id="remark" class="remark col-12 remark-1" type="text" placeholder="Ghi chú..." />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @if (Model.Leave_Early.GuardStatus == 1)
+                            {
+                                <i class="fas fa-check-square"></i>
+                            }
+                            else if (Model.Leave_Early.GuardStatus == 0)
+                            {
+                                <i class="fas fa-times" style="color:red"></i>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(model => model.Leave_Early.GuardRemark)</td>
+                    }
                 </tr>
             </tbody>
         </table>

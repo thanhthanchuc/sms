@@ -34,11 +34,11 @@
             <div class="form-group input-group specific-date-pick">
                 <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" value="@Model.EstimatedDate" readonly />
+                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" value="@Model.EstimatedDate" readonly style="background:white" />
                 </div>
                 <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" value="@Model.EstimatedTime" readonly />
+                    <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" value="@Model.EstimatedTime" type="time" />
                     <input type="hidden" id="txtStatus" value="@Model.Status" />
                     <input type="hidden" id="txtCreatedBy" value="@Model.CreatedBy" />
                     <input type="hidden" id="txtCreatedDate" value="@Model.CreatedDate" />
@@ -146,10 +146,10 @@
                                 </select>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" value="@item.ReturnDate" readonly />
+                                <input class="form-control datepicker returnDate" placeholder="Ngày" value="@item.ReturnDate" readonly style="background:white" />
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control timepicker returnTime" placeholder="Giờ" value="@item.ReturnTime" readonly />
+                                <input class="form-control timepicker returnTime" placeholder="Giờ" value="@item.ReturnTime" type="time" />
                             </td>
                         </tr>
                     }
@@ -162,7 +162,7 @@
             <i class="fas fa-plus"></i>&nbsp; Thêm tài sản
         </label>
         <button id="register" class="btn-success btn btn-sm" type="submit" title="Đăng ký mang hàng vào" style="cursor: pointer">
-            <i class="fas fa-edit"></i>&nbsp; Đăng ký
+            <i class="fas fa-edit"></i>&nbsp; Cập nhật
         </button>
     </div>
 </div>
@@ -201,10 +201,10 @@
                                         </select>
                                     </td>
                                     <td class="input-group-sm">
-                                        <input class="form-control datepicker returnDate" placeholder="Ngày" readonly />
+                                        <input class="form-control datepicker returnDate" placeholder="Ngày" readonly style="background:white" />
                                     </td>
                                     <td class="input-group-sm">
-                                        <input class="form-control timepicker returnTime" placeholder="Giờ" readonly />
+                                        <input class="form-control timepicker returnTime" placeholder="Giờ" type="time" />
                                     </td>
                                  </tr>`;
             $('#BO-items > tbody:last-child').append(html);
@@ -217,14 +217,14 @@
                 $(this).closest(".row-items").remove();
             });
 
-            $('.timepicker').timepicker({
-                timeFormat: 'h:mm p',
-                interval: 15,
-                startTime: '00:00',
-                dynamic: false,
-                dropdown: true,
-                scrollbar: true
-            });
+            //$('.timepicker').timepicker({
+            //    timeFormat: 'h:mm p',
+            //    interval: 15,
+            //    startTime: '00:00',
+            //    dynamic: false,
+            //    dropdown: true,
+            //    scrollbar: true
+            //});
         });
 
         $('.datepicker, #estimated_date').datepicker({
@@ -235,14 +235,14 @@
             $(this).closest(".row-items").remove();
         });
 
-        $('.timepicker').timepicker({
-            timeFormat: 'h:mm p',
-            interval: 15,
-            startTime: '00:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
+        //$('.timepicker').timepicker({
+        //    timeFormat: 'h:mm p',
+        //    interval: 15,
+        //    startTime: '00:00',
+        //    dynamic: false,
+        //    dropdown: true,
+        //    scrollbar: true
+        //});
 
         //Edit
         $('#register').on("click", (event) => {

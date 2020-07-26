@@ -22,8 +22,8 @@
     @Html.ValidationSummary(true)
     <!--Div chứa table dữ liệu-->
     <div style="width:100%">
-        <div class="card-header py-3">
-            <h5 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV VỀ SỚM</h5>
+        <div class="card-header">
+            <h5 class="m-0 font-weight-bold text-primary"><a href="/LeaveEarly/History">DANH SÁCH CNV VỀ SỚM</a></h5>
         </div>
         <div class="row dataTables_wrapper dt-bootstrap4 above-table">
             <div class="col-2 input-group input-group-sm">
@@ -60,38 +60,6 @@
                 <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
             </div>
         </div>
-
-        <div style="margin-top: 8px">
-            <div class="button-container" style="float: left">
-                <a class="btn btn-sm btn-success btn-reload"><i class="fas fa-sync"></i> Tải lại</a>
-            </div>
-            <div style="float: right">
-                <form class="radio-container">
-                    <label class="checkbox-inline radio-button">
-                        <input class="radio" type="checkbox" checked>Tất cả
-                    </label>
-                    <label class="checkbox-inline radio-button">
-                        <input class="radio" type="checkbox">Chưa phê duyệt
-                    </label>
-                    <label class="checkbox-inline radio-button">
-                        <input class="radio" type="checkbox">Đã phê duyệt
-                    </label>
-                    <label class="checkbox-inline radio-button">
-                        <input class="radio" type="checkbox">Phê duyệt thay
-                    </label>
-                    <label class="checkbox-inline radio-button">
-                        <input class="radio" type="checkbox">Hủy bỏ
-                    </label>
-                    <label class="checkbox-inline radio-button">
-                        <input class="radio" type="checkbox">Bảo vệ đã xác nhận
-                    </label>
-                    <label class="checkbox-inline radio-button">
-                        <input class="radio" type="checkbox">Bảo vệ chưa xác nhận
-                    </label>
-                </form>
-            </div>
-        </div>
-
 
         <div class="main-data-container">
             <!--Bảng dữ liệu Về sớm-->
@@ -141,7 +109,7 @@
                 {
                     <tr id="row_@item.ID">
                         <td class="col-sticky-1">
-                            <span>REL</span>@Html.DisplayFor(modelItem => item.ID)@Html.DisplayFor(modelItem => item.Team)
+                            @Html.DisplayFor(modelItem => item.Team)@Html.DisplayFor(modelItem => item.ID)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.EmpCode)

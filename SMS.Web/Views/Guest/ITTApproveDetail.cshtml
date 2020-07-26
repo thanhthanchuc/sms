@@ -209,7 +209,7 @@
                     <th>Đơn vị</th>
                     <th>Loại hàng hóa</th>
                     <th colspan="2">Thời gian đem trở ra</th>
-                    <th colspan="2">ITT/SMT phê duyệt</th>
+                    <th colspan="4">ITT/SMT phê duyệt</th>
                     <th colspan="4">FST phê duyệt</th>
                 </tr>
             </thead>
@@ -266,6 +266,8 @@
                                 <a class="btn btn-primary btn-standard btn-admin-approve-LE approve" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
                                 <a class="btn btn-danger btn-standard btn-admin-reject-LE unapprove" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
                             </td>
+                            <td>@item.ITT</td>
+                            <td>@item.ITT_Date</td>
                             <td><input class="remark col-12 remark-1" type="text" placeholder="Ghi chú..." /></td>
                         }
                         else
@@ -280,6 +282,8 @@
                                 {
                                     <td><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
                                 }
+                                <td>@item.ITT</td>
+                                <td>@item.ITT_Date</td>
                             }
                             else if (item.SMT_Status != null)
                             {
@@ -291,6 +295,8 @@
                                 {
                                     <td><i class="fas fa-check-square" style="color: dodgerblue"></i></td>
                                 }
+                                <td>@item.SMT</td>
+                                <td>@item.SMT_Date</td>
                             }
                             if (!string.IsNullOrEmpty(item.ITT_Remark))
                             {
@@ -364,7 +370,7 @@
                         url: "/Guest/ITTApprove",
                         method: "POST",
                         data: {
-                            id: $('#ID').val(),
+                            id: $('#txtID').val(),
                             itemId: $(self).closest("tr").find(".itemID").val(),
                             remark: $(self).closest("tr").find(".remark").val(),
                             status: 1
@@ -392,7 +398,7 @@
                         url: "/Guest/ITTApprove",
                         method: "POST",
                         data: {
-                            id: $('#ID').val(),
+                            id: $('#txtID').val(),
                             itemId: $(self).closest("tr").find(".itemID").val(),
                             remark: $(self).closest("tr").find(".remark").val(),
                             status: 0

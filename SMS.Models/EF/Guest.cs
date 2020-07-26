@@ -1,4 +1,4 @@
-namespace SMS.Models.EF
+﻿namespace SMS.Models.EF
 {
     using System;
     using System.Collections.Generic;
@@ -22,14 +22,17 @@ namespace SMS.Models.EF
         public bool? IO { get; set; }
 
         [StringLength(150)]
+        [Required(ErrorMessage = "Bạn phải điền tên khách")]
         public string FullName { get; set; }
 
         [StringLength(250)]
         public string IDCard { get; set; }
 
         [StringLength(250)]
+        [Required(ErrorMessage = "Bạn phải điền tên công ty")]
         public string Company { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền số người")]
         public int? NumbersOfPerson { get; set; }
 
         [StringLength(200)]
@@ -57,11 +60,16 @@ namespace SMS.Models.EF
         [StringLength(3)]
         public string Position { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền ngày vào")]
         public string EstimatedDateIn { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền giờ vào")]
         public string EstimatedTimeIn { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền ngày ra")]
         public string EstimatedDateOut { get; set; }
+
+        [Required(ErrorMessage = "Bạn phải điền giờ ra")]
         public string EstimatedTimeOut { get; set; }
 
         [StringLength(50)]

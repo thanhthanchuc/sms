@@ -92,8 +92,6 @@
                     <th>Loại hàng hóa</th>
                     <th colspan="2">Thời gian đem trở ra</th>
                     <th colspan="4">Trưởng phòng phê duyệt</th>
-                    <th colspan="4">ITT/SMT phê duyệt</th>
-                    <th colspan="4">FST phê duyệt</th>
                 </tr>
             </thead>
             <tbody>
@@ -134,7 +132,7 @@
                         <td>
                             @if (item.IsReturn.Value)
                             {
-                                <span>@item.ReturnDate | @item.ReturnTime</span>
+                                <span>@item.ReturnDate  @item.ReturnTime</span>
                             }
                         </td>
                         @if (string.IsNullOrEmpty(item.ApprovedBy))
@@ -157,96 +155,10 @@
                             }
                             else
                             {
-                                <td><i class="fas fa-check-square"></i></td>
+                                <td><i class="fas fa-check-square" title="Đã phê duyệt"></i></td>
                             }
                             <td>@item.ApproverRemark</td>
                         }
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.ITT))
-                            {
-                                @:@item.ITT
-                            }
-                            else if (!string.IsNullOrEmpty(item.SMT))
-                            {
-                                @:@item.SMT
-                            }
-                        </td>
-                        <td>
-                            @if (item.ITT_Date != null)
-                            {
-                                @:@item.ITT_Date
-                            }
-                            else if (item.SMT_Date != null)
-                            {
-                                @:@item.SMT_Date
-                            }
-                        </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.ITT_Remark))
-                            {
-                                @:@item.ITT_Remark
-                            }
-                            else if (!string.IsNullOrEmpty(item.SMT_Remark))
-                            {
-                                @:@item.SMT_Remark
-                            }
-                        </td>
-                        <td>
-                            @if (item.ITT_Status != null)
-                            {
-                                if (item.ITT_Status == 1)
-                                {
-                                    <i class="fas fa-check-square"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times" style="color:red"></i>
-                                }
-                            }
-                            else if (item.SMT_Status != null)
-                            {
-                                if (item.SMT_Status == 1)
-                                {
-                                    <i class="fas fa-check-square"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times" style="color:red"></i>
-                                }
-                            }
-                        </td>
-
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.FST))
-                            {
-                                @:@item.FST
-                            }
-                        </td>
-                        <td>
-                            @if (item.FST_Date != null)
-                            {
-                                @:@item.FST_Date
-                            }
-                        </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.FST_Remark))
-                            {
-                                @:@item.FST_Remark
-                            }
-                        </td>
-                        <td>
-                            @if (item.FST_Status != null)
-                            {
-                                if (item.FST_Status == 1)
-                                {
-                                    <i class="fas fa-check-square"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times" style="color:red"></i>
-                                }
-                            }
-                        </td>
                     </tr>
                 }
             </tbody>
