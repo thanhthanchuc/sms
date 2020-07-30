@@ -54,7 +54,7 @@ namespace SMS.Web.Controllers
         [AuthorizeUser(AccessLevel = 5)]
         public ActionResult Delegate()
         {
-            var user = _context.Users.Include(u => u.UserRoles).ToList();
+            var user = _context.Users.Include(u => u.UserRoles).Include(t => t.Team).ToList();
             var roles = _context.Roles.ToList();
 
             List<UserRoleViewModel> userRoleViewModels = new List<UserRoleViewModel>();

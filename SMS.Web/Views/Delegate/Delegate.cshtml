@@ -123,7 +123,7 @@
                                 <td>@(model.User.EmpCode)</td>
                                 <td>@(model.User.FullName)</td>
                                 <td>@(model.User.Position)</td>
-                                <td>@(model.User.Team)</td>
+                                <td>@(model.User.Team.Name)</td>
                                 <td>@((model.Roles.Exists(r => r.ID == 1) ? "Admin" : "Sub Admin"))</td>
                                 <td>@(model.User.Status)</td>
                                 <td>@(model.User.Email)</td>
@@ -160,7 +160,7 @@
                             <td>@(model.User.EmpCode)</td>
                             <td>@(model.User.FullName)</td>
                             <td>@(model.User.Position)</td>
-                            <td>@(model.User.Team)</td>
+                            <td>@(model.User.Team.Name)</td>
                             <td>@(model.User.Status)</td>
                             <td>@(model.User.Email)</td>
                         </tr>
@@ -195,7 +195,7 @@
                                 <td>@(model.User.EmpCode)</td>
                                 <td>@(model.User.FullName)</td>
                                 <td>@(model.User.Position)</td>
-                                <td>@(model.User.Team)</td>
+                                <td>@(model.User.Team.Name)</td>
                                 <td>@(model.User.Status)</td>
                                 <td>@(model.User.Email)</td>
                             </tr>
@@ -281,6 +281,7 @@
             })
         }
 
+
         var _userBI = {
             init: function () {
                 _userBI.registerEvent();
@@ -301,50 +302,51 @@
                             const { FullName, Position, Team, roles } = reponse.data
 
                             const hasRole = roleID => roles.filter(r => r.ID == roleID).length > 0
-                            
+
+
                             $('#txtFullNameBI').val(FullName);
                             $('#txtPositionBI').val(Position);
                             $('#txtTeamBI').val(Team);
-                            $('#admin').attr("checked", hasRole(1));
-                            $('#sub_admin').attr("checked", hasRole(2));
-                            $('#pic').attr("checked", hasRole(3));
-                            $('#itt_team_manager').attr("checked", hasRole(4));
-                            $('#smt_team_manager').attr("checked", hasRole(5));
-                            $('#fst_team_manager').attr("checked", hasRole(6));
-                            $('#group_leader').attr("checked", hasRole(8));
-                            $('#guard').attr("checked", hasRole(9));
-                            $('#read_only').attr("checked", hasRole(10));
-                            $('#pic_team_manager').attr("checked", hasRole(7));
+                            $('#admin').prop("checked", hasRole(1));
+                            $('#sub_admin').prop("checked", hasRole(2));
+                            $('#pic').prop("checked", hasRole(3));
+                            $('#itt_team_manager').prop("checked", hasRole(4));
+                            $('#smt_team_manager').prop("checked", hasRole(5));
+                            $('#fst_team_manager').prop("checked", hasRole(6));
+                            $('#group_leader').prop("checked", hasRole(8));
+                            $('#guard').prop("checked", hasRole(9));
+                            $('#read_only').prop("checked", hasRole(10));
+                            $('#pic_team_manager').prop("checked", hasRole(7));
                         } else {
                             $('#txtFullNameBI').val("Không tồn tại");
                             $('#txtPositionBI').val("?");
                             $('#txtTeamBI').val("?");
-                            $('#admin').attr("checked", false);
-                            $('#sub_admin').attr("checked", false);
-                            $('#pic').attr("checked", false);
-                            $('#itt_team_manager').attr("checked", false);
-                            $('#smt_team_manager').attr("checked", false);
-                            $('#fst_team_manager').attr("checked", false);
-                            $('#group_leader').attr("checked", false);
-                            $('#guard').attr("checked", false);
-                            $('#read_only').attr("checked", false);
-                            $('#pic_team_manager').attr("checked", false);
+                            $('#admin').prop("checked", false);
+                            $('#sub_admin').prop("checked", false);
+                            $('#pic').prop("checked", false);
+                            $('#itt_team_manager').prop("checked", false);
+                            $('#smt_team_manager').prop("checked", false);
+                            $('#fst_team_manager').prop("checked", false);
+                            $('#group_leader').prop("checked", false);
+                            $('#guard').prop("checked", false);
+                            $('#read_only').prop("checked", false);
+                            $('#pic_team_manager').prop("checked", false);
                         }
                     },
-                    error: function () {
+                    error: () => {
                         $('#txtFullNameBI').val("Không tồn tại");
                         $('#txtPositionBI').val("?");
                         $('#txtTeamBI').val("?");
-                        $('#admin').attr("checked", false);
-                        $('#sub_admin').attr("checked", false);
-                        $('#pic').attr("checked", false);
-                        $('#itt_team_manager').attr("checked", false);
-                        $('#smt_team_manager').attr("checked", false);
-                        $('#fst_team_manager').attr("checked", false);
-                        $('#group_leader').attr("checked", false);
-                        $('#guard').attr("checked", false);
-                        $('#read_only').attr("checked", false);
-                        $('#pic_team_manager').attr("checked", false);
+                        $('#admin').prop("checked", false);
+                        $('#sub_admin').prop("checked", false);
+                        $('#pic').prop("checked", false);
+                        $('#itt_team_manager').prop("checked", false);
+                        $('#smt_team_manager').prop("checked", false);
+                        $('#fst_team_manager').prop("checked", false);
+                        $('#group_leader').prop("checked", false);
+                        $('#guard').prop("checked", false);
+                        $('#read_only').prop("checked", false);
+                        $('#pic_team_manager').prop("checked", false);
                     }
                 });
             }
@@ -356,6 +358,7 @@
             if (count == 8) {
                 _userBI.getUserBI();
             } else {
+
                 $('#txtFullNameBI').val("");
                 $('#txtPositionBI').val("");
                 $('#txtTeamBI').val("");

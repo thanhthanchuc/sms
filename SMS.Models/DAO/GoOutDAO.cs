@@ -87,9 +87,9 @@ namespace SMS.Models.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Go_Out> ListApprove(string searchString, int page, int pageSize)
+        public IEnumerable<Go_Out> ListApprove(string searchString, int page, int pageSize, string tName, bool unfilter)
         {
-            IQueryable<Go_Out> model = dbContext.Go_Out;
+            IQueryable<Go_Out> model = dbContext.Go_Out.Where(t => unfilter || t.Team == tName);
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.ApprovedStatus.Equals(null) && (x.EmpCode.Contains(searchString.ToLower()) || x.FullName.Contains(searchString.ToLower()) || x.Team.Contains(searchString.ToLower())));

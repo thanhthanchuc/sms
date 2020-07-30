@@ -159,7 +159,17 @@ namespace SMS.Web.Controllers
         [AuthorizeUser(AccessLevel = 3)]
         public ActionResult Approve(int? from, int? to, string team, string empcode, int? shift, int page = 1, int pageSize = 20)
         {
-            var res = _dbContext.Leave_Early.ToList();
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = _dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
+            bool unfilter = false;
+
+            if((HttpContext.User as CustomPrincipal).PriorityRole >=4)
+            {
+                unfilter = true;
+            }
+
+            var res = _dbContext.Leave_Early.Where(l => unfilter || l.Team == tName).ToList();
 
             string new_from = null;
             string new_to = null;

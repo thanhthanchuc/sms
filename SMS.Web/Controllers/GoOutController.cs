@@ -3,6 +3,7 @@ using SMS.Models.EF;
 using SMS.Web.Common;
 using SMS.Web.Models;
 using System;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
@@ -124,8 +125,18 @@ namespace SMS.Web.Controllers
         [AuthorizeUser(AccessLevel = 3)]
         public ActionResult Approve(string searchString, int page = 1, int pageSize = 20)
         {
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = _dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
+            bool unfilter = false;
+
+            if ((HttpContext.User as CustomPrincipal).PriorityRole >= 4)
+            {
+                unfilter = true;
+            }
+
             var dao = new GoOutDAO();
-            var model = dao.ListApprove(searchString, page, pageSize);
+            var model = dao.ListApprove(searchString, page, pageSize, tName, unfilter);
             return View(model);
         }
 
