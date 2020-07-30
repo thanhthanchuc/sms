@@ -44,38 +44,6 @@
             <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
         </div>
     </div>
-
-    <div style="margin-top: 8px">
-        <div class="button-container" style="float: left">
-            <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
-        </div>
-        <div style="float: right">
-            <form class="radio-container">
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox" checked>Tất cả
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Chưa phê duyệt
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Đã phê duyệt
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Phê duyệt thay
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Hủy bỏ
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Bảo vệ đã xác nhận
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Bảo vệ chưa xác nhận
-                </label>
-            </form>
-        </div>
-    </div>
-
     <div style="width:100%; overflow-x:auto">
         <!--Bảng dữ liệu Về sớm-->
         <table class="table table-hover table-bordered" id="LE-table" style="border-collapse: collapse; width: 100%">
@@ -138,7 +106,7 @@
                     }
                 },
                 "columns": [
-                    { data: function (res) { return `<span>G</span><span>${res.ID}</span><span>${res.Team}</span>`; } },
+                    { data: function (res) { return `<span>${res.ID}</span><span>${res.Team}</span>`; } },
                     {
                         data: function (res) {
                             return `${res.EmployeeID} | ${res.EmployeeName}`;
@@ -155,12 +123,12 @@
                     { data: function (res) { return res.Purpose; } },
                     {
                         data: function (res) {
-                            return `<div>${res.EstimatedDateIn}   ${res.EstimatedTimeIn}</div>`;
+                            return `<div>${res.EstimatedDateIn}  ${res.EstimatedTimeIn}</div>`;
                         }
                     },
                     {
                         data: function (res) {
-                            return `<div>${res.EstimatedDateOut}   ${res.EstimatedTimeOut}</div>`;
+                            return `<div>${res.EstimatedDateOut}  ${res.EstimatedTimeOut}</div>`;
                         }
                     },
                     {
@@ -177,16 +145,16 @@
                             var html = '';
                             if (!res.Status) {
                                 html = `<a class="btn btn-edit btn-standard btnEdit" title="Sửa" href="/Guest/Edit/${res.ID}">
-                                                                <i class="icon fas fa-cog" style="margin-left: -4px"></i>
-                                                            </a>
-                                                            <a class="btn btn-danger btn-standard btn-delete btnXoa" onclick="Delete(${res.ID})" title="Xóa">
-                                                                <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
-                                                            </a>`;
+                                                                    <i class="icon fas fa-cog" style="margin-left: -4px"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger btn-standard btn-delete btnXoa" onclick="Delete(${res.ID})" title="Xóa">
+                                                                    <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
+                                                                </a>`;
                             }
                             else {
                                 html = `<a class="btn btn-cancel btn-danger btn-standard" id="btnCancel" title="Hủy bỏ">
-                                                                <i class="fas fa-lock" style="margin-left: -3px"></i>
-                                                            </a>`
+                                                                    <i class="fas fa-lock" style="margin-left: -3px"></i>
+                                                                </a>`
                             }
                             return html;
                         }
@@ -199,9 +167,9 @@
                     },
                     {
                         data: function (res) {
-                            return `<a href="/Guest/GuestReport/${res.ID}" class="btn btn-print btn-primary btn-standard" id="btnPrint" title="In báo cáo">
-                                                                <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                                            </a>`;
+                            return `<a href="/Guest/GuestReport/${res.ID}" target="_blank" class="btn btn-print btn-primary btn-standard" id="btnPrint" title="In báo cáo">
+                                                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                                                </a>`;
                         }
                     },
                     {
@@ -209,7 +177,7 @@
                             if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
-                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
                             return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
                         }
                     },
@@ -218,7 +186,7 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
                             return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
                         }
                     }

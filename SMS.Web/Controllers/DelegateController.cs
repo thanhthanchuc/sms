@@ -112,6 +112,10 @@ namespace SMS.Web.Controllers
             return Content("OK");
         }
 
+        /// <summary>
+        /// Suwar view choo dep da~
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Unauthorised()
         {
             return Content("You are not authorize this end-point!");

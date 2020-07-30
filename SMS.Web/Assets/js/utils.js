@@ -36,12 +36,12 @@ var _userBI = {
                 if (reponse.status) {
                     $('#txtFullNameBI').val(reponse.data.FullName);
                     $('#txtPositionBI').val(reponse.data.Position);
-                    $('#txtTeamBI').val(reponse.data.Team);
+                    $('#txtTeamBI').val(reponse.data.Team.Name);
                 } else {
                     alert("Mã nhân viên không tồn tại");
                     $('#txtFullNameBI').val("");
                     $('#txtPositionBI').val(reponse.data.Position);
-                    $('#txtTeamBI').val(reponse.data.Team);
+                    $('#txtTeamBI').val(reponse.data.Team.Name);
                     console.log(reponse.data.data);
                 }
             },

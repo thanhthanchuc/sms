@@ -32,7 +32,7 @@
             <div class="form-group input-group specific-date-pick">
                 <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" readonly style="background:white"/>
+                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" autocomplete="off"/>
                 </div>
                 <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
                 <div class="col-2 input-group-sm">
@@ -104,10 +104,10 @@
                             <input class="form-control input-previous-button serial" />
                         </td>
                         <td class="input-group-sm">
-                            <input type="number" min="1" class="form-control input-previous-button quantity" />
+                            <input type="number" min="0" class="form-control input-previous-button quantity" />
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control input-previous-button unit" />
+                            <input class="form-control input-previous-button unit" maxlength="50" />
                         </td>
                         <td class="input-group-sm">
                             <select class="form-control input-previous-button assetType">
@@ -123,7 +123,7 @@
                             </select>
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control datepicker returnDate" placeholder="Ngày" readonly style="background:white"/>
+                            <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
                         </td>
                         <td class="input-group-sm">
                             <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
@@ -159,10 +159,10 @@
                                 <input class="form-control input-previous-button serial" />
                             </td>
                             <td class="input-group-sm">
-                                <input type="number" class="form-control input-previous-button quantity" />
+                                <input type="number" class="form-control input-previous-button quantity" min="0" />
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button unit" />
+                                <input class="form-control input-previous-button unit" maxlength = "50" />
                             </td>
                             <td class="input-group-sm">
                                 <select class="form-control input-previous-button assetType">
@@ -178,7 +178,7 @@
                                 </select>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" readonly style="background:white"/>
+                                <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
                             </td>
                             <td class="input-group-sm">
                                 <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>

@@ -2276,12 +2276,10 @@
     <Content Include="Views\BringIn\BIReport.cshtml" />
     <Content Include="Views\Delegate\Delegate.cshtml" />
     <Content Include="Views\Delegate\ListEmployee.cshtml" />
-    <Content Include="Views\LeaveEarly\SummaryLE.cshtml" />
     <Content Include="Views\BringOut\BOReport.cshtml" />
     <Content Include="Views\Guest\GuestReport.cshtml" />
     <Content Include="Views\BringIn\SummaryBI.cshtml" />
     <Content Include="Views\GoOut\SummaryGO.cshtml" />
-    <Content Include="Views\BringOut\SummaryBO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\bring_in\" />
