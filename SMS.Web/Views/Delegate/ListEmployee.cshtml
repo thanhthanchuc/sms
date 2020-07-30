@@ -101,7 +101,7 @@
                     { data: function (res) { return res.Team.Name; } },
                     {
                         data: function (res) {
-                            return !res.Status ? 'Đang hoạt động' : '';
+                            return res.Status ? 'Đang hoạt động' : '';
                         }
                     },
                     { data: function (res) { return res.Email || ""; } },
@@ -116,8 +116,8 @@
         $("#DL").removeClass('collapse');
         $("#DL").removeClass('collapsed');
         $("#DL").attr("aria-expanded", "true");
-        $("#list_emp").addClass('active');
-        $("#collapseAdmin").addClass('show');
+        $("#ListEmp").addClass('active');
+        $("#collapseDelegateTab").addClass('show');
         $("#collapseDelegate").removeClass('collapse');
 
         function handleSearch() {

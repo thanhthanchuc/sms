@@ -111,8 +111,7 @@
                         <th class="th-1">Phòng ban</th>
                         <th class="th-1">Quyền hạn</th>
                         <th class="th-1">Trạng thái</th>
-                        <th class="th-1">Email</th>
-                        <th class="th-1">Cellphone</th>
+                        <th class="th-1">Điện thoại</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -123,10 +122,117 @@
                                 <td>@(model.User.EmpCode)</td>
                                 <td>@(model.User.FullName)</td>
                                 <td>@(model.User.Position)</td>
-                                <td>@(model.User.Team)</td>
+                                <td>@(model.User.Team.Name)</td>
                                 <td>@((model.Roles.Exists(r => r.ID == 1) ? "Admin" : "Sub Admin"))</td>
-                                <td>@(model.User.Status)</td>
-                                <td>@(model.User.Email)</td>
+                                <td>@(model.User.Status == 1 ? "Đang hoạt động" : "")</td>
+                                <td>@(model.User.Cellphone)</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6 form-horizontal">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH PIC TEAM MANAGER</h6>
+        </div>
+        <div style="width:100%; overflow-x:auto">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+                <!--Tiêu đề cột-->
+                <thead>
+                    <tr class="table-heading">
+                        <th class="th-1">Mã</th>
+                        <th class="th-1">Nhân viên</th>
+                        <th class="th-1">Vị trí</th>
+                        <th class="th-1">Phòng ban</th>
+                        <th class="th-1">Trạng thái</th>
+                        <th class="th-1">Điện thoại</th>
+                    </tr>
+                </thead>
+                <tbody id="tblData">
+                    @{
+                        foreach (var model in Model.FindAll(m => m.Roles.Exists(r => r.ID == 7)))
+                        {
+                            <tr>
+                                <td>@(model.User.EmpCode)</td>
+                                <td>@(model.User.FullName)</td>
+                                <td>@(model.User.Position)</td>
+                                <td>@(model.User.Team.Name)</td>
+                                <td>@(model.User.Status == 1 ? "Đang hoạt động" : "")</td>
+                                <td>@(model.User.Cellphone)</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6 form-horizontal">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH SMT TEAM MANAGER</h6>
+        </div>
+        <div style="width:100%; overflow-x:auto">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+                <!--Tiêu đề cột-->
+                <thead>
+                    <tr class="table-heading">
+                        <th class="th-1">Mã</th>
+                        <th class="th-1">Nhân viên</th>
+                        <th class="th-1">Vị trí</th>
+                        <th class="th-1">Phòng ban</th>
+                        <th class="th-1">Trạng thái</th>
+                        <th class="th-1">Điện thoại</th>
+                    </tr>
+                </thead>
+                <tbody id="tblData">
+                    @{
+                        foreach (var model in Model.FindAll(m => m.Roles.Exists(r => r.ID == 5)))
+                        {
+                            <tr>
+                                <td>@(model.User.EmpCode)</td>
+                                <td>@(model.User.FullName)</td>
+                                <td>@(model.User.Position)</td>
+                                <td>@(model.User.Team.Name)</td>
+                                <td>@(model.User.Status == 1 ? "Đang hoạt động" : "")</td>
+                                <td>@(model.User.Cellphone)</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6 form-horizontal">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH FST TEAM MANAGER</h6>
+        </div>
+        <div style="width:100%; overflow-x:auto">
+            <!--Bảng dữ liệu Về sớm-->
+            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+                <!--Tiêu đề cột-->
+                <thead>
+                    <tr class="table-heading">
+                        <th class="th-1">Mã</th>
+                        <th class="th-1">Nhân viên</th>
+                        <th class="th-1">Vị trí</th>
+                        <th class="th-1">Phòng ban</th>
+                        <th class="th-1">Trạng thái</th>
+                        <th class="th-1">Điện thoại</th>
+                    </tr>
+                </thead>
+                <tbody id="tblData">
+                    @{
+                        foreach (var model in Model.FindAll(m => m.Roles.Exists(r => r.ID == 6)))
+                        {
+                            <tr>
+                                <td>@(model.User.EmpCode)</td>
+                                <td>@(model.User.FullName)</td>
+                                <td>@(model.User.Position)</td>
+                                <td>@(model.User.Team.Name)</td>
+                                <td>@(model.User.Status == 1 ? "Đang hoạt động" : "")</td>
                                 <td>@(model.User.Cellphone)</td>
                             </tr>
                         }
@@ -150,7 +256,7 @@
                         <th class="th-1">Vị trí</th>
                         <th class="th-1">Phòng ban</th>
                         <th class="th-1">Trạng thái</th>
-                        <th class="th-1">Email</th>
+                        <th class="th-1">Điện thoại</th>
                     </tr>
                 </thead>
                 @{
@@ -160,9 +266,9 @@
                             <td>@(model.User.EmpCode)</td>
                             <td>@(model.User.FullName)</td>
                             <td>@(model.User.Position)</td>
-                            <td>@(model.User.Team)</td>
-                            <td>@(model.User.Status)</td>
-                            <td>@(model.User.Email)</td>
+                            <td>@(model.User.Team.Name)</td>
+                            <td>@(model.User.Status == 1 ? "Đang hoạt động" : "")</td>
+                            <td>@(model.User.Cellphone)</td>
                         </tr>
                     }
                 }
@@ -184,7 +290,7 @@
                         <th class="th-1">Vị trí</th>
                         <th class="th-1">Phòng ban</th>
                         <th class="th-1">Trạng thái</th>
-                        <th class="th-1">Email</th>
+                        <th class="th-1">Điện thoại</th>
                     </tr>
                 </thead>
                 <tbody id="tblData">
@@ -195,45 +301,9 @@
                                 <td>@(model.User.EmpCode)</td>
                                 <td>@(model.User.FullName)</td>
                                 <td>@(model.User.Position)</td>
-                                <td>@(model.User.Team)</td>
-                                <td>@(model.User.Status)</td>
-                                <td>@(model.User.Email)</td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="col-6 form-horizontal">
-        <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH PIC TEAM MANAGER</h6>
-        </div>
-        <div style="width:100%; overflow-x:auto">
-            <!--Bảng dữ liệu Về sớm-->
-            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
-                <!--Tiêu đề cột-->
-                <thead>
-                    <tr class="table-heading">
-                        <th class="th-1">Mã</th>
-                        <th class="th-1">Nhân viên</th>
-                        <th class="th-1">Vị trí</th>
-                        <th class="th-1">Phòng ban</th>
-                        <th class="th-1">Trạng thái</th>
-                        <th class="th-1">Email</th>
-                    </tr>
-                </thead>
-                <tbody id="tblData">
-                    @{
-                        foreach (var model in Model.FindAll(m => m.Roles.Exists(r => r.ID == 7)))
-                        {
-                            <tr>
-                                <td>@(model.User.EmpCode)</td>
-                                <td>@(model.User.FullName)</td>
-                                <td>@(model.User.Position)</td>
-                                <td>@(model.User.Team)</td>
-                                <td>@(model.User.Status)</td>
-                                <td>@(model.User.Email)</td>
+                                <td>@(model.User.Team.Name)</td>
+                                <td>@(model.User.Status == 1 ? "Đang hoạt động" : "")</td>
+                                <td>@(model.User.Cellphone)</td>
                             </tr>
                         }
                     }
@@ -276,7 +346,7 @@
                     window.location.reload()
                 },
                 error: () => {
-                    alert("Lỗi hệ thống!")
+                    alert("Dữ liệu nhập không chính xác!")
                 }
             })
         }
@@ -305,46 +375,46 @@
                             $('#txtFullNameBI').val(FullName);
                             $('#txtPositionBI').val(Position);
                             $('#txtTeamBI').val(Team);
-                            $('#admin').attr("checked", hasRole(1));
-                            $('#sub_admin').attr("checked", hasRole(2));
-                            $('#pic').attr("checked", hasRole(3));
-                            $('#itt_team_manager').attr("checked", hasRole(4));
-                            $('#smt_team_manager').attr("checked", hasRole(5));
-                            $('#fst_team_manager').attr("checked", hasRole(6));
-                            $('#group_leader').attr("checked", hasRole(8));
-                            $('#guard').attr("checked", hasRole(9));
-                            $('#read_only').attr("checked", hasRole(10));
-                            $('#pic_team_manager').attr("checked", hasRole(7));
+                            $('#admin').prop("checked", hasRole(1));
+                            $('#sub_admin').prop("checked", hasRole(2));
+                            $('#pic').prop("checked", hasRole(3));
+                            $('#itt_team_manager').prop("checked", hasRole(4));
+                            $('#smt_team_manager').prop("checked", hasRole(5));
+                            $('#fst_team_manager').prop("checked", hasRole(6));
+                            $('#group_leader').prop("checked", hasRole(8));
+                            $('#guard').prop("checked", hasRole(9));
+                            $('#read_only').prop("checked", hasRole(10));
+                            $('#pic_team_manager').prop("checked", hasRole(7));
                         } else {
                             $('#txtFullNameBI').val("Không tồn tại");
                             $('#txtPositionBI').val("?");
                             $('#txtTeamBI').val("?");
-                            $('#admin').attr("checked", false);
-                            $('#sub_admin').attr("checked", false);
-                            $('#pic').attr("checked", false);
-                            $('#itt_team_manager').attr("checked", false);
-                            $('#smt_team_manager').attr("checked", false);
-                            $('#fst_team_manager').attr("checked", false);
-                            $('#group_leader').attr("checked", false);
-                            $('#guard').attr("checked", false);
-                            $('#read_only').attr("checked", false);
-                            $('#pic_team_manager').attr("checked", false);
+                            $('#admin').prop("checked", false);
+                            $('#sub_admin').prop("checked", false);
+                            $('#pic').prop("checked", false);
+                            $('#itt_team_manager').prop("checked", false);
+                            $('#smt_team_manager').prop("checked", false);
+                            $('#fst_team_manager').prop("checked", false);
+                            $('#group_leader').prop("checked", false);
+                            $('#guard').prop("checked", false);
+                            $('#read_only').prop("checked", false);
+                            $('#pic_team_manager').prop("checked", false);
                         }
                     },
                     error: function () {
                         $('#txtFullNameBI').val("Không tồn tại");
                         $('#txtPositionBI').val("?");
                         $('#txtTeamBI').val("?");
-                        $('#admin').attr("checked", false);
-                        $('#sub_admin').attr("checked", false);
-                        $('#pic').attr("checked", false);
-                        $('#itt_team_manager').attr("checked", false);
-                        $('#smt_team_manager').attr("checked", false);
-                        $('#fst_team_manager').attr("checked", false);
-                        $('#group_leader').attr("checked", false);
-                        $('#guard').attr("checked", false);
-                        $('#read_only').attr("checked", false);
-                        $('#pic_team_manager').attr("checked", false);
+                        $('#admin').prop("checked", false);
+                        $('#sub_admin').prop("checked", false);
+                        $('#pic').prop("checked", false);
+                        $('#itt_team_manager').prop("checked", false);
+                        $('#smt_team_manager').prop("checked", false);
+                        $('#fst_team_manager').prop("checked", false);
+                        $('#group_leader').prop("checked", false);
+                        $('#guard').prop("checked", false);
+                        $('#read_only').prop("checked", false);
+                        $('#pic_team_manager').prop("checked", false);
                     }
                 });
             }

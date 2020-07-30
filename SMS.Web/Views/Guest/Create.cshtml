@@ -39,13 +39,13 @@
                 <label class="control-label col-md-2 top-space">Số thẻ khách</label>
                 <div class="col-md-3 input-group">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtKVPNo" />
+                        <input class="form-control input-previous-button" id="txtKVPNo" maxlength="50" />
                     </div>
                 </div>
                 <label class="control-label col-md-2 top-space">Họ tên khách <span class="red">(*)</span></label>
                 <div class="col-5 input-group-sm">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtEmployeeName" />
+                        <input class="form-control input-previous-button" id="txtEmployeeName" maxlength="150" />
                     </div>
                 </div>
             </div>
@@ -54,13 +54,13 @@
                 <label class="control-label col-md-2 top-space">CMTND/Hộ chiếu</label>
                 <div class="col-md-3 input-group">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtIDCard" />
+                        <input class="form-control input-previous-button" id="txtIDCard" maxlength="250" />
                     </div>
                 </div>
                 <label class="control-label col-md-1 top-space">Visa</label>
                 <div class="col-md-6 input-group-sm">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtVisa" />
+                        <input class="form-control input-previous-button" id="txtVisa" maxlength="200" />
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <label class="control-label col-md-2 top-space">Nơi ở hiện tại</label>
                 <div class="col-md-10">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtHotel" />
+                        <input class="form-control input-previous-button" id="txtHotel" maxlength="300" />
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                 <label class="control-label col-md-2 top-space">Công ty <span class="red">(*)</span></label>
                 <div class="col-md-10">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtCompany" />
+                        <input class="form-control input-previous-button" id="txtCompany" maxlength="250" />
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                 <label class="control-label col-md-2 top-space">Số xe</label>
                 <div class="col-md-5">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtTransportNo" />
+                        <input class="form-control input-previous-button" id="txtTransportNo" maxlength="100" />
                     </div>
                 </div>
             </div>
@@ -121,20 +121,20 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ vào <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" readonly />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" autocomplete="off" />
                 </div>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" readonly />
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" type="time" />
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ ra <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" readonly />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" autocomplete="off" />
                 </div>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" readonly />
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" type="time" />
                 </div>
             </div>
         </div>
@@ -186,8 +186,8 @@
                         <th>Số lượng <span class="red">(*)</span></th>
                         <th>Đơn vị <span class="red">(*)</span></th>
                         <th>Loại tài sản <span class="red">(*)</span></th>
-                        <th>Mang quay lại <span class="red">(*)</span></th>
-                        <th colspan="2">Thời gian quay lại</th>
+                        <th>Mang ra/quay lại <span class="red">(*)</span></th>
+                        <th colspan="2">Thời gian ra/quay lại</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -216,16 +216,16 @@
                                 <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button item" />
+                                <input class="form-control input-previous-button item" maxlength="250"/>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button serial" />
+                                <input class="form-control input-previous-button serial" maxlength="250" />
                             </td>
                             <td class="input-group-sm">
                                 <input type="number" class="form-control input-previous-button quantity" min="0" />
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button unit" />
+                                <input class="form-control input-previous-button unit" maxlength="50" />
                             </td>
                             <td class="input-group-sm">
                                 <select class="form-control input-previous-button assetType">
@@ -241,10 +241,10 @@
                                 </select>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" readonly/>
+                                <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control timepicker returnTime" placeholder="Giờ" readonly/>
+                                <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
                             </td>
                         </tr>`;
             $('#guest-items > tbody:last-child').append(html);
@@ -257,14 +257,6 @@
                 $(this).closest(".row-items").remove();
             });
 
-            $('.timepicker').timepicker({
-                timeFormat: 'h:mm p',
-                interval: 5,
-                startTime: '00:00',
-                dynamic: false,
-                dropdown: true,
-                scrollbar: true
-            });
         });
 
         $("#guest-items").on("click", ".delete-items", function () {
@@ -273,14 +265,6 @@
 
         $('.datepicker').datepicker({
             dateFormat: 'dd/mm/yy'
-        });
-        $('.timepicker').timepicker({
-            timeFormat: 'h:mm p',
-            interval: 5,
-            startTime: '00:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
         });
 
         //user
@@ -304,12 +288,12 @@
                         if (reponse.status) {
                             $('#txtFullNameBI').val(reponse.data.FullName);
                             $('#txtPositionBI').val(reponse.data.Position);
-                            $('#txtTeamBI').val(reponse.data.Team);
+                            $('#txtTeamBI').val(reponse.data.Team.Name);
                         } else {
                             alert("Mã nhân viên không tồn tại");
                             $('#txtFullNameBI').val("");
                             $('#txtPositionBI').val(reponse.data.Position);
-                            $('#txtTeamBI').val(reponse.data.Team);
+                            $('#txtTeamBI').val(reponse.data.Team.Name);
                             console.log(reponse.data.data);
                         }
                     },

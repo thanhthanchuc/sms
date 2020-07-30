@@ -10,7 +10,6 @@
     <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
 }
 
-@Html.ValidationSummary()
 <div class="form-horizontal">
     <div class="card-header">
         <h5 class="m-0 font-weight-bold text-primary">CHỈNH SỬA ĐĂNG KÝ KHÁCH - NHÀ THẦU</h5>
@@ -61,13 +60,13 @@
                 <label class="control-label col-md-2 top-space">Số thẻ khách</label>
                 <div class="col-md-3 input-group">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtKVPNo" value="@Model.KVPNo" />
+                        <input class="form-control input-previous-button" id="txtKVPNo" value="@Model.KVPNo" maxlength="50" />
                     </div>
                 </div>
                 <label class="control-label col-md-2 top-space">Họ tên khách <span class="red">(*)</span></label>
                 <div class="col-5 input-group-sm">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtEmployeeName" value="@Model.FullName" />
+                        <input class="form-control input-previous-button" id="txtEmployeeName" value="@Model.FullName" maxlength="150" />
                     </div>
                 </div>
             </div>
@@ -76,13 +75,13 @@
                 <label class="control-label col-md-2 top-space">CMTND/Hộ chiếu</label>
                 <div class="col-md-3 input-group">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtIDCard" value="@Model.IDCard" />
+                        <input class="form-control input-previous-button" id="txtIDCard" value="@Model.IDCard" maxlength="250" />
                     </div>
                 </div>
                 <label class="control-label col-md-1 top-space">Visa</label>
                 <div class="col-md-6 input-group-sm">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtVisa" value="@Model.Visa" />
+                        <input class="form-control input-previous-button" id="txtVisa" value="@Model.Visa" maxlength="200" />
                     </div>
                 </div>
             </div>
@@ -91,7 +90,7 @@
                 <label class="control-label col-md-2 top-space">Nơi ở hiện tại</label>
                 <div class="col-md-10">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtHotel" value="@Model.Hotel" />
+                        <input class="form-control input-previous-button" id="txtHotel" value="@Model.Hotel" maxlength="300" />
                     </div>
                 </div>
             </div>
@@ -100,7 +99,7 @@
                 <label class="control-label col-md-2 top-space">Công ty <span class="red">(*)</span></label>
                 <div class="col-md-10">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtCompany" value="@Model.Company" />
+                        <input class="form-control input-previous-button" id="txtCompany" value="@Model.Company" maxlength="250" />
                     </div>
                 </div>
             </div>
@@ -135,7 +134,7 @@
                 <label class="control-label col-md-2 top-space">Số xe</label>
                 <div class="col-md-5">
                     <div class="input-group-sm">
-                        <input class="form-control input-previous-button" id="txtTransportNo" value="@Model.TransportNo" />
+                        <input class="form-control input-previous-button" id="txtTransportNo" value="@Model.TransportNo" maxlength="100" />
                     </div>
                 </div>
             </div>
@@ -143,20 +142,20 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ vào <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" readonly />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" autocomplete="off" />
                 </div>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" value="@Model.EstimatedTimeIn" readonly />
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" value="@Model.EstimatedTimeIn" type="time" />
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ ra <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" readonly />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" autocomplete="off" />
                 </div>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.EstimatedTimeOut" readonly />
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.EstimatedTimeOut" type="time" />
                 </div>
             </div>
         </div>
@@ -224,16 +223,16 @@
                         </td>
                         <td class="input-group-sm">
                             <input type="hidden" class="itemId" value="@item.ID" />
-                            <input class="form-control input-previous-button item" value="@item.Item" />
+                            <input class="form-control input-previous-button item" value="@item.Item" maxlength="250" />
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control input-previous-button serial" value="@item.Serial" />
+                            <input class="form-control input-previous-button serial" value="@item.Serial" maxlength="250" />
                         </td>
                         <td class="input-group-sm">
                             <input type="number" class="form-control input-previous-button quantity" value="@item.Quantity" min="0" />
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control input-previous-button unit" value="@item.Unit" />
+                            <input class="form-control input-previous-button unit" value="@item.Unit" maxlength="50" />
                         </td>
                         <td class="input-group-sm">
                             <select class="form-control input-previous-button assetType">
@@ -266,10 +265,10 @@
                             </select>
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control input-previous-button returnDate datepicker" placeholder="Ngày" value="@item.ReturnDate" readonly />
+                            <input class="form-control input-previous-button returnDate datepicker" placeholder="Ngày" value="@item.ReturnDate" autocomplete="off" />
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control input-previous-button returnTime timepicker" placeholder="Giờ" value="@item.ReturnTime" readonly />
+                            <input class="form-control input-previous-button returnTime timepicker" placeholder="Giờ" value="@item.ReturnTime" type="time" />
                         </td>
                     </tr>
                     }
@@ -298,16 +297,16 @@
                                 <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button item" />
+                                <input class="form-control input-previous-button item" maxlength="250" />
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button serial" />
+                                <input class="form-control input-previous-button serial" maxlength="250" />
                             </td>
                             <td class="input-group-sm">
                                 <input type="number" class="form-control input-previous-button quantity" min="0" />
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control input-previous-button unit" />
+                                <input class="form-control input-previous-button unit" maxlength="50" />
                             </td>
                             <td class="input-group-sm">
                                 <select class="form-control input-previous-button assetType">
@@ -323,10 +322,10 @@
                                 </select>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" readonly/>
+                                <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control timepicker returnTime" placeholder="Giờ" readonly/>
+                                <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
                             </td>
                         </tr>`;
             $('#guest-items > tbody:last-child').append(html)
@@ -338,15 +337,6 @@
             $("#guest-items").on("click", ".delete-items", function () {
                 $(this).closest(".row-items").remove();
             });
-
-            $('.timepicker').timepicker({
-                timeFormat: 'h:mm p',
-                interval: 5,
-                startTime: '00:00',
-                dynamic: false,
-                dropdown: true,
-                scrollbar: true
-            });
         });
         $("#guest-items").on("click", ".delete-items", function () {
             $(this).closest(".row-items").remove();
@@ -356,14 +346,6 @@
             dateFormat: 'dd/mm/yy'
         });
 
-        $('.timepicker').timepicker({
-            timeFormat: 'h:mm p',
-            interval: 5,
-            startTime: '00:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
 
         //Create
         $('#guest-confirm').on("click", (event) => {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SMS.Models.EF;
 using PagedList;
+using System.Data.Entity;
 
 namespace SMS.Models.DAO
 {
@@ -21,7 +22,7 @@ namespace SMS.Models.DAO
         /// <returns></returns>
         public User GetByCode(string empCode)
         {
-            return dbContext.Users.SingleOrDefault(x => x.EmpCode.Equals(empCode));
+            return dbContext.Users.Include(u => u.Team).SingleOrDefault(x => x.EmpCode.Equals(empCode));
         }
 
         /// <summary>

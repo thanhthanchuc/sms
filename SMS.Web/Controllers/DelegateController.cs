@@ -54,7 +54,7 @@ namespace SMS.Web.Controllers
         [AuthorizeUser(AccessLevel = 5)]
         public ActionResult Delegate()
         {
-            var user = _context.Users.Include(u => u.UserRoles).ToList();
+            var user = _context.Users.Include(u => u.UserRoles).Include(t => t.Team).ToList();
             var roles = _context.Roles.ToList();
 
             List<UserRoleViewModel> userRoleViewModels = new List<UserRoleViewModel>();
@@ -112,6 +112,10 @@ namespace SMS.Web.Controllers
             return Content("OK");
         }
 
+        /// <summary>
+        /// Suwar view choo dep da~
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Unauthorised()
         {
             return Content("You are not authorize this end-point!");

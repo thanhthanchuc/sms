@@ -43,39 +43,41 @@
             <!-- Divider -->
             <hr class="sidebar-divider divider">
 
-            <div class="tab-1">
-                <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseDelegate" aria-expanded="true" aria-controls="collapseDelegate">
-                    <i class="fas fa-fw fa-users fa-menu" style="color:cornflowerblue"></i>
-                    &nbsp;
-                    <span class="tab-text">Quản trị</span>
-                </a>
-                <div id="collapseDelegate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <!-- Item 1 -->
-                    <li class="nav-item sub-menu item-delegate" style="font-weight: 500">
-                        <a id="DL" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseDelegateTab" aria-expanded="true" aria-controls="collapse1">
-                            <i class="fas fa-fw fa-user-cog fa-menu lv-3-delegate"></i>
-                            <span>Phân quyền</span>
-                        </a>
+            @if ((User as CustomPrincipal).PriorityRole >= 3)
+            {
+                <div class="tab-1">
+                    <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseDelegate" aria-expanded="true" aria-controls="collapseDelegate">
+                        <i class="fas fa-fw fa-users fa-menu" style="color:cornflowerblue"></i>
+                        &nbsp;
+                        <span class="tab-text">Quản trị</span>
+                    </a>
+                    <div id="collapseDelegate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <!-- Item 1 -->
+                        <li class="nav-item sub-menu item-delegate" style="font-weight: 500">
+                            <a id="DL" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseDelegateTab" aria-expanded="true" aria-controls="collapse1">
+                                <i class="fas fa-fw fa-user-cog fa-menu lv-3-delegate"></i>
+                                <span>Phân quyền</span>
+                            </a>
 
-                        <div id="collapseDelegateTab" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDelegate">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                @if ((User as CustomPrincipal).PriorityRole == 5)
-                                {
-                                    <a id="EditDelegate" class="collapse-item grey-a-tag" href="/Delegate/Delegate">Cấp quyền</a>
-                                }
+                            <div id="collapseDelegateTab" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseDelegate">
+                                <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                    @if ((User as CustomPrincipal).PriorityRole == 5)
+                                    {
+                                        <a id="EditDelegate" class="collapse-item grey-a-tag" href="/Delegate/Delegate">Cấp quyền</a>
+                                    }
 
-                                @if ((User as CustomPrincipal).PriorityRole >= 4)
-                                {
-                                    <a id="ListEmp" class="collapse-item grey-a-tag" href="/Delegate/ListEmployee">Danh sách người dùng</a>
-                                }
+                                    @if ((User as CustomPrincipal).PriorityRole >= 3)
+                                    {
+                                        <a id="ListEmp" class="collapse-item grey-a-tag" href="/Delegate/ListEmployee">Danh sách người dùng</a>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider divider">
+                <!-- Divider -->
+                <hr class="sidebar-divider divider">
+            }
 
             <div class="tab-1">
                 <a class="nav-link collapsed header sidebar-heading" href="#" data-toggle="collapse" data-target="#collapseNews" aria-expanded="true" aria-controls="collapseNews">
@@ -119,7 +121,7 @@
                         </a>
                         <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
                             <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a id="LEReport" class="collapse-item grey-a-tag" href="#">CNV về sớm</a>
+                                <a id="LEReport" class="collapse-item grey-a-tag" href="~/Reports/leave_early/ReportLE.rdlc">CNV về sớm</a>
                                 <a id="GOReport" class="collapse-item grey-a-tag" href="#">CNV ra ngoài</a>
                                 <a id="BIReport" class="collapse-item grey-a-tag" href="#">CNV mang hàng vào</a>
                                 <a id="BOReport" class="collapse-item grey-a-tag" href="#">CNV mang hàng ra</a>
@@ -186,7 +188,7 @@
                                 @if ((User as CustomPrincipal).PriorityRole >= 3)
                                 {
                                     <a id="BIApprove" class="collapse-item grey-a-tag" href="/BringIn/Approve">Phê duyệt</a>
-                                    <a id="BIitt" class="collapse-item grey-a-tag" href="/BringIn/ITTApprove">ITT & SMT phê duyệt</a>
+                                    <a id="BIitt" class="collapse-item grey-a-tag" href="/BringIn/ITTApprove">SMT phê duyệt</a>
                                     <a id="BIfst" class="collapse-item grey-a-tag" href="/BringIn/FSTApprove">FST phê duyệt</a>
                                 }
                                 <a id="BIHistory" class="collapse-item grey-a-tag" href="@Url.Action("History","BringIn")">Lịch sử</a>
@@ -208,7 +210,7 @@
                                 @if ((User as CustomPrincipal).PriorityRole >= 3)
                                 {
                                     <a id="BOApprove" class="collapse-item grey-a-tag" href="/BringOut/Approve">Phê duyệt</a>
-                                    <a id="BOitt" class="collapse-item grey-a-tag" href="/BringOut/ITTApprove">ITT & SMT phê duyệt</a>
+                                    <a id="BOitt" class="collapse-item grey-a-tag" href="/BringOut/ITTApprove">SMT phê duyệt</a>
                                     <a id="BOfst" class="collapse-item grey-a-tag" href="/BringOut/FSTApprove">FST phê duyệt</a>
                                 }
                                 <a id="BOHistory" class="collapse-item grey-a-tag" href="/BringOut/History">Lịch sử</a>
@@ -229,7 +231,7 @@
                                 {
                                     <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
                                 }
-                                </div>
+                            </div>
                         </div>
                     </li>
                     <!--Khách & Nhà thầu-->
@@ -246,7 +248,7 @@
                                 }
                                 @if ((User as CustomPrincipal).PriorityRole >= 3)
                                 {
-                                    <a id="guest-itt" class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove", "Guest")">ITT & SMT phê duyệt</a>
+                                    <a id="guest-itt" class="collapse-item grey-a-tag" href="@Url.Action("ITTApprove", "Guest")">SMT phê duyệt</a>
                                     <a id="guest-fst" class="collapse-item grey-a-tag" href="@Url.Action("FSTApprove", "Guest")">FST Phê duyệt</a>
                                     <a id="guest-punish" class="collapse-item grey-a-tag" href="#">Hạn chế truy cập</a>
                                 }
@@ -476,7 +478,8 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline small" id="logged_name" style="color:black">@((User as SMS.Web.Models.CustomPrincipal).FullName)</span>
+                                <b class="mr-2 d-none d-lg-inline" id="logged_name" style="color:orangered">@((User as SMS.Web.Models.CustomPrincipal).FullName)</b>
+                                <img id="logged_image" class="img-profile rounded-circle" src="~/Assets/img/the-world.jpg">
                                 <!-- <img id="logged_image" class="img-profile rounded-circle"> -->
                             </a>
                             <!-- Dropdown - User Information -->

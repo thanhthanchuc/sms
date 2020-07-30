@@ -91,7 +91,7 @@
                     <div class="form-group input-group specific-date-pick">
                         <label class="col-2 top-space" for="EstimatedDate">Ngày ra <span class="red">(*)</span></label>
                         <div class="col-3 input-group-sm">
-                            @Html.EditorFor(model => model.EstimatedDateOut, new { htmlAttributes = new { @id = "estimated_date_out", @class = "form-control input-previous-button", @readonly = "readonly", @style = "background-color: white" } })
+                            @Html.EditorFor(model => model.EstimatedDateOut, new { htmlAttributes = new { @id = "estimated_date_out", @class = "form-control input-previous-button", autocomplete = "off", @style = "background-color: white" } })
                         </div>
                         <label class="top-space" for="EstimatedTimeOut">Giờ ra <span class="red">(*)</span></label>
                         <div class="col-2 input-group-sm">
@@ -104,7 +104,7 @@
                     <div class="form-group input-group specific-date-pick">
                         <label class="col-2 top-space" for="EstimatedDate">Ngày quay lại <span class="red">(*)</span></label>
                         <div class="col-3 input-group-sm">
-                            @Html.EditorFor(model => model.EstimatedDateReturn, new { htmlAttributes = new { @id = "estimated_date_return", @class = "form-control input-previous-button", @readonly = "readonly", @style = "background-color: white" } })
+                            @Html.EditorFor(model => model.EstimatedDateReturn, new { htmlAttributes = new { @id = "estimated_date_return", @class = "form-control input-previous-button", autocomplete = "off", @style = "background-color: white" } })
                         </div>
                         <label class="top-space" for="EstimatedTimeReturn">Giờ quay lại <span class="red">(*)</span></label>
                         <div class="col-2 input-group-sm">

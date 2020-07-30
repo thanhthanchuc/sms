@@ -18,12 +18,12 @@
                 if (reponse.status) {
                     $('#txtFullNameBO').val(reponse.data.FullName);
                     $('#txtPositionBO').val(reponse.data.Position);
-                    $('#txtTeamBO').val(reponse.data.Team);
+                    $('#txtTeamBO').val(reponse.data.Team.Name);
                 } else {
                     alert("Mã nhân viên không tồn tại");
                     $('#txtFullNameBO').val("");
                     $('#txtPositionBO').val(reponse.data.Position);
-                    $('#txtTeamBO').val(reponse.data.Team);
+                    $('#txtTeamBO').val(reponse.data.Team.Name);
                     console.log(reponse.data.data);
                 }
             },

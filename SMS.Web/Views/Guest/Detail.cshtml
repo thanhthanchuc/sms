@@ -234,9 +234,9 @@
                         }
                         else
                         {
-                            <td title="Không đem trở ra"><i class="fas fa-times"></i></td>
+                            <td title="Không đem trở ra"><i class="fas fa-times" style="color:red"></i></td>
                         }
-                        <td>@item.ReturnDate | @item.ReturnTime</td>
+                        <td>@item.ReturnDate  @item.ReturnTime</td>
                         <td>
                             @if (!string.IsNullOrEmpty(item.SMT))
                             {
@@ -264,7 +264,7 @@
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times" style="color:red"></i>
                                 }
                             }
                         </td>
@@ -296,7 +296,7 @@
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times" style="color:red"></i>
                                 }
                             }
                         </td>
@@ -328,7 +328,7 @@
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times" style="color:red"></i>
                                 }
                             }
                         </td>
@@ -338,7 +338,7 @@
         </table>
     </div>
     <div style="text-align: center">
-        <label id="return-history" class="btn-cancel btn top-space" title="Trở lại" style="cursor: pointer">
+        <label id="return-history" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
         </label>
     </div>
