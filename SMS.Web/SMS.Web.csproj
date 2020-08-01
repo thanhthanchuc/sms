@@ -1956,6 +1956,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Image\42001005.png" />
     <Content Include="Localization\ar.xml" />
     <Content Include="Localization\be.xml" />
     <Content Include="Localization\bg.xml" />
@@ -2280,6 +2281,10 @@
     <Content Include="Views\Guest\GuestReport.cshtml" />
     <Content Include="Views\BringIn\SummaryBI.cshtml" />
     <Content Include="Views\GoOut\SummaryGO.cshtml" />
+    <Content Include="Views\Guard\HistoryLE.cshtml" />
+    <Content Include="Views\Guard\HistoryGO.cshtml" />
+    <Content Include="Views\Guard\HistoryBI.cshtml" />
+    <Content Include="Views\Guard\HistoryBO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\bring_in\" />

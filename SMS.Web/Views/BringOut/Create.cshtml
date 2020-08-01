@@ -47,7 +47,7 @@
         <div class="column form-horizontal form-right col-md-4">
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
-                <div class="img-profile">
+                <div class="img-profile" id="emp_img">
                     <img src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
@@ -118,7 +118,8 @@
                         </td>
                         <td class="input-group-sm">
                             <select class="form-control input-previous-button isReturn">
-                                <option value="true" selected>Có</option>
+                                <option>--Chọn--</option>
+                                <option value="true">Có</option>
                                 <option value="false">Không</option>
                             </select>
                         </td>
@@ -222,7 +223,7 @@
         //    dropdown: true,
         //    scrollbar: true
         //});
-
+        <img src="~/Image/42001005.png" />
         $('#txtEmpCodeBO').keyup(function () {
             var count = $('#txtEmpCodeBO').val().length;
             if (count == 8) {

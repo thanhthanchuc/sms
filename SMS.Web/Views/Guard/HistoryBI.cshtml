@@ -1,12 +1,12 @@
 ﻿@model SMS.Web.ViewModels.GuardViewModel
 @{
-    ViewBag.Title = "Xác nhận CNV mang hàng vào";
+    ViewBag.Title = "Lịch sử CNV mang hàng vào";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="form-horizontal">
     <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN CÔNG NHÂN VIÊN MANG HÀNG VÀO</h5>
+        <h5 class="m-0 font-weight-bold text-primary">LỊCH SỬ CÔNG NHÂN VIÊN MANG HÀNG VÀO</h5>
     </div>
     <!--Cột bên trái dành cho form đăng ký-->
     <div class="col-md-12 row-form">
@@ -116,7 +116,7 @@
                         <td>
                             @if (@item.IsReturn == true)
                             {
-                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                                <i class="fas fa-check-square" style="color: dodgerblue" title="Có mang trở ra"></i>
                             }
                             else if (@item.IsReturn == false)
                             {
@@ -178,76 +178,43 @@
                         <td>@item.FST_Date</td>
                         <td>@item.GuardIn</td>
                         <td>
-                            @if (@item.GuardStatusIn == null)
-                            {
-                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveIn(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveIn(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                            }
-                            else if (@item.GuardStatusIn == 1)
+                            @if (@item.GuardStatusIn == 1)
                             {
                                 <i class="fas fa-check-square" title="Đã xác nhận"></i>
                             }
-                            else
+                            else if (@item.GuardStatusIn == 0)
                             {
                                 <i class="fas fa-times" style="color: red" title="Không xác nhận"></i>
                             }
                         </td>
                         <td>
-                            @if (item.GuardIn == null)
-                            {
-                                <input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkIn" />
-                            }
-                            else
-                            {
-                                @item.GuardRemarkIn
-                            }
+                            @item.GuardRemarkIn
                         </td>
                         <td>@item.GuardDateIn</td>
-                        @if (item.IsReturn == true && item.GuardStatusIn == 1)
-                        {
-                            <td>@item.GuardOut</td>
-                            <td>
-                                @if (@item.GuardStatusOut == null)
-                                {
-                                    <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveOut(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                                    <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveOut(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                                }
-                                else if (@item.GuardStatusOut == 1)
-                                {
-                                    <i class="fas fa-check-square" title="Đã xác nhận"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times" style="color: red" title="Không xác nhận"></i>
-                                }
+                        <td>@item.GuardOut</td>
+                        <td>
+                            @if (@item.GuardStatusOut == 1)
+                            {
+                                <i class="fas fa-check-square" title="Đã xác nhận"></i>
+                            }
+                            else if (@item.GuardStatusOut == 0)
+                            {
+                                <i class="fas fa-times" style="color: red" title="Không xác nhận"></i>
+                            }
 
-                            </td>
-                            <td>
-                                @if (item.GuardOut == null)
-                                {
-                                    <input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" />
-                                }
-                                else
-                                {
-                                    @item.GuardRemarkOut
-                                }
-                            </td>
-                            <td>@item.GuardDateOut</td>
-                        }
-                        else
-                        {
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        }
+                        </td>
+                        <td>
+                            @item.GuardRemarkOut
+                        </td>
+                        <td>@item.GuardDateOut</td>
+
                     </tr>
                 }
             </tbody>
         </table>
     </div>
     <div style="text-align: center">
-        <label id="return-queue" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
+        <label id="return-history" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
         </label>
     </div>
@@ -257,8 +224,8 @@
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/utils.js"></script>
     <script>
-        $('#return-queue').on("click", () => {
-            window.location.href = "/Guard/Queue"
+        $('#return-history').on("click", () => {
+            window.location.href = "/Guard/History"
         })
 
         function handleApproveIn(id) {
@@ -302,7 +269,7 @@
         $("#guard").removeClass('collapse');
         $("#guard").removeClass('collapsed');
         $("#guard").attr("aria-expanded", "true");
-        $("#queue").addClass('active');
+        $("#guard_history").addClass('active');
         $("#collapseGuard").addClass('show');
         $("#collapseInOut").removeClass('collapse');
     </script>

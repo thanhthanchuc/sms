@@ -93,12 +93,12 @@
                     @foreach (var item in ViewBag.LeaveEarlies)
                     {
                         <tr>
-                            <td><span>RLE</span><span>@item.ID</span><span>@item.Team</span></td>
-                            <td><a href="/Guard/ConfirmLE/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                            <td><span>@item.ID</span><span>@item.Team</span></td>
+                            <td><a href="/Guard/HistoryLE/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.Position</td>
                             <td>@item.Team</td>
                             <td>@item.Reason</td>
-                            <td>@item.EstimatedDate | @item.EstimatedTime</td>
+                            <td>@item.EstimatedDate  @item.EstimatedTime</td>
                             <td>
                                 <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -145,13 +145,13 @@
                     @foreach (var item in ViewBag.GoOuts)
                     {
                         <tr>
-                            <td><span>RGO</span><span>@item.ID</span><span>@item.Team</span></td>
-                            <td><a href="/Guard/ConfirmGO/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                            <td><span>@item.ID</span><span>@item.Team</span></td>
+                            <td><a href="/Guard/HistoryGO/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.Position</td>
                             <td>@item.Team</td>
                             <td>@item.Reason</td>
-                            <td>@item.EstimatedDateOut | @item.EstimatedTimeOut</td>
-                            <td>@item.EstimatedDateReturn | @item.EstimatedTimeReturn</td>
+                            <td>@item.EstimatedDateOut  @item.EstimatedTimeOut</td>
+                            <td>@item.EstimatedDateReturn  @item.EstimatedTimeReturn</td>
                             <td>
                                 <a href="/GoOut/GOReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -194,30 +194,17 @@
                         <th>
                             @Html.DisplayName("Thời gian dự kiến")
                         </th>
-                        <th>
-                            @Html.DisplayName("Trạng thái")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.BringIns)
                     {
                         <tr>
-                            <td><span>RBI</span><span>@item.ID</span><span>@item.Team</span></td>
-                            <td><a href="/Guard/ConfirmBringIn/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                            <td><span>@item.ID</span><span>@item.Team</span></td>
+                            <td><a href="/Guard/HistoryBI/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.Position</td>
                             <td>@item.Team</td>
                             <td>@item.Reason</td>
-                            <td>@item.EstimatedDate | @item.EstimatedTime</td>
-                            <td>
-                                @if (@item.Status)
-                                {
-                                    <span>Đã thực hiện</span>
-                                }
-                                else
-                                {
-                                    <span>Chưa thực hiện</span>
-                                }
-                            </td>
+                            <td>@item.EstimatedDate  @item.EstimatedTime</td>
                             <td>
                                 <a href="/BringIn/BIReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -256,30 +243,17 @@
                         <th>
                             @Html.DisplayName("Thời gian dự kiến")
                         </th>
-                        <th>
-                            @Html.DisplayName("Trạng thái")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.BringOuts)
                     {
                         <tr>
-                            <td><span>RBO</span><span>@item.ID</span><span>@item.Team</span></td>
-                            <td><a href="/Guard/ConfirmBringOut/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                            <td><span>@item.ID</span><span>@item.Team</span></td>
+                            <td><a href="/Guard/HistoryBO/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.Position</td>
                             <td>@item.Team</td>
                             <td>@item.Reason</td>
-                            <td>@item.EstimatedDate | @item.EstimatedTime</td>
-                            <td>
-                                @if (@item.Status)
-                                {
-                                    <span>Đã thực hiện</span>
-                                }
-                                else
-                                {
-                                    <span>Chưa thực hiện</span>
-                                }
-                            </td>
+                            <td>@item.EstimatedDate  @item.EstimatedTime</td>
                             <td>
                                 <a href="/BringOut/BOReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -345,7 +319,7 @@
                     @foreach (var item in ViewBag.GuestNoItems)
                     {
                         <tr>
-                            <td>@item.EstimatedDateIn | @item.EstimatedTimeIn</td>
+                            <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
                             <td>
                                 @if (item.Type == 0)
                                 {
@@ -433,7 +407,7 @@
                     @foreach (var item in ViewBag.GuestHasItems)
                     {
                         <tr>
-                            <td>@item.EstimatedDateIn | @item.EstimatedTimeIn</td>
+                            <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
                             <td>
                                 @if (item.Type == 0)
                                 {
@@ -524,7 +498,7 @@
                     @foreach (var item in ViewBag.ForeignGuestNoItems)
                     {
                         <tr>
-                            <td>@item.EstimatedDateIn | @item.EstimatedTimeIn</td>
+                            <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
                             <td>
                                 @if (item.Type == 0)
                                 {
@@ -613,7 +587,7 @@
                     @foreach (var item in ViewBag.ForeignGuestHasItems)
                     {
                         <tr>
-                            <td>@item.EstimatedDateIn | @item.EstimatedTimeIn</td>
+                            <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
                             <td>
                                 @if (item.Type == 0)
                                 {

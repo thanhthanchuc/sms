@@ -21,13 +21,13 @@ namespace SMS.Web.Controllers
         {
             dbcontext = new SMSDbContext();
         }
-        public ActionResult History(string employee ="", string guest="",string company = "")
+        public ActionResult History(string employee = "", string guest = "", string company = "")
         {
             ViewBag.LeaveEarlies = dbcontext.Leave_Early.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
             ViewBag.GoOuts = dbcontext.Go_Out.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
             ViewBag.BringIns = dbcontext.Bring_In.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
             ViewBag.BringOuts = dbcontext.Bring_Out.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
-            var Guests = dbcontext.Guests.Where(t => ((string.IsNullOrEmpty(guest) || t.FullName.ToLower().Contains(guest.ToLower()))) && 
+            var Guests = dbcontext.Guests.Where(t => ((string.IsNullOrEmpty(guest) || t.FullName.ToLower().Contains(guest.ToLower()))) &&
                                                 (string.IsNullOrEmpty(company) || t.Company.ToLower().Contains(company.ToLower()))).ToList();
             var guest_no_items = new List<Guest>();
             var guest_has_items = new List<Guest>();
@@ -35,7 +35,7 @@ namespace SMS.Web.Controllers
             var foreign_guest_has_items = new List<Guest>();
             foreach (var g in Guests)
             {
-                if(g.Check_Guest == false)
+                if (g.Check_Guest == false)
                 {
                     if (dbcontext.Guest_Item.Where(t => t.CatID == g.ID && t.Item != null).Count() > 0)
                     {
@@ -101,7 +101,7 @@ namespace SMS.Web.Controllers
                         guest_no_items.Add(g);
                     }
                 }
-                
+
                 if (g.Check_Guest == true)
                 {
                     if (dbcontext.Guest_Item.Where(t => t.CatID == g.ID && t.Item != null).Count() > 0)
@@ -122,7 +122,7 @@ namespace SMS.Web.Controllers
         }
 
         /// <summary>
-        /// Xác nhận veefg s
+        /// Xác nhận về sớm
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -138,7 +138,8 @@ namespace SMS.Web.Controllers
                 return View(); // 404
             }
 
-            var guardViewModel = new GuardViewModel() {
+            var guardViewModel = new GuardViewModel()
+            {
                 UserLogin = user,
                 Leave_Early = model
             };
@@ -146,6 +147,36 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
+        /// <summary>
+        /// Lịch sử Về sớm
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
+        public ActionResult HistoryLE(int id)
+        {
+            var model = dbcontext.Leave_Early.FirstOrDefault(l => l.ID == id);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+
+            if (model == null)
+            {
+                return View(); // 404
+            }
+
+            var guardViewModel = new GuardViewModel()
+            {
+                UserLogin = user,
+                Leave_Early = model
+            };
+
+            return View(guardViewModel);
+        }
+
+        /// <summary>
+        /// Xác nhận Ra ngoài
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmGO(int id)
         {
@@ -161,13 +192,40 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
+        /// <summary>
+        /// Lịch sử Ra ngoài
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
+        public ActionResult HistoryGO(int id)
+        {
+            var model = dbcontext.Go_Out.Find(id);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+
+            var guardViewModel = new GuardViewModel()
+            {
+                UserLogin = user,
+                Go_Out = model
+            };
+
+            return View(guardViewModel);
+        }
+
+        /// <summary>
+        /// Xác nhận khâu ra ngoài
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="remark"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveGoOut(int id, string remark, int status)
         {
             var data = dbcontext.Go_Out.Find(id);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            data.GuardOut = user.EmpCode + "|" + user.FullName; 
+            data.GuardOut = user.EmpCode + "|" + user.FullName;
             data.GuardStatusOut = status;
             data.GuardRemarkOut = remark;
             data.GuardDateOut = DateTime.Now;
@@ -176,6 +234,13 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(data), "application/json");
         }
 
+        /// <summary>
+        /// Xác nhận khâu Quay lại
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="remark"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveGoReturn(int id, string remark, int status)
@@ -191,6 +256,11 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(data), "application/json");
         }
 
+        /// <summary>
+        /// Xác nhận Mang hàng vào
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmBringIn(int id)
         {
@@ -208,6 +278,36 @@ namespace SMS.Web.Controllers
             return View(guardViewModel);
         }
 
+        /// <summary>
+        /// Xác nhận Mang hàng vào
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
+        public ActionResult HistoryBI(int id)
+        {
+            var model = dbcontext.Bring_In.Find(id);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var items = dbcontext.Bring_In_Items.Where(i => i.CatID == model.ID).ToList();
+
+            var guardViewModel = new GuardViewModel()
+            {
+                UserLogin = user,
+                Bring_In = model,
+                Bring_In_Items = items
+            };
+
+            return View(guardViewModel);
+        }
+
+        /// <summary>
+        /// Bảo vệ xác nhận mang hàng vào
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="remark"></param>
+        /// <param name="status"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         [HttpPost]
         public ActionResult ApproveBringInItem(int id, string remark, int status, bool ret = false)
@@ -223,7 +323,8 @@ namespace SMS.Web.Controllers
 
                 dbcontext.SaveChanges();
                 return Content(JsonConvert.SerializeObject(item), "application/json");
-            } else
+            }
+            else
             {
                 var item = dbcontext.Bring_In_Items.Find(id);
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
@@ -239,6 +340,23 @@ namespace SMS.Web.Controllers
 
         [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
         public ActionResult ConfirmBringOut(int id)
+        {
+            var model = dbcontext.Bring_Out.Find(id);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var items = dbcontext.Bring_Out_Items.Where(i => i.CatID == model.ID).ToList();
+
+            var guardViewModel = new GuardViewModel()
+            {
+                UserLogin = user,
+                Bring_Out = model,
+                Bring_Out_Items = items
+            };
+
+            return View(guardViewModel);
+        }
+
+        [AuthorizeUser(IncludeRoleLevels = new int[] { 5, 4, 1 })]
+        public ActionResult HistoryBO(int id)
         {
             var model = dbcontext.Bring_Out.Find(id);
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
@@ -296,7 +414,7 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult ApproveGuest(int id, string remark, int status, bool gout = false)
         {
-            if(gout)
+            if (gout)
             {
                 var guest = dbcontext.Guests.Find(id);
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
@@ -307,7 +425,7 @@ namespace SMS.Web.Controllers
 
                 dbcontext.SaveChanges();
                 return Content(JsonConvert.SerializeObject(guest), "application/json");
-            } 
+            }
             else
             {
                 var guest = dbcontext.Guests.Find(id);

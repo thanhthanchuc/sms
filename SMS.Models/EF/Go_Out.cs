@@ -85,13 +85,6 @@
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (DateTime.Parse(Util.FormatDate(EstimatedDateOut) + ' ' + EstimatedTimeOut) < DateTime.Now)
-            {
-                yield return
-                 new ValidationResult("Ngày giờ ra phải sau thời điểm hiện tại",
-                                      new[] { "EstimatedDateOut" });
-            }
-
             if (DateTime.Parse(Util.FormatDate(EstimatedDateOut) + ' ' + EstimatedTimeOut) > DateTime.Parse(Util.FormatDate(EstimatedDateReturn) + ' ' + EstimatedTimeReturn))
             {
                 yield return

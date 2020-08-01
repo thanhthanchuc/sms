@@ -1,0 +1,128 @@
+﻿@model SMS.Web.ViewModels.GuardViewModel
+
+@{
+    ViewBag.Title = "Lịch sử về sớm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-horizontal">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">LỊCH SỬ CÔNG NHÂN VIÊN VỀ SỚM</h5>
+    </div>
+    <!--Cột bên trái dành cho form đăng ký-->
+    <div class="col-md-12 row-form">
+        <div class="column form-horizontal form-left col-md-7">
+            <div class="form-group row-1 input-group">
+                <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                <div class="col-md-7 input-group">
+                    <div class="top-space input-group-sm">
+                        <input type="hidden" id="leaveId" value="@Model.Leave_Early.ID" />
+                        @Html.TextBoxFor(model => model.Leave_Early.EmpCode, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                @Html.LabelFor(model => model.Leave_Early.Shift, "Ca", htmlAttributes: new { @class = "control-label col-md-2 top-space" })
+                <div class="col-md-3 input-group-sm">
+                    @Html.DropDownListFor(model => model.Leave_Early.Shift, new List<SelectListItem>()
+                    {
+                       new SelectListItem(){Selected = true, Text = "Hành chính", Value="0"},
+                       new SelectListItem(){Text = "1", Value="1"},
+                       new SelectListItem(){Text = "2", Value="2"},
+                       new SelectListItem(){Text = "3", Value="3"}
+                    }, new { @class = "form-control input-previous-button", disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <div class="col-md-10 input-group-sm">
+                    @Html.TextAreaFor(model => model.Leave_Early.Reason, new { @class = "form-control col-md-12", @readonly = "readonly", @style = "resize: none" })
+                </div>
+            </div>
+        </div>
+
+        <div class="column col-md-1 col-mid">
+        </div>
+
+
+        <!--Cột bên phải dành cho thông tin nhân viên-->
+        <div class="column form-horizontal form-right col-md-4">
+            <!--Ảnh profile-->
+            <div class="form-group col-12 profile-img">
+                <div class="img-profile">
+                    <img src="~/Assets/img/the-world.jpg" />
+                </div>
+            </div>
+            <!--Thông tin profile-->
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Họ và tên</label>
+                @Html.TextBoxFor(model => model.Leave_Early.FullName, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
+            </div>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Vị trí</label>
+                @Html.TextBoxFor(model => model.Leave_Early.Position, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
+            </div>
+            <div class="form-group input-group profile input-group-sm">
+                <label class="control-label col-md-3">Phòng ban</label>
+                @Html.TextBoxFor(model => model.Leave_Early.Team, new { @class = "form-control input-previous-button col-9 txtFullNameBI", @readonly = "readonly" })
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="bottom">
+    <div style="width:100%; overflow-x:auto">
+        <!--Bảng dữ liệu Về sớm-->
+        <table class="table table-hover table-bordered" id="LE-table">
+            <!--Tiêu đề cột-->
+            <thead>
+                <tr class="table-heading">
+                    <th>Thời gian ra ngoài</th>
+                    <th colspan="4">Bảo vệ xác nhận ra ngoài</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.EstimatedDate)  @Html.DisplayFor(model => model.Leave_Early.EstimatedTime)</td>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.Guard)</td>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.GuardDate)</td>
+                    <td>
+                        @if (Model.Leave_Early.GuardStatus == 1)
+                        {
+                            <i class="fas fa-check-square" title="Đã xác nhận"></i>
+                        }
+                        else if (Model.Leave_Early.GuardStatus == 0)
+                        {
+                            <i class="fas fa-times" style="color:red" title="Không xác nhận"></i>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.GuardRemark)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center">
+        <label id="return-history" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
+            <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
+        </label>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script>
+        $('#return-history').on("click", () => {
+            window.location.href = "/Guard/History"
+        })
+
+        $("#guard").removeClass('collapse');
+        $("#guard").removeClass('collapsed');
+        $("#guard").attr("aria-expanded", "true");
+        $("#guard_history").addClass('active');
+        $("#collapseGuard").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
+    </script>
+}
+

@@ -217,23 +217,6 @@
                             </div>
                         </div>
                     </li>
-                    <!-- Bảo vệ -->
-                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
-                        <a id="guard" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuard" aria-expanded="true" aria-controls="collapseGuard">
-                            <i class="fas fa-fw fa-user-shield fa-menu lv-3-in-out"></i>
-                            <span>Bảo vệ</span>
-                        </a>
-                        <div id="collapseGuard" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
-                            <div class="bg-sub-menu py-2 collapse-inner rounded">
-                                <a class="collapse-item grey-a-tag" href="/Guard/Queue">Chờ xử lý</a>
-                                <a class="collapse-item grey-a-tag" href="/Guard/History">Lịch sử</a>
-                                @if ((User as CustomPrincipal).PriorityRole >= 1)
-                                {
-                                    <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
-                                }
-                            </div>
-                        </div>
-                    </li>
                     <!--Khách & Nhà thầu-->
                     <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
                         <a id="guest" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuest" aria-expanded="true" aria-controls="collapseGuest">
@@ -253,6 +236,23 @@
                                     <a id="guest-punish" class="collapse-item grey-a-tag" href="#">Hạn chế truy cập</a>
                                 }
                                 <a id="guest-history" class="collapse-item grey-a-tag" href="@Url.Action("History","Guest")">Lịch sử</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Bảo vệ -->
+                    <li class="nav-item sub-menu item-in-out" style="font-weight: 500">
+                        <a id="guard" class="nav-link collapsed grey-a-tag" href="#" data-toggle="collapse" data-target="#collapseGuard" aria-expanded="true" aria-controls="collapseGuard">
+                            <i class="fas fa-fw fa-user-shield fa-menu lv-3-in-out"></i>
+                            <span>Bảo vệ</span>
+                        </a>
+                        <div id="collapseGuard" class="collapse" aria-labelledby="headingTwo" data-parent="#collapseInOut">
+                            <div class="bg-sub-menu py-2 collapse-inner rounded">
+                                <a id="queue" class="collapse-item grey-a-tag" href="/Guard/Queue">Chờ xử lý</a>
+                                <a id="guard_history" class="collapse-item grey-a-tag" href="/Guard/History">Lịch sử</a>
+                                @if ((User as CustomPrincipal).PriorityRole >= 1)
+                                {
+                                    <a class="collapse-item grey-a-tag" href="/Guest/Create">Đăng ký khách vào</a>
+                                }
                             </div>
                         </div>
                     </li>
