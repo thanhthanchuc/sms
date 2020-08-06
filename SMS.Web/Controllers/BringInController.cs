@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using SMS.Web.Models;
+using System.Data.Entity;
 
 namespace SMS.Web.Controllers
 {
@@ -87,7 +88,30 @@ namespace SMS.Web.Controllers
                 res = res.Where(t => t.EmpCode.Contains(empcode)).ToList();
             }
 
-            return Json(new { data = res, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = recordNumber });
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
+            bool unfilter = false;
+
+            if ((HttpContext.User as CustomPrincipal).PriorityRole >= 4)
+            {
+                unfilter = true;
+            }
+
+            if(assetType != 0 && !unfilter)
+            {
+                if(assetType == 1 && tName != "SMT")
+                {
+                    res.Clear();
+                }
+
+                if(assetType == 2 && tName != "FST")
+                {
+                    res.Clear();
+                }
+            }
+
+            return Json(new { data = res, recordsTotal = recordNumber, recordsFiltered = recordNumber });
         }
 
         public ActionResult Detail(int id)

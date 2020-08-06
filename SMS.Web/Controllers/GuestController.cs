@@ -4,6 +4,7 @@ using SMS.Web.Common;
 using SMS.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -280,7 +281,24 @@ namespace SMS.Web.Controllers
         public ActionResult ITTApproveDetail(int id)
         {
             var guest = dbContext.Guests.Find(id);
-            var guest_items = dbContext.Guest_Item.Where(t => t.CatID == id).OrderByDescending(t => t.CreatedDate).ToList();
+            var guest_items = dbContext.Guest_Item.Where(t => t.CatID == id && t.AssetType == 1).OrderByDescending(t => t.CreatedDate).ToList();
+
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
+            bool unfilter = false;
+
+            if ((HttpContext.User as CustomPrincipal).PriorityRole >= 4)
+            {
+                unfilter = true;
+            }
+
+            if(!unfilter && tName == "FST")
+            {
+                guest_items.Clear();
+            }
+
+
             guest.Guest_Item = guest_items;
             return View(guest);
         }
@@ -328,7 +346,23 @@ namespace SMS.Web.Controllers
         public ActionResult FSTApproveDetail(int id)
         {
             var guest = dbContext.Guests.Find(id);
-            var guestItems = dbContext.Guest_Item.Where(t => t.CatID == id).OrderByDescending(t => t.CreatedDate).ToList();
+            var guestItems = dbContext.Guest_Item.Where(t => t.CatID == id && t.AssetType == 2).OrderByDescending(t => t.CreatedDate).ToList();
+
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
+            bool unfilter = false;
+
+            if ((HttpContext.User as CustomPrincipal).PriorityRole >= 4)
+            {
+                unfilter = true;
+            }
+
+            if (!unfilter && tName == "SMT")
+            {
+                guestItems.Clear();
+            } 
+
             guest.Guest_Item = guestItems;
             return View(guest);
         }
