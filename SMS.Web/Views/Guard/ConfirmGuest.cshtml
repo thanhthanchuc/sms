@@ -15,7 +15,7 @@
     <div class="col-md-12 row-form">
         <div class="column form-horizontal form-left col-md-7">
             <div class="form-group row-1 input-group">
-                <label class="control-label col-md-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                <label class="control-label col-md-2 top-space lb">Mã CNV</label>
                 <div class="col-md-7 input-group">
                     <div class="top-space input-group-sm">
                         <input type="hidden" id="guestID" value="@Model.ID" />
@@ -25,45 +25,65 @@
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <label class="control-label col-md-2">Lý do</label>
                 <div class="col-md-10 input-group-sm">
                     @Html.TextAreaFor(model => model.Purpose, new { @class = "form-control col-md-12", @readonly = "readonly", @style = "resize: none" })
                 </div>
             </div>
 
-            <div class="form-group row-1 input-group">
-                <label class="control-label col-md-2 top-space lb">Ngày vào <span class="red">(*)</span></label>
-                <div class="col-md-3 input-group">
-                    <div class="top-space input-group-sm">
-                        <input type="hidden" id="guestID" value="@Model.ID" />
-                        @Html.TextBoxFor(model => model.EstimatedDateIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                    </div>
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Giờ vào</label>
+                <div class="col-3 input-group-sm">
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" readonly />
                 </div>
-                <label class="control-label top-space lb">Giờ vào <span class="red">(*)</span></label>
-                <div class="col-md-3 input-group">
-                    <div class="top-space input-group-sm">
-                        <input type="hidden" id="guestID" value="@Model.ID" />
-                        @Html.TextBoxFor(model => model.EstimatedTimeIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                    </div>
+                <div class="col-2 input-group-sm">
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" value="@Model.EstimatedTimeIn" readonly />
                 </div>
             </div>
 
-            <div class="form-group row-1 input-group">
-                <label class="control-label col-md-2 top-space lb">Ngày ra <span class="red">(*)</span></label>
-                <div class="col-md-3 input-group">
-                    <div class="top-space input-group-sm">
-                        <input type="hidden" id="guestID" value="@Model.ID" />
-                        @Html.TextBoxFor(model => model.EstimatedDateOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                    </div>
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Giờ ra</label>
+                <div class="col-3 input-group-sm">
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" readonly />
                 </div>
-                <label class="control-label top-space lb">Giờ ra <span class="red">(*)</span></label>
-                <div class="col-md-3 input-group">
-                    <div class="top-space input-group-sm">
-                        <input type="hidden" id="guestID" value="@Model.ID" />
-                        @Html.TextBoxFor(model => model.EstimatedTimeOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                    </div>
+                <div class="col-2 input-group-sm">
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.EstimatedTimeOut" readonly />
                 </div>
             </div>
+
+            @*<div class="form-group row-1 input-group">
+            <label class="control-label col-md-2 top-space lb">Ngày vào <span class="red">(*)</span></label>
+            <div class="col-md-3 input-group">
+                <div class="top-space input-group-sm">
+                    <input type="hidden" id="guestID" value="@Model.ID" />
+                    @Html.TextBoxFor(model => model.EstimatedDateIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                </div>
+            </div>
+            <label class="control-label top-space lb">Giờ vào <span class="red">(*)</span></label>
+            <div class="col-md-3 input-group">
+                <div class="top-space input-group-sm">
+                    <input type="hidden" id="guestID" value="@Model.ID" />
+                    @Html.TextBoxFor(model => model.EstimatedTimeIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row-1 input-group">
+            <label class="control-label col-md-2 top-space lb">Ngày ra <span class="red">(*)</span></label>
+            <div class="col-md-3 input-group">
+                <div class="top-space input-group-sm">
+                    <input type="hidden" id="guestID" value="@Model.ID" />
+                    @Html.TextBoxFor(model => model.EstimatedDateOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                </div>
+            </div>
+            <label class="control-label top-space lb">Giờ ra <span class="red">(*)</span></label>
+            <div class="col-md-3 input-group">
+                <div class="top-space input-group-sm">
+                    <input type="hidden" id="guestID" value="@Model.ID" />
+                    @Html.TextBoxFor(model => model.EstimatedTimeOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>*@
         </div>
 
         <div class="column col-md-1 col-mid"></div>
@@ -73,7 +93,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile">
-                    <img src="~/Assets/img/the-world.jpg" />
+                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -111,7 +131,9 @@
                     <th>Số người</th>
                     <th>Lí do</th>
                     <th>Số xe</th>
+                    <th>Giờ vào</th>
                     <th colspan="4">Bảo vệ xác nhận vào</th>
+                    <th>Giờ ra</th>
                     <th colspan="4">Bảo vệ xác nhận ra</th>
                 </tr>
             </thead>
@@ -145,6 +167,7 @@
                     <td>@Model.NumbersOfPerson</td>
                     <td>@Model.Purpose</td>
                     <td>@Model.TransportNo</td>
+                    <td>@Model.EstimatedDateIn @Model.EstimatedTimeIn</td>
                     @if (Model.GuardStatusIn != null)
                     {
                         <td>@Model.GuardIn</td>
@@ -162,13 +185,14 @@
                     else
                     {
                         <td></td>
+                        <td></td>
                         <td>
                             <a class="btn btn-primary btn-standard approveIn" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
                             <a class="btn btn-danger btn-standard unapproveIn" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
                         </td>
                         <td><input class="remarkIn col-12 remark" type="text" placeholder="Ghi chú..." /></td>
-                        <td></td>
                     }
+                    <td>@Model.EstimatedDateOut @Model.EstimatedTimeOut</td>
                     @if (Model.GuardStatusOut != null)
                     {
                         <td>@Model.GuardOut</td>
@@ -186,14 +210,14 @@
                     else
                     {
                         <td></td>
+                        <td></td>
                         <td>
                             <a class="btn btn-primary btn-standard approveOut" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
                             <a class="btn btn-danger btn-standard unapproveOut" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
                         </td>
                         <td><input class="remarkOut col-12 remark" type="text" placeholder="Ghi chú..." /></td>
-                        <td></td>
                     }
-            </tbody>
+</tbody>
         </table>
     </div>
     <div style="text-align: center">

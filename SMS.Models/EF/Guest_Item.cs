@@ -39,6 +39,7 @@ namespace SMS.Models.EF
         [StringLength(50)]
         public string SMT_Remark { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? SMT_Date { get; set; }
 
         [StringLength(50)]
@@ -49,6 +50,7 @@ namespace SMS.Models.EF
         [StringLength(50)]
         public string ITT_Remark { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? ITT_Date { get; set; }
 
         [StringLength(50)]
@@ -59,6 +61,7 @@ namespace SMS.Models.EF
         [StringLength(50)]
         public string FST_Remark { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? FST_Date { get; set; }
 
         [StringLength(50)]
@@ -69,6 +72,7 @@ namespace SMS.Models.EF
         [StringLength(250)]
         public string GuardRemarkIn { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? GuardDateIn { get; set; }
 
         [StringLength(50)]
@@ -79,13 +83,16 @@ namespace SMS.Models.EF
         [StringLength(250)]
         public string GuardRemarkOut { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? GuardDateOut { get; set; }
 
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? CreatedDate { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? ModifiedDate { get; set; }
 
         [StringLength(50)]

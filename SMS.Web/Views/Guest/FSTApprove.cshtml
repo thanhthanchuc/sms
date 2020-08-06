@@ -22,12 +22,12 @@
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
             &nbsp;
-            <input id="date_from" class="form-control bg-light from-date" readonly>
+            <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
             &nbsp;
-            <input id="date_to" class="form-control bg-light to-date" readonly>
+            <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
@@ -41,37 +41,6 @@
         </div>
         <div class="col-2">
             <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
-        </div>
-    </div>
-
-    <div style="margin-top: 8px">
-        <div class="button-container" style="float: left">
-            <a class="btn btn-sm btn-success"><i class="fas fa-sync"></i> Tải lại</a>
-        </div>
-        <div style="float: right">
-            <form class="radio-container">
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox" checked>Tất cả
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Chưa phê duyệt
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Đã phê duyệt
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Phê duyệt thay
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Hủy bỏ
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Bảo vệ đã xác nhận
-                </label>
-                <label class="checkbox-inline radio-button">
-                    <input class="radio" type="checkbox">Bảo vệ chưa xác nhận
-                </label>
-            </form>
         </div>
     </div>
 </div>
@@ -128,7 +97,7 @@
                     "contentType": 'application/json; charset=utf-8'
                 },
                 "columns": [
-                    { data: function (res) { return `<span>G</span><span>${res.ID}</span><span>${res.Team}</span>`; } },
+                    { data: function (res) { return `<span>${res.ID}</span><span>${res.Team}</span>`; } },
                     {
                         data: function (res) {
                             return `${res.EmployeeID} | ${res.EmployeeName}`;

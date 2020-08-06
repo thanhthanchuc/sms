@@ -1,4 +1,4 @@
-﻿@model SMS.Models.EF.Guest
+﻿@model SMS.Web.ViewModels.GuardViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,8 +15,8 @@
                 <label class="control-label col-2 top-space lb">Mã CNV</label>
                 <div class="col-md-3 input-group">
                     <div class="top-space input-group-sm">
-                        <input type="hidden" value="@Model.ID" id="txtID" />
-                        <input class="form-control input-previous-button col-md-12" id="txtEmployeeID" value="@Model.EmployeeID" readonly />
+                        <input type="hidden" value="@Model.Guest.ID" id="txtID" />
+                        <input class="form-control input-previous-button col-md-12" id="txtEmployeeID" value="@Model.Guest.EmployeeID" readonly />
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <label class="control-label col-md-2">Lý do</label>
                 <div class="col-md-10">
                     <div class="input-group-sm">
-                        <textarea readonly class="form-control col-md-12" style="resize: none" id="txtPurpose">@Model.Purpose</textarea>
+                        <textarea readonly class="form-control col-md-12" style="resize: none" id="txtPurpose">@Model.Guest.Purpose</textarea>
                     </div>
                 </div>
             </div>
@@ -33,20 +33,20 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ vào</label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" readonly />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.Guest.EstimatedDateIn" readonly />
                 </div>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" value="@Model.EstimatedTimeIn" readonly />
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" value="@Model.Guest.EstimatedTimeIn" readonly />
                 </div>
             </div>
 
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ ra</label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" readonly />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.Guest.EstimatedDateOut" readonly />
                 </div>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.EstimatedTimeOut" readonly />
+                    <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.Guest.EstimatedTimeOut" readonly />
                 </div>
             </div>
         </div>
@@ -65,15 +65,15 @@
             <!--Thông tin profile-->
             <div class="form-group input-group profile input-group-sm">
                 <label class="control-label col-md-3">Họ và tên</label>
-                <input readonly class="form-control input-previous-button col-9" id="txtFullNameBI" value="@Model.EmployeeName" />
+                <input readonly class="form-control input-previous-button col-9" id="txtFullNameBI" value="@Model.Guest.EmployeeName" />
             </div>
             <div class="form-group input-group profile input-group-sm">
                 <label class="control-label col-md-3">Vị trí</label>
-                <input readonly class="form-control input-previous-button col-9" id="txtPositionBI" value="@Model.Position" />
+                <input readonly class="form-control input-previous-button col-9" id="txtPositionBI" value="@Model.Guest.Position" />
             </div>
             <div class="form-group input-group profile input-group-sm">
                 <label class="control-label col-md-3">Phòng ban</label>
-                <input readonly class="form-control input-previous-button col-9" id="txtTeamBI" value="@Model.Team" />
+                <input readonly class="form-control input-previous-button col-9" id="txtTeamBI" value="@Model.Guest.Team" />
             </div>
         </div>
     </div>
@@ -108,11 +108,11 @@
             <tbody>
                 <tr>
                     <td>
-                        @if (Model.Type == 0)
+                        @if (Model.Guest.Type == 0)
                         {
                             @: Khách
                         }
-                        else if (Model.Type == 1)
+                        else if (Model.Guest.Type == 1)
                         {
                             @:Nhà thầu
                         }
@@ -121,70 +121,71 @@
                             @:Lái xe
                         }
                     </td>
-                    <td>@Model.KVPNo</td>
-                    <td>@Model.FullName</td>
+                    <td>@Model.Guest.KVPNo</td>
+                    <td>@Model.Guest.FullName</td>
                     <td>
-                        <a class="btn btnDownloadFile btn-primary btn-standard" href="/Guard/GuestFileDownload?filename=@Model.FileRedirectURL" target="_blank" title="Tải danh sách khách">
+                        <a class="btn btnDownloadFile btn-primary btn-standard" href="/Guard/GuestFileDownload?filename=@Model.Guest.FileRedirectURL" target="_blank" title="Tải danh sách khách">
                             <i class="fas fa-download" style="margin-left:-3.5px;"></i>
                         </a>
                     </td>
-                    <td>@Model.IDCard</td>
-                    <td>@Model.Visa</td>
-                    <td>@Model.Hotel</td>
-                    <td>@Model.Company</td>
-                    <td>@Model.NumbersOfPerson</td>
-                    <td>@Model.Purpose</td>
-                    <td>@Model.TransportNo</td>
-                    <td>@Model.EstimatedDateIn @Model.EstimatedTimeIn</td>
-                    @if (Model.GuardStatusIn != null)
+                    <td>@Model.Guest.IDCard</td>
+                    <td>@Model.Guest.Visa</td>
+                    <td>@Model.Guest.Hotel</td>
+                    <td>@Model.Guest.Company</td>
+                    <td>@Model.Guest.NumbersOfPerson</td>
+                    <td>@Model.Guest.Purpose</td>
+                    <td>@Model.Guest.TransportNo</td>
+                    <td>@Model.Guest.EstimatedDateIn @Model.Guest.EstimatedTimeIn</td>
+                    @if (Model.Guest.GuardStatusIn != null)
                     {
-                        <td>@Model.GuardIn</td>
-                        if (Model.GuardStatusIn.Value == 0)
+                        <td>@Model.Guest.GuardIn</td>
+                        if (Model.Guest.GuardStatusIn.Value == 0)
                         {
                             <td><i class="fas fa-times" style="color:red"></i></td>
                         }
-                        else
+                        else if (Model.Guest.GuardStatusIn.Value == 1)
                         {
                             <td><i class="fas fa-check-square"></i></td>
                         }
-                        <td>@Model.GuardRemarkIn</td>
-                        <td>@Model.GuardDateIn</td>
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>@Model.Guest.GuardRemarkIn</td>
+                        <td>@Model.Guest.GuardDateIn</td>
                     }
                     else
                     {
                         <td></td>
                         <td></td>
-                        <td>
-                            <a class="btn btn-primary btn-standard approveIn" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                            <a class="btn btn-danger btn-standard unapproveIn" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                        </td>
-                        <td><input class="remarkIn col-12 remark" type="text" placeholder="Ghi chú..." /></td>
+                        <td></td>
+                        <td></td>
                     }
-                    <td>@Model.EstimatedDateOut @Model.EstimatedTimeOut</td>
-                    @if (Model.GuardStatusOut != null)
+                    <td>@Model.Guest.EstimatedDateOut @Model.Guest.EstimatedTimeOut</td>
+                    @if (Model.Guest.GuardStatusOut != null)
                     {
-                        <td>@Model.GuardOut</td>
-                        if (Model.GuardStatusOut.Value == 0)
+                        <td>@Model.Guest.GuardOut</td>
+                        if (Model.Guest.GuardStatusOut.Value == 0)
                         {
                             <td><i class="fas fa-times" style="color:red"></i></td>
                         }
-                        else
+                        else if (Model.Guest.GuardStatusOut.Value == 1)
                         {
                             <td><i class="fas fa-check-square"></i></td>
                         }
-                        <td>@Model.GuardRemarkOut</td>
-                        <td>@Model.GuardDateOut</td>
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>@Model.Guest.GuardRemarkOut</td>
+                        <td>@Model.Guest.GuardDateOut</td>
                     }
                     else
                     {
                         <td></td>
                         <td></td>
-                        <td>
-                            <a class="btn btn-primary btn-standard approveOut" title="Phê duyệt"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                            <a class="btn btn-danger btn-standard unapproveOut" title="Không phê duyệt"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                        </td>
-                        <td><input class="remarkOut col-12 remark" type="text" placeholder="Ghi chú..." /></td>
-
+                        <td></td>
+                        <td></td>
                     }
             </tbody>
         </table>
@@ -215,105 +216,119 @@
             <tbody>
                 @foreach (var item in Model.Guest_Item)
                 {
-                    <tr>
-                        <td>@item.Item</td>
-                        <td>@item.Serial</td>
-                        <td>@item.Quantity</td>
-                        <td>@item.Unit</td>
-                        <td>
-                            @if (@item.AssetType == 0)
-                            {
-                                <span>Hàng thường</span>
-                            }
-                            else if (item.AssetType == 1)
-                            {
-                                <span>Hàng IT</span>
-                            }
-                            else
-                            {
-                                <span>Hàng độc hại</span>
-                            }
-                        </td>
-                        <td>
-                            @if (item.IsReturn == true)
-                            {
-                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                            }
-                            else if (item.IsReturn == false)
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td>@item.ReturnDate @item.ReturnTime</td>
-                        <td>@item.ITT</td>
-                        <td>
-                            @if (item.ITT_Status == 1)
-                            {
-                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                            }
-                            else if (item.ITT_Status == 0)
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td>@item.ITT_Remark</td>
-                        <td>@item.ITT_Date</td>
-                        <td>@item.FST</td>
-                        <td>
-                            @if (item.FST_Status == 1)
-                            {
-                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                            }
-                            else if (item.FST_Status == 2)
-                            {
-                                <i class="fas fa-times" style="color: red"></i>
-                            }
-                        </td>
-                        <td>@item.FST_Remark</td>
-                        <td>@item.FST_Date</td>
+                <tr>
+                    <td>@item.Item</td>
+                    <td>@item.Serial</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Unit</td>
+                    <td>
+                        @if (@item.AssetType == 0)
+                        {
+                            <span>Hàng thường</span>
+                        }
+                        else if (item.AssetType == 1)
+                        {
+                            <span>Hàng IT</span>
+                        }
+                        else
+                        {
+                            <span>Hàng độc hại</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsReturn == true)
+                        {
+                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                        }
+                        else if (item.IsReturn == false)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>@item.ReturnDate @item.ReturnTime</td>
+                    <td>@item.ITT</td>
+                    <td>
+                        @if (item.ITT_Status == 1)
+                        {
+                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                        }
+                        else if (item.ITT_Status == 0)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>@item.ITT_Remark</td>
+                    <td>@item.ITT_Date</td>
+                    <td>@item.FST</td>
+                    <td>
+                        @if (item.FST_Status == 1)
+                        {
+                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                        }
+                        else if (item.FST_Status == 2)
+                        {
+                            <i class="fas fa-times" style="color: red"></i>
+                        }
+                    </td>
+                    <td>@item.FST_Remark</td>
+                    <td>@item.FST_Date</td>
+                    @if (item.GuardStatusIn != null)
+                    {
                         <td>@item.GuardIn</td>
-                        <td>
-                            @if (@item.GuardStatusIn == null)
-                            {
-                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveIn(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveIn(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                            }
-                            else if (@item.GuardStatusIn == 1)
-                            {
-                                <i class="fas fa-check-square"></i>
-                            }
-                            else
-                            {
-                                <i class="fas fa-times" style="color:red"></i>
-                            }
-                        </td>
-                        <td><input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkIn" readonly="@(item.GuardStatusIn != null)" /></td>
+                        if (item.GuardStatusIn.Value == 0)
+                        {
+                            <td><i class="fas fa-times" style="color:red"></i></td>
+                        }
+                        else if (item.GuardStatusIn.Value == 1)
+                        {
+                            <td><i class="fas fa-check-square"></i></td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>@item.GuardRemarkIn</td>
                         <td>@item.GuardDateIn</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    }
+                    @if (item.GuardStatusOut != null)
+                    {
                         <td>@item.GuardOut</td>
-                        <td>
-                            @if (@item.GuardStatusOut == null)
-                            {
-                                <a data-id="" class="btn btn-primary btn-standard btn-admin-approve-LE" href="#" title="Phê duyệt" onclick="handleApproveOut(@item.ID)"><i class="fas fa-check" style="margin-left: -4px"></i></a>
-                                <a data-id="" class="btn btn-danger btn-standard btn-admin-reject-LE" href="#" title="Không phê duyệt" onclick="handleUnapproveOut(@item.ID)"><i class="fas fa-times" style="margin-left: -2.5px"></i></a>
-                            }
-                            else if (@item.GuardStatusOut == 1)
-                            {
-                                <i class="fas fa-check-square"></i>
-                            }
-                            else
-                            {
-                                <i class="fas fa-times" style="color:red"></i>
-                            }
-                        </td>
-                        <td><input class="remark-@item.ID-out remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkOut" disabled="@(item.GuardStatusOut != null)" /></td>
+                        if (item.GuardStatusOut.Value == 0)
+                        {
+                            <td><i class="fas fa-times" style="color:red"></i></td>
+                        }
+                        else if (item.GuardStatusOut.Value == 1)
+                        {
+                            <td><i class="fas fa-check-square"></i></td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>@item.GuardRemarkOut</td>
                         <td>@item.GuardDateOut</td>
-                    </tr>
+                    }
+                    else
+                    {
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    }
+                </tr>
                 }
             </tbody>
         </table>
     </div>
     <div style="text-align: center">
-        <label id="return-queue" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
+        <label id="return-history" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
         </label>
     </div>
@@ -323,8 +338,8 @@
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/utils.js"></script>
     <script>
-        $('#return-queue').on("click", () => {
-            window.location.href = "/Guard/Queue"
+        $('#return-history').on("click", () => {
+            window.location.href = "/Guard/History"
         })
 
         function handleApproveIn(itemId) {
@@ -370,7 +385,7 @@
         $("#guard").removeClass('collapse');
         $("#guard").removeClass('collapsed');
         $("#guard").attr("aria-expanded", "true");
-        $("#queue").addClass('active');
+        $("#guard_history").addClass('active');
         $("#collapseGuard").addClass('show');
         $("#collapseInOut").removeClass('collapse');
     </script>
