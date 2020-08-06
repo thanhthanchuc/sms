@@ -22,12 +22,12 @@
                 <div class="col-2 input-group input-group-sm">
                     <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
                     &nbsp;
-                    <input id="date_from" class="form-control bg-light from-date" readonly>
+                    <input id="date_from" class="form-control bg-light from-date">
                 </div>
                 <div class="col-2 input-group input-group-sm">
                     <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
                     &nbsp;
-                    <input id="date_to" class="form-control bg-light to-date" readonly>
+                    <input id="date_to" class="form-control bg-light to-date">
                 </div>
                 <div class="col-2 input-group input-group-sm">
 
@@ -48,8 +48,6 @@
                 </div>
                 <div class="col-2">
                     <a href="/Guest/Create" class="btn btn-sm btn-primary" id="btn-guest-register"><i class="fas fa-users"></i> Đăng ký khách</a>
-                    @*&nbsp;
-                    <a href="/Guard/Queue" class="btn btn-sm btn-info" id="btn-process" title="Chuyển sang màn hình Chờ xử lý"><i class="fas fa-clock"></i> Chờ xử lý</a>*@
                     &nbsp;
                     <button class="btn btn-sm btn-search btn-info" title="Tìm kiếm"><i class="fas fa-search"></i> Tìm kiếm</button>
                 </div>
@@ -311,9 +309,6 @@
                         <th>
                             @Html.DisplayName("Phòng ban")
                         </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.GuestNoItems)
@@ -335,7 +330,7 @@
                                 }
                             </td>
                             <td>@item.Company</td>
-                            <td><a href="/Guard/ConfirmGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                            <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.IDCard</td>
                             <td>@item.NumbersOfPerson</td>
                             <td>@item.Purpose</td>
@@ -344,7 +339,6 @@
                             <td>@item.EmployeeID</td>
                             <td>@item.EmployeeName</td>
                             <td>@item.Team</td>
-                            <td>@item.Position</td>
                             <td>
                                 <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -399,9 +393,6 @@
                         <th>
                             @Html.DisplayName("Phòng ban")
                         </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.GuestHasItems)
@@ -423,7 +414,7 @@
                                 }
                             </td>
                             <td>@item.Company</td>
-                            <td><a href="/Guard/ConfirmGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                            <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.IDCard</td>
                             <td>@item.NumbersOfPerson</td>
                             <td>@item.Purpose</td>
@@ -432,7 +423,6 @@
                             <td>@item.EmployeeID</td>
                             <td>@item.EmployeeName</td>
                             <td>@item.Team</td>
-                            <td>@item.Position</td>
                             <td>
                                 <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -490,9 +480,6 @@
                         <th>
                             @Html.DisplayName("Phòng ban")
                         </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.ForeignGuestNoItems)
@@ -514,7 +501,7 @@
                                 }
                             </td>
                             <td>@item.Company</td>
-                            <td><a href="/Guard/ConfirmGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                            <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.IDCard</td>
                             <td>@item.NumbersOfPerson</td>
                             <td>@item.Purpose</td>
@@ -523,7 +510,6 @@
                             <td>@item.EmployeeID</td>
                             <td>@item.EmployeeName</td>
                             <td>@item.Team</td>
-                            <td>@item.Position</td>
                             <td>
                                 <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -579,9 +565,6 @@
                         <th>
                             @Html.DisplayName("Phòng ban")
                         </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.ForeignGuestHasItems)
@@ -603,7 +586,7 @@
                                 }
                             </td>
                             <td>@item.Company</td>
-                            <td><a href="/Guard/ConfirmGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                            <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
                             <td>@item.IDCard</td>
                             <td>@item.NumbersOfPerson</td>
                             <td>@item.Purpose</td>
@@ -612,7 +595,6 @@
                             <td>@item.EmployeeID</td>
                             <td>@item.EmployeeName</td>
                             <td>@item.Team</td>
-                            <td>@item.Position</td>
                             <td>
                                 <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>

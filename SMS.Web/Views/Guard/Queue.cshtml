@@ -19,30 +19,18 @@
         @using (@Html.BeginForm("Queue", "Guard", FormMethod.Get))
         {
             <div class="row dataTables_wrapper dt-bootstrap4 above-table">
-
-                <div class="col-2 input-group input-group-sm">
-                    <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
-                    &nbsp;
-                    <input id="date_from" class="form-control bg-light from-date" readonly>
-                </div>
-                <div class="col-2 input-group input-group-sm">
-                    <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
-                    &nbsp;
-                    <input id="date_to" class="form-control bg-light to-date" readonly>
-                </div>
-                <div class="col-2 input-group input-group-sm">
-
+                <div class="col-3 input-group input-group-sm">
                     <div class="col-12 input-group input-group-sm">
                         <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
                         &nbsp;
                         <input id="emp_code" class="form-control bg-light to-date" name="employee" value="@ViewBag.employee">
                     </div>
                 </div>
-                <div class="col-2 input-group input-group-sm">
+                <div class="col-3 input-group input-group-sm">
                     <label class="no-margin-bottom" style="padding-top: 5px; margin-right: 5px;">Tên khách</label>
                     <input id="guest" class="form-control bg-light to-date" name="guest" value="@ViewBag.guest">
                 </div>
-                <div class="col-2 input-group input-group-sm">
+                <div class="col-3 input-group input-group-sm">
                     <label class="no-margin-bottom" style="padding-top: 5px">Công ty</label>
                     &nbsp;
                     <input id="emp_code" class="form-control bg-light to-date" name="company" value="@ViewBag.company">
@@ -392,9 +380,6 @@
                         <th>
                             @Html.DisplayName("Phòng ban")
                         </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.GuestHasItems)
@@ -425,7 +410,6 @@
                             <td>@item.EmployeeID</td>
                             <td>@item.EmployeeName</td>
                             <td>@item.Team</td>
-                            <td>@item.Position</td>
                             <td>
                                 <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -483,9 +467,6 @@
                         <th>
                             @Html.DisplayName("Phòng ban")
                         </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.ForeignGuestNoItems)
@@ -516,7 +497,6 @@
                             <td>@item.EmployeeID</td>
                             <td>@item.EmployeeName</td>
                             <td>@item.Team</td>
-                            <td>@item.Position</td>
                             <td>
                                 <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -572,9 +552,6 @@
                         <th>
                             @Html.DisplayName("Phòng ban")
                         </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
                         <th>In ấn</th>
                     </tr>
                     @foreach (var item in ViewBag.ForeignGuestHasItems)
@@ -605,7 +582,6 @@
                             <td>@item.EmployeeID</td>
                             <td>@item.EmployeeName</td>
                             <td>@item.Team</td>
-                            <td>@item.Position</td>
                             <td>
                                 <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
                                     <i class="fas fa-print" style="margin-left:-3.5px;"></i>
@@ -624,12 +600,6 @@
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/jquery.dataTables.min.js"></script>
     <script>
-        $('.datepicker, #date_from, #date_to').datepicker({
-            dateFormat: 'dd/mm/yy'
-        });
-
-        $('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
-
         $("#guard").removeClass('collapse');
         $("#guard").removeClass('collapsed');
         $("#guard").attr("aria-expanded", "true");

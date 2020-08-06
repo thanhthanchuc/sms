@@ -83,6 +83,7 @@
         [Column(TypeName = "ntext")]
         public string GuardRemarkIn { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? GuardDateIn { get; set; }
 
         [StringLength(50)]
@@ -93,6 +94,7 @@
         [Column(TypeName = "ntext")]
         public string GuardRemarkOut { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? GuardDateOut { get; set; }
 
         public bool? Status { get; set; }
@@ -104,8 +106,10 @@
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? CreatedDate { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? ModifiedDate { get; set; }
 
         [StringLength(50)]

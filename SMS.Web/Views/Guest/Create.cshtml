@@ -146,7 +146,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile">
-                    <img src="~/Assets/img/the-world.jpg" />
+                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -290,11 +290,13 @@
                             $('#txtFullNameBI').val(reponse.data.FullName);
                             $('#txtPositionBI').val(reponse.data.Position);
                             $('#txtTeamBI').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `/Image/${empCode}.png`);
                         } else {
                             alert("Mã nhân viên không tồn tại");
                             $('#txtFullNameBI').val("");
                             $('#txtPositionBI').val(reponse.data.Position);
                             $('#txtTeamBI').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                             console.log(reponse.data.data);
                         }
                     },
@@ -302,6 +304,7 @@
                         $('#txtFullNameBI').val("Không tồn tại");
                         $('#txtPositionBI').val("?");
                         $('#txtTeamBI').val("?");
+                        $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                         console.log(reponse.data.data);
                     }
                 });
