@@ -22,8 +22,9 @@ namespace SMS.Web.Controllers
         // GET: GoOut
         public ActionResult History(string searchString, int page = 1, int pageSize = 20)
         {
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var dao = new GoOutDAO();
-            var model = dao.ListAllPaging(searchString, page, pageSize);
+            var model = dao.ListAllPaging(searchString, page, pageSize, user.ID);
             ViewBag.SearchString = searchString;
             return View(model);
         }

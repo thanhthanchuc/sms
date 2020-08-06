@@ -267,7 +267,7 @@
                 id,
                 remark: $(remarkId).val(),
                 status: 1
-            }, true)
+            })
         }
 
         function handleUnapproveOut(id) {
@@ -276,7 +276,7 @@
                 id,
                 remark: $(remarkId).val(),
                 status: 0
-            }, true)
+            })
         }
 
         function handleApproveReturn(id) {
@@ -286,7 +286,7 @@
                 remark: $(remarkId).val(),
                 status: 1,
                 ret: true
-            }, true)
+            })
         }
 
         function handleUnapproveReturn(id) {
@@ -296,7 +296,7 @@
                 remark: $(remarkId).val(),
                 status: 0,
                 ret: true
-            }, true)
+            })
         }
 
         $("#guard").removeClass('collapse');

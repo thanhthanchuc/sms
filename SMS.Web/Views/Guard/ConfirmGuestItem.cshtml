@@ -323,7 +323,7 @@
                 itemId,
                 remark: $(remarkId).val(),
                 status: 1
-            }, true)
+            })
         }
 
         function handleUnapproveIn(itemId) {
@@ -333,7 +333,7 @@
                 itemId,
                 remark: $(remarkId).val(),
                 status: 0
-            }, true)
+            })
         }
 
         function handleApproveOut(itemId) {
@@ -343,7 +343,7 @@
                 itemId,
                 remark: $(remarkId).val(),
                 status: 1,
-            }, true)
+            })
         }
 
         function handleUnapproveOut(itemId) {
@@ -353,7 +353,7 @@
                 itemId,
                 remark: $(remarkId).val(),
                 status: 0,
-            }, true)
+            })
         }
 
         $("#guard").removeClass('collapse');

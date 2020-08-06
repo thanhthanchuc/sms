@@ -158,16 +158,13 @@
             window.location.href = "/Guard/Queue"
         })
 
-        function handle(url, data, reload = false) {
+        function handle(url, data) {
             $.ajax({
                 url,
                 method: "POST",
                 data,
                 success: () => {
-                    if (reload)
-                        window.location.reload()
-                    else
-                        window.location.href = "/Guard/Queue"
+                    window.location.reload()
                 },
                 error: () => {
                     alert("Lỗi hệ thống!")
@@ -180,7 +177,7 @@
                 id: $('#go_outId').val(),
                 remark: $(".out_remark").val(),
                 status: 1
-            }, true)
+            })
         })
 
         $('#GO-table').on("click", ".out_unapprove", () => {
@@ -188,7 +185,7 @@
                 id: $('#go_outId').val(),
                 remark: $("#out_remark").val(),
                 status: 0
-            }, true)
+            })
         })
 
         $('#GO-table').on("click", ".return_approve", () => {
@@ -196,7 +193,7 @@
                 id: $('#go_outId').val(),
                 remark: $("return_remark").val(),
                 status: 1
-            }, true)
+            })
         })
 
         $('#GO-table').on("click", ".return_unapprove", () => {
@@ -204,7 +201,7 @@
                 id: $('#go_outId').val(),
                 remark: $("return_remark").val(),
                 status: 0
-            }, true)
+            })
         })
 
         $("#guard").removeClass('collapse');

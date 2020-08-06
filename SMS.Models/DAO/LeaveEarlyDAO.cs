@@ -43,9 +43,10 @@ namespace SMS.Models.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Leave_Early> ListAllPaging(string searchString, int page, int pageSize)
+        public IEnumerable<Leave_Early> ListAllPaging(string searchString, int page, int pageSize, int userID)
         {
-            IQueryable<Leave_Early> model = dbContext.Leave_Early;
+            var team = dbContext.Users.Include(t => t.Team).Single(u => u.ID == userID).Team.Name;
+            IQueryable<Leave_Early> model = dbContext.Leave_Early.Where(t => t.Team == team);
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.EmpCode.Contains(searchString.ToLower()) || x.FullName.Contains(searchString.ToLower()) || x.Team.Contains(searchString.ToLower()));

@@ -1,13 +1,10 @@
-﻿function handleAPI(url, data, reload = false) {
+﻿function handleAPI(url, data) {
     $.ajax({
         url,
         method: "POST",
         data,
         success: () => {
-            if (reload)
-                window.location.reload()
-            else
-                window.location.href = "/Guard/Queue"
+            window.location.reload()
         },
         error: () => {
             alert("Lỗi hệ thống!")
