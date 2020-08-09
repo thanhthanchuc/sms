@@ -52,38 +52,38 @@
             </div>
 
             @*<div class="form-group row-1 input-group">
-            <label class="control-label col-md-2 top-space lb">Ngày vào <span class="red">(*)</span></label>
-            <div class="col-md-3 input-group">
-                <div class="top-space input-group-sm">
-                    <input type="hidden" id="guestID" value="@Model.ID" />
-                    @Html.TextBoxFor(model => model.EstimatedDateIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                    <label class="control-label col-md-2 top-space lb">Ngày vào <span class="red">(*)</span></label>
+                    <div class="col-md-3 input-group">
+                        <div class="top-space input-group-sm">
+                            <input type="hidden" id="guestID" value="@Model.ID" />
+                            @Html.TextBoxFor(model => model.EstimatedDateIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <label class="control-label top-space lb">Giờ vào <span class="red">(*)</span></label>
+                    <div class="col-md-3 input-group">
+                        <div class="top-space input-group-sm">
+                            <input type="hidden" id="guestID" value="@Model.ID" />
+                            @Html.TextBoxFor(model => model.EstimatedTimeIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <label class="control-label top-space lb">Giờ vào <span class="red">(*)</span></label>
-            <div class="col-md-3 input-group">
-                <div class="top-space input-group-sm">
-                    <input type="hidden" id="guestID" value="@Model.ID" />
-                    @Html.TextBoxFor(model => model.EstimatedTimeIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                </div>
-            </div>
-        </div>
 
-        <div class="form-group row-1 input-group">
-            <label class="control-label col-md-2 top-space lb">Ngày ra <span class="red">(*)</span></label>
-            <div class="col-md-3 input-group">
-                <div class="top-space input-group-sm">
-                    <input type="hidden" id="guestID" value="@Model.ID" />
-                    @Html.TextBoxFor(model => model.EstimatedDateOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                </div>
-            </div>
-            <label class="control-label top-space lb">Giờ ra <span class="red">(*)</span></label>
-            <div class="col-md-3 input-group">
-                <div class="top-space input-group-sm">
-                    <input type="hidden" id="guestID" value="@Model.ID" />
-                    @Html.TextBoxFor(model => model.EstimatedTimeOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                </div>
-            </div>
-        </div>*@
+                <div class="form-group row-1 input-group">
+                    <label class="control-label col-md-2 top-space lb">Ngày ra <span class="red">(*)</span></label>
+                    <div class="col-md-3 input-group">
+                        <div class="top-space input-group-sm">
+                            <input type="hidden" id="guestID" value="@Model.ID" />
+                            @Html.TextBoxFor(model => model.EstimatedDateOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <label class="control-label top-space lb">Giờ ra <span class="red">(*)</span></label>
+                    <div class="col-md-3 input-group">
+                        <div class="top-space input-group-sm">
+                            <input type="hidden" id="guestID" value="@Model.ID" />
+                            @Html.TextBoxFor(model => model.EstimatedTimeOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>*@
         </div>
 
         <div class="column col-md-1 col-mid"></div>
@@ -217,7 +217,7 @@
                         </td>
                         <td><input class="remarkOut col-12 remark" type="text" placeholder="Ghi chú..." /></td>
                     }
-</tbody>
+            </tbody>
         </table>
     </div>
     <div style="text-align: center">
@@ -228,6 +228,61 @@
 </div>
 @section scripts{
     <script src="~/Assets/js/jquery-confirm.js"></script>
+
+    <script>
+        //user
+        var _userBI = {
+            init: function () {
+                _userBI.registerEvent();
+            },
+            registerEvent: function () {
+                _userBI.getUserBI();
+            },
+            getUserBI: function () {
+                var empCode = $("#txtEmpCodeBI").val();
+                $.ajax({
+                    url: '/User/GetUserByCode?empCode=' + empCode,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (reponse) {
+                        console.log(reponse.data);
+                        if (reponse.status) {
+                            $('#txtFullNameBI').val(reponse.data.FullName);
+                            $('#txtPositionBI').val(reponse.data.Position);
+                            $('#txtTeamBI').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
+                        } else {
+                            alert("Mã nhân viên không tồn tại");
+                            $('#txtFullNameBI').val("");
+                            $('#txtPositionBI').val(reponse.data.Position);
+                            $('#txtTeamBI').val(reponse.data.Team.Name);
+                            console.log(reponse.data.data);
+                        }
+                    },
+                    error: function () {
+                        $('#txtFullNameBI').val("Không tồn tại");
+                        $('#txtPositionBI').val("?");
+                        $('#txtTeamBI').val("?");
+                        console.log(reponse.data.data);
+                    }
+                });
+            }
+        }
+        _userBI.init();
+        //
+
+        $('#txtEmpCodeBI').keyup(function () {
+            var count = $('#txtEmployeeID').val().length;
+            if (count == 8) {
+                _userBI.getUserBI();
+            } else {
+                $('#txtFullNameBI').val("");
+                $('#txtPositionBI').val("");
+                $('#txtTeamBI').val("");
+            }
+        });
+    </script>
+
     <script>
         $(".approveIn").on("click", function () {
             var self = this;

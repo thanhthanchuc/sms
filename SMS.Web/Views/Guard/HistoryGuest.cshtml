@@ -59,7 +59,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile">
-                    <img src="~/Assets/img/the-world.jpg" />
+                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -216,113 +216,113 @@
             <tbody>
                 @foreach (var item in Model.Guest_Item)
                 {
-                <tr>
-                    <td>@item.Item</td>
-                    <td>@item.Serial</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.Unit</td>
-                    <td>
-                        @if (@item.AssetType == 0)
+                    <tr>
+                        <td>@item.Item</td>
+                        <td>@item.Serial</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Unit</td>
+                        <td>
+                            @if (@item.AssetType == 0)
+                            {
+                                <span>Hàng thường</span>
+                            }
+                            else if (item.AssetType == 1)
+                            {
+                                <span>Hàng IT</span>
+                            }
+                            else
+                            {
+                                <span>Hàng độc hại</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsReturn == true)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (item.IsReturn == false)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                        </td>
+                        <td>@item.ReturnDate @item.ReturnTime</td>
+                        <td>@item.ITT</td>
+                        <td>
+                            @if (item.ITT_Status == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (item.ITT_Status == 0)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                        </td>
+                        <td>@item.ITT_Remark</td>
+                        <td>@item.ITT_Date</td>
+                        <td>@item.FST</td>
+                        <td>
+                            @if (item.FST_Status == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (item.FST_Status == 2)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                        </td>
+                        <td>@item.FST_Remark</td>
+                        <td>@item.FST_Date</td>
+                        @if (item.GuardStatusIn != null)
                         {
-                            <span>Hàng thường</span>
-                        }
-                        else if (item.AssetType == 1)
-                        {
-                            <span>Hàng IT</span>
-                        }
-                        else
-                        {
-                            <span>Hàng độc hại</span>
-                        }
-                    </td>
-                    <td>
-                        @if (item.IsReturn == true)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (item.IsReturn == false)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                    </td>
-                    <td>@item.ReturnDate @item.ReturnTime</td>
-                    <td>@item.ITT</td>
-                    <td>
-                        @if (item.ITT_Status == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (item.ITT_Status == 0)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                    </td>
-                    <td>@item.ITT_Remark</td>
-                    <td>@item.ITT_Date</td>
-                    <td>@item.FST</td>
-                    <td>
-                        @if (item.FST_Status == 1)
-                        {
-                            <i class="fas fa-check-square" style="color: dodgerblue"></i>
-                        }
-                        else if (item.FST_Status == 2)
-                        {
-                            <i class="fas fa-times" style="color: red"></i>
-                        }
-                    </td>
-                    <td>@item.FST_Remark</td>
-                    <td>@item.FST_Date</td>
-                    @if (item.GuardStatusIn != null)
-                    {
-                        <td>@item.GuardIn</td>
-                        if (item.GuardStatusIn.Value == 0)
-                        {
-                            <td><i class="fas fa-times" style="color:red"></i></td>
-                        }
-                        else if (item.GuardStatusIn.Value == 1)
-                        {
-                            <td><i class="fas fa-check-square"></i></td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                        <td>@item.GuardRemarkIn</td>
-                        <td>@item.GuardDateIn</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    }
-                    @if (item.GuardStatusOut != null)
-                    {
-                        <td>@item.GuardOut</td>
-                        if (item.GuardStatusOut.Value == 0)
-                        {
-                            <td><i class="fas fa-times" style="color:red"></i></td>
-                        }
-                        else if (item.GuardStatusOut.Value == 1)
-                        {
-                            <td><i class="fas fa-check-square"></i></td>
+                            <td>@item.GuardIn</td>
+                            if (item.GuardStatusIn.Value == 0)
+                            {
+                                <td><i class="fas fa-times" style="color:red"></i></td>
+                            }
+                            else if (item.GuardStatusIn.Value == 1)
+                            {
+                                <td><i class="fas fa-check-square"></i></td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            <td>@item.GuardRemarkIn</td>
+                            <td>@item.GuardDateIn</td>
                         }
                         else
                         {
                             <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         }
-                        <td>@item.GuardRemarkOut</td>
-                        <td>@item.GuardDateOut</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    }
-                </tr>
+                        @if (item.GuardStatusOut != null)
+                        {
+                            <td>@item.GuardOut</td>
+                            if (item.GuardStatusOut.Value == 0)
+                            {
+                                <td><i class="fas fa-times" style="color:red"></i></td>
+                            }
+                            else if (item.GuardStatusOut.Value == 1)
+                            {
+                                <td><i class="fas fa-check-square"></i></td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            <td>@item.GuardRemarkOut</td>
+                            <td>@item.GuardDateOut</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                    </tr>
                 }
             </tbody>
         </table>
@@ -337,6 +337,61 @@
 @section scripts{
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/utils.js"></script>
+
+    <script>
+        //user
+        var _userBI = {
+            init: function () {
+                _userBI.registerEvent();
+            },
+            registerEvent: function () {
+                _userBI.getUserBI();
+            },
+            getUserBI: function () {
+                var empCode = $("#txtEmployeeID").val();
+                $.ajax({
+                    url: '/User/GetUserByCode?empCode=' + empCode,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (reponse) {
+                        console.log(reponse.data);
+                        if (reponse.status) {
+                            $('#txtFullNameBI').val(reponse.data.FullName);
+                            $('#txtPositionBI').val(reponse.data.Position);
+                            $('#txtTeamBI').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
+                        } else {
+                            alert("Mã nhân viên không tồn tại");
+                            $('#txtFullNameBI').val("");
+                            $('#txtPositionBI').val(reponse.data.Position);
+                            $('#txtTeamBI').val(reponse.data.Team.Name);
+                            console.log(reponse.data.data);
+                        }
+                    },
+                    error: function () {
+                        $('#txtFullNameBI').val("Không tồn tại");
+                        $('#txtPositionBI').val("?");
+                        $('#txtTeamBI').val("?");
+                        console.log(reponse.data.data);
+                    }
+                });
+            }
+        }
+        _userBI.init();
+        //
+
+        $('#txtEmpCodeBI').keyup(function () {
+            var count = $('#txtEmployeeID').val().length;
+            if (count == 8) {
+                _userBI.getUserBI();
+            } else {
+                $('#txtFullNameBI').val("");
+                $('#txtPositionBI').val("");
+                $('#txtTeamBI').val("");
+            }
+        });
+    </script>
+
     <script>
         $('#return-history').on("click", () => {
             window.location.href = "/Guard/History"
