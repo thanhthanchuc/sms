@@ -43,11 +43,11 @@ namespace SMS.Models.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Go_Out> ListAllPaging(string searchString, int page, int pageSize, int userID)
+        public IEnumerable<Go_Out> ListAllPaging(string searchString, int page, int pageSize, int userID, int role)
         {
             var team = dbContext.Users.Include(t => t.Team).Single(u => u.ID == userID).Team.Name;
 
-            IQueryable<Go_Out> model = dbContext.Go_Out.Where(t => t.Team == team);
+            IQueryable<Go_Out> model = dbContext.Go_Out.Where(t => role >= 4 || t.Team == team);
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.EmpCode.Contains(searchString) || x.FullName.Contains(searchString) || x.Team.Contains(searchString.ToLower()));

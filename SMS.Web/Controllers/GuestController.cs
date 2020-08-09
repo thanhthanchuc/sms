@@ -29,9 +29,18 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchGuestData()
         {
-            var model = dbContext.Guests.OrderByDescending(x => x.CreatedDate).ToList();
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
 
             var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
+
+            var category = 0;
+            if (tName == "SMT") category = 1;
+            else if (tName == "FST") category = 2;
+
+
+            var model = dbContext.Guests.Where(g => currentRole >= 4 || dbContext.Guest_Item.Any(i => i.CatID == g.ID && i.AssetType == category)).OrderByDescending(x => x.CreatedDate).ToList();
+
 
             return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
@@ -286,18 +295,12 @@ namespace SMS.Web.Controllers
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
 
-            bool unfilter = false;
+            var isAdmin = (HttpContext.User as CustomPrincipal).PriorityRole >= 4;
 
-            if ((HttpContext.User as CustomPrincipal).PriorityRole >= 4)
-            {
-                unfilter = true;
-            }
-
-            if(!unfilter && tName == "FST")
+            if (!isAdmin && tName != "SMT")
             {
                 guest_items.Clear();
             }
-
 
             guest.Guest_Item = guest_items;
             return View(guest);
@@ -351,17 +354,13 @@ namespace SMS.Web.Controllers
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
 
-            bool unfilter = false;
 
-            if ((HttpContext.User as CustomPrincipal).PriorityRole >= 4)
-            {
-                unfilter = true;
-            }
+            var isAdmin = (HttpContext.User as CustomPrincipal).PriorityRole >= 4;
 
-            if (!unfilter && tName == "SMT")
+            if (!isAdmin && tName != "FST")
             {
                 guestItems.Clear();
-            } 
+            }
 
             guest.Guest_Item = guestItems;
             return View(guest);

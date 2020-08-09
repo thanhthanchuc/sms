@@ -91,14 +91,9 @@ namespace SMS.Web.Controllers
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
 
-            bool unfilter = false;
+            var isAdmin = (HttpContext.User as CustomPrincipal).PriorityRole >= 4;
 
-            if ((HttpContext.User as CustomPrincipal).PriorityRole >= 4)
-            {
-                unfilter = true;
-            }
-
-            if(assetType != 0 && !unfilter)
+            if (assetType != 0 && !isAdmin)
             {
                 if(assetType == 1 && tName != "SMT")
                 {
