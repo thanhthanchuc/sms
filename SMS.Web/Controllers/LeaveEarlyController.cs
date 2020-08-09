@@ -29,7 +29,10 @@ namespace SMS.Web.Controllers
         {
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var dao = new LeaveEarlyDAO();
-            var model = dao.ListAllPaging(searchString, page, pageSize, user.ID);
+
+            var role = (User as CustomPrincipal).PriorityRole;
+
+            var model = dao.ListAllPaging(searchString, page, pageSize, user.ID, role);
             ViewBag.SearchString = searchString;
             return View(model);
         }
@@ -163,14 +166,9 @@ namespace SMS.Web.Controllers
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var tName = _dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
 
-            bool unfilter = false;
+            var isAdmin = (HttpContext.User as CustomPrincipal).PriorityRole >= 4;
 
-            if((HttpContext.User as CustomPrincipal).PriorityRole >=4)
-            {
-                unfilter = true;
-            }
-
-            var res = _dbContext.Leave_Early.Where(l => unfilter || l.Team == tName).ToList();
+            var res = _dbContext.Leave_Early.Where(l => isAdmin || l.Team == tName).ToList();
 
             string new_from = null;
             string new_to = null;

@@ -24,7 +24,10 @@ namespace SMS.Web.Controllers
         {
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var dao = new GoOutDAO();
-            var model = dao.ListAllPaging(searchString, page, pageSize, user.ID);
+
+            var role = (User as CustomPrincipal).PriorityRole;
+
+            var model = dao.ListAllPaging(searchString, page, pageSize, user.ID, role);
             ViewBag.SearchString = searchString;
             return View(model);
         }
