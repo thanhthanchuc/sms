@@ -3,9 +3,7 @@
         _userBO.registerEvent();
     },
     registerEvent: function () {
-        $("#info-BI-create").click(function () {
-            _userBO.getUserBO();
-        });
+        _userBO.getUserBO();
     },
     getUserBO: function () {
         var empCode = $("#txtEmpCodeBO").val();
@@ -19,6 +17,7 @@
                     $('#txtFullNameBO').val(reponse.data.FullName);
                     $('#txtPositionBO').val(reponse.data.Position);
                     $('#txtTeamBO').val(reponse.data.Team.Name);
+                    $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                 } else {
                     alert("Mã nhân viên không tồn tại");
                     $('#txtFullNameBO').val("");

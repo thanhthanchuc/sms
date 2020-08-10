@@ -3,9 +3,7 @@
         _userLE.registerEvent();
     },
     registerEvent: function () {
-        $("#info-LE-create").click(function () {
-            _userLE.getUserLE();
-        });
+        _userLE.getUserLE();
     },
     getUserLE: function () {
         var empCode = $("#txtEmpCodeLE").val();
@@ -19,7 +17,6 @@
                     $('#txtFullNameLE').val(reponse.data.FullName);
                     $('#txtPositionLE').val(reponse.data.Position);
                     $('#txtTeamLE').val(reponse.data.Team.Name);
-                    //console.log(`/Image/${ empCode }.png`)
                     $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                 } else {
                     alert("Mã nhân viên không tồn tại");

@@ -174,7 +174,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile">
-                    <img src="~/Assets/img/the-world.jpg" />
+                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -322,6 +322,60 @@
 
 @section scripts{
     <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script>
+        //user
+        var _userBI = {
+            init: function () {
+                _userBI.registerEvent();
+            },
+            registerEvent: function () {
+                _userBI.getUserBI();
+            },
+            getUserBI: function () {
+                var empCode = $("#txtEmpCodeBI").val();
+                $.ajax({
+                    url: '/User/GetUserByCode?empCode=' + empCode,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (reponse) {
+                        console.log(reponse.data);
+                        if (reponse.status) {
+                            $('#txtFullNameBI').val(reponse.data.FullName);
+                            $('#txtPositionBI').val(reponse.data.Position);
+                            $('#txtTeamBI').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
+                        } else {
+                            alert("Mã nhân viên không tồn tại");
+                            $('#txtFullNameBI').val("");
+                            $('#txtPositionBI').val(reponse.data.Position);
+                            $('#txtTeamBI').val(reponse.data.Team.Name);
+                            console.log(reponse.data.data);
+                        }
+                    },
+                    error: function () {
+                        $('#txtFullNameBI').val("Không tồn tại");
+                        $('#txtPositionBI').val("?");
+                        $('#txtTeamBI').val("?");
+                        console.log(reponse.data.data);
+                    }
+                });
+            }
+        }
+        _userBI.init();
+        //
+
+        $('#txtEmpCodeBI').keyup(function () {
+            var count = $('#txtEmployeeID').val().length;
+            if (count == 8) {
+                _userBI.getUserBI();
+            } else {
+                $('#txtFullNameBI').val("");
+                $('#txtPositionBI').val("");
+                $('#txtTeamBI').val("");
+            }
+        });
+    </script>
+
     <script>
         $("#return-history").on("click", () => {
             window.location.href = "/Guest/ITTApprove"

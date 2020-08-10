@@ -53,7 +53,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile">
-                    <img src="~/Assets/img/the-world.jpg" />
+                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -184,6 +184,7 @@
     </div>
 </div>
 @section scripts{
+    <script src="~/Assets/js/bring_out/common.js"></script>
     <script>
         $("#return-history").on("click", () => {
             window.location.href = "/BringOut/History"

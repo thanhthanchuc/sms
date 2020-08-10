@@ -108,7 +108,7 @@
                         </div>
                         <label class="top-space" for="EstimatedTimeReturn">Giờ quay lại <span class="red">(*)</span></label>
                         <div class="col-2 input-group-sm">
-                            @Html.EditorFor(model => model.EstimatedTimeReturn, new { htmlAttributes = new { @id = "estimated_time_return", @class = "form-control input-previous-button", @type = "time"} })
+                            @Html.EditorFor(model => model.EstimatedTimeReturn, new { htmlAttributes = new { @id = "estimated_time_return", @class = "form-control input-previous-button", @type = "time" } })
                         </div>
                         @Html.ValidationMessageFor(model => model.EstimatedTimeReturn, "", new { @class = "text-danger" })
                     </div>
@@ -128,7 +128,7 @@
                     <!--Ảnh profile-->
                     <div class="form-group col-12 profile-img">
                         <div class="img-profile">
-                            <img src="~/Assets/img/the-world.jpg" />
+                            <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                         </div>
                     </div>
                     <!--Thông tin profile-->
@@ -164,9 +164,7 @@
                 _userGO.registerEvent();
             },
             registerEvent: function () {
-                $("#info-GO-create").click(function () {
-                    _userGO.getUserGO();
-                });
+                _userGO.getUserGO();
             },
             getUserGO: function () {
                 var empCode = $("#txtEmpCodeGO").val();
@@ -180,11 +178,13 @@
                             $('.txtFullNameGO').val(reponse.data.FullName);
                             $('.txtPositionGO').val(reponse.data.Position);
                             $('.txtTeamGO').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                         } else {
                             alert("Mã nhân viên không tồn tại");
                             $('.txtFullNameGO').val("");
                             $('.txtPositionLGO').val(reponse.data.Position);
                             $('.txtTeamGO').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                             console.log(reponse.data.data);
                         }
                     },
@@ -192,6 +192,7 @@
                         $('.txtFullNameGO').val("Không tồn tại");
                         $('.txtPositionGO').val("?");
                         $('.txtTeamGO').val("?");
+                        $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                         console.log(reponse.data.data);
                     }
                 });

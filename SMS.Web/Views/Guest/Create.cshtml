@@ -274,9 +274,7 @@
                 _userBI.registerEvent();
             },
             registerEvent: function () {
-                $("#info-BI-create").click(function () {
-                    _userBI.getUserBI();
-                });
+                   _userBI.getUserBI();
             },
             getUserBI: function () {
                 var empCode = $("#txtEmployeeID").val();
@@ -290,13 +288,12 @@
                             $('#txtFullNameBI').val(reponse.data.FullName);
                             $('#txtPositionBI').val(reponse.data.Position);
                             $('#txtTeamBI').val(reponse.data.Team.Name);
-                            $("#img-profile").attr("src", `/Image/${empCode}.png`);
+                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                         } else {
                             alert("Mã nhân viên không tồn tại");
                             $('#txtFullNameBI').val("");
                             $('#txtPositionBI').val(reponse.data.Position);
                             $('#txtTeamBI').val(reponse.data.Team.Name);
-                            $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                             console.log(reponse.data.data);
                         }
                     },
@@ -304,7 +301,6 @@
                         $('#txtFullNameBI').val("Không tồn tại");
                         $('#txtPositionBI').val("?");
                         $('#txtTeamBI').val("?");
-                        $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                         console.log(reponse.data.data);
                     }
                 });

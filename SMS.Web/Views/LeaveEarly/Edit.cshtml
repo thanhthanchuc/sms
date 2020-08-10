@@ -115,7 +115,7 @@
                     <!--Ảnh profile-->
                     <div class="form-group col-12 profile-img">
                         <div class="img-profile">
-                            <img src="~/Assets/img/the-world.jpg" />
+                            <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                         </div>
                     </div>
                     <!--Thông tin profile-->
@@ -159,9 +159,7 @@
                 _userLE.registerEvent();
             },
             registerEvent: function () {
-                $("#info-LE-create").click(function () {
-                    _userLE.getUserLE();
-                });
+                _userLE.getUserLE();
             },
             getUserLE: function () {
                 var empCode = $("#txtEmpCodeLE").val();
@@ -175,11 +173,13 @@
                             $('#txtFullNameLE').val(reponse.data.FullName);
                             $('#txtPositionLE').val(reponse.data.Position);
                             $('#txtTeamLE').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                         } else {
                             alert("Mã nhân viên không tồn tại");
                             $('#txtFullNameLE').val("");
                             $('#txtPositionLE').val(reponse.data.Position);
                             $('#txtTeamLE').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                             console.log(reponse.data.data);
                         }
                     },
@@ -187,12 +187,63 @@
                         $('#txtFullNameLE').val("Không tồn tại");
                         $('#txtPositionLE').val("?");
                         $('#txtTeamLE').val("?");
+                        $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                         console.log(reponse.data.data);
                     }
                 });
             }
         }
         _userLE.init();
+
+        var leaveEarly = {
+            init: function () {
+                leaveEarly.registerEvent();
+            },
+            registerEvent: function () {
+                $(".btn-admin-approve-LE").off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var row = this;
+                    var btn = $(this);
+                    var s_id = btn.attr('data-id');
+                    var remark = $('#approve_' + s_id).val();
+                    var data = { id: s_id, remark: remark }
+                    $.ajax({
+                        url: "/LeaveEarly/ApproveForAdmin",
+                        data: data,
+                        dataType: "json",
+                        type: "POST",
+                        success: function (respone) {
+                            if (respone.status == true) {
+                                leaveEarly.deleteRow(row);
+                            }
+                        }
+                    })
+                });
+                $(".btn-admin-reject-LE").off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var row = this;
+                    var btn = $(this);
+                    var s_id = btn.attr('data-id');
+                    var remark = $('#approve_' + s_id).val();
+                    var data = { id: s_id, remark: remark }
+                    $.ajax({
+                        url: "/LeaveEarly/RejectForAdmin",
+                        data: data,
+                        dataType: "json",
+                        type: "POST",
+                        success: function (respone) {
+                            if (respone.status == true) {
+                                leaveEarly.deleteRow(row);
+                            }
+                        }
+                    })
+                });
+            },
+            deleteRow: function (row) {
+                $(row).parent().parent().remove();
+            }
+        }
+        leaveEarly.init();
 
         $('#txtEmpCodeLE').keyup(function () {
             var count = $('#txtEmpCodeLE').val().length;
@@ -217,6 +268,18 @@
         //    dropdown: true,
         //    scrollbar: true
         //});
+
+
+        $(".btn-reload").off('click').on('click', function (e) {
+            location.reload();
+        });
+
+        function handleRefId(leaveId) {
+            $("#btn-confirm-delete-LE").attr("href", "/LeaveEarly/Delete/" + leaveId)
+        }
+        function cancel(leaveId) {
+            $("#btn-confirm-reject-LE").attr("href", "/LeaveEarly/Cancel/" + leaveId)
+        }
 
         $("#LE").removeClass('collapse');
         $("#LE").removeClass('collapsed');

@@ -18,7 +18,7 @@
             <div class="form-group row-1 input-group">
                 <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group input-group-sm">
-                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBO" maxlength="8"/>
+                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBO" maxlength="8" />
                 </div>
             </div>
 
@@ -32,11 +32,11 @@
             <div class="form-group input-group specific-date-pick">
                 <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" autocomplete="off"/>
+                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" autocomplete="off" />
                 </div>
                 <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
                 <div class="col-2 input-group-sm">
-                    <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" type="time"/>
+                    <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" type="time" />
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile" id="emp_img">
-                    <img src="~/Assets/img/the-world.jpg" />
+                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -124,10 +124,10 @@
                             </select>
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
+                            <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off" />
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
+                            <input class="form-control timepicker returnTime" placeholder="Giờ" type="time" />
                         </td>
                     </tr>
                 </tbody>
@@ -147,48 +147,49 @@
 @section scripts{
     <script src="~/Assets/js/jquery.timepicker.min.js"></script>
     <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/bring_out/common.js"></script>
     <script>
         $("#add-row-items").off('click').on('click', function (e) {
             var html = `<tr class="row-items">
-                            <td>
-                                <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button item" />
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button serial" />
-                            </td>
-                            <td class="input-group-sm">
-                                <input type="number" class="form-control input-previous-button quantity" min="0" />
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button unit" maxlength = "50" />
-                            </td>
-                            <td class="input-group-sm">
-                                <select class="form-control input-previous-button assetType">
-                                    <option value="0" selected>Hàng thường</option>
-                                    <option value="1">Hàng IT</option>
-                                    <option value="2">Hàng độc hại</option>
-                                </select>
-                            </td>
-                            <td class="input-group-sm">
-                                <select class="form-control input-previous-button isReturn">
-                                    <option value="true" selected>Có</option>
-                                    <option value="false">Không</option>
-                                </select>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
-                            </td>
-                        </tr>`;
+                                <td>
+                                    <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button item" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button serial" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input type="number" class="form-control input-previous-button quantity" min="0" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button unit" maxlength = "50" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <select class="form-control input-previous-button assetType">
+                                        <option value="0" selected>Hàng thường</option>
+                                        <option value="1">Hàng IT</option>
+                                        <option value="2">Hàng độc hại</option>
+                                    </select>
+                                </td>
+                                <td class="input-group-sm">
+                                    <select class="form-control input-previous-button isReturn">
+                                        <option value="true" selected>Có</option>
+                                        <option value="false">Không</option>
+                                    </select>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
+                                </td>
+                            </tr>`;
             $('#BO-items > tbody:last-child').append(html);
 
             $('.datepicker, #estimated_date, .returnDate').datepicker({
-                dateFormat: 'dd/mm/yy'
+                dateFormat: 'dd/mm/yyyy'
             });
 
             $("#BO-items").on("click", ".delete-items", function () {
@@ -209,21 +210,10 @@
             dateFormat: 'dd/mm/yy'
         });
 
-        //$('#estimated_date').datepicker().datepicker("setDate", new Date());
-
         $("#BO-items").on("click", ".delete-items", function () {
             $(this).closest(".row-items").remove();
         });
 
-        //$('.timepicker').timepicker({
-        //    timeFormat: 'h:mm p',
-        //    interval: 5,
-        //    startTime: '00:00',
-        //    dynamic: false,
-        //    dropdown: true,
-        //    scrollbar: true
-        //});
-        <img src="~/Image/42001005.png" />
         $('#txtEmpCodeBO').keyup(function () {
             var count = $('#txtEmpCodeBO').val().length;
             if (count == 8) {
@@ -242,5 +232,4 @@
         $("#collapseBringOut").addClass('show');
         $("#collapseInOut").removeClass('collapse');
     </script>
-    <script src="~/Assets/js/bring_out/common.js"></script>
 }
