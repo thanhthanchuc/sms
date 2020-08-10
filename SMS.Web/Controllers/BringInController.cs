@@ -31,8 +31,12 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringInData()
         {
-            var model = dbContext.Bring_In.OrderByDescending(x => x.EstimatedDate).ToList();
             var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
+
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
+            var model = dbContext.Bring_In.Where(b => currentRole >=4 || b.Team == tName).OrderByDescending(x => x.EstimatedDate).ToList();
 
             return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
@@ -49,21 +53,29 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringInApproveData(string name, int? from, int? to, string team = "", string empcode = "")
         {
-            var assetType = 0;
-            switch (name.ToLower().Trim())
-            {
-                case "itt":
-                    assetType = 1;
-                    break;
-                case "fst":
-                    assetType = 2;
-                    break;
-            }
+            var res = new List<Bring_In>();
 
-            var res = dbContext.Bring_In
-                .Where(bi => dbContext.Bring_In_Items.Any(i => i.CatID == bi.ID && i.AssetType == assetType && i.ApprovedStatus == null))
+            if (name == "itt")
+            {
+                res = dbContext.Bring_In
+                .Where(bi => dbContext.Bring_In_Items.Any(i => i.CatID == bi.ID && i.AssetType == 1 && i.ITT_Status == null))
                 .OrderByDescending(x => x.EstimatedDate)
                 .ToList();
+            }
+            else if (name == "fst")
+            {
+                res = dbContext.Bring_In
+                .Where(bi => dbContext.Bring_In_Items.Any(i => i.CatID == bi.ID && i.AssetType == 2 && i.FST_Status == null))
+                .OrderByDescending(x => x.EstimatedDate)
+                .ToList();
+            }
+            else
+            {
+                res = dbContext.Bring_In
+               .Where(bi => dbContext.Bring_In_Items.Any(i => i.CatID == bi.ID && i.AssetType == 0 && i.ApprovedStatus == null))
+               .OrderByDescending(x => x.EstimatedDate)
+               .ToList();
+            }
 
             var recordNumber = dbContext.Bring_In.Count();
 
@@ -93,17 +105,14 @@ namespace SMS.Web.Controllers
 
             var isAdmin = (HttpContext.User as CustomPrincipal).PriorityRole >= 4;
 
-            if (assetType != 0 && !isAdmin)
+            if (name == "itt" && !isAdmin && tName != "SMT")
             {
-                if(assetType == 1 && tName != "SMT")
-                {
-                    res.Clear();
-                }
+                res.Clear();
+            }
 
-                if(assetType == 2 && tName != "FST")
-                {
-                    res.Clear();
-                }
+            if (name == "fst" && !isAdmin && tName != "FST")
+            {
+                res.Clear();
             }
 
             return Json(new { data = res, recordsTotal = recordNumber, recordsFiltered = recordNumber });
@@ -379,12 +388,12 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
-        public ActionResult SummaryBI( )
+        public ActionResult SummaryBI()
         {
             var bringin = dbContext.Bring_In.ToList();
             var bis = dbContext.Bring_In_Items.Where(b => b.Quantity != null && b.Item != null).ToList();
 
-            for(var b = 0; b<bringin.Count(); b++)
+            for (var b = 0; b < bringin.Count(); b++)
             {
                 var bringinItems = bis.Where(t => t.CatID == bringin[b].ID).ToList();
                 bringin[b].Bring_In_Items = bringinItems;

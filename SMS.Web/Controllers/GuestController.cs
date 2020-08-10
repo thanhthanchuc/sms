@@ -27,7 +27,7 @@ namespace SMS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult FetchGuestData()
+        public ActionResult FetchGuestDataHistory()
         {
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
@@ -38,11 +38,46 @@ namespace SMS.Web.Controllers
             if (tName == "SMT") category = 1;
             else if (tName == "FST") category = 2;
 
-
             var model = dbContext.Guests.Where(g => currentRole >= 4 || dbContext.Guest_Item.Any(i => i.CatID == g.ID && i.AssetType == category)).OrderByDescending(x => x.CreatedDate).ToList();
 
 
             return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
+        }
+
+        [HttpPost]
+        public ActionResult FetchGuestData(string type)
+        {
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
+            var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
+
+            var model = new List<Guest>();
+
+            if (type == "SMT")
+            {
+                model = dbContext.Guests
+                    .Where(g => dbContext.Guest_Item.Any(i => i.CatID == g.ID && i.AssetType == 1 && i.ITT_Status == null))
+                    .OrderByDescending(x => x.CreatedDate).ToList();
+            }
+            else if (type == "FST")
+            {
+                model = dbContext.Guests
+                   .Where(g => dbContext.Guest_Item.Any(i => i.CatID == g.ID && i.AssetType == 2 && i.FST_Status == null))
+                   .OrderByDescending(x => x.CreatedDate).ToList();
+            } 
+
+            if (type == "SMT" && currentRole < 4 && tName != "SMT")
+            {
+                model.Clear();
+            }
+
+            if (type == "FST" && currentRole < 4 && tName != "FST")
+            {
+                model.Clear();
+            }
+
+            return Json(new { data = model, currentRole, recordsTotal = model.Count(), recordsFiltered = model.Count() });
         }
 
         /// <summary>
