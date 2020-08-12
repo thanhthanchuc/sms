@@ -19,7 +19,7 @@
                 <label class="control-label col-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group">
                     <div class="top-space input-group-sm">
-                        <input class="form-control input-previous-button col-md-12" id="txtEmployeeID" maxlength="8"/>
+                        <input class="form-control input-previous-button col-md-12" id="txtEmployeeID" maxlength="8" />
                     </div>
                 </div>
                 <label class="control-label col-1 top-space lb">Khách</label>
@@ -146,7 +146,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile">
-                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
+                    <img src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -212,69 +212,65 @@
     <script>
         $("#add-row-items").off('click').on('click', function (e) {
             var html = `<tr class="row-items">
-                            <td>
-                                <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button item" maxlength="250"/>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button serial" maxlength="250" />
-                            </td>
-                            <td class="input-group-sm">
-                                <input type="number" class="form-control input-previous-button quantity" min="0" />
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control input-previous-button unit" maxlength="50" />
-                            </td>
-                            <td class="input-group-sm">
-                                <select class="form-control input-previous-button assetType">
-                                    <option value="0" selected>Hàng thường</option>
-                                    <option value="1">Hàng IT</option>
-                                    <option value="2">Hàng độc hại</option>
-                                </select>
-                            </td>
-                            <td class="input-group-sm">
-                                <select class="form-control input-previous-button isReturn">
-                                    <option>--Chọn--</option>
-                                    <option value="true">Có</option>
-                                    <option value="false">Không</option>
-                                </select>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
-                            </td>
-                            <td class="input-group-sm">
-                                <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
-                            </td>
-                        </tr>`;
+                                <td>
+                                    <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button item" maxlength="250"/>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button serial" maxlength="250" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input type="number" class="form-control input-previous-button quantity" min="0" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control input-previous-button unit" maxlength="50" />
+                                </td>
+                                <td class="input-group-sm">
+                                    <select class="form-control input-previous-button assetType">
+                                        <option value="0" selected>Hàng thường</option>
+                                        <option value="1">Hàng IT</option>
+                                        <option value="2">Hàng độc hại</option>
+                                    </select>
+                                </td>
+                                <td class="input-group-sm">
+                                    <select class="form-control input-previous-button isReturn">
+                                        <option>--Chọn--</option>
+                                        <option value="true">Có</option>
+                                        <option value="false">Không</option>
+                                    </select>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
+                                </td>
+                                <td class="input-group-sm">
+                                    <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
+                                </td>
+                            </tr>`;
             $('#guest-items > tbody:last-child').append(html);
-
             $('.datepicker').datepicker({
                 dateFormat: 'dd/mm/yy'
             });
-
             $("#guest-items").on("click", ".delete-items", function () {
                 $(this).closest(".row-items").remove();
             });
-
         });
-
         $("#guest-items").on("click", ".delete-items", function () {
             $(this).closest(".row-items").remove();
         });
-
         $('.datepicker').datepicker({
             dateFormat: 'dd/mm/yy'
         });
-
         //user
         var _userBI = {
             init: function () {
                 _userBI.registerEvent();
             },
             registerEvent: function () {
-                   _userBI.getUserBI();
+                $("#info-BI-create").click(function () {
+                    _userBI.getUserBI();
+                });
             },
             getUserBI: function () {
                 var empCode = $("#txtEmployeeID").val();
@@ -288,7 +284,6 @@
                             $('#txtFullNameBI').val(reponse.data.FullName);
                             $('#txtPositionBI').val(reponse.data.Position);
                             $('#txtTeamBI').val(reponse.data.Team.Name);
-                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                         } else {
                             alert("Mã nhân viên không tồn tại");
                             $('#txtFullNameBI').val("");
@@ -308,7 +303,6 @@
         }
         _userBI.init();
         //
-
         $('#txtEmployeeID').keyup(function () {
             var count = $('#txtEmployeeID').val().length;
             if (count == 8) {
@@ -319,7 +313,6 @@
                 $('#txtTeamBI').val("");
             }
         });
-
         //Create
         $('#guest-confirm').on("click", (event) => {
             event.preventDefault();
@@ -346,7 +339,6 @@
             guestObject.Position = $('#txtPositionBI').val();
             guestObject.Team = $('#txtTeamBI').val();
             guestObject.Guest_Item = [];
-
             $(".row-items").each((index, item) => {
                 var guest_Item = {};
                 guest_Item.Item = $(item).find('input[class*=item]').val();
@@ -357,7 +349,6 @@
                 guest_Item.IsReturn = $(item).find('select[class*=isReturn]').val();
                 guest_Item.ReturnDate = $(item).find('input[class*=returnDate]').val();
                 guest_Item.ReturnTime = $(item).find('input[class*=returnTime]').val();
-
                 guestObject.Guest_Item.push(guest_Item);
             })
             data.append("guest", JSON.stringify(guestObject));
@@ -372,12 +363,10 @@
             //        alert(xhr.responseText);
             //    }
             //}
-
             $.confirm({
                 title: "Thông báo",
                 content: function () {
                     var self = this;
-
                     return $.ajax({
                         url: "/Guest/Create",
                         method: "POST",
@@ -396,7 +385,6 @@
                 }
             })
         });
-
         $("#guest").removeClass('collapse');
         $("#guest").removeClass('collapsed');
         $("#guest").attr("aria-expanded", "true");

@@ -15,6 +15,14 @@
         //    Guest_Item = new HashSet<Guest_Item>();
         //}
 
+        public Guest()
+        {
+        }
+
+        public Guest(Guest other)
+        {
+        }
+
         public int ID { get; set; }
 
         public int? Type { get; set; }

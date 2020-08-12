@@ -3,7 +3,7 @@
         _userBO.registerEvent();
     },
     registerEvent: function () {
-        _userBO.getUserBO();
+        //_userBO.getUserBO();
     },
     getUserBO: function () {
         var empCode = $("#txtEmpCodeBO").val();

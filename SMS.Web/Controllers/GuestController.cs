@@ -170,15 +170,60 @@ namespace SMS.Web.Controllers
                 file.SaveAs(filePath);
             }
 
-            model.CreatedDate = System.DateTime.Now;
-            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            model.CreatedBy = user.EmpCode + "|" + user.FullName;
-            model.Status = false;
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
 
-            var bringIn = dbContext.Guests.Add(model);
+            var guests = new List<Guest>();
+
+            saveGuest(FormatDate(model.EstimatedDateIn), FormatDate(model.EstimatedDateOut), json, ref guests);
+
+            dbContext.Guests.AddRange(guests);
+
             dbContext.SaveChanges();
 
             return Content("Success");
+        }
+
+
+        private string FormatDate(string date)
+        {
+            var strs = date.Split('/');
+            return strs[1] + "/" + strs[0] + "/" + strs[2];
+        }
+
+        private void saveGuest(string StartDate, string EndDate, string model, ref List<Guest> guests)
+        {
+            var startdate = DateTime.Parse(StartDate);
+            var enddate = DateTime.Parse(EndDate);
+
+            var dateDiff = (enddate - startdate).TotalDays;
+
+            var newGuest = Newtonsoft.Json.JsonConvert.DeserializeObject<Guest>(model);
+
+            var newStartDate = startdate.AddDays(1).ToShortDateString();
+
+            if (dateDiff >= 1)
+            {
+                newGuest.EstimatedDateIn = StartDate;
+                newGuest.EstimatedDateOut = StartDate;
+                newGuest.CreatedDate = System.DateTime.Now;
+                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                newGuest.CreatedBy = user.EmpCode + "|" + user.FullName;
+                newGuest.Status = false;
+
+                guests.Add(newGuest);
+
+                saveGuest(newStartDate, EndDate, model, ref guests);
+            } else
+            {
+                newGuest.EstimatedDateIn = StartDate;
+                newGuest.EstimatedDateOut = StartDate;
+                newGuest.CreatedDate = System.DateTime.Now;
+                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                newGuest.CreatedBy = user.EmpCode + "|" + user.FullName;
+                newGuest.Status = false;
+
+                guests.Add(newGuest);
+            }
         }
 
         public ActionResult Detail(int id)
