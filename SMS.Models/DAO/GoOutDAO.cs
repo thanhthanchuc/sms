@@ -22,7 +22,7 @@ namespace SMS.Models.DAO
         /// <returns></returns>
         public User GetByCode(string empCode)
         {
-            return dbContext.Users.SingleOrDefault(x => x.EmpCode.Equals(empCode));
+            return dbContext.Users.Include(u => u.Team).SingleOrDefault(x => x.EmpCode.Equals(empCode));
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace SMS.Models.DAO
             IQueryable<Go_Out> model = dbContext.Go_Out.Where(t => role >= 4 || t.Team == team);
             if (!string.IsNullOrEmpty(searchString))
             {
-                model = model.Where(x => x.EmpCode.Contains(searchString) || x.FullName.Contains(searchString) || x.Team.Contains(searchString.ToLower()));
+                model = model.Where(x => x.EmpCode.Contains(searchString.ToLower()) || x.FullName.Contains(searchString.ToLower()) || x.Team.Contains(searchString.ToLower()));
             }
-            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.EstimatedDateOut).ThenByDescending(x => x.EstimatedTimeOut).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace SMS.Models.DAO
             {
                 model = model.Where(x => x.ApprovedStatus.Equals(null));
             }
-            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.EstimatedDateOut).ThenByDescending(x => x.EstimatedTimeOut).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -189,12 +189,14 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Cancel(int id)
+        public bool Cancel(int id, string modifiedBy)
         {
             try
             {
                 var goOut = dbContext.Go_Out.Find(id);
                 goOut.ApprovedStatus = 4;
+                goOut.ModifiedDate = DateTime.Now;
+                goOut.ModifiedBy = modifiedBy;
                 dbContext.SaveChanges();
                 return true;
             }

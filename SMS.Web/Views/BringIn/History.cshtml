@@ -23,12 +23,12 @@
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
             &nbsp;
-            <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
+            <input id="date_from" class="form-control bg-light from-date" autocomplete="off" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")">
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
             &nbsp;
-            <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
+            <input id="date_to" class="form-control bg-light to-date" autocomplete="off" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")">
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
@@ -47,7 +47,7 @@
 
     <div style="width:100%; overflow-x:auto">
         <!--Bảng dữ liệu Về sớm-->
-        <table class="table table-hover table-bordered" id="BI-table" style="border-collapse: collapse; width: 100%">
+        <table class="table table-hover table-bordered" id="BI-table" style="border-collapse: collapse; width: 100%" data-order='[[ 5, "desc" ]]'>
             <!--Tiêu đề cột-->
             <thead>
                 <tr class="table-heading">
@@ -57,7 +57,6 @@
                     <th class="th-1">Phòng ban</th>
                     <th class="th-1">Lí do</th>
                     <th class="th-1">Thời gian ước tính</th>
-                    <th class="th-1">Trạng thái</th>
                     <th class="th-1">Thao tác</th>
                     <th class="th-1">Chi tiết</th>
                     <th class="th-1">In ấn</th>
@@ -79,6 +78,7 @@
     <script>
         var table = null;
         var currentRole = null;
+        var items = null;
 
         $(document).ready(() => {
             var options = {
@@ -102,31 +102,75 @@
 
                     "dataSrc": function (res) {
                         currentRole = res.currentRole;
+                        items = res.items;
                         return res.data;
                     }
-                }, 
+                },
                 "columns": [
                     {
                         data: function (res) {
-                            return `<span">${res.Team}</span>${res.ID}`;
+                            html = '';
+                            if (isOver(res, items)) {
+                                html = `<span style="color:red">${res.Team}</span><span style="color:red">${res.ID}</span>`
+                            } else {
+                                html = `<span>${res.Team}</span><span>${res.ID}</span>`
+                            }
+                            return html;
                         }
                     },
                     {
                         data: function (res) {
-                            return `<span class="border-right" style="padding-right:10px;">${res.EmpCode}</span><span style="margin-left:10px;">${res.FullName}</span>`;
+                            html = '';
+                            if (isOver(res, items)) {
+                                html = `<span class="border-right" style="padding-right:10px; color:red">${res.EmpCode}</span><span style="margin-left:10px; color:red">${res.FullName}</span>`
+                            } else {
+                                html = `<span class="border-right" style="padding-right:10px;">${res.EmpCode}</span><span style="margin-left:10px;">${res.FullName}</span>`
+                            }
+                            return html;
                         }
                     },
-                    { data: function (res) { return res.Position; } },
-                    { data: function (res) { return res.Team; } },
-                    { data: function (res) { return res.Reason; } },
                     {
                         data: function (res) {
-                            return `<span>${res.EstimatedDate}</span> <span>${res.EstimatedTime}</span>`;
+                            html = '';
+                            if (isOver(res, items)) {
+                                html = `<span style="color:red">${res.Position}</span>`
+                            } else {
+                                html = `<span>${res.Position}</span>`
+                            }
+                            return html;
                         }
                     },
                     {
                         data: function (res) {
-                            return !res.Status ? 'Đang thực hiện' : 'Đã thực hiện';
+                            html = '';
+                            if (isOver(res, items)) {
+                                html = `<span style="color:red">${res.Team}</span>`
+                            } else {
+                                html = `<span>${res.Team}</span>`
+                            }
+                            return html;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            html = '';
+                            if (isOver(res, items)) {
+                                html = `<span style="color:red">${res.Reason}</span>`
+                            } else {
+                                html = `<span>${res.Reason}</span>`
+                            }
+                            return html;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            html = '';
+                            if (isOver(res, items)) {
+                                html = `<span style="color:red">${res.EstimatedDate}</span> <span style="color:red">${res.EstimatedTime}</span>`
+                            } else {
+                                html = `<span>${res.EstimatedDate}</span> <span>${res.EstimatedTime}</span>`
+                            }
+                            return html;
                         }
                     },
                     {
@@ -134,24 +178,25 @@
                             if (currentRole <= 1) {
                                 return ''
                             }
-                            
+
                             var html = '';
                             if (res.Cancel) {
-                                html = `<span class="red">Hủy bỏ</span>`;
+                                html = `<span class="red"><b>Hủy bỏ</b></span>`;
                             }
                             else {
-                                if (!res.Status) {
-                                    html = `<a class="btn btn-edit btn-standard btnEdit" title="Sửa" href="/BringIn/Edit/${res.ID}">
-                                               <i class="icon fas fa-cog" style="margin-left: -4px"></i>
-                                            </a>
-                                            <a class="btn btn-danger btn-standard btn-delete btnXoa" onclick="Delete(${res.ID})" title="Xóa">
-                                               <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
-                                            </a>`;
-                                }
-                                else {
-                                    html = `<a class="btn btn-cancel btn-danger btn-standard" id="btnCancel" onclick="Cancel(${res.ID})" title="Hủy bỏ">
-                                                 <i class="fas fa-lock" style="margin-left: -3px"></i>
-                                            </a>`;
+                                if (isNotDone(res, items)) {
+                                    if (isApproved(res, items)) {
+                                        html = `<a class="btn btn-cancel btn-danger btn-standard" id="btnCancel" onclick="Cancel(${res.ID})" title="Hủy bỏ">
+                                                       <i class="fas fa-lock" style="margin-left: -3px"></i>
+                                                    </a>`
+                                    } else {
+                                        html = `<a class="btn btn-edit btn-standard btnEdit" title="Sửa" href="/BringIn/Edit/${res.ID}">
+                                                       <i class="icon fas fa-cog" style="margin-left: -4px"></i>
+                                                    </a>
+                                                    <a class="btn btn-danger btn-standard btn-delete btnXoa" onclick="Delete(${res.ID})" title="Xóa">
+                                                       <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
+                                                    </a>`;
+                                    }
                                 }
                             }
                             return html;
@@ -165,9 +210,15 @@
                     },
                     {
                         data: function (res) {
-                            return `<a href="/BringIn/BIReport/${res.ID}" target="_blank" class="btn btn-print btn-primary btn-standard" id="btnPrint"  title="In báo cáo">
-                                       <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                    </a>`;
+                            var html = '';
+                            if (!res.Cancel) {
+                                html = `<a href="/BringIn/BIReport/${res.ID}" target="_blank" class="btn btn-print btn-primary btn-standard" id="btnPrint"  title="In báo cáo">
+                                               <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                            </a>`
+                            } else {
+                                html = ''
+                            }
+                            return html;
                         }
                     },
                     {
@@ -175,7 +226,7 @@
                             if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
-                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
                             return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
                         }
                     },
@@ -184,14 +235,31 @@
                             if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
                                 return "";
                             var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
-                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} | ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy }</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
                         }
                     }
                 ]
             };
             table = $('#BI-table').DataTable(options);
         });
+
+        ///Lấy ra hàng hóa đã phê duyệt r
+        function isApproved(data, items) {
+            return items.find(t => t.CatID === data.ID && t.ApprovedStatus !== null)
+        }
+
+        ///Khi đã xong quy trình thì k làm j nữa
+        function isNotDone(data, items) {
+            return items.find(t => t.CatID === data.ID && t.GuardStatusOut === null)
+        }
+
+        ///Lấy ra hàng hóa quá hạn
+        function isOver(data, items) {
+            const obj = items.find(t => (t.CatID === data.ID && t.ReturnDate !== null && t.GuardStatusOut === null && new Date(`${t.ReturnDate.split('/')[1]}/${t.ReturnDate.split('/')[0]}/${t.ReturnDate.split('/')[2]}`).getTime() - new Date(`${new Date().getMonth() + 1}/${new Date().getDate()}/${new Date().getFullYear()}`).getTime() < 0))
+            console.log(obj)
+            return obj
+        }
 
         function Delete(id) {
             $.confirm({
@@ -238,8 +306,6 @@
         $('.datepicker, #date_from, #date_to').datepicker({
             dateFormat: 'dd/mm/yy'
         });
-
-        $('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
 
         $("#BI").removeClass('collapse');
         $("#BI").removeClass('collapsed');

@@ -1,0 +1,266 @@
+﻿@model SMS.Models.EF.Incident
+@using SMS.Web.Models
+@{
+    ViewBag.Title = "Incident";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery.timepicker.min.css" rel="stylesheet" />
+    <style>
+        label {
+            color: black;
+        }
+
+        #import_file, #pic_import_file, #smt_import_file {
+            background: white;
+        }
+
+        #file, #SMTfile, #PICfile {
+            width: 100%;
+        }
+    </style>
+}
+
+<div class="form-horizontal" style="width:100%;">
+    <div class="card-header">
+        <h5 class="m-0 font-weight-bold text-primary">BÁO CÁO SỰ VIỆC</h5>
+    </div>
+    @if ((User as CustomPrincipal).RoleName == "Guard" || (User as CustomPrincipal).RoleName == "Sub Admin" || (User as CustomPrincipal).RoleName == "Admin")
+    {
+        <div class="col-md-12 row-form">
+            <div class="column form-horizontal form-left col-md-12">
+                <div class="row col-12 input-group row-1">
+                    <label class="control-label lb col-1">File đính kèm <span class="red">(*)</span></label>
+                    <div class="form-horizontal col-4 row-add input-group-sm" id="import_file" style="padding: 1px">
+                        <input class="input-group-sm" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="file" placeholder="Chọn file Excel" />
+                    </div>
+                    <div class="col-1">
+                        <a href="/Incident/TemplateReport" id="tempfile" class="btn btn-sm btn-success" title="Tải file mẫu"><i class="fas fa-download"></i> File mẫu</a>
+                    </div>
+                    <label class="control-label lb col-1">Nội dung <span class="red">(*)</span></label>
+                    <div class="col-md-5 input-group-sm input-group" style="padding-left:unset">
+                        <input class="form-control input-previous-button" id="txtContent" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="row col-12 input-group row-1">
+                    <label class="control-label lb col-1">SMT xác nhận</label>
+                    <div class="form-horizontal col-4 row-add input-group-sm" id="smt_import_file" style="padding: 1px">
+                        <input class="input-group-sm" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="SMTfile" placeholder="Chọn file Excel" />
+                    </div>
+                    <div class="col-1">
+                        <a href="/Incident/TemplateSMTReport" id="smt-tempfile" class="btn btn-sm btn-success" title="Tải file mẫu"><i class="fas fa-download"></i> File mẫu</a>
+                    </div>
+                    <label class="control-label lb col-1">Team xác nhận</label>
+                    <div class="form-horizontal col-4 row-add input-group-sm" id="pic_import_file" style="padding: 1px">
+                        <input class="input-group-sm" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="PICfile" placeholder="Chọn file Excel" />
+                    </div>
+                    <div class="col-1">
+                        <a href="/Incident/TemplateTeamReport" id="pic-tempfile" class="btn btn-sm btn-success" title="Tải file mẫu"><i class="fas fa-download"></i> File mẫu</a>
+                    </div>
+                </div>
+                <div class="row col-12 input-group row-1">
+                    <div class="col-1"></div>
+                    <button id="incident-confirm" type="submit" class="btn btn-sm btn-primary" title="Thêm mới yêu cầu"><i class="fas fa-edit"></i> Đăng ký</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<br />
+
+<div style="width:100%; overflow-x:auto">
+    <!--Bảng dữ liệu Về sớm-->
+    <table class="table table-hover table-bordered" id="incident-table" style="border-collapse: collapse; width: 100%" data-order='[[ 0, "desc" ]]'>
+        <!--Tiêu đề cột-->
+        <thead>
+            <tr class="table-heading">
+                <th class="th-1">Mã</th>
+                <th class="th-1">Nội dung</th>
+                <th class="th-1">File đính kèm</th>
+                <th class="th-1">Xác nhận của SMT</th>
+                <th class="th-1">Xác nhận của phòng ban liên quan</th>
+                <th class="th-1">Thao tác</th>
+                <th class="th-1">Người tạo</th>
+                <th class="th-1">Chỉnh sửa</th>
+            </tr>
+        </thead>
+        <tbody id="tblData"></tbody>
+    </table>
+</div>
+
+@section scripts {
+    <script src="~/Assets/js/jquery.timepicker.min.js"></script>
+    <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/jquery.dataTables.min.js"></script>
+    <script>
+        var table = null;
+        currentRole = null;
+        var isGuard = false;
+        var isAdmin = false;
+        var isSubAdmin = false;
+        $(document).ready(() => {
+            var options = {
+                "serverSide": false,
+                "searching": false,
+                "orderCellsTop": false,
+                "fixedHeader": true,
+                "processing": true,
+                "paging": true,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_"
+                },
+                "lengthMenu": [[20, 25, 50, 100, -1], [20, 25, 50, 100, "All"]],
+                "lengthChange": false,
+                "pageLength": 20,
+                "ajax": {
+                    "type": "POST",
+                    "url": "/Incident/FetchDataHistory",
+                    "dataType": "json",
+                    "contentType": 'application/json; charset=utf-8',
+                    "dataSrc": function (res) {
+                        isGuard = res.isGuard;
+                        isAdmin = res.isAdmin;
+                        isSubAdmin = res.isSubAdmin;
+                        currentRole = res.currentRole
+                        return res.data;
+                    }
+                },
+                "columns": [
+                    { data: function (res) { return res.ID; } },
+                    { data: function (res) { return res.Title; } },
+                    {
+                        data: function (res) {
+                            if (res.AttachedFile != null) {
+                                return `<a class="btn btnDownloadFile btn-primary btn-standard" href="/Incident/FileDownload?filename=${res.AttachedFile}" title="Tải file khai báo sự việc">
+                                           <i class="fas fa-download" style="margin-left:-3.5px;"></i>
+                                        </a>`;
+                            }
+                            return "";
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            if (res.SMTAttachedFile != null) {
+                                return `<a class="btn btnDownloadFile btn-primary btn-standard" href="/Incident/FileDownload?filename=${res.SMTAttachedFile}" title="Tải file xác nhận của SMT">
+                                       <i class="fas fa-download" style="margin-left:-3.5px;"></i>
+                                    </a>`;
+                            }
+                            return "";
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            if (res.TeamAttachedFile != null) {
+                                return `<a class="btn btnDownloadFile btn-primary btn-standard" href="/Incident/FileDownload?filename=${res.TeamAttachedFile}" title="Tải file xác nhận của phòng ban liên quan">
+                                       <i class="fas fa-download" style="margin-left:-3.5px;"></i>
+                                    </a>`;
+                            }
+                            return "";
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            if (isAdmin || isSubAdmin || isGuard) {
+                                return `<a class="btn btn-edit btn-standard btnEdit" title="Sửa" href="/Incident/Edit/${res.ID}">
+                                                                 <i class="icon fas fa-cog" style="margin-left: -4px"></i>
+                                                            </a>
+                                                            <a class="btn btn-danger btn-standard btn-delete btnXoa" onclick="Delete(${res.ID})" title="Xóa">
+                                                                 <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
+                                                            </a>`;
+                            }
+                            return "";
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            if (res.CreatedDate === null || res.CreatedDate === "" || typeof (res.CreatedDate) === "undefined")
+                                return "";
+                            var date = new Date(parseInt(res.CreatedDate.replace(/[^0-9 +]/g, '')));
+                            var createdDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.CreatedBy}</span><span style="margin-left:10px;">${createdDate}</span>`;
+                        }
+                    },
+                    {
+                        data: function (res) {
+                            if (res.ModifiedDate === null || res.ModifiedDate === "" || typeof (res.ModifiedDate) === "undefined")
+                                return "";
+                            var date = new Date(parseInt(res.ModifiedDate.replace(/[^0-9 +]/g, '')));
+                            var modifiedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
+                            return `<span class="border-right" style="padding-right:10px;">${res.ModifiedBy}</span ><span style="margin-left:10px;">${modifiedDate}</span>`;
+                        }
+                    }
+                ]
+            };
+            table = $('#incident-table').DataTable(options);
+        })
+
+        //Create
+        $('#incident-confirm').on("click", (event) => {
+            event.preventDefault();
+            var data = new FormData();
+            var incidentObject = {};
+            incidentObject.Title = $('#txtContent').val();
+            data.append("incident", JSON.stringify(incidentObject));
+            data.append("file", $('#file')[0].files[0]);
+            data.append("SMTfile", $('#SMTfile')[0].files[0]);
+            data.append("PICfile", $('#PICfile')[0].files[0]);
+
+            $.confirm({
+                title: "Bạn phải nhập trường có dấu (*)",
+                content: function () {
+                    var self = this;
+                    return $.ajax({
+                        url: "/Incident/Create",
+                        method: "POST",
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        success: function (mess) {
+                            if (mess === "Success") {
+                                window.location.href = "/Incident/Index"
+                            }
+                            else {
+                                self.setContent(mess);
+                            }
+                        }
+                    })
+                }
+            })
+        });
+
+        function Delete(id) {
+            $.confirm({
+                title: 'Xác nhận',
+                content: 'Bạn có chắc muốn xóa bản ghi?',
+                buttons: {
+                    confirm: async function () {
+                        await $.ajax({
+                            url: "/Incident/Delete/" + id,
+                            method: "GET",
+                            success: function () {
+                                window.location.reload();
+                            }
+                        })
+                    },
+                    cancel: function () {
+                        //$.alert('Hủy bỏ!');
+                    }
+                }
+            });
+        }
+
+        $("#guard").removeClass('collapse');
+        $("#guard").removeClass('collapsed');
+        $("#guard").attr("aria-expanded", "true");
+        $("#incident").addClass('active');
+        $("#collapseGuard").addClass('show');
+        $("#collapseInOut").removeClass('collapse');
+    </script>
+}
+
+
+

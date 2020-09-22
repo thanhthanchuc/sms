@@ -106,7 +106,7 @@ namespace SMS.Web.Controllers
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
                 go_Out.ModifiedBy = user.EmpCode + "|" + user.FullName;
                 var res = dao.Update(go_Out, user.EmpCode);
-                if (res /*&& (go_Out.EstimatedDateReturn >= go_Out.EstimatedDateOut)*/)
+                if (res)
                 {
                     return RedirectToAction("History", "GoOut");
                 }
@@ -114,6 +114,11 @@ namespace SMS.Web.Controllers
                 {
                     ModelState.AddModelError("", "Cập nhật thất bại");
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Cập nhật thất bại");
+                return View("Edit");
             }
             return View("History");
         }
@@ -208,7 +213,8 @@ namespace SMS.Web.Controllers
         [AuthorizeUser(AccessLevel = 2)]
         public ActionResult Cancel(int id)
         {
-            new GoOutDAO().Cancel(id);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            new GoOutDAO().Cancel(id, user.EmpCode + "|" + user.FullName);
             return RedirectToAction("History");
         }
 

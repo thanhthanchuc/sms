@@ -29,27 +29,27 @@
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
                 &nbsp;
-                <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
+                <input id="date_from" class="form-control bg-light from-date" autocomplete="off" name="from" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")" value="@ViewBag.from">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
                 &nbsp;
-                <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
+                <input id="date_to" class="form-control bg-light to-date" autocomplete="off" name="to" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")" value="@ViewBag.to">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
                 &nbsp;
-                <input id="team" class="form-control bg-light to-date">
+                <input id="team" class="form-control bg-light to-date" autocomplete="off" name="team" value="@ViewBag.teamName">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
                 &nbsp;
-                <input id="emp_code" class="form-control bg-light to-date">
+                <input id="emp_code" class="form-control bg-light to-date" autocomplete="off" name="emp_code" value="@ViewBag.employee">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Ca làm việc</label>
                 &nbsp;
-                <select class="form-control from-date">
+                <select class="form-control from-date" name="shift">
                     <option value="0">Hành chính</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -161,25 +161,29 @@
                         <td class="col-sticky-11" style="text-align: left">
                             @if ((User as SMS.Web.Models.CustomPrincipal).PriorityRole > 1)
                             {
-                                if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                                if (item.GuardStatus == null)
                                 {
-                                    <a class="btn btn-cancel btn-danger btn-standard" data-toggle="modal" data-target="#rejectModal" title="Hủy bỏ" onclick="cancel(@item.ID)">
-                                        <i class="fas fa-lock" style="margin-left: -3px"></i>
-                                    </a>
+                                    if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                                    {
+                                        <a class="btn btn-cancel btn-danger btn-standard" data-toggle="modal" data-target="#rejectModal" title="Hủy bỏ" onclick="cancel(@item.ID)">
+                                            <i class="fas fa-lock" style="margin-left: -3px"></i>
+                                        </a>
+                                    }
+                                    else if (item.ApprovedStatus == null || item.ApprovedStatus == 3)
+                                    {
+                                        <a class="btn btn-edit btn-standard btn-white" href="/LeaveEarly/Edit/@item.ID" title="Sửa">
+                                            <i class="icon fas fa-cog" style="margin-left: -4px"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-standard btn-delete" data-toggle="modal" data-target="#deleteModal" title="Xóa" onclick="handleRefId(@item.ID)">
+                                            <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
+                                        </a>
+                                    }
+                                    else if (item.ApprovedStatus == 4)
+                                    {
+                                        <b class="red">Hủy bỏ</b>
+                                    }
                                 }
-                                else if (item.ApprovedStatus == null || item.ApprovedStatus == 3)
-                                {
-                                    <a class="btn btn-edit btn-standard btn-white" href="/LeaveEarly/Edit/@item.ID" title="Sửa">
-                                        <i class="icon fas fa-cog" style="margin-left: -4px"></i>
-                                    </a>
-                                    <a class="btn btn-danger btn-standard btn-delete" data-toggle="modal" data-target="#deleteModal" title="Xóa" onclick="handleRefId(@item.ID)">
-                                        <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
-                                    </a>
-                                }
-                                else if (item.ApprovedStatus == 4)
-                                {
-                                    <b class="red">Hủy bỏ</b>
-                                }
+
                             }
                         </td>
                         <td class="col-sticky-12">
@@ -194,6 +198,10 @@
                             @if (item.ApprovedBy != null)
                             {
                                 @Html.DisplayFor(modelItem => item.ApprovedBy)
+                            }
+                            else if (item.ApprovedBy == null)
+                            {
+                                <i class="fas fa-question" title="Đang chờ phê duyệt" style="cursor: pointer"></i>
                             }
                         </td>
                         <td>
@@ -230,6 +238,10 @@
                             @if (item.Guard != null)
                             {
                                 @Html.DisplayFor(modelItem => item.Guard)
+                            }
+                            else if (item.Guard == null)
+                            {
+                                <i class="fas fa-question" title="Đang chờ xác nhận" style="cursor: pointer"></i>
                             }
                         </td>
                         <td>

@@ -29,12 +29,12 @@
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
                 &nbsp;
-                <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
+                <input id="date_from" class="form-control bg-light from-date" autocomplete="off" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
                 &nbsp;
-                <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
+                <input id="date_to" class="form-control bg-light to-date" autocomplete="off" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")">
             </div>
             <div class="col-2 input-group input-group-sm">
                 <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
@@ -164,24 +164,27 @@
                         <td class="col-sticky-11" style="text-align: left">
                             @if ((User as SMS.Web.Models.CustomPrincipal).PriorityRole > 1)
                             {
-                                if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                                if (item.GuardStatusOut == null)
                                 {
-                                    <a class="btn btn-cancel btn-danger btn-standard" data-toggle="modal" data-target="#rejectModal" title="Hủy bỏ" onclick="cancel(@item.ID)">
-                                        <i class="fas fa-lock" style="margin-left: -3px"></i>
-                                    </a>
-                                }
-                                else if (item.ApprovedStatus == null || item.ApprovedStatus == 3)
-                                {
-                                    <a class="btn btn-edit btn-standard btn-white" href="/GoOut/Edit/@item.ID" title="Sửa">
-                                        <i class="icon fas fa-cog" style="margin-left: -4px"></i>
-                                    </a>
-                                    <a class="btn btn-danger btn-standard btn-delete" data-toggle="modal" data-target="#deleteModal" title="Xóa" onclick="handleRefId(@item.ID)">
-                                        <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
-                                    </a>
-                                }
-                                else if (item.ApprovedStatus == 4)
-                                {
-                                    <b class="red">Hủy bỏ</b>
+                                    if (item.ApprovedStatus == 1 || item.ApprovedStatus == 2)
+                                    {
+                                        <a class="btn btn-cancel btn-danger btn-standard" data-toggle="modal" data-target="#rejectModal" title="Hủy bỏ" onclick="cancel(@item.ID)">
+                                            <i class="fas fa-lock" style="margin-left: -3px"></i>
+                                        </a>
+                                    }
+                                    else if (item.ApprovedStatus == null || item.ApprovedStatus == 3)
+                                    {
+                                        <a class="btn btn-edit btn-standard btn-white" href="/GoOut/Edit/@item.ID" title="Sửa">
+                                            <i class="icon fas fa-cog" style="margin-left: -4px"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-standard btn-delete" data-toggle="modal" data-target="#deleteModal" title="Xóa" onclick="handleRefId(@item.ID)">
+                                            <i class="icon fas fa-times" style="margin-left: -2px; color: white; cursor: pointer"></i>
+                                        </a>
+                                    }
+                                    else if (item.ApprovedStatus == 4)
+                                    {
+                                        <b class="red">Hủy bỏ</b>
+                                    }
                                 }
                             }
                         </td>
@@ -201,6 +204,10 @@
                             @if (item.ApprovedBy != null)
                             {
                                 @Html.DisplayFor(modelItem => item.ApprovedBy)
+                            }
+                            else if (item.ApprovedBy == null)
+                            {
+                                <i class="fas fa-question" style="cursor: pointer" title="Đang chờ phê duyệt"></i>
                             }
                         </td>
                         <td>
@@ -234,6 +241,10 @@
                             {
                                 @Html.DisplayFor(modelItem => item.GuardOut)
                             }
+                            else if (item.GuardOut == null)
+                            {
+                                <i class="fas fa-question" style="cursor: pointer" title="Đang chờ xác nhận ra"></i>
+                            }
                         </td>
                         <td>
                             @if (item.GuardStatusOut == 1)
@@ -262,6 +273,10 @@
                             @if (item.GuardReturn != null)
                             {
                                 @Html.DisplayFor(modelItem => item.GuardReturn)
+                            }
+                            else if (item.GuardReturn == null)
+                            {
+                                <i class="fas fa-question" style="cursor: pointer" title="Đang chờ xác nhận quay lại"></i>
                             }
                         </td>
                         <td>

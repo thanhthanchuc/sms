@@ -1511,7 +1511,10 @@ pre {
     border: 1px solid #e3e6f0
 }
 
-    .table-bordered td, .table-bordered th {
+    .table-bordered td {
+        border: 1px solid #e3e6f0
+    }
+    .table-bordered th {
         border: 1px solid #e3e6f0
     }
 

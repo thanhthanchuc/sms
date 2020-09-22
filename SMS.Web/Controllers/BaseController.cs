@@ -16,28 +16,18 @@ namespace SMS.Web.Controllers
         /// <param name="filterContext"></param>
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var session = (UserLogin)Session[CommonConstants.USER_SESSION];
-            if (session == null)
+            try
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Login", action = "Index" }));
+                var session = (UserLogin)Session[CommonConstants.USER_SESSION];
+                if (session == null)
+                {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Login", action = "Index" }));
+                }
+                base.OnActionExecuted(filterContext);
             }
-            base.OnActionExecuted(filterContext);
-        }
-
-        protected void SetAlert(string message, string type)
-        {
-            TempData["AlertMessage"] = message;
-            if (type == "success")
+            catch (Exception ex)
             {
-                TempData["AlertType"] = "alert-success";
-            }
-            else if (type == "warning")
-            {
-                TempData["AlertType"] = "alert-warning";
-            }
-            else if (type == "error")
-            {
-                TempData["AlertType"] = "alert-danger";
+                throw ex;
             }
         }
     }

@@ -74,8 +74,8 @@ namespace SMS.Web.Controllers
                         HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
                         Response.Cookies.Add(faCookie);
 
-                        userSession.EmpCode = user.EmpCode;
                         userSession.ID = user.ID;
+                        userSession.EmpCode = user.EmpCode;
                         userSession.FullName = user.FullName;
                         ViewBag.userSS = userSession.FullName;
                         //userSession.RoleName = userDAO.GetRoleName(user.RoleId);
@@ -126,6 +126,7 @@ namespace SMS.Web.Controllers
                         Response.Cookies.Add(faCookie);
 
                         ViewBag.userSS = (UserLogin)Session[CommonConstants.USER_SESSION];
+                        userSession.ID = user.ID;
                         userSession.EmpCode = user.EmpCode;
                         userSession.FullName = user.FullName;
                         //userSession.RoleName = userDAO.GetRoleName(user.RoleId);

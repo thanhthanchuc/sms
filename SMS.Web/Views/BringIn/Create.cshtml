@@ -19,21 +19,19 @@
             <div class="form-group row-1 input-group">
                 <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group input-group-sm">
-                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" maxlength="8" />
+                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" maxlength="8" autocomplete="off" />
                 </div>
             </div>
-
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Lý do <span class="red">(*)</span></label>
                 <div class="col-md-10 input-group-sm">
                     <textarea class="form-control col-md-12" style="resize: none" id="reason"></textarea>
                 </div>
             </div>
-
             <div class="form-group input-group specific-date-pick">
                 <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input style="background: white" class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" autocomplete="off" />
+                    <input style="background: white" class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" autocomplete="off" readonly />
                 </div>
                 <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
                 <div class="col-2 input-group-sm">
@@ -105,7 +103,7 @@
                             <input class="form-control input-previous-button serial" />
                         </td>
                         <td class="input-group-sm">
-                            <input type="number" class="form-control input-previous-button quantity" min="0"/>
+                            <input type="number" class="form-control input-previous-button quantity" min="0" />
                         </td>
                         <td class="input-group-sm">
                             <input class="form-control input-previous-button unit" maxlength="50" />
@@ -117,15 +115,15 @@
                                 <option value="2">Hàng độc hại</option>
                             </select>
                         </td>
+                        @{ }
                         <td class="input-group-sm">
                             <select id="return" class="form-control input-previous-button isReturn">
-                                <option>--Chọn--</option>
-                                <option value="true">Có</option>
+                                <option value="true" selected>Có</option>
                                 <option value="false">Không</option>
                             </select>
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off" />
+                            <input class="form-control datepicker returnDate" style="background: white" readonly placeholder="Ngày" autocomplete="off" />
                         </td>
                         <td class="input-group-sm">
                             <input class="form-control timepicker returnTime" placeholder="Giờ" type="time" />
@@ -139,7 +137,7 @@
         <label id="add-row-items" class="btn-primary btn top-space btn-sm" title="Thêm hàng hóa khác" style="cursor: pointer; margin-top:8px;">
             <i class="fas fa-plus"></i>&nbsp; Thêm tài sản
         </label>
-        <button id="register" class="btn-success btn btn-sm" type="submit" title="Đăng ký mang hàng vào" onclick="validate()" style="cursor: pointer">
+        <button id="register" class="btn-success btn btn-sm" type="submit" title="Đăng ký mang hàng vào" style="cursor: pointer">
             <i class="fas fa-edit"></i>&nbsp; Đăng ký
         </button>
     </div>
@@ -150,48 +148,43 @@
     <script src="~/Assets/js/jquery-confirm.js"></script>
     <script src="~/Assets/js/bring_in/common.js"></script>
     <script>
-        function validate() {
-
-        }
-
         $("#add-row-items").off('click').on('click', function (e) {
             var html = `<tr class="row-items">
-                                    <td>
-                                        <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
-                                    </td>
-                                    <td class="input-group-sm">
-                                        <input class="form-control input-previous-button item" />
-                                    </td>
-                                    <td class="input-group-sm">
-                                        <input class="form-control input-previous-button serial" />
-                                    </td>
-                                    <td class="input-group-sm">
-                                        <input type="number" class="form-control input-previous-button quantity" min="0" />
-                                    </td>
-                                    <td class="input-group-sm">
-                                        <input class="form-control input-previous-button unit" maxlength="50" />
-                                    </td>
-                                    <td class="input-group-sm">
-                                        <select class="form-control input-previous-button assetType">
-                                            <option value="0" selected>Hàng thường</option>
-                                            <option value="1">Hàng IT</option>
-                                            <option value="2">Hàng độc hại</option>
-                                        </select>
-                                    </td>
-                                    <td class="input-group-sm">
-                                        <select class="form-control input-previous-button isReturn">
-                                            <option>--Chọn--</option>
-                                            <option value="true" selected>Có</option>
-                                            <option value="false">Không</option>
-                                        </select>
-                                    </td>
-                                    <td class="input-group-sm">
-                                        <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off" />
-                                    </td>
-                                    <td class="input-group-sm">
-                                        <input class="form-control timepicker returnTime" placeholder="Giờ" type="time" />
-                                    </td>
-                                </tr>`;
+                                           <td>
+                                               <label class="control-label btn btn-sm delete-items"><i class="fas fa-times-circle"></i></label>
+                                           </td>
+                                           <td class="input-group-sm">
+                                               <input class="form-control input-previous-button item" />
+                                           </td>
+                                           <td class="input-group-sm">
+                                               <input class="form-control input-previous-button serial" />
+                                           </td>
+                                           <td class="input-group-sm">
+                                               <input type="number" class="form-control input-previous-button quantity" min="0" />
+                                           </td>
+                                           <td class="input-group-sm">
+                                               <input class="form-control input-previous-button unit" maxlength="50" />
+                                           </td>
+                                           <td class="input-group-sm">
+                                               <select class="form-control input-previous-button assetType">
+                                                   <option value="0" selected>Hàng thường</option>
+                                                   <option value="1">Hàng IT</option>
+                                                   <option value="2">Hàng độc hại</option>
+                                               </select>
+                                           </td>
+                                           <td class="input-group-sm">
+                                               <select class="form-control input-previous-button isReturn">
+                                                   <option value="true" selected>Có</option>
+                                                   <option value="false">Không</option>
+                                               </select>
+                                           </td>
+                                           <td class="input-group-sm">
+                                               <input class="form-control datepicker returnDate" style="background: white" readonly placeholder="Ngày" autocomplete="off" />
+                                           </td>
+                                           <td class="input-group-sm">
+                                               <input class="form-control timepicker returnTime" placeholder="Giờ" type="time" />
+                                           </td>
+                                        </tr>`;
             $('#BI-items > tbody:last-child').append(html);
 
             $('.datepicker, #estimated_date, .returnDate').datepicker({
@@ -209,7 +202,7 @@
 
         $('#txtEmpCodeBI').keyup(function () {
             var count = $('#txtEmpCodeBI').val().length;
-            if (count == 8) {
+            if (count == 7 || count == 8) {
                 _userBI.getUserBI();
             } else {
                 $('#txtFullNameBI').val("");
@@ -224,5 +217,40 @@
         $("#BICreate").addClass('active');
         $("#collapseBringIn").addClass('show');
         $("#collapseInOut").removeClass('collapse');
+
+        $(document).ready(function () {
+            $("#register").on("click", function () {
+                if ($('#txtEmpCodeBI').val() == "") {
+                    $('#txtEmpCodeBI').css("border-color", "red");
+                } else {
+                    $('#txtEmpCodeBI').css("border-color", "#d1d3e2");
+                }
+
+                if ($('#reason').val() == "") {
+                    $('#reason').css("border-color", "red");
+                } else {
+                    $('#reasom').css("border-color", "#d1d3e2");
+                }
+
+                if ($('#estimated_date').val() == "") {
+                    $('#estimated_date').css("border-color", "red");
+                } else {
+                    $('#estimated_date').css("border-color", "#d1d3e2");
+                }
+
+                if ($('#estimated_time').val() == "") {
+                    $('#estimated_time').css("border-color", "red");
+                } else {
+                    $('#estimated_time').css("border-color", "#d1d3e2");
+                }
+
+                $(".item").each(function () {
+                    if ($(this).val() == "") {
+                        $(this).css("border-color", "red");
+                        return false;
+                    }
+                });
+            });
+        });
     </script>
 }

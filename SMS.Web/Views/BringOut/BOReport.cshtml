@@ -41,13 +41,13 @@
     <br />
     <div style="text-align: center; color: black">
         <img style="width: 200px; position: absolute; left:9%; top:2%" src="~/Assets/img/logo.png" />
-        <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">GIẤY XÁC NHẬN MANG HÀNG VÀO</h5>
+        <h5 style="font-size:30px; color: black" class="m-0 font-weight-bold">GIẤY XÁC NHẬN MANG HÀNG RA</h5>
     </div>
     <div class="center">
-        <span class="normal">BRING IN CONFIRMATION</span>
+        <span class="normal">BRING OUT CONFIRMATION</span>
     </div>
     <div class="center">
-        <span class="normal">Mã đăng ký (ID): </span><b class="normal"><span>RBI</span><span>@Html.DisplayFor(model => model.ID)</span><span>@Html.DisplayFor(model => model.Team)</span></b>
+        <span class="normal">Mã đăng ký (ID): </span><b class="normal"><span>@Html.DisplayFor(model => model.Team)</span><span>@Html.DisplayFor(model => model.ID)</span></b>
     </div>
     <div class="center">
         <span class="normal">Ngày đăng ký (Created Date): </span>&nbsp;<b class="normal">@Html.DisplayFor(model => model.CreatedDate)</b>
@@ -91,7 +91,7 @@
                 <th>Loại hàng <br />(Asset type)</th>
                 <th colspan="2">Mang ra<br /> (Return)</th>
                 <th>TM phê duyệt<br /> (Approved by)</th>
-                <th>ITT/SMT phê duyệt<br /> (ITT/SMT Approved)</th>
+                <th>SMT phê duyệt<br /> (SMT Approved)</th>
                 <th>FST phê duyệt<br /> (FST Approved)</th>
                 <th>Bảo vệ<br /> (Ra/Out)</th>
                 <th>Bảo vệ<br /> (Quay lại/Return)</th>
@@ -220,21 +220,25 @@
     </div>
     <br />
     <div>
-        <table class="table table-bordered" style="border: 1px solid black !important">
+        <table class="table table-bordered" style="border: 1px solid black !important; width:90%; margin:auto">
             <tr>
-                <th height="80">Người đăng ký<br />(Created by)</th>
-                <th>TM xác nhận <br />(Approved by)</th>
-                <th>ITT/SMT xác nhận <br />(ITT/SMT Approved)</th>
-                <th>FST xác nhận <br />(FST Approved)</th>
-                <th colspan="2">Bảo vệ xác nhận (Guard) (Ra/Out)</th>
+                <th rowspan="2" height="80" width="15%">Người đăng ký<br />(Created by)</th>
+                <th rowspan="2" width="16%">TM xác nhận <br />(Approved by)</th>
+                <th rowspan="2" width="16%">SMT xác nhận <br />(SMT Approved)</th>
+                <th rowspan="2" width="16%">FST xác nhận <br />(FST Approved)</th>
+                <th width="19%" colspan="2">Bảo vệ xác nhận (Guard)</th>
             </tr>
             <tr>
-                <td height="100"><b class="normal">@Html.DisplayFor(model => model.CreatedBy)</b></td>
-                <td height="100"></td>
-                <td height="100"></td>
-                <td height="100"></td>
-                <td height="100"></td>
-                <td height="100"></td>
+                <th height="40" width="9.5%">Ra (Out)</th>
+                <th height="40">Quay lại (Return)</th>
+            </tr>
+            <tr>
+                <td height="150"><b class="normal">@Html.DisplayFor(model => model.CreatedBy)</b></td>
+                <td height="150"></td>
+                <td height="150"></td>
+                <td height="150"></td>
+                <td height="150"></td>
+                <td height="150"></td>
             </tr>
         </table>
     </div>

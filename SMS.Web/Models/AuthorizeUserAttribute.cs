@@ -12,6 +12,7 @@ namespace SMS.Web.Models
         public string RoleName { get; set; }
 
         public int[] ExceptRoleLevels { get; set; }
+        public string ExceptRoleName { get; set; }
 
         public int[] IncludeRoleLevels { get; set; }
 
@@ -24,6 +25,11 @@ namespace SMS.Web.Models
             }
 
             string roleName = (httpContext.User as CustomPrincipal).RoleName;
+
+            if (ExceptRoleName != null)
+            {
+                return ExceptRoleName != roleName;
+            }
 
             if (RoleName != null && RoleName != "")
             {

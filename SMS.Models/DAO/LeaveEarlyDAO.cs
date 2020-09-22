@@ -46,13 +46,13 @@ namespace SMS.Models.DAO
         public IEnumerable<Leave_Early> ListAllPaging(string searchString, int page, int pageSize, int userID, int role)
         {
             var team = dbContext.Users.Include(t => t.Team).Single(u => u.ID == userID).Team.Name;
+
             IQueryable<Leave_Early> model = dbContext.Leave_Early.Where(t => role >= 4 || t.Team == team);
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.EmpCode.Contains(searchString.ToLower()) || x.FullName.Contains(searchString.ToLower()) || x.Team.Contains(searchString.ToLower()));
             }
-
-            return model.OrderByDescending(x => x.EstimatedDate).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.EstimatedDate).ThenByDescending(x => x.EstimatedTime).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace SMS.Models.DAO
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Leave_Early> ListApprove(string searchString, int page, int pageSize)
+        public IEnumerable<Leave_Early> ListApprove(string searchString, int page, int pageSize, string tName, bool unfilter)
         {
-            IQueryable<Leave_Early> model = dbContext.Leave_Early;
+            IQueryable<Leave_Early> model = dbContext.Leave_Early.Where(t => unfilter || t.Team == tName); ;
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.ApprovedStatus.Equals(null) && (x.EmpCode.Contains(searchString.ToLower()) || x.FullName.Contains(searchString.ToLower()) || x.Team.Contains(searchString.ToLower())));
@@ -72,7 +72,7 @@ namespace SMS.Models.DAO
             {
                 model = model.Where(x => x.ApprovedStatus.Equals(null));
             }
-            return model.OrderByDescending(x => x.EstimatedDate).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.EstimatedDate).ThenByDescending(x => x.EstimatedTime).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -184,12 +184,14 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Cancel(int id)
+        public bool Cancel(int id, string modifiedBy)
         {
             try
             {
                 var leaveEarly = dbContext.Leave_Early.Find(id);
                 leaveEarly.ApprovedStatus = 4;
+                leaveEarly.ModifiedDate = DateTime.Now;
+                leaveEarly.ModifiedBy = modifiedBy;
                 dbContext.SaveChanges();
                 return true;
             }

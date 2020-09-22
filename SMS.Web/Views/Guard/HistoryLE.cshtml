@@ -79,14 +79,46 @@
             <!--Tiêu đề cột-->
             <thead>
                 <tr class="table-heading">
+                    <th colspan="4">TM phê duyệt</th>
                     <th>Thời gian ra ngoài</th>
                     <th colspan="4">Bảo vệ xác nhận ra ngoài</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>
+                        @if (Model.Leave_Early.ApprovedStatus == null)
+                        {
+                            <i class="fas fa-question" title="Đang chờ Trưởng phòng PIC phê duyệt"></i>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.Leave_Early.ApprovedBy)
+                        }
+                    </td>
+                    <td>
+                        @if (Model.Leave_Early.ApprovedStatus == 1)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                        else if (Model.Leave_Early.ApprovedStatus == 0)
+                        {
+                            <i class="fas fa-times" style="color:red"></i>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.ApprovedDate)</td>
+                    <td>@Html.DisplayFor(model => model.Leave_Early.ApproverRemark)</td>
                     <td>@Html.DisplayFor(model => model.Leave_Early.EstimatedDate)  @Html.DisplayFor(model => model.Leave_Early.EstimatedTime)</td>
-                    <td>@Html.DisplayFor(model => model.Leave_Early.Guard)</td>
+                    <td>
+                        @if (Model.Leave_Early.Guard == null)
+                        {
+                            <i class="fas fa-question" title="Đang chờ Bảo vệ xác nhận"></i>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.Leave_Early.Guard)
+                        }
+                    </td>
                     <td>@Html.DisplayFor(model => model.Leave_Early.GuardDate)</td>
                     <td>
                         @if (Model.Leave_Early.GuardStatus == 1)
@@ -106,6 +138,11 @@
     <div style="text-align: center">
         <label id="return-history" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
+        </label>
+        <label class="btn-primary btn top-space btn-sm" style="cursor: pointer">
+            <a href="/LeaveEarly/LEReport/@Model.Leave_Early.ID" target="_blank" style="cursor: pointer; text-decoration: none; color: white" title="In báo cáo">
+                In xác nhận
+            </a>
         </label>
     </div>
 </div>

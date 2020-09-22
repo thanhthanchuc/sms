@@ -6,6 +6,11 @@
 @section styles{
     <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
+    <style>
+        label {
+            color: black;
+        }
+    </style>
 }
 
 <div style="width:100%">
@@ -13,20 +18,20 @@
         <h5 class="m-0 font-weight-bold text-primary">PHÒNG FST PHÊ DUYỆT MANG HÀNG RA</h5>
     </div>
     <div class="row dataTables_wrapper dt-bootstrap4 above-table">
-        <div class="col-2 input-group input-group-sm">
-            <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
-            &nbsp;
-            <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
-        </div>
-        <div class="col-2 input-group input-group-sm">
-            <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
-            &nbsp;
-            <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
-        </div>
+        @*<div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
+                &nbsp;
+                <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
+            </div>
+            <div class="col-2 input-group input-group-sm">
+                <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+                &nbsp;
+                <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
+            </div>*@
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
             &nbsp;
-            <input class="form-control bg-light to-date"/>
+            <input class="form-control bg-light to-date" />
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>

@@ -9,623 +9,601 @@
     }
 </style>
 
-<div style="margin-left:10px; margin-right:10px;">
-    <!--Navbar lọc dữ liệu-->
-    <div style="width: 100%">
-        <div class="card-header">
-            <h5 class="m-0 font-weight-bold text-primary">@Html.ActionLink("LỊCH SỬ VÀO RA", "History", "Guard")</h5>
-        </div>
-        @using (@Html.BeginForm("History", "Guard", FormMethod.Get))
-        {
-            <div class="row dataTables_wrapper dt-bootstrap4 above-table">
-
-                <div class="col-2 input-group input-group-sm">
-                    <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
-                    &nbsp;
-                    <input id="date_from" class="form-control bg-light from-date">
-                </div>
-                <div class="col-2 input-group input-group-sm">
-                    <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
-                    &nbsp;
-                    <input id="date_to" class="form-control bg-light to-date">
-                </div>
-                <div class="col-2 input-group input-group-sm">
-
-                    <div class="col-12 input-group input-group-sm">
-                        <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+<body onload="JavaScript:AutoRefresh(120000);">
+    <div>
+        <!--Navbar lọc dữ liệu-->
+        <div style="width: 100%">
+            <div class="card-header">
+                <h5 class="m-0 font-weight-bold text-primary">@Html.ActionLink("LỊCH SỬ VÀO RA", "History", "Guard")</h5>
+            </div>
+            @using (@Html.BeginForm("History", "Guard", FormMethod.Get))
+            {
+                <div class="row dataTables_wrapper dt-bootstrap4 above-table">
+                    <div class="col-2 input-group input-group-sm">
+                        <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
                         &nbsp;
-                        <input id="emp_code" class="form-control bg-light to-date" name="employee" value="@ViewBag.employee">
+                        <input id="date_from" class="form-control bg-light from-date" autocomplete="off" name="from" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")" value="@ViewBag.from">
+                    </div>
+                    <div class="col-2 input-group input-group-sm">
+                        <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
+                        &nbsp;
+                        <input id="date_to" class="form-control bg-light to-date" autocomplete="off" name="to" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")" value="@ViewBag.to">
+                    </div>
+                    <div class="col-2 input-group input-group-sm">
+                        <div class="col-12 input-group input-group-sm">
+                            <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
+                            &nbsp;
+                            <input id="emp_code" class="form-control bg-light to-date" name="employee" value="@ViewBag.employee">
+                        </div>
+                    </div>
+                    <div class="col-2 input-group input-group-sm">
+                        <label class="no-margin-bottom" style="padding-top: 5px; margin-right: 5px;">Tên khách</label>
+                        <input id="guest" class="form-control bg-light to-date" name="guest" value="@ViewBag.guest">
+                    </div>
+                    <div class="col-2 input-group input-group-sm">
+                        <label class="no-margin-bottom" style="padding-top: 5px">Công ty</label>
+                        &nbsp;
+                        <input id="emp_code" class="form-control bg-light to-date" name="company" value="@ViewBag.company">
+                    </div>
+                    <div class="col-2">
+                        <a href="/Guest/Create" class="btn btn-sm btn-primary" id="btn-guest-register"><i class="fas fa-users"></i> Đăng ký khách</a>
+                        &nbsp;
+                        <button class="btn btn-sm btn-search btn-info" title="Tìm kiếm"><i class="fas fa-search"></i> Tìm kiếm</button>
                     </div>
                 </div>
-                <div class="col-2 input-group input-group-sm">
-                    <label class="no-margin-bottom" style="padding-top: 5px; margin-right: 5px;">Tên khách</label>
-                    <input id="guest" class="form-control bg-light to-date" name="guest" value="@ViewBag.guest">
+            }
+        </div>
+
+        <!--Div chứa table dữ liệu-->
+        <div class="row" style="margin-left:0px; margin-right:5px; width: 100%">
+            <!--Danh sách CNV về sớm-->
+            <div class="col-6" style="border: 1px solid #d1d3e2; border-radius: 5px">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV VỀ SỚM</h6>
                 </div>
-                <div class="col-2 input-group input-group-sm">
-                    <label class="no-margin-bottom" style="padding-top: 5px">Công ty</label>
-                    &nbsp;
-                    <input id="emp_code" class="form-control bg-light to-date" name="company" value="@ViewBag.company">
+
+                <div style="overflow: auto; height: 300px; margin-bottom: 5px">
+                    <table class="table table-hover table-bordered">
+                        <!--Tiêu đề cột-->
+                        <tr class="table-heading">
+                            <th>In ấn</th>
+                            <th>
+                                @Html.DisplayName("Họ tên")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Vị trí")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Phòng ban")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Lí do")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Thời gian dự kiến")
+                            </th>
+                        </tr>
+                        @foreach (var item in ViewBag.LeaveEarlies)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                </td>
+                                <td><a href="/Guard/HistoryLE/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                                <td>@item.Position</td>
+                                <td>@item.Team</td>
+                                <td>@item.Reason</td>
+                                <td>@item.EstimatedDate  @item.EstimatedTime</td>
+                            </tr>
+                        }
+                    </table>
                 </div>
-                <div class="col-2">
-                    <a href="/Guest/Create" class="btn btn-sm btn-primary" id="btn-guest-register"><i class="fas fa-users"></i> Đăng ký khách</a>
-                    &nbsp;
-                    <button class="btn btn-sm btn-search btn-info" title="Tìm kiếm"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </div>
+
+            <!--Danh sách CNV ra ngoài-->
+            <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV RA NGOÀI</h6>
                 </div>
-                <button type="submit" class="btn btn-primary" style="display: none"></button>
-            </div>
-        }
-    </div>
-
-    <!--Div chứa table dữ liệu-->
-    <div class="row" style="margin-left:0px; margin-right:5px; width: 100%">
-        <!--Danh sách CNV về sớm-->
-        <div class="col-6" style="border: 1px solid #d1d3e2; border-radius: 5px">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV VỀ SỚM</h6>
-            </div>
-
-            <div style="overflow: auto; height: 300px; margin-bottom: 5px">
-                <table class="table table-hover table-bordered">
-                    <!--Tiêu đề cột-->
-                    <tr class="table-heading">
-                        <th>
-                            @Html.DisplayName("ID")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Họ tên")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Phòng ban")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Lí do")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thời gian dự kiến")
-                        </th>
-                        <th>In ấn</th>
-                    </tr>
-                    @foreach (var item in ViewBag.LeaveEarlies)
-                    {
-                        <tr>
-                            <td><span>@item.ID</span><span>@item.Team</span></td>
-                            <td><a href="/Guard/HistoryLE/@item.ID" style="text-decoration:none">@item.FullName</a></td>
-                            <td>@item.Position</td>
-                            <td>@item.Team</td>
-                            <td>@item.Reason</td>
-                            <td>@item.EstimatedDate  @item.EstimatedTime</td>
-                            <td>
-                                <a href="/LeaveEarly/LEReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
-                            </td>
+                <div style="overflow: auto; height: 300px; margin-bottom: 5px">
+                    <table class="table table-hover table-bordered">
+                        <!--Tiêu đề cột-->
+                        <tr class="table-heading">
+                            <th>In ấn</th>
+                            <th>
+                                @Html.DisplayName("Họ tên")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Vị trí")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Phòng ban")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Lí do")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Thời gian ra")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Thời gian quay lại")
+                            </th>
                         </tr>
-                    }
-                </table>
+                        @foreach (var item in ViewBag.GoOuts)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/GoOut/GOReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                </td>
+                                <td><a href="/Guard/HistoryGO/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                                <td>@item.Position</td>
+                                <td>@item.Team</td>
+                                <td>@item.Reason</td>
+                                <td>@item.EstimatedDateOut  @item.EstimatedTimeOut</td>
+                                <td>@item.EstimatedDateReturn  @item.EstimatedTimeReturn</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
 
-        <!--Danh sách CNV ra ngoài-->
-        <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV RA NGOÀI</h6>
-            </div>
-            <div style="overflow: auto; height: 300px; margin-bottom: 5px">
-                <table class="table table-hover table-bordered">
-                    <!--Tiêu đề cột-->
-                    <tr class="table-heading">
-                        <th>
-                            @Html.DisplayName("ID")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Họ tên")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Phòng ban")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Lí do")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thời gian ra")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thời gian quay lại")
-                        </th>
-                        <th>In ấn</th>
-                    </tr>
-                    @foreach (var item in ViewBag.GoOuts)
-                    {
-                        <tr>
-                            <td><span>@item.ID</span><span>@item.Team</span></td>
-                            <td><a href="/Guard/HistoryGO/@item.ID" style="text-decoration:none">@item.FullName</a></td>
-                            <td>@item.Position</td>
-                            <td>@item.Team</td>
-                            <td>@item.Reason</td>
-                            <td>@item.EstimatedDateOut  @item.EstimatedTimeOut</td>
-                            <td>@item.EstimatedDateReturn  @item.EstimatedTimeReturn</td>
-                            <td>
-                                <a href="/GoOut/GOReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </div>
-        </div>
-    </div>
+        &nbsp;
 
-    &nbsp;
-
-    <div class="row" style="margin-left:0px; margin-right:5px; width: 100%">
-        <!--Danh sách CNV mang hàng vào-->
-        <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV MANG HÀNG VÀO</h6>
-            </div>
-            <div style="overflow: auto; height: 300px; margin-bottom: 5px">
-                <table class="table table-hover table-bordered">
-                    <!--Tiêu đề cột-->
-                    <tr class="table-heading">
-                        <th>
-                            @Html.DisplayName("ID")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Họ tên")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Phòng ban")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Lí do")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thời gian dự kiến")
-                        </th>
-                        <th>In ấn</th>
-                    </tr>
-                    @foreach (var item in ViewBag.BringIns)
-                    {
-                        <tr>
-                            <td><span>@item.ID</span><span>@item.Team</span></td>
-                            <td><a href="/Guard/HistoryBI/@item.ID" style="text-decoration:none">@item.FullName</a></td>
-                            <td>@item.Position</td>
-                            <td>@item.Team</td>
-                            <td>@item.Reason</td>
-                            <td>@item.EstimatedDate  @item.EstimatedTime</td>
-                            <td>
-                                <a href="/BringIn/BIReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
-                            </td>
+        <div class="row" style="margin-left:0px; margin-right:5px; width: 100%">
+            <!--Danh sách CNV mang hàng vào-->
+            <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV MANG HÀNG VÀO</h6>
+                </div>
+                <div style="overflow: auto; height: 300px; margin-bottom: 5px">
+                    <table class="table table-hover table-bordered">
+                        <!--Tiêu đề cột-->
+                        <tr class="table-heading">
+                            <th>In ấn</th>
+                            <th>
+                                @Html.DisplayName("Họ tên")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Vị trí")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Phòng ban")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Lí do")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Thời gian dự kiến")
+                            </th>
                         </tr>
-                    }
-                </table>
+                        @foreach (var item in ViewBag.BringIns)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/BringIn/BIReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                </td>
+                                <td><a href="/Guard/HistoryBI/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                                <td>@item.Position</td>
+                                <td>@item.Team</td>
+                                <td>@item.Reason</td>
+                                <td>@item.EstimatedDate  @item.EstimatedTime</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+            <!--Danh sách CNV mang hàng vào - ra-->
+            <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV MANG HÀNG RA</h6>
+                </div>
+                <div style="overflow: auto; height: 300px; margin-bottom: 5px">
+                    <table class="table table-hover table-bordered">
+                        <!--Tiêu đề cột-->
+                        <tr class="table-heading">
+                            <th>In ấn</th>
+                            <th>
+                                @Html.DisplayName("Họ tên")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Vị trí")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Phòng ban")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Lí do")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Thời gian dự kiến")
+                            </th>
+                        </tr>
+                        @foreach (var item in ViewBag.BringOuts)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/BringOut/BOReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                </td>
+                                <td><a href="/Guard/HistoryBO/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                                <td>@item.Position</td>
+                                <td>@item.Team</td>
+                                <td>@item.Reason</td>
+                                <td>@item.EstimatedDate  @item.EstimatedTime</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
 
-        <!--Danh sách CNV mang hàng vào - ra-->
-        <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH CNV MANG HÀNG RA</h6>
-            </div>
-            <div style="overflow: auto; height: 300px; margin-bottom: 5px">
-                <table class="table table-hover table-bordered">
-                    <!--Tiêu đề cột-->
-                    <tr class="table-heading">
-                        <th>
-                            @Html.DisplayName("ID")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Họ tên")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Vị trí")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Phòng ban")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Lí do")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thời gian dự kiến")
-                        </th>
-                        <th>In ấn</th>
-                    </tr>
-                    @foreach (var item in ViewBag.BringOuts)
-                    {
-                        <tr>
-                            <td><span>@item.ID</span><span>@item.Team</span></td>
-                            <td><a href="/Guard/HistoryBO/@item.ID" style="text-decoration:none">@item.FullName</a></td>
-                            <td>@item.Position</td>
-                            <td>@item.Team</td>
-                            <td>@item.Reason</td>
-                            <td>@item.EstimatedDate  @item.EstimatedTime</td>
-                            <td>
-                                <a href="/BringOut/BOReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
-                            </td>
+        &nbsp;
+
+        <div class="row" style="margin-left:0px; margin-right:5px; width: 100%">
+            <!--Danh sách khách vào ra-->
+            <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH KHÁCH VÀO - RA</h6>
+                </div>
+                <div style="overflow: auto; height: 300px; margin-bottom: 5px">
+                    <table class="table table-hover table-bordered">
+                        <!--Tiêu đề cột-->
+                        <tr class="table-heading">
+                            <th>In ấn</th>
+                            <th>
+                                @Html.DisplayName("Thời điểm")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Khách")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Công ty")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Tên khách")
+                            </th>
+                            <th>
+                                @Html.DisplayName("CMND/CCCD")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Số người")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Mục đích")
+                            </th>
+                            <th colspan="2">
+                                @Html.DisplayName("Nhân viên")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Phòng ban")
+                            </th>
                         </tr>
-                    }
-                </table>
+                        @foreach (var item in ViewBag.GuestNoItems)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                </td>
+                                <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
+                                <td>
+                                    @if (item.Type == 0)
+                                    {
+                                        @: Khách
+                                    }
+                                    else if (item.Type == 1)
+                                    {
+                                        @:Nhà thầu
+                                    }
+                                    else
+                                    {
+                                        @:Lái xe
+                                    }
+                                </td>
+                                <td>@item.Company</td>
+                                <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                                <td>@item.IDCard</td>
+                                <td>@item.NumbersOfPerson</td>
+                                <td>@item.Purpose</td>
+                                <td>@item.EmployeeID</td>
+                                <td>@item.EmployeeName</td>
+                                <td>@item.Team</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
-        </div>
-    </div>
 
-    &nbsp;
 
-    <div class="row" style="margin-left:0px; margin-right:5px; width: 100%">
-        <!--Danh sách khách vào ra-->
-        <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH KHÁCH VÀO - RA</h6>
-            </div>
-            <div style="overflow: auto; height: 300px; margin-bottom: 5px">
-                <table class="table table-hover table-bordered">
-                    <!--Tiêu đề cột-->
-                    <tr class="table-heading">
-                        <th>
-                            @Html.DisplayName("Thời điểm")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Loại khách")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Công ty")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Tên khách")
-                        </th>
-                        <th>
-                            @Html.DisplayName("CMND/CCCD")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Số người")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Mục đích")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Số xe")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thẻ khách")
-                        </th>
-                        <th colspan="2">
-                            @Html.DisplayName("Nhân viên")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Phòng ban")
-                        </th>
-                        <th>In ấn</th>
-                    </tr>
-                    @foreach (var item in ViewBag.GuestNoItems)
-                    {
-                        <tr>
-                            <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
-                            <td>
-                                @if (item.Type == 0)
-                                {
-                                    @: Khách
-                                }
-                                else if (item.Type == 1)
-                                {
-                                    @:Nhà thầu
-                                }
-                                else
-                                {
-                                    @:Lái xe
-                                }
-                            </td>
-                            <td>@item.Company</td>
-                            <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
-                            <td>@item.IDCard</td>
-                            <td>@item.NumbersOfPerson</td>
-                            <td>@item.Purpose</td>
-                            <td>@item.TransportNo</td>
-                            <td>@item.KVPNo</td>
-                            <td>@item.EmployeeID</td>
-                            <td>@item.EmployeeName</td>
-                            <td>@item.Team</td>
-                            <td>
-                                <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
-                            </td>
+            <!--Danh sách khách mang hàng vào - ra-->
+            <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH KHÁCH MANG HÀNG VÀO - RA</h6>
+                </div>
+                <div style="overflow: auto; height: 300px; margin-bottom: 5px">
+                    <table class="table table-hover table-bordered">
+                        <!--Tiêu đề cột-->
+                        <tr class="table-heading">
+                            <th>In ấn</th>
+                            <th>
+                                @Html.DisplayName("Thời điểm")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Khách")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Công ty")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Tên khách")
+                            </th>
+                            <th>
+                                @Html.DisplayName("CMND/CCCD")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Số người")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Mục đích")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Số xe")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Thẻ khách")
+                            </th>
+                            <th colspan="2">
+                                @Html.DisplayName("Nhân viên")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Phòng ban")
+                            </th>
                         </tr>
-                    }
-                </table>
-            </div>
-        </div>
-
-
-        <!--Danh sách khách mang hàng vào - ra-->
-        <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH KHÁCH MANG HÀNG VÀO - RA</h6>
-            </div>
-            <div style="overflow: auto; height: 300px; margin-bottom: 5px">
-                <table class="table table-hover table-bordered">
-                    <!--Tiêu đề cột-->
-                    <tr class="table-heading">
-                        <th>
-                            @Html.DisplayName("Thời điểm")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Loại khách")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Công ty")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Tên khách")
-                        </th>
-                        <th>
-                            @Html.DisplayName("CMND/CCCD")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Số người")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Mục đích")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Số xe")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thẻ khách")
-                        </th>
-                        <th colspan="2">
-                            @Html.DisplayName("Nhân viên")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Phòng ban")
-                        </th>
-                        <th>In ấn</th>
-                    </tr>
-                    @foreach (var item in ViewBag.GuestHasItems)
-                    {
-                        <tr>
-                            <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
-                            <td>
-                                @if (item.Type == 0)
-                                {
-                                    @: Khách
-                                }
-                                else if (item.Type == 1)
-                                {
-                                    @:Nhà thầu
-                                }
-                                else
-                                {
-                                    @:Lái xe
-                                }
-                            </td>
-                            <td>@item.Company</td>
-                            <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
-                            <td>@item.IDCard</td>
-                            <td>@item.NumbersOfPerson</td>
-                            <td>@item.Purpose</td>
-                            <td>@item.TransportNo</td>
-                            <td>@item.KVPNo</td>
-                            <td>@item.EmployeeID</td>
-                            <td>@item.EmployeeName</td>
-                            <td>@item.Team</td>
-                            <td>
-                                <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </div>
-        </div>
-    </div>
-
-    &nbsp;
-    <!--Div chứa table dữ liệu-->
-    <div class="row" style="margin-left:0px; margin-right:5px; width: 100%">
-        <!--Danh sách khách nước ngoài-->
-        <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH KHÁCH NƯỚC NGOÀI</h6>
-            </div>
-            <div style="overflow: auto; height: 300px; margin-bottom: 5px">
-                <table class="table table-hover table-bordered">
-                    <!--Tiêu đề cột-->
-                    <tr class="table-heading">
-                        <th>
-                            @Html.DisplayName("Thời điểm")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Loại khách")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Công ty")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Tên khách")
-                        </th>
-                        <th>
-                            @Html.DisplayName("CMND/CCCD")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Số người")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Mục đích")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Số xe")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thẻ khách")
-                        </th>
-                        <th colspan="2">
-                            @Html.DisplayName("Nhân viên")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Phòng ban")
-                        </th>
-                        <th>In ấn</th>
-                    </tr>
-                    @foreach (var item in ViewBag.ForeignGuestNoItems)
-                    {
-                        <tr>
-                            <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
-                            <td>
-                                @if (item.Type == 0)
-                                {
-                                    @: Khách
-                                }
-                                else if (item.Type == 1)
-                                {
-                                    @:Nhà thầu
-                                }
-                                else
-                                {
-                                    @:Lái xe
-                                }
-                            </td>
-                            <td>@item.Company</td>
-                            <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
-                            <td>@item.IDCard</td>
-                            <td>@item.NumbersOfPerson</td>
-                            <td>@item.Purpose</td>
-                            <td>@item.TransportNo</td>
-                            <td>@item.KVPNo</td>
-                            <td>@item.EmployeeID</td>
-                            <td>@item.EmployeeName</td>
-                            <td>@item.Team</td>
-                            <td>
-                                <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </table>
+                        @foreach (var item in ViewBag.GuestHasItems)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                </td>
+                                <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
+                                <td>
+                                    @if (item.Type == 0)
+                                    {
+                                        @: Khách
+                                    }
+                                    else if (item.Type == 1)
+                                    {
+                                        @:Nhà thầu
+                                    }
+                                    else
+                                    {
+                                        @:Lái xe
+                                    }
+                                </td>
+                                <td>@item.Company</td>
+                                <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                                <td>@item.IDCard</td>
+                                <td>@item.NumbersOfPerson</td>
+                                <td>@item.Purpose</td>
+                                <td>@item.TransportNo</td>
+                                <td>@item.KVPNo</td>
+                                <td>@item.EmployeeID</td>
+                                <td>@item.EmployeeName</td>
+                                <td>@item.Team</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
 
-
-        <!--Danh sách khách nước ngoài mang hàng vào - ra-->
-        <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH KHÁCH NƯỚC NGOÀI MANG HÀNG VÀO - RA</h6>
+        &nbsp;
+        <!--Div chứa table dữ liệu-->
+        <div class="row" style="margin-left:0px; margin-right:5px; width: 100%">
+            <!--Danh sách khách nước ngoài-->
+            <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH KHÁCH NƯỚC NGOÀI</h6>
+                </div>
+                <div style="overflow: auto; height: 300px; margin-bottom: 5px">
+                    <table class="table table-hover table-bordered">
+                        <!--Tiêu đề cột-->
+                        <tr class="table-heading">
+                            <th>In ấn</th>
+                            <th>
+                                @Html.DisplayName("Thời điểm")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Khách")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Công ty")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Tên khách")
+                            </th>
+                            <th>
+                                @Html.DisplayName("CMND/CCCD")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Số người")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Mục đích")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Số xe")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Thẻ khách")
+                            </th>
+                            <th colspan="2">
+                                @Html.DisplayName("Nhân viên")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Phòng ban")
+                            </th>
+                        </tr>
+                        @foreach (var item in ViewBag.ForeignGuestNoItems)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                </td>
+                                <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
+                                <td>
+                                    @if (item.Type == 0)
+                                    {
+                                        @: Khách
+                                    }
+                                    else if (item.Type == 1)
+                                    {
+                                        @:Nhà thầu
+                                    }
+                                    else
+                                    {
+                                        @:Lái xe
+                                    }
+                                </td>
+                                <td>@item.Company</td>
+                                <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                                <td>@item.IDCard</td>
+                                <td>@item.NumbersOfPerson</td>
+                                <td>@item.Purpose</td>
+                                <td>@item.TransportNo</td>
+                                <td>@item.KVPNo</td>
+                                <td>@item.EmployeeID</td>
+                                <td>@item.EmployeeName</td>
+                                <td>@item.Team</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
 
-            <div style="overflow: auto; height: 300px; margin-bottom: 5px">
-                <table class="table table-hover table-bordered">
-                    <!--Tiêu đề cột-->
-                    <tr class="table-heading">
-                        <th>
-                            @Html.DisplayName("Thời điểm")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Loại khách")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Công ty")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Tên khách")
-                        </th>
-                        <th>
-                            @Html.DisplayName("CMND/CCCD")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Số người")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Mục đích")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Số xe")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thẻ khách")
-                        </th>
-                        <th colspan="2">
-                            @Html.DisplayName("Nhân viên")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Phòng ban")
-                        </th>
-                        <th>In ấn</th>
-                    </tr>
-                    @foreach (var item in ViewBag.ForeignGuestHasItems)
-                    {
-                        <tr>
-                            <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
-                            <td>
-                                @if (item.Type == 0)
-                                {
-                                    @: Khách
-                                }
-                                else if (item.Type == 1)
-                                {
-                                    @:Nhà thầu
-                                }
-                                else
-                                {
-                                    @:Lái xe
-                                }
-                            </td>
-                            <td>@item.Company</td>
-                            <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
-                            <td>@item.IDCard</td>
-                            <td>@item.NumbersOfPerson</td>
-                            <td>@item.Purpose</td>
-                            <td>@item.TransportNo</td>
-                            <td>@item.KVPNo</td>
-                            <td>@item.EmployeeID</td>
-                            <td>@item.EmployeeName</td>
-                            <td>@item.Team</td>
-                            <td>
-                                <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
-                                    <i class="fas fa-print" style="margin-left:-3.5px;"></i>
-                                </a>
-                            </td>
+
+            <!--Danh sách khách nước ngoài mang hàng vào - ra-->
+            <div class="col-6" style="overflow: auto; border: 1px solid #d1d3e2; border-radius: 5px">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH KHÁCH NƯỚC NGOÀI MANG HÀNG VÀO - RA</h6>
+                </div>
+
+                <div style="overflow: auto; height: 300px; margin-bottom: 5px">
+                    <table class="table table-hover table-bordered">
+                        <!--Tiêu đề cột-->
+                        <tr class="table-heading">
+                            <th>In ấn</th>
+                            <th>
+                                @Html.DisplayName("Thời điểm")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Khách")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Công ty")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Tên khách")
+                            </th>
+                            <th>
+                                @Html.DisplayName("CMND/CCCD")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Số người")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Mục đích")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Số xe")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Thẻ khách")
+                            </th>
+                            <th colspan="2">
+                                @Html.DisplayName("Nhân viên")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Phòng ban")
+                            </th>
                         </tr>
-                    }
-                </table>
+                        @foreach (var item in ViewBag.ForeignGuestHasItems)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Guest/GuestReport/@item.ID" target="_blank" class="btn btn-print btnPrint btn-primary btn-standard" title="In báo cáo">
+                                        <i class="fas fa-print" style="margin-left:-3.5px;"></i>
+                                    </a>
+                                </td>
+                                <td>@item.EstimatedDateIn  @item.EstimatedTimeIn</td>
+                                <td>
+                                    @if (item.Type == 0)
+                                    {
+                                        @: Khách
+                                    }
+                                    else if (item.Type == 1)
+                                    {
+                                        @:Nhà thầu
+                                    }
+                                    else
+                                    {
+                                        @:Lái xe
+                                    }
+                                </td>
+                                <td>@item.Company</td>
+                                <td><a href="/Guard/HistoryGuest/@item.ID" style="text-decoration:none">@item.FullName</a></td>
+                                <td>@item.IDCard</td>
+                                <td>@item.NumbersOfPerson</td>
+                                <td>@item.Purpose</td>
+                                <td>@item.TransportNo</td>
+                                <td>@item.KVPNo</td>
+                                <td>@item.EmployeeID</td>
+                                <td>@item.EmployeeName</td>
+                                <td>@item.Team</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-@section scripts{
-    <script src="~/Assets/js/jquery.timepicker.min.js"></script>
-    <script src="~/Assets/js/jquery-confirm.js"></script>
-    <script src="~/Assets/js/jquery.dataTables.min.js"></script>
-    <script>
-        $('.datepicker, #date_from, #date_to').datepicker({
-            dateFormat: 'dd/mm/yy'
-        });
+    @section scripts{
+        <script src="~/Assets/js/jquery.timepicker.min.js"></script>
+        <script src="~/Assets/js/jquery-confirm.js"></script>
+        <script src="~/Assets/js/jquery.dataTables.min.js"></script>
+        <script>
+            $('.datepicker, #date_from, #date_to').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
 
-        $('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
+            $("#guard").removeClass('collapse');
+            $("#guard").removeClass('collapsed');
+            $("#guard").attr("aria-expanded", "true");
+            $("#guard_history").addClass('active');
+            $("#collapseGuard").addClass('show');
+            $("#collapseInOut").removeClass('collapse');
 
-        $("#guard").removeClass('collapse');
-        $("#guard").removeClass('collapsed');
-        $("#guard").attr("aria-expanded", "true");
-        $("#guard_history").addClass('active');
-        $("#collapseGuard").addClass('show');
-        $("#collapseInOut").removeClass('collapse');
-    </script>
-}
+            ///Set timeout tự động reload
+            function AutoRefresh(t) {
+                setTimeout("location.reload(true);", t);
+            }
+        </script>
+    }
+</body>
 

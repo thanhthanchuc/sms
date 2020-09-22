@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Bring_In" msprop:Generator_TableClassName="Bring_InDataTable" msprop:Generator_TableVarName="tableBring_In" msprop:Generator_TablePropName="Bring_In" msprop:Generator_RowDeletingName="Bring_InRowDeleting" msprop:Generator_RowChangingName="Bring_InRowChanging" msprop:Generator_RowEvHandlerName="Bring_InRowChangeEventHandler" msprop:Generator_RowDeletedName="Bring_InRowDeleted" msprop:Generator_UserTableName="Bring_In" msprop:Generator_RowChangedName="Bring_InRowChanged" msprop:Generator_RowEvArgName="Bring_InRowChangeEvent" msprop:Generator_RowClassName="Bring_InRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" minOccurs="0" />
+              <xs:element name="EmpCode" msprop:Generator_ColumnVarNameInTable="columnEmpCode" msprop:Generator_ColumnPropNameInRow="EmpCode" msprop:Generator_ColumnPropNameInTable="EmpCodeColumn" msprop:Generator_UserColumnName="EmpCode" type="xs:string" minOccurs="0" />
+              <xs:element name="FullName" msprop:Generator_ColumnVarNameInTable="columnFullName" msprop:Generator_ColumnPropNameInRow="FullName" msprop:Generator_ColumnPropNameInTable="FullNameColumn" msprop:Generator_UserColumnName="FullName" type="xs:string" minOccurs="0" />
+              <xs:element name="Team" msprop:Generator_ColumnVarNameInTable="columnTeam" msprop:Generator_ColumnPropNameInRow="Team" msprop:Generator_ColumnPropNameInTable="TeamColumn" msprop:Generator_UserColumnName="Team" type="xs:string" minOccurs="0" />
+              <xs:element name="Reason" msprop:Generator_ColumnVarNameInTable="columnReason" msprop:Generator_ColumnPropNameInRow="Reason" msprop:Generator_ColumnPropNameInTable="ReasonColumn" msprop:Generator_UserColumnName="Reason" type="xs:string" minOccurs="0" />
+              <xs:element name="EstimatedDate" msprop:Generator_ColumnVarNameInTable="columnEstimatedDate" msprop:Generator_ColumnPropNameInRow="EstimatedDate" msprop:Generator_ColumnPropNameInTable="EstimatedDateColumn" msprop:Generator_UserColumnName="EstimatedDate" type="xs:string" minOccurs="0" />
+              <xs:element name="EstimatedTime" msprop:Generator_ColumnVarNameInTable="columnEstimatedTime" msprop:Generator_ColumnPropNameInRow="EstimatedTime" msprop:Generator_ColumnPropNameInTable="EstimatedTimeColumn" msprop:Generator_UserColumnName="EstimatedTime" type="xs:string" minOccurs="0" />
+              <xs:element name="Position" msprop:Generator_ColumnVarNameInTable="columnPosition" msprop:Generator_ColumnPropNameInRow="Position" msprop:Generator_ColumnPropNameInTable="PositionColumn" msprop:Generator_UserColumnName="Position" type="xs:string" minOccurs="0" />
+              <xs:element name="CatID" msprop:Generator_ColumnVarNameInTable="columnCatID" msprop:Generator_ColumnPropNameInRow="CatID" msprop:Generator_ColumnPropNameInTable="CatIDColumn" msprop:Generator_UserColumnName="CatID" type="xs:int" minOccurs="0" />
+              <xs:element name="Item" msprop:Generator_ColumnVarNameInTable="columnItem" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" msprop:Generator_UserColumnName="Item" type="xs:string" minOccurs="0" />
+              <xs:element name="Quantity" msdata:Caption="" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Unit" msdata:Caption="Team" msprop:Generator_ColumnVarNameInTable="columnUnit" msprop:Generator_ColumnPropNameInRow="Unit" msprop:Generator_ColumnPropNameInTable="UnitColumn" msprop:Generator_UserColumnName="Unit" type="xs:string" minOccurs="0" />
+              <xs:element name="AssetType" msdata:Caption="Purpose" msprop:Generator_ColumnVarNameInTable="columnAssetType" msprop:Generator_ColumnPropNameInRow="AssetType" msprop:Generator_ColumnPropNameInTable="AssetTypeColumn" msprop:Generator_UserColumnName="AssetType" type="xs:int" minOccurs="0" />
+              <xs:element name="ReturnDate" msdata:Caption="Reason" msprop:Generator_ColumnVarNameInTable="columnReturnDate" msprop:Generator_ColumnPropNameInRow="ReturnDate" msprop:Generator_ColumnPropNameInTable="ReturnDateColumn" msprop:Generator_UserColumnName="ReturnDate" type="xs:string" minOccurs="0" />
+              <xs:element name="ReturnTime" msdata:Caption="EstimatedDate" msprop:Generator_ColumnVarNameInTable="columnReturnTime" msprop:Generator_ColumnPropNameInRow="ReturnTime" msprop:Generator_ColumnPropNameInTable="ReturnTimeColumn" msprop:Generator_UserColumnName="ReturnTime" type="xs:string" minOccurs="0" />
+              <xs:element name="ApprovedStatus" msprop:Generator_ColumnVarNameInTable="columnApprovedStatus" msprop:Generator_ColumnPropNameInRow="ApprovedStatus" msprop:Generator_ColumnPropNameInTable="ApprovedStatusColumn" msprop:Generator_UserColumnName="ApprovedStatus" type="xs:int" minOccurs="0" />
+              <xs:element name="ITT_Status" msdata:Caption="GuardStatus" msprop:Generator_ColumnVarNameInTable="columnITT_Status" msprop:Generator_ColumnPropNameInRow="ITT_Status" msprop:Generator_ColumnPropNameInTable="ITT_StatusColumn" msprop:Generator_UserColumnName="ITT_Status" type="xs:int" minOccurs="0" />
+              <xs:element name="FST_Status" msdata:Caption="GuardStatus" msprop:Generator_ColumnVarNameInTable="columnFST_Status" msprop:Generator_ColumnPropNameInRow="FST_Status" msprop:Generator_ColumnPropNameInTable="FST_StatusColumn" msprop:Generator_UserColumnName="FST_Status" type="xs:int" minOccurs="0" />
+              <xs:element name="GuardDateIn" msdata:Caption="GuardDate" msprop:Generator_ColumnVarNameInTable="columnGuardDateIn" msprop:Generator_ColumnPropNameInRow="GuardDateIn" msprop:Generator_ColumnPropNameInTable="GuardDateInColumn" msprop:Generator_UserColumnName="GuardDateIn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GuardStatusIn" msdata:Caption="GuardDate" msprop:Generator_ColumnVarNameInTable="columnGuardStatusIn" msprop:Generator_ColumnPropNameInRow="GuardStatusIn" msprop:Generator_ColumnPropNameInTable="GuardStatusInColumn" msprop:Generator_UserColumnName="GuardStatusIn" type="xs:int" minOccurs="0" />
+              <xs:element name="GuardDateOut" msdata:Caption="Position" msprop:Generator_ColumnVarNameInTable="columnGuardDateOut" msprop:Generator_ColumnPropNameInRow="GuardDateOut" msprop:Generator_ColumnPropNameInTable="GuardDateOutColumn" msprop:Generator_UserColumnName="GuardDateOut" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GuardStatusOut" msdata:Caption="EstimatedDate" msprop:Generator_ColumnVarNameInTable="columnGuardStatusOut" msprop:Generator_ColumnPropNameInRow="GuardStatusOut" msprop:Generator_ColumnPropNameInTable="GuardStatusOutColumn" msprop:Generator_UserColumnName="GuardStatusOut" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -41,6 +41,7 @@ namespace SMS.Models.EF
         public virtual DbSet<Guest> Guests { get; set; }
         public virtual DbSet<Guest_Item> Guest_Item { get; set; }
         public virtual DbSet<Leave_Early> Leave_Early { get; set; }
+        public DbSet<Incident> Incidents { get; set; }
         public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -48,7 +49,7 @@ namespace SMS.Models.EF
         {
             modelBuilder.Entity<Bring_In>()
                 .Property(e => e.EmpCode)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_In>()
                 .Property(e => e.Position)
@@ -114,7 +115,7 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Bring_Out>()
                 .Property(e => e.EmpCode)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Bring_Out>()
                 .Property(e => e.Position)
@@ -180,7 +181,7 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Go_Out>()
                 .Property(e => e.EmpCode)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Go_Out>()
                 .Property(e => e.Position)
@@ -286,7 +287,7 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<Leave_Early>()
                 .Property(e => e.EmpCode)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Leave_Early>()
                 .Property(e => e.Position)
@@ -318,7 +319,7 @@ namespace SMS.Models.EF
 
             modelBuilder.Entity<User>()
                 .Property(e => e.EmpCode)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<User>()
                 .Property(e => e.Password)
@@ -327,6 +328,26 @@ namespace SMS.Models.EF
             //modelBuilder.Entity<User>()
             //    .Property(e => e.Phone)
             //    .IsUnicode(false);
+
+            modelBuilder.Entity<Incident>()
+                .Property(e => e.AttachedFile)
+                .IsUnicode(true);
+
+            modelBuilder.Entity<Incident>()
+                .Property(e => e.SMTAttachedFile)
+                .IsUnicode(true);
+
+            modelBuilder.Entity<Incident>()
+                .Property(e => e.TeamAttachedFile)
+                .IsUnicode(true);
+
+            modelBuilder.Entity<Incident>()
+                .Property(e => e.CreatedBy)
+                .IsUnicode(true);
+
+            modelBuilder.Entity<Incident>()
+                .Property(e => e.ModifiedBy)
+                .IsUnicode(true);
         }
     }
 }

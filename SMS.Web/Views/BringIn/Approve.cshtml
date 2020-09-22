@@ -19,7 +19,7 @@
         <h5 class="m-0 font-weight-bold text-primary">TRƯỞNG PHÒNG PIC PHÊ DUYỆT MANG HÀNG VÀO</h5>
     </div>
     <div class="row dataTables_wrapper dt-bootstrap4 above-table">
-        <div class="col-2 input-group input-group-sm">
+        @*<div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
             &nbsp;
             <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
@@ -28,7 +28,7 @@
             <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
             &nbsp;
             <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
-        </div>
+        </div>*@
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
             &nbsp;
@@ -40,7 +40,7 @@
             <input id="emp_code" class="form-control bg-light to-date">
         </div>
         <div class="col-2">
-            <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
+            <button class="btn btn-sm btn-primary" id="btn-search" type="button" onclick="handleSearch()"><i class="fas fa-search"></i> Tìm kiếm</button>
         </div>
     </div>
 </div>
@@ -146,7 +146,22 @@
             dateFormat: 'dd/mm/yy'
         });
 
-        //$('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
+        function handleSearch() {
+            const date_from = new Date(preprocess($("#date_from").val())).getTime() / 1000
+            const date_to = new Date(preprocess($("#date_to").val())).getTime() / 1000
+            var team = ("#team").val()
+            var emp_code = ("#emp_code").val()
+            console.table([date_from, date_to])
+            const opt = configOption("/BringIn/FetchBringInApproveData?from=" + date_from + "&to=" + date_to + "&team=" + team + "&emp_code=" + emp_code)
+            $('#approve-table').DataTable(opt);
+        }
+
+        function preprocess(datestr) {
+            const strs = datestr.split('/')
+            return strs[1] + "/" + strs[0] + "/" + strs[2]
+        }
+
+        $('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
 
         $("#BI").removeClass('collapse');
         $("#BI").removeClass('collapsed');

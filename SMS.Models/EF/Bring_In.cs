@@ -20,12 +20,15 @@
         public string EmpCode { get; set; }
 
         [StringLength(100)]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string FullName { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string Position { get; set; }
 
         [StringLength(10)]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string Team { get; set; }
 
         [Required(ErrorMessage = "Bạn phải điền lí do")]

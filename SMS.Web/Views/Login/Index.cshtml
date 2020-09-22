@@ -63,23 +63,17 @@
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 @Html.CheckBoxFor(loginModel => loginModel.Check, new { @type = "checkbox", @class = "custom-control-input", @id = "checkType" })
-                                                <label class="custom-control-label text-after-checkbox" for="checkType">Đăng nhập bằng tài khoản bảo vệ</label>
+                                                <label class="custom-control-label text-after-checkbox" for="checkType">Đăng nhập bằng tài khoản Bảo vệ - Thời vụ</label>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            @Html.TextBoxFor(loginModel => loginModel.EmpCode, new { maxlength = "8", @class = "form-control form-control-user", @id = "empcode", @placeholder = "Username", @autofocus = "autofocus" })
+                                        <div class="form-group input-group-sm">
+                                            @Html.TextBoxFor(loginModel => loginModel.EmpCode, new { maxlength = "8 ", @class = "form-control form-control-user", @id = "empcode", @placeholder = "Username", @autofocus = "autofocus", @autocomplete = "off" })
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group input-group-sm">
                                             @Html.TextBoxFor(loginModel => loginModel.Password, new { @class = "form-control form-control-user", @id = "password", @placeholder = "Password", @type = "password" })
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                @Html.CheckBoxFor(loginModel => loginModel.RememberMe, new { @type = "checkbox", @class = "custom-control-input", @id = "customCheck" })
-                                                <label class="custom-control-label text-after-checkbox" for="customCheck">Ghi nhớ tài khoản</label>
-                                            </div>
-                                        </div>
                                         <hr />
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block btn-sm">Đăng nhập</button>
                                         <hr>
 
                                         <div class="text-center">

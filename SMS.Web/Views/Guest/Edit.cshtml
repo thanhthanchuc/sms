@@ -106,21 +106,35 @@
 
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Số người <span class="red">(*)</span></label>
-                <div class="col-md-2 input-group">
+                <div class="col-md-1 input-group">
                     <div class="input-group-sm">
                         <input type="number" class="form-control input-previous-button" id="txtNumbersOfPerson" value="@Model.NumbersOfPerson" min="1" />
                     </div>
                 </div>
                 <a id="guest-multi-day" class="btn-info btn btn-sm" title="Đăng ký theo đoàn" style="color: white; cursor: pointer" data-toggle="collapse" data-target=".multi_day">
-                    <i class="fas fa-edit"></i>&nbsp; Đăng ký Khách theo đoàn
+                    <i class="fas fa-edit"></i>&nbsp; Đăng ký đoàn khách
                 </a>
-                <div class="multi_day collapse input-group-sm col-5">
-                    <div class="form-horizontal col-12 row-add input-group-sm" id="import_file" style="padding: 1px">
+                <div class="multi_day collapse row input-group-sm col-7">
+                    &nbsp;&nbsp;
+                    <div>
+                        <a id="guest-multi-day" class="btn-primary btn btn-sm" href="/Guest/TemplateGuest" title="Đăng ký theo đoàn" style="color: white; cursor: pointer">
+                            <i class="fas fa-download"></i>&nbsp; Tải file mẫu
+                        </a>
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="form-horizontal col-8 row-add input-group-sm" id="import_file" style="padding: 0px">
                         <input class="input-group-sm" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileRedirectUrl" placeholder="Chọn file Excel" />
                     </div>
+                    @*<div class="form-horizontal col-8 row-add input-group-sm" id="import_file" style="padding: 0px">
+                            <input id="file" class="input-group-sm" type="file" style="display:none;" />
+                            <label for="file" style="width: 100%">
+                                <a class="btn btn-light btn-sm">@Model.FileRedirectURL</a>
+                            </label>
+                        </div>*@
                 </div>
-            </div>
 
+
+            </div>
             <div class="form-group input-group">
                 <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
                 <div class="col-md-10">
@@ -142,7 +156,7 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ vào <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" autocomplete="off" />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" style="background: white" readonly autocomplete="off" />
                 </div>
                 <div class="col-2 input-group-sm">
                     <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" value="@Model.EstimatedTimeIn" type="time" />
@@ -152,7 +166,7 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ ra <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" autocomplete="off" />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" style="background: white" readonly autocomplete="off" />
                 </div>
                 <div class="col-2 input-group-sm">
                     <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.EstimatedTimeOut" type="time" />
@@ -215,62 +229,61 @@
                 <tbody>
                     @foreach (var item in Model.Guest_Item)
                     {
-                    <tr class="row-items">
-                        <td>
-                            <label class="control-label btn btn-sm delete-items">
-                                <i class="fas fa-times-circle"></i>
-                            </label>
-                        </td>
-                        <td class="input-group-sm">
-                            <input type="hidden" class="itemId" value="@item.ID" />
-                            <input class="form-control input-previous-button item" value="@item.Item" maxlength="250" />
-                        </td>
-                        <td class="input-group-sm">
-                            <input class="form-control input-previous-button serial" value="@item.Serial" maxlength="250" />
-                        </td>
-                        <td class="input-group-sm">
-                            <input type="number" class="form-control input-previous-button quantity" value="@item.Quantity" min="0" />
-                        </td>
-                        <td class="input-group-sm">
-                            <input class="form-control input-previous-button unit" value="@item.Unit" maxlength="50" />
-                        </td>
-                        <td class="input-group-sm">
-                            <select class="form-control input-previous-button assetType">
-                                <option value="0" @if (item.AssetType == 0) { @: selected
-                                        }>
-                                    Hàng thường
-                                </option>
-                                <option value="1" @if (item.AssetType == 1) { @: selected
-                                        }>
-                                    Hàng IT
-                                </option>
-                                <option value="2" @if (item.AssetType == 2) { @: selected
-                                        }>
-                                    Hàng độc hại
-                                </option>
-                            </select>
-                        </td>
-                        <td class="input-group-sm">
-                            <select class="form-control input-previous-button isReturn">
-                                @if (item.IsReturn.HasValue && item.IsReturn.Value)
-                                {
-                                    <option value="true" selected>Có</option>
-                                    <option value="false">Không</option>
-                                }
-                                else
-                                {
-                                    <option value="true">Có</option>
-                                    <option value="false" selected>Không</option>
-                                }
-                            </select>
-                        </td>
-                        <td class="input-group-sm">
-                            <input class="form-control input-previous-button returnDate datepicker" placeholder="Ngày" value="@item.ReturnDate" autocomplete="off" />
-                        </td>
-                        <td class="input-group-sm">
-                            <input class="form-control input-previous-button returnTime timepicker" placeholder="Giờ" value="@item.ReturnTime" type="time" />
-                        </td>
-                    </tr>
+                        <tr class="row-items">
+                            <td>
+                                <label class="control-label btn btn-sm delete-items">
+                                    <i class="fas fa-times-circle"></i>
+                                </label>
+                            </td>
+                            <td class="input-group-sm">
+                                <input class="form-control input-previous-button item" value="@item.Item" maxlength="250" />
+                            </td>
+                            <td class="input-group-sm">
+                                <input class="form-control input-previous-button serial" value="@item.Serial" maxlength="250" />
+                            </td>
+                            <td class="input-group-sm">
+                                <input type="number" class="form-control input-previous-button quantity" value="@item.Quantity" min="0" />
+                            </td>
+                            <td class="input-group-sm">
+                                <input class="form-control input-previous-button unit" value="@item.Unit" maxlength="50" />
+                            </td>
+                            <td class="input-group-sm">
+                                <select class="form-control input-previous-button assetType">
+                                    <option value="0" @if (item.AssetType == 0) { @: selected
+                                            }>
+                                        Hàng thường
+                                    </option>
+                                    <option value="1" @if (item.AssetType == 1) { @: selected
+                                            }>
+                                        Hàng IT
+                                    </option>
+                                    <option value="2" @if (item.AssetType == 2) { @: selected
+                                            }>
+                                        Hàng độc hại
+                                    </option>
+                                </select>
+                            </td>
+                            <td class="input-group-sm">
+                                <select class="form-control input-previous-button isReturn">
+                                    @if (item.IsReturn.HasValue && item.IsReturn.Value)
+                                    {
+                                        <option value="true" selected>Có</option>
+                                        <option value="false">Không</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="true">Có</option>
+                                        <option value="false" selected>Không</option>
+                                    }
+                                </select>
+                            </td>
+                            <td class="input-group-sm">
+                                <input class="form-control input-previous-button returnDate datepicker" placeholder="Ngày" value="@item.ReturnDate" style="background: white" readonly autocomplete="off" />
+                            </td>
+                            <td class="input-group-sm">
+                                <input class="form-control input-previous-button returnTime timepicker" placeholder="Giờ" value="@item.ReturnTime" type="time" />
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -281,7 +294,7 @@
             <i class="fas fa-plus"></i>&nbsp; Thêm tài sản
         </label>
 
-        <button id="guest-confirm" class="btn-success btn btn-sm" type="submit" title="Đăng ký mang hàng vào" style="cursor: pointer">
+        <button id="guest-confirm" class="btn-success btn btn-sm" type="submit" title="Sửa thông tin khách" style="cursor: pointer">
             <i class="fas fa-edit"></i>&nbsp; Cập nhật
         </button>
     </div>
@@ -375,7 +388,7 @@
                                 </select>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
+                                <input class="form-control datepicker returnDate" placeholder="Ngày" style="background: white" readonly autocomplete="off"/>
                             </td>
                             <td class="input-group-sm">
                                 <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
@@ -430,7 +443,6 @@
 
             $(".row-items").each((index, item) => {
                 var guest_Item = {};
-                guest_Item.ID = $(item).find('input[class*=itemId]').val();
                 guest_Item.CatID = $('#txtID').val();
                 guest_Item.Item = $(item).find('input[class*=item]').val();
                 guest_Item.Serial = $(item).find('input[class*=serial]').val();

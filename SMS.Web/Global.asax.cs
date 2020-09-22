@@ -43,6 +43,7 @@ namespace SMS.Web
                 CustomPrincipalSerializeModel serializeModel = serializer.Deserialize<CustomPrincipalSerializeModel>(authTicket.UserData);
 
                 CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
+                newUser.Id = serializeModel.Id;
                 newUser.FullName = serializeModel.FullName;
                 newUser.PriorityRole = serializeModel.PriorityRole;
                 newUser.RoleName = serializeModel.RoleName;

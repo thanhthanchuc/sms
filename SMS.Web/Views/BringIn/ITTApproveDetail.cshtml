@@ -17,7 +17,7 @@
     <div class="col-md-12 row-form">
         <div class="column form-horizontal form-left col-md-7">
             <div class="form-group row-1 input-group">
-                <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
+                <label class="control-label col-md-2 lb">Mã CNV</label>
                 <div class="col-md-3 input-group input-group-sm">
                     <input type="hidden" id="bringInID" value="@Model.ID" />
                     <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBI" readonly value="@Model.EmpCode" />
@@ -25,18 +25,18 @@
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <label class="control-label col-md-2">Lý do</label>
                 <div class="col-md-10 input-group-sm">
                     <textarea class="form-control col-md-12" style="resize: none" readonly>@Model.Reason</textarea>
                 </div>
             </div>
 
             <div class="form-group input-group specific-date-pick">
-                <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
+                <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký</label>
                 <div class="col-3 input-group-sm">
                     <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" value="@Model.EstimatedDate" readonly />
                 </div>
-                <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
+                <label class="top-space" for="EstimatedTime">Giờ đăng ký</label>
                 <div class="col-2 input-group-sm">
                     <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" value="@Model.EstimatedTime" readonly />
                     <input type="hidden" id="txtStatus" value="@Model.Status" />
@@ -76,12 +76,6 @@
 
 <br />
 
-<div class="note col-12">
-    <span class="control-label" style="color: dodgerblue"><u>Lưu ý</u>: <span style="color: #858796">&nbsp;Các trường <span style="color:red">(*)</span> bắt buộc phải nhập đầy đủ.</span></span>
-</div>
-
-<br />
-
 <div class="bottom">
     <div style="width:100%; overflow-x:auto">
         <!--Bảng dữ liệu Về sớm-->
@@ -95,6 +89,7 @@
                     <th>Đơn vị</th>
                     <th>Loại hàng hóa</th>
                     <th colspan="2">Thời gian đem trở ra</th>
+                    <th colspan="4">TM phê duyệt</th>
                     <th colspan="4">SMT phê duyệt</th>
                 </tr>
             </thead>
@@ -130,6 +125,29 @@
                             }
                         </td>
                         <td>@item.ReturnDate @item.ReturnTime</td>
+                        <td class="input-group-sm">
+                            @if (item.ApprovedBy != null)
+                            {
+                                @item.ApprovedBy
+                            }
+                            else
+                            {
+                                <i class="fas fa-question" title="Đang chờ Trưởng phòng PIC phê duyệt"></i>
+                            }
+
+                        </td>
+                        <td class="input-group-sm">
+                            @if (@item.ApprovedStatus == 1)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                            else if (@item.ApprovedStatus == 0)
+                            {
+                                <i class="fas fa-times" style="color: red"></i>
+                            }
+                        </td>
+                        <td class="input-group-sm">@item.ApprovedDate</td>
+                        <td class="input-group-sm">@item.ApproverRemark</td>
                         @if (string.IsNullOrEmpty(item.ITT) && string.IsNullOrEmpty(item.SMT))
                         {
                             <td>@item.ITT</td>
@@ -174,7 +192,7 @@
                             {
                                 <td>@item.SMT_Remark</td>
                             }
-                        }                        
+                        }
                     </tr>
                 }
             </tbody>
@@ -188,6 +206,7 @@
 </div>
 @section scripts{
     <script src="~/Assets/js/jquery-confirm.js"></script>
+    <script src="~/Assets/js/bring_in/common.js"></script>
     <script>
         $('#return-approve').on("click", () => {
             window.location.href = "/BringIn/ITTApprove"

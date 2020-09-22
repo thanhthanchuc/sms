@@ -28,6 +28,10 @@
     background-size: cover;
 }
 
+.tab-text {
+    color: black;
+}
+
 /*Màn hình chính*/
 .menu-side {
     /*background: url(../img/forest.png);*/
@@ -53,6 +57,10 @@
 .bg-sub-menu {
     background: white;
     border: 2px solid rgba(0,0,0,.0625) !important;
+}
+
+.alert {
+    color: red;
 }
 
 .sub-menu:hover span {
@@ -497,13 +505,6 @@ span#btn-next {
     color: white;
 }
 
-/*.sticky-1 {
-    position: sticky;
-    left: 0;
-    z-index: 1;
+.delete-items, .delete-date-items {
+    margin-bottom: 0px !important;
 }
-
-.col-sticky-1{
-    position: sticky;
-    left:0;
-}*/

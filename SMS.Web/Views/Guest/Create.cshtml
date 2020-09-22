@@ -51,7 +51,7 @@
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2 top-space">CMTND/Hộ chiếu</label>
+                <label class="control-label col-md-2 top-space">CMND/Hộ chiếu <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group">
                     <div class="input-group-sm">
                         <input class="form-control input-previous-button" id="txtIDCard" maxlength="250" />
@@ -85,23 +85,30 @@
 
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Số người <span class="red">(*)</span></label>
-                <div class="col-md-2 input-group">
+                <div class="col-md-1 input-group">
                     <div class="input-group-sm">
                         <input type="number" class="form-control input-previous-button" id="txtNumbersOfPerson" min="1" />
                     </div>
                 </div>
                 <a id="guest-multi-day" class="btn-info btn btn-sm" title="Đăng ký theo đoàn" style="color: white; cursor: pointer" data-toggle="collapse" data-target=".multi_day">
-                    <i class="fas fa-edit"></i>&nbsp; Đăng ký Khách theo đoàn
+                    <i class="fas fa-edit"></i>&nbsp; Đăng ký đoàn khách
                 </a>
-                <div class="multi_day collapse input-group-sm col-5">
-                    <div class="form-horizontal col-12 row-add input-group-sm" id="import_file" style="padding: 1px">
+                <div class="multi_day row collapse input-group-sm col-7">
+                    &nbsp;&nbsp;
+                    <div>
+                        <a id="guest-multi-day" class="btn-primary btn btn-sm" href="/Guest/TemplateGuest" title="Đăng ký theo đoàn" style="color: white; cursor: pointer">
+                            <i class="fas fa-download"></i>&nbsp; Tải file mẫu
+                        </a>
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="form-horizontal col-8 row-add input-group-sm" id="import_file" style="padding: 1px">
                         <input class="input-group-sm" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileRedirectUrl" placeholder="Chọn file Excel" />
                     </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <label class="control-label col-md-2">Mục đích <span class="red">(*)</span></label>
                 <div class="col-md-10">
                     <div class="input-group-sm">
                         <textarea class="form-control col-md-12" style="resize: none" id="txtPurpose"></textarea>
@@ -121,7 +128,7 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ vào <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" autocomplete="off" />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" style="background: white" readonly autocomplete="off" />
                 </div>
                 <div class="col-2 input-group-sm">
                     <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeIn" placeholder="Giờ" type="time" />
@@ -131,10 +138,24 @@
             <div class="form-group input-group">
                 <label class="control-label col-md-2 top-space">Giờ ra <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" autocomplete="off" />
+                    <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" style="background: white" readonly autocomplete="off" />
                 </div>
                 <div class="col-2 input-group-sm">
                     <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" type="time" />
+                </div>
+            </div>
+
+            <div class="form-group input-group">
+                <label class="control-label col-md-2 top-space">Ngày nghỉ</label>
+                <div class="col-3 input-group-sm">
+                    <label id="add-date-items" class="btn-primary btn top-space btn-sm" title="Thêm ngày nghỉ" style="cursor: pointer">
+                        <i class="fas fa-plus"></i>&nbsp; Thêm ngày nghỉ
+                    </label>
+                </div>
+                <div class="date-off-container">
+                    <table class="table-bordered table table-hover" id="date-off-items">
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -146,7 +167,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile">
-                    <img src="~/Assets/img/the-world.jpg" />
+                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -236,13 +257,12 @@
                                 </td>
                                 <td class="input-group-sm">
                                     <select class="form-control input-previous-button isReturn">
-                                        <option>--Chọn--</option>
-                                        <option value="true">Có</option>
+                                        <option value="true" selected>Có</option>
                                         <option value="false">Không</option>
                                     </select>
                                 </td>
                                 <td class="input-group-sm">
-                                    <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
+                                    <input class="form-control datepicker returnDate" placeholder="Ngày" style="background: white" readonly autocomplete="off"/>
                                 </td>
                                 <td class="input-group-sm">
                                     <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
@@ -262,6 +282,32 @@
         $('.datepicker').datepicker({
             dateFormat: 'dd/mm/yy'
         });
+
+        ///Thêm ngày nghỉ cho khách
+        $("#add-date-items").off('click').on('click', function (e) {
+            var html = `<tr class="date-off-items">
+                              <td>
+                                 <label class="control-label btn btn-sm delete-date-items"><i class="fas fa-times-circle" style="color: red; cursor: pointer"></i></label>
+                              </td>
+                              <td class="input-group-sm">
+                                 <input class="form-control datepicker date-off" placeholder="Ngày" autocomplete="off"/>
+                              </td>
+                            </tr>`;
+            $('#date-off-items > tbody:last-child').append(html);
+            $('.datepicker').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+            $("#date-off-items").on("click", ".delete-date-items", function () {
+                $(this).closest(".date-off-items").remove();
+            });
+        });
+        $("#date-off-items").on("click", ".delete-date-items", function () {
+            $(this).closest(".date-off-items").remove();
+        });
+        $('.datepicker').datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+
         //user
         var _userBI = {
             init: function () {
@@ -284,19 +330,20 @@
                             $('#txtFullNameBI').val(reponse.data.FullName);
                             $('#txtPositionBI').val(reponse.data.Position);
                             $('#txtTeamBI').val(reponse.data.Team.Name);
+                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                         } else {
                             alert("Mã nhân viên không tồn tại");
-                            $('#txtFullNameBI').val("");
-                            $('#txtPositionBI').val(reponse.data.Position);
-                            $('#txtTeamBI').val(reponse.data.Team.Name);
-                            console.log(reponse.data.data);
+                            //$('#txtFullNameBI').val("");
+                            //$('#txtPositionBI').val(reponse.data.Position);
+                            //$('#txtTeamBI').val(reponse.data.Team.Name);
+                            //console.log(reponse.data.data);
                         }
                     },
                     error: function () {
-                        $('#txtFullNameBI').val("Không tồn tại");
-                        $('#txtPositionBI').val("?");
-                        $('#txtTeamBI').val("?");
-                        console.log(reponse.data.data);
+                        //$('#txtFullNameBI').val("Không tồn tại");
+                        //$('#txtPositionBI').val("?");
+                        //$('#txtTeamBI').val("?");
+                        //console.log(reponse.data.data);
                     }
                 });
             }
@@ -305,7 +352,7 @@
         //
         $('#txtEmployeeID').keyup(function () {
             var count = $('#txtEmployeeID').val().length;
-            if (count == 8) {
+            if (count == 7 || count == 8) {
                 _userBI.getUserBI();
             } else {
                 $('#txtFullNameBI').val("");
@@ -313,11 +360,13 @@
                 $('#txtTeamBI').val("");
             }
         });
+
         //Create
         $('#guest-confirm').on("click", (event) => {
             event.preventDefault();
             var data = new FormData();
             var guestObject = {};
+            var excludeDate = [];
             guestObject.EmployeeID = $('#txtEmployeeID').val();
             guestObject.Type = $('#txtType').val();
             guestObject.Check_Guest = $('#txtCheck_Guest').is(':checked') ? true : false;
@@ -350,19 +399,14 @@
                 guest_Item.ReturnDate = $(item).find('input[class*=returnDate]').val();
                 guest_Item.ReturnTime = $(item).find('input[class*=returnTime]').val();
                 guestObject.Guest_Item.push(guest_Item);
-            })
+            });
+            $(".date-off-items").each((index, item) => {
+                excludeDate.push($(item).find('input[class*=date-off]').val());
+            });
+            data.append("excludeDate", excludeDate);
             data.append("guest", JSON.stringify(guestObject));
             data.append("file", $('#fileRedirectUrl')[0].files[0]);
-            //guestObject.file = $('#fileRedirectUrl')[0].files[0];
-            //var file = $('#fileRedirectUrl')[0].files[0];
-            //var xhr = new XMLHttpRequest();
-            //xhr.open('POST', '/Guest/Create');
-            //xhr.send(data);
-            //xhr.onreadystatechange = function () {
-            //    if (xhr.readyState == 4 && xhr.status == 200) {
-            //        alert(xhr.responseText);
-            //    }
-            //}
+
             $.confirm({
                 title: "Thông báo",
                 content: function () {

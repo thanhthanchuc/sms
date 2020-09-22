@@ -16,11 +16,11 @@
         public string EmpCode { get; set; }
 
         [StringLength(100)]
-        [Required(ErrorMessage = "Bạn phải điền tên")]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string FullName { get; set; }
 
         [StringLength(50)]
-        [Required(ErrorMessage = "Bạn phải điền vị trí")]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string Position { get; set; }
 
         [StringLength(10)]
@@ -34,9 +34,10 @@
 
         public bool Purpose { get; set; }
 
+        [Required(ErrorMessage = "Bạn phải điền ngày đăng ký")]
         public string EstimatedDate { get; set; }
 
-        [Required(ErrorMessage = "Bạn phải điền giờ đăng ký")]
+        [Required(ErrorMessage = "Bạn phải điền ngày, giờ đăng ký")]
         public string EstimatedTime { get; set; }
 
         [StringLength(50)]
@@ -74,8 +75,7 @@
 
         //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         //{
-
-        //    if (DateTime.Parse(Util.FormatDate(EstimatedDate) + ' ' + EstimatedTime) <= DateTime.Now)
+        //    if (DateTime.Parse(Util.FormatDate(EstimatedDate) + ' ' + EstimatedTime) < DateTime.Now)
         //    {
         //        yield return
         //         new ValidationResult("Ngày giờ ra ngoài phải sau thời điểm hiện tại",

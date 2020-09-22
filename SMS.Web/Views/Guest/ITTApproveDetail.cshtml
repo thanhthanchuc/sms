@@ -24,7 +24,7 @@
     <div class="col-md-12 row-form">
         <div class="column form-horizontal form-left col-md-7">
             <div class="form-group row-1 input-group">
-                <label class="control-label col-2 top-space lb">Mã CNV <span class="red">(*)</span></label>
+                <label class="control-label col-2 top-space lb">Mã CNV</label>
                 <div class="col-md-3 input-group">
                     <div class="top-space input-group-sm">
                         <input type="hidden" value="@Model.ID" id="txtID" />
@@ -69,7 +69,7 @@
                         <input class="form-control input-previous-button" id="txtKVPNo" value="@Model.KVPNo" readonly />
                     </div>
                 </div>
-                <label class="control-label col-md-2 top-space">Họ tên khách <span class="red">(*)</span></label>
+                <label class="control-label col-md-2 top-space">Họ tên khách</label>
                 <div class="col-5 input-group-sm">
                     <div class="input-group-sm">
                         <input class="form-control input-previous-button" id="txtEmployeeName" value="@Model.FullName" readonly />
@@ -102,7 +102,7 @@
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2 top-space">Công ty <span class="red">(*)</span></label>
+                <label class="control-label col-md-2 top-space">Công ty</label>
                 <div class="col-md-10">
                     <div class="input-group-sm">
                         <input class="form-control input-previous-button" id="txtCompany" value="@Model.Company" readonly />
@@ -111,24 +111,27 @@
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2 top-space">Số người <span class="red">(*)</span></label>
+                <label class="control-label col-md-2 top-space">Số người</label>
                 <div class="col-md-2 input-group">
                     <div class="input-group-sm">
                         <input class="form-control input-previous-button" id="txtNumbersOfPerson" value="@Model.NumbersOfPerson" readonly />
                     </div>
                 </div>
-                <a id="guest-multi-day" class="btn-primary btn btn-sm" title="Đăng ký theo đoàn" style="color: white; cursor: pointer">
+                <a id="guest-multi-day" class="btn-primary btn btn-sm" href="/Guest/GuestFileDownload?filename=@Model.FileRedirectURL" title="Đăng ký theo đoàn" style="color: white; cursor: pointer">
                     <i class="fas fa-download"></i>&nbsp; Tải file đính kèm
                 </a>
-                <div class="multi_day collapse input-group-sm col-5 show">
-                    <div class="form-horizontal col-12 row-add input-group-sm" id="import_file" style="padding: 1px">
-                        <input disabled class="input-group-sm" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileRedirectUrl" placeholder="Chọn file Excel" />
+                <div class="multi_day input-group-sm col-5">
+                    <div class="form-horizontal col-12 row-add input-group-sm" id="import_file" style="padding: 0px">
+                        <input id="file" class="input-group-sm" type="file" style="display:none;" disabled />
+                        <label for="file" style="width: 100%">
+                            <a class="btn btn-light btn-sm">@Model.FileRedirectURL</a>
+                        </label>
                     </div>
                 </div>
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <label class="control-label col-md-2">Mục đích</label>
                 <div class="col-md-10">
                     <div class="input-group-sm">
                         <textarea class="form-control col-md-12" style="resize: none" id="txtPurpose" readonly>@Model.Purpose</textarea>
@@ -146,7 +149,7 @@
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2 top-space">Giờ vào <span class="red">(*)</span></label>
+                <label class="control-label col-md-2 top-space">Giờ vào</label>
                 <div class="col-3 input-group-sm">
                     <input class="form-control input-previous-button datepicker" id="txtEstimatedDateIn" placeholder="Ngày" value="@Model.EstimatedDateIn" readonly />
                 </div>
@@ -156,7 +159,7 @@
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2 top-space">Giờ ra <span class="red">(*)</span></label>
+                <label class="control-label col-md-2 top-space">Giờ ra</label>
                 <div class="col-3 input-group-sm">
                     <input class="form-control input-previous-button datepicker" id="txtEstimatedDateOut" placeholder="Ngày" value="@Model.EstimatedDateOut" readonly />
                 </div>
@@ -179,15 +182,15 @@
             </div>
             <!--Thông tin profile-->
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Họ và tên <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Họ và tên</label>
                 <input readonly class="form-control input-previous-button col-9 txtFullNameBI" value="@Model.EmployeeName" />
             </div>
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Vị trí <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Vị trí</label>
                 <input readonly class="form-control input-previous-button col-9 txtPositionBI" value="@Model.Position" />
             </div>
             <div class="form-group input-group profile input-group-sm">
-                <label class="control-label col-md-3">Phòng ban <span class="red">(*)</span></label>
+                <label class="control-label col-md-3">Phòng ban</label>
                 <input readonly class="form-control input-previous-button col-9 txtTeamBI" value="@Model.Team" />
             </div>
         </div>

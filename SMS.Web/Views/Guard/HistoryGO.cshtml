@@ -77,6 +77,7 @@
             <!--Tiêu đề cột-->
             <thead>
                 <tr class="table-heading">
+                    <th colspan="4">TM phê duyệt</th>
                     <th>Thời gian ra ngoài</th>
                     <th colspan="4">Bảo vệ xác nhận ra ngoài</th>
                     <th>Thời gian trở lại</th>
@@ -85,8 +86,39 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>
+                        @if (Model.Go_Out.ApprovedStatus == null)
+                        {
+                            <i class="fas fa-question" title="Đang chờ Trưởng phòng PIC phê duyệt"></i>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.Go_Out.ApprovedBy)
+                        }
+                    </td>
+                    <td>
+                        @if (Model.Go_Out.ApprovedStatus == 1)
+                        {
+                            <i class="fas fa-check-square"></i>
+                        }
+                        else if (Model.Go_Out.ApprovedStatus == 0)
+                        {
+                            <i class="fas fa-times" style="color:red"></i>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(model => model.Go_Out.ApprovedDate)</td>
+                    <td>@Html.DisplayFor(model => model.Go_Out.ApproverRemark)</td>
                     <td>@Html.DisplayFor(m => m.Go_Out.EstimatedDateOut) @Html.DisplayFor(m => m.Go_Out.EstimatedTimeOut)</td>
-                    <td>@Html.DisplayFor(m => m.Go_Out.GuardOut)</td>
+                    <td>
+                        @if (Model.Go_Out.GuardOut == null)
+                        {
+                            <i class="fas fa-question" title="Đang chờ Bảo vệ xác nhận ra"></i>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.Go_Out.GuardOut)
+                        }
+                    </td>
                     <td>
                         @if (Model.Go_Out.GuardStatusOut == 1)
                         {
@@ -102,7 +134,16 @@
                     </td>
                     <td>@Html.DisplayFor(m => m.Go_Out.GuardDateOut)</td>
                     <td>@Html.DisplayFor(m => m.Go_Out.EstimatedDateReturn) @Html.DisplayFor(m => m.Go_Out.EstimatedTimeReturn)</td>
-                    <td>@Html.DisplayFor(m => m.Go_Out.GuardReturn)</td>
+                    <td>
+                        @if (Model.Go_Out.GuardReturn == null)
+                        {
+                            <i class="fas fa-question" title="Đang chờ Bảo vệ xác nhận quay lại"></i>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.Go_Out.GuardReturn)
+                        }
+                    </td>
                     <td>
                         @if (Model.Go_Out.GuardStatusReturn == 1)
                         {
@@ -124,6 +165,11 @@
     <div style="text-align: center">
         <label id="return-history" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
+        </label>
+        <label class="btn-primary btn top-space btn-sm" style="cursor: pointer">
+            <a href="/GoOut/GOReport/@Model.Go_Out.ID" target="_blank" style="cursor: pointer; text-decoration: none; color: white" title="In báo cáo">
+                In xác nhận
+            </a>
         </label>
     </div>
 </div>

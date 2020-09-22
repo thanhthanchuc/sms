@@ -34,7 +34,7 @@
             <div class="form-group input-group specific-date-pick">
                 <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" value="@Model.EstimatedDate" autocomplete="off" />
+                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" value="@Model.EstimatedDate" style="background: white" readonly autocomplete="off" />
                 </div>
                 <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
                 <div class="col-2 input-group-sm">
@@ -146,7 +146,7 @@
                                 </select>
                             </td>
                             <td class="input-group-sm">
-                                <input class="form-control datepicker returnDate" placeholder="Ngày" value="@item.ReturnDate" autocomplete="off" />
+                                <input class="form-control datepicker returnDate" placeholder="Ngày" value="@item.ReturnDate" style="background: white" readonly autocomplete="off" />
                             </td>
                             <td class="input-group-sm">
                                 <input class="form-control timepicker returnTime" placeholder="Giờ" value="@item.ReturnTime" type="time" />
@@ -197,12 +197,12 @@
                                     </td>
                                     <td class="input-group-sm">
                                         <select class="form-control input-previous-button isReturn">
-                                            <option value="true" selected>Có</option>
-                                            <option value="false">Không</option>
+                                        <option value="true" selected>Có</option>
+                                        <option value="false">Không</option>
                                         </select>
                                     </td>
                                     <td class="input-group-sm">
-                                        <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off" />
+                                        <input class="form-control datepicker returnDate" placeholder="Ngày" style="background: white" readonly autocomplete="off" />
                                     </td>
                                     <td class="input-group-sm">
                                         <input class="form-control timepicker returnTime" placeholder="Giờ" type="time" />

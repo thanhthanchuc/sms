@@ -3,7 +3,7 @@
         _userGO.registerEvent();
     },
     registerEvent: function () {
-        $("#info-GO-create").click(function () {
+        $("#info-LE-create").click(function () {
             _userGO.getUserGO();
         });
     },
@@ -22,19 +22,18 @@
                     $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                 } else {
                     alert("Mã nhân viên không tồn tại");
-                    $('.txtFullNameGO').val("");
-                    $('.txtPositionLGO').val(reponse.data.Position);
-                    $('.txtTeamGO').val(reponse.data.Team.Name);
-                    $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
-                    console.log(reponse.data.data);
+                    //$('.txtFullNameGO').val("");
+                    //$('.txtPositionLGO').val(reponse.data.Position);
+                    //$('.txtTeamGO').val(reponse.data.Team.Name);
+                    //console.log(reponse.data.data);
                 }
             },
             error: function () {
-                $('.txtFullNameGO').val("Không tồn tại");
-                $('.txtPositionGO').val("?");
-                $('.txtTeamGO').val("?");
                 $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
-                console.log(reponse.data.data);
+                $('.txtFullNameGO').val("");
+                $('.txtPositionGO').val("");
+                $('.txtTeamGO').val("");
+                //console.log(reponse.data.data);
             }
         });
     }
@@ -94,32 +93,13 @@ goOut.init();
 
 $('#txtEmpCodeGO').keyup(function () {
     var count = $('#txtEmpCodeGO').val().length;
-    if (count == 8) {
+    if (count == 7 || count == 8) {
         _userGO.getUserGO();
-    } else {
-        $('.txtFullNameGO').val("");
-        $('.txtPositionGO').val("");
-        $('.txtTeamGO').val("");
     }
 });
 
 $('#estimated_date_out, #estimated_date_return, #date_from, #date_to').datepicker({
     dateFormat: 'dd/mm/yy'
-});
-
-//$('#estimated_date_out, #estimated_date_return, #date_from, #date_to').datepicker().datepicker("setDate", new Date());
-
-//$('.timepicker, #estimated_time_out, #estimated_time_return').timepicker({
-//    timeFormat: 'h:mm p',
-//    interval: 5,
-//    startTime: '00:00',
-//    dynamic: false,
-//    dropdown: true,
-//    scrollbar: true
-//});
-
-$(".btn-reload").off('click').on('click', function (e) {
-    location.reload();
 });
 
 function handleRefId(leaveId) {

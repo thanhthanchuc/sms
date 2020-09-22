@@ -3,7 +3,9 @@
         _userLE.registerEvent();
     },
     registerEvent: function () {
-        _userLE.getUserLE();
+        $("#info-LE-create").click(function () {
+            _userLE.getUserLE();
+        });
     },
     getUserLE: function () {
         var empCode = $("#txtEmpCodeLE").val();
@@ -20,19 +22,17 @@
                     $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                 } else {
                     alert("Mã nhân viên không tồn tại");
-                    $('#txtFullNameLE').val("");
-                    $('#txtPositionLE').val(reponse.data.Position);
-                    $('#txtTeamLE').val(reponse.data.Team.Name);
-                    $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
-                    console.log(reponse.data.data);
+                    //$('#txtFullNameLE').val("");
+                    //$('#txtPositionLE').val(reponse.data.Position);
+                    //$('#txtTeamLE').val(reponse.data.Team.Name);
+                    //$("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
                 }
             },
             error: function () {
-                $('#txtFullNameLE').val("Không tồn tại");
-                $('#txtPositionLE').val("?");
-                $('#txtTeamLE').val("?");
+                $('#txtFullNameLE').val("");
+                $('#txtPositionLE').val("");
+                $('#txtTeamLE').val("");
                 $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
-                console.log(reponse.data.data);
             }
         });
     }
@@ -91,27 +91,14 @@ leaveEarly.init();
 
 $('#txtEmpCodeLE').keyup(function () {
     var count = $('#txtEmpCodeLE').val().length;
-    if (count == 8) {
+    if (count == 7 || count == 8) {
         _userLE.getUserLE();
-    } else {
-        $('#txtFullNameLE').val("");
-        $('#txtPositionLE').val("");
-        $('#txtTeamLE').val("");
     }
 });
 
 $('#estimated_date, #date_from, #date_to').datepicker({
     dateFormat: 'dd/mm/yy'
 });
-
-//$('.timepicker, #estimated_time').timepicker({
-//    timeFormat: 'h:mm p',
-//    interval: 5,
-//    startTime: '00:00',
-//    dynamic: false,
-//    dropdown: true,
-//    scrollbar: true
-//});
 
 
 $(".btn-reload").off('click').on('click', function (e) {

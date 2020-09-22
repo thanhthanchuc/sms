@@ -18,7 +18,7 @@ namespace SMS.Web.Controllers
         // GET: User
         public ActionResult GetUserByCode(string empCode)
         {
-            var dao = new LeaveEarlyDAO();
+            var dao = new UserDAO();
             User user = new User();
             UserViewModel userViewModel = new UserViewModel();
             user = dao.GetByCode(empCode);

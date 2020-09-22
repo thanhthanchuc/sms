@@ -91,6 +91,7 @@
     <Compile Include="EF\Guest.cs" />
     <Compile Include="EF\Guest_Item.cs" />
     <Compile Include="EF\HrTimeDBContext.cs" />
+    <Compile Include="EF\Incident.cs" />
     <Compile Include="EF\Leave_Early.cs" />
     <Compile Include="EF\Profile_Employee.cs" />
     <Compile Include="EF\Role.cs" />

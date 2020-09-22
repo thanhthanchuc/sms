@@ -17,7 +17,7 @@
     <div class="col-md-12 row-form">
         <div class="column form-horizontal form-left col-md-7">
             <div class="form-group row-1 input-group">
-                <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
+                <label class="control-label col-md-2 lb">Mã CNV</label>
                 <div class="col-md-3 input-group input-group-sm">
                     <input type="hidden" id="bringOutID" value="@Model.ID" />
                     <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBO" readonly value="@Model.EmpCode" />
@@ -25,18 +25,18 @@
             </div>
 
             <div class="form-group input-group">
-                <label class="control-label col-md-2">Lý do <span class="red">(*)</span></label>
+                <label class="control-label col-md-2">Lý do</label>
                 <div class="col-md-10 input-group-sm">
                     <textarea class="form-control col-md-12" style="resize: none" readonly>@Model.Reason</textarea>
                 </div>
             </div>
 
             <div class="form-group input-group specific-date-pick">
-                <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
+                <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký</label>
                 <div class="col-3 input-group-sm">
                     <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" value="@Model.EstimatedDate" readonly />
                 </div>
-                <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
+                <label class="top-space" for="EstimatedTime">Giờ đăng ký</label>
                 <div class="col-2 input-group-sm">
                     <input class="form-control input-previous-button timepicker" id="estimated_time" placeholder="Giờ" value="@Model.EstimatedTime" readonly />
                     <input type="hidden" id="txtStatus" value="@Model.Status" />
@@ -72,10 +72,6 @@
             </div>
         </div>
     </div>
-</div>
-<br />
-<div class="note col-12">
-    <span class="control-label" style="color: dodgerblue"><u>Lưu ý</u>: <span style="color: #858796">&nbsp;Các trường <span style="color:red">(*)</span> bắt buộc phải nhập đầy đủ.</span></span>
 </div>
 <br />
 <div class="bottom">

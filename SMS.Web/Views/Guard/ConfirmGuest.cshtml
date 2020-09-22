@@ -8,7 +8,7 @@
     <link href="~/Assets/css/jquery-confirm.css" rel="stylesheet" />
 }
 <div class="form-horizontal">
-    <div class="card-header py-3">
+    <div class="card-header">
         <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN KHÁCH VÀO - RA</h5>
     </div>
     <!--Cột bên trái dành cho form đăng ký-->
@@ -50,40 +50,6 @@
                     <input class="form-control input-previous-button timepicker" id="txtEstimatedTimeOut" placeholder="Giờ" value="@Model.EstimatedTimeOut" readonly />
                 </div>
             </div>
-
-            @*<div class="form-group row-1 input-group">
-                    <label class="control-label col-md-2 top-space lb">Ngày vào <span class="red">(*)</span></label>
-                    <div class="col-md-3 input-group">
-                        <div class="top-space input-group-sm">
-                            <input type="hidden" id="guestID" value="@Model.ID" />
-                            @Html.TextBoxFor(model => model.EstimatedDateIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                        </div>
-                    </div>
-                    <label class="control-label top-space lb">Giờ vào <span class="red">(*)</span></label>
-                    <div class="col-md-3 input-group">
-                        <div class="top-space input-group-sm">
-                            <input type="hidden" id="guestID" value="@Model.ID" />
-                            @Html.TextBoxFor(model => model.EstimatedTimeIn, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row-1 input-group">
-                    <label class="control-label col-md-2 top-space lb">Ngày ra <span class="red">(*)</span></label>
-                    <div class="col-md-3 input-group">
-                        <div class="top-space input-group-sm">
-                            <input type="hidden" id="guestID" value="@Model.ID" />
-                            @Html.TextBoxFor(model => model.EstimatedDateOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                        </div>
-                    </div>
-                    <label class="control-label top-space lb">Giờ ra <span class="red">(*)</span></label>
-                    <div class="col-md-3 input-group">
-                        <div class="top-space input-group-sm">
-                            <input type="hidden" id="guestID" value="@Model.ID" />
-                            @Html.TextBoxFor(model => model.EstimatedTimeOut, new { @id = "txtEmpCodeBI", @class = "form-control input-previous-button col-md-12", @readonly = "readonly" })
-                        </div>
-                    </div>
-                </div>*@
         </div>
 
         <div class="column col-md-1 col-mid"></div>
@@ -156,9 +122,12 @@
                     <td>@Model.KVPNo</td>
                     <td>@Model.FullName</td>
                     <td>
-                        <a class="btn btnDownloadFile btn-primary btn-standard" href="/Guard/GuestFileDownload?filename=@Model.FileRedirectURL" target="_blank" title="Tải danh sách khách">
-                            <i class="fas fa-download" style="margin-left:-3.5px;"></i>
-                        </a>
+                        @if (Model.FileRedirectURL != null)
+                        {
+                            <a class="btn btnDownloadFile btn-primary btn-standard" href="/Guard/GuestFileDownload?filename=@Model.FileRedirectURL" title="Tải danh sách khách">
+                                <i class="fas fa-download" style="margin-left:-3.5px;"></i>
+                            </a>
+                        }
                     </td>
                     <td>@Model.IDCard</td>
                     <td>@Model.Visa</td>
@@ -221,6 +190,14 @@
         </table>
     </div>
     <div style="text-align: center">
+        <label class="btn-primary btn top-space btn-sm" style="cursor: pointer">
+            <a href="/Guest/GuestReport/@Model.ID" target="_blank" style="cursor: pointer; text-decoration: none; color: white" title="In báo cáo">
+                In xác nhận
+            </a>
+        </label>
+        <label class="btn-success btn top-space btn-sm" title="Thay đổi thông tin đăng ký" style="cursor: pointer">
+            <a href="/Guest/Edit/@Model.ID" style="text-decoration: none; color: white"><i class="fas fa-edit"></i>&nbsp; Thay đổi thông tin đăng ký</a>
+        </label>
         <label class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <a href="/Guard/Queue" style="text-decoration: none; color: white"><i class="fas fa-arrow-left"></i>&nbsp; Trở lại</a>
         </label>

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SMS.Models.EF;
+using PagedList;
+using System.Data.Entity;
 
 namespace SMS.Models.DAO
 {
@@ -13,6 +13,11 @@ namespace SMS.Models.DAO
         public UserDAO()
         {
             dbContext = new SMSDbContext();
+        }
+
+        public User GetByCode(string empCode)
+        {
+            return dbContext.Users.Include(u => u.Team).SingleOrDefault(x => x.EmpCode.Equals(empCode));
         }
 
         public int Insert(User entity)
@@ -27,10 +32,7 @@ namespace SMS.Models.DAO
         /// </summary>
         /// <param name="empCode"></param>
         /// <returns></returns>
-        public User GetByCode(string empCode)
-        {
-            return dbContext.Users.SingleOrDefault(x => x.EmpCode == empCode);
-        }
+
 
         /// <summary>
         /// Phương thức đăng nhập

@@ -24,6 +24,7 @@ namespace SMS.Web.Controllers
         {
             _dbContext = new SMSDbContext();
         }
+
         // GET: LeaveEarly
         public ActionResult History(string searchString, int page = 1, int pageSize = 20)
         {
@@ -64,7 +65,7 @@ namespace SMS.Web.Controllers
                 var dao = new LeaveEarlyDAO();
                 leave_Early.CreatedDate = DateTime.Now;
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                leave_Early.CreatedBy = user.EmpCode + "|" + user.FullName;
+                leave_Early.CreatedBy = user.EmpCode + " | " + user.FullName;
                 int id = dao.Insert(leave_Early, user.EmpCode);
                 if (id > 0)
                 {
@@ -132,11 +133,10 @@ namespace SMS.Web.Controllers
             {
                 var dao = new LeaveEarlyDAO();
                 var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                leave_Early.ModifiedBy = user.EmpCode + "|" + user.FullName;
+                leave_Early.ModifiedBy = user.EmpCode + " | " + user.FullName;
                 var res = dao.Update(leave_Early, user.EmpCode);
                 if (res)
                 {
-                    SetAlert("Cập nhật yêu cầu thành công", "success");
                     return RedirectToAction("History", "LeaveEarly");
                 }
                 else
@@ -168,7 +168,7 @@ namespace SMS.Web.Controllers
 
             var isAdmin = (HttpContext.User as CustomPrincipal).PriorityRole >= 4;
 
-            var res = _dbContext.Leave_Early.Where(l => isAdmin || l.Team == tName).ToList();
+            var res = _dbContext.Leave_Early.Where(l => l.ApprovedStatus == null && (isAdmin || l.Team == tName)).ToList();
 
             string new_from = null;
             string new_to = null;
@@ -200,7 +200,7 @@ namespace SMS.Web.Controllers
                 res = res.Where(t => t.EmpCode.Contains(empcode)).ToList();
             }
 
-            var model = res.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+            var model = res.OrderByDescending(x => x.EstimatedDate).ToPagedList(page, pageSize);
 
             var viewModel = new LeaveEarlyViewModel()
             {
@@ -232,7 +232,7 @@ namespace SMS.Web.Controllers
         public JsonResult ApproveForAdmin(int id, string remark)
         {
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            var res = new LeaveEarlyDAO().ApproveForAdmin(id, remark, user.EmpCode + "|" + user.FullName);
+            var res = new LeaveEarlyDAO().ApproveForAdmin(id, remark, user.EmpCode + " | " + user.FullName);
             return Json(new
             {
                 status = res
@@ -250,7 +250,7 @@ namespace SMS.Web.Controllers
         public JsonResult RejectForAdmin(int id, string remark)
         {
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            var res = new LeaveEarlyDAO().RejectForAdmin(id, remark, user.EmpCode + "|" + user.FullName);
+            var res = new LeaveEarlyDAO().RejectForAdmin(id, remark, user.EmpCode + " | " + user.FullName);
             return Json(new
             {
                 status = res
@@ -279,7 +279,8 @@ namespace SMS.Web.Controllers
         [AuthorizeUser(AccessLevel = 3)]
         public ActionResult Cancel(int id)
         {
-            new LeaveEarlyDAO().Cancel(id);
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            new LeaveEarlyDAO().Cancel(id, user.EmpCode + " | " + user.FullName);
             return RedirectToAction("History");
         }
 

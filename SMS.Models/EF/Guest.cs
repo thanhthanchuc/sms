@@ -55,17 +55,19 @@
         public string TransportNo { get; set; }
 
         [StringLength(10)]
-        [Required]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string EmployeeID { get; set; }
 
         [StringLength(250)]
-        [Required]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string EmployeeName { get; set; }
 
         [StringLength(4)]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string Team { get; set; }
 
         [StringLength(3)]
+        [Required(ErrorMessage = "Bạn phải điền mã CNV")]
         public string Position { get; set; }
 
         [Required(ErrorMessage = "Bạn phải điền ngày vào")]

@@ -14,6 +14,7 @@
     </style>
 }
 
+<!--Div chứa table dữ liệu-->
 <div style="width:100%">
     <div class="card-header">
         <h5 class="m-0 font-weight-bold text-primary">PHÒNG SMT PHÊ DUYỆT KHÁCH MANG HÀNG VÀO RA</h5>
@@ -22,33 +23,37 @@
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
             &nbsp;
-            <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
+            <input id="date_from" class="form-control bg-light from-date" value="@ViewBag.from" autocomplete="off" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")">
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
             &nbsp;
-            <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
+            <input id="date_to" class="form-control bg-light to-date" value="@ViewBag.to" autocomplete="off" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")">
+        </div>
+        <div class="col-2 input-group input-group-sm">
+            <label class="no-margin-bottom" style="padding-top: 5px">Công ty</label>
+            &nbsp;
+            <input class="form-control bg-light to-date" value="@ViewBag.company" autocomplete="off" />
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
             &nbsp;
-            <input class="form-control bg-light to-date" />
+            <input class="form-control bg-light to-date" value="@ViewBag.team" autocomplete="off" />
         </div>
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Mã nhân viên</label>
             &nbsp;
-            <input id="emp_code" class="form-control bg-light to-date">
+            <input id="emp_code" class="form-control bg-light to-date" value="@ViewBag.employee" autocomplete="off">
         </div>
         <div class="col-2">
-            <button class="btn btn-sm btn-primary" id="btn-search"><i class="fas fa-search"></i> Tìm kiếm</button>
+            <button class="btn btn-sm btn-primary" id="btn-search" type="button"><i class="fas fa-search"></i> Tìm kiếm</button>
         </div>
     </div>
 </div>
 
-
 <div style="width:100%; overflow-x:auto">
     <!--Bảng dữ liệu Về sớm-->
-    <table class="table table-hover table-bordered" id="approve-table" style="border-collapse: collapse; width: 100%">
+    <table data-order='[[ 0, "desc" ]]' class="table table-hover table-bordered" id="approve-table" style="border-collapse: collapse; width: 100%">
         <!--Tiêu đề cột-->
         <thead>
             <tr class="table-heading">
@@ -97,7 +102,7 @@
                     "contentType": 'application/json; charset=utf-8'
                 },
                 "columns": [
-                    { data: function (res) { return `<span>${res.ID}</span><span>${res.Team}</span>`; } },
+                    { data: function (res) { return `<span>${res.ID}</span>`; } },
                     {
                         data: function (res) {
                             return `${res.EmployeeID} | ${res.EmployeeName}`;
@@ -158,7 +163,7 @@
             dateFormat: 'dd/mm/yy'
         });
 
-        $('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
+        //$('#date_from, #date_to').datepicker().datepicker("setDate", new Date());
 
         $("#guest").removeClass('collapse');
         $("#guest").removeClass('collapsed');

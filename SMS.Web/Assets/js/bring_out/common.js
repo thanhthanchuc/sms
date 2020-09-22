@@ -3,7 +3,7 @@
         _userBO.registerEvent();
     },
     registerEvent: function () {
-        //_userBO.getUserBO();
+        _userBO.getUserBO();
     },
     getUserBO: function () {
         var empCode = $("#txtEmpCodeBO").val();
@@ -20,17 +20,12 @@
                     $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                 } else {
                     alert("Mã nhân viên không tồn tại");
-                    $('#txtFullNameBO').val("");
-                    $('#txtPositionBO').val(reponse.data.Position);
-                    $('#txtTeamBO').val(reponse.data.Team.Name);
-                    console.log(reponse.data.data);
                 }
             },
             error: function () {
-                $('#txtFullNameBO').val("Không tồn tại");
-                $('#txtPositionBO').val("?");
-                $('#txtTeamBO').val("?");
-                console.log(reponse.data.data);
+                //$('#txtFullNameBO').val("Không tồn tại");
+                //$('#txtPositionBO').val("?");
+                //$('#txtTeamBO').val("?");
             }
         });
     }

@@ -12,7 +12,7 @@
         <h5 class="m-0 font-weight-bold text-primary">PHÒNG SMT PHÊ DUYỆT MANG HÀNG VÀO</h5>
     </div>
     <div class="row dataTables_wrapper dt-bootstrap4 above-table">
-        <div class="col-2 input-group input-group-sm">
+        @*<div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Từ ngày</label>
             &nbsp;
             <input id="date_from" class="form-control bg-light from-date" autocomplete="off">
@@ -21,7 +21,7 @@
             <label class="no-margin-bottom" style="padding-top: 5px">Đến ngày</label>
             &nbsp;
             <input id="date_to" class="form-control bg-light to-date" autocomplete="off">
-        </div>
+        </div>*@
         <div class="col-2 input-group input-group-sm">
             <label class="no-margin-bottom" style="padding-top: 5px">Phòng ban</label>
             &nbsp;
@@ -147,12 +147,11 @@
             $('#approve-table').DataTable(opt);
         });
 
-
         function handleSearch() {
             const date_from = new Date(preprocess($("#date_from").val())).getTime() / 1000
             const date_to = new Date(preprocess($("#date_to").val())).getTime() / 1000
             console.table([date_from, date_to])
-            const opt = configOption("/BringIn/FetchBringInApproveData?name=itt&from=" + date_from + "&to=" + date_to)
+            const opt = configOption("/BringIn/FetchBringInApproveData?from=" + date_from + "&to=" + date_to + "&team=" + team + "&emp_code=" + emp_code)
             $('#approve-table').DataTable(opt);
         }
 

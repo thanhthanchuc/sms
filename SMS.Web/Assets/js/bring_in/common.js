@@ -20,17 +20,13 @@
                     $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                 } else {
                     alert("Mã nhân viên không tồn tại");
-                    $('#txtFullNameBI').val("");
-                    $('#txtPositionBI').val(reponse.data.Position);
-                    $('#txtTeamBI').val(reponse.data.Team.Name);
-                    console.log(reponse.data.data);
                 }
             },
             error: function () {
-                $('#txtFullNameBI').val("Không tồn tại");
-                $('#txtPositionBI').val("?");
-                $('#txtTeamBI').val("?");
-                console.log(reponse.data.data);
+                $("#img-profile").attr("src", `~/Assets/img/the-world.jpg`);
+                $('#txtFullNameBI').val("");
+                $('#txtPositionBI').val("");
+                $('#txtTeamBI').val("");
             }
         });
     }

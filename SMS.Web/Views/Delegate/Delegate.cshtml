@@ -5,6 +5,16 @@
     ViewBag.Title = "Delegate";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    table {
+        position: relative;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+    }
+</style>
 
 <div class="form-horizontal">
     <div class="card-header">
@@ -49,7 +59,10 @@
                             <input class="radio" type="checkbox" id="group_leader">Group Leader
                         </label>
                         <label class="checkbox-inline radio-button">
-                            <input class="radio" type="checkbox" id="guard">Bảo vệ
+                            <input class="radio" type="checkbox" id="fore_man">Foreman
+                        </label>
+                        <label class="checkbox-inline radio-button">
+                            <input class="radio" type="checkbox" id="guard-role">Bảo vệ
                         </label>
                         <label class="checkbox-inline radio-button">
                             <input class="radio" type="checkbox" id="read_only">Chỉ đọc
@@ -72,7 +85,7 @@
             <!--Ảnh profile-->
             <div class="form-group col-12 profile-img">
                 <div class="img-profile">
-                    <img src="~/Assets/img/the-world.jpg" />
+                    <img id="img-profile" src="~/Assets/img/the-world.jpg" />
                 </div>
             </div>
             <!--Thông tin profile-->
@@ -99,9 +112,9 @@
         <div class="card-header">
             <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH ADMIN & SUB ADMIN</h6>
         </div>
-        <div style="width:100%; overflow-x:auto">
+        <div style="width:100%; overflow-y:auto; height: 400px">
             <!--Bảng dữ liệu Về sớm-->
-            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+            <table class="sortable table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
                 <!--Tiêu đề cột-->
                 <thead>
                     <tr class="table-heading">
@@ -137,9 +150,9 @@
         <div class="card-header">
             <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH PIC TEAM MANAGER</h6>
         </div>
-        <div style="width:100%; overflow-x:auto">
+        <div style="width:100%; overflow-y:auto; height: 400px">
             <!--Bảng dữ liệu Về sớm-->
-            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+            <table class="sortable table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
                 <!--Tiêu đề cột-->
                 <thead>
                     <tr class="table-heading">
@@ -175,7 +188,7 @@
         </div>
         <div style="width:100%; overflow-x:auto">
             <!--Bảng dữ liệu Về sớm-->
-            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+            <table class="sortable table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
                 <!--Tiêu đề cột-->
                 <thead>
                     <tr class="table-heading">
@@ -211,7 +224,7 @@
         </div>
         <div style="width:100%; overflow-x:auto">
             <!--Bảng dữ liệu Về sớm-->
-            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+            <table class="sortable table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
                 <!--Tiêu đề cột-->
                 <thead>
                     <tr class="table-heading">
@@ -245,9 +258,9 @@
         <div class="card-header">
             <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH PIC</h6>
         </div>
-        <div style="width:100%; overflow-x:auto">
+        <div style="width:100%; overflow-y:auto; height: 400px">
             <!--Bảng dữ liệu Về sớm-->
-            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+            <table class="sortable table table-hover table-bordered" id="pic-table" style="border-collapse: collapse; width: 100%" data-order='[[ 3, "asc" ]]'>
                 <!--Tiêu đề cột-->
                 <thead>
                     <tr class="table-heading">
@@ -273,15 +286,23 @@
                     }
                 }
             </table>
+            <script>
+                $(document).ready(function () {
+                    $('#pic-table').DataTable({
+                        "paging": true,
+                        "pageLength": 5
+                    });
+                });
+            </script>
         </div>
     </div>
     <div class="col-6 form-horizontal">
         <div class="card-header">
             <h6 class="m-0 font-weight-bold text-primary">DANH SÁCH GROUP LEADER</h6>
         </div>
-        <div style="width:100%; overflow-x:auto">
+        <div style="width:100%; overflow-y:auto; height: 400px">
             <!--Bảng dữ liệu Về sớm-->
-            <table class="table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
+            <table class="sortable table table-hover table-bordered" id="Emp-table" style="border-collapse: collapse; width: 100%">
                 <!--Tiêu đề cột-->
                 <thead>
                     <tr class="table-heading">
@@ -314,6 +335,7 @@
 </div>
 
 @section scripts {
+    <script src="~/Assets/js/plugins/sortable.js"></script>
     <script>
         $("#DL").removeClass('collapse');
         $("#DL").removeClass('collapsed');
@@ -332,8 +354,9 @@
             if ($('#fst_team_manager').is(':checked')) roles.push(6);
             if ($('#pic_team_manager').is(':checked')) roles.push(7);
             if ($('#group_leader').is(':checked')) roles.push(8);
-            if ($('#guard').is(':checked')) roles.push(9);
+            if ($('#guard-role').is(':checked')) roles.push(9);
             if ($('#read_only').is(':checked')) roles.push(10);
+            if ($('#fore_man').is(':checked')) roles.push(11);
 
             $.ajax({
                 url: "/Delegate/UpdateRoles",
@@ -357,9 +380,7 @@
                 _userBI.registerEvent();
             },
             registerEvent: function () {
-                $("#info-BI-create").click(function () {
-                    _userBI.getUserBI();
-                });
+                _userBI.getUserBI();
             },
             getUserBI: function () {
                 var empCode = $("#txtEmployeeID").val();
@@ -373,10 +394,10 @@
 
                             const hasRole = roleID => roles.filter(r => r.ID == roleID).length > 0
 
-
                             $('#txtFullNameBI').val(FullName);
                             $('#txtPositionBI').val(Position);
                             $('#txtTeamBI').val(Team);
+                            $("#img-profile").attr("src", `/Image/${empCode}.jpg`);
                             $('#admin').prop("checked", hasRole(1));
                             $('#sub_admin').prop("checked", hasRole(2));
                             $('#pic').prop("checked", hasRole(3));
@@ -384,8 +405,9 @@
                             $('#smt_team_manager').prop("checked", hasRole(5));
                             $('#fst_team_manager').prop("checked", hasRole(6));
                             $('#group_leader').prop("checked", hasRole(8));
-                            $('#guard').prop("checked", hasRole(9));
+                            $('#guard-role').prop("checked", hasRole(9));
                             $('#read_only').prop("checked", hasRole(10));
+                            $('#fore_man').prop("checked", hasRole(11));
                             $('#pic_team_manager').prop("checked", hasRole(7));
                         } else {
                             $('#txtFullNameBI').val("Không tồn tại");
@@ -398,8 +420,9 @@
                             $('#smt_team_manager').prop("checked", false);
                             $('#fst_team_manager').prop("checked", false);
                             $('#group_leader').prop("checked", false);
-                            $('#guard').prop("checked", false);
+                            $('#guard-role').prop("checked", false);
                             $('#read_only').prop("checked", false);
+                            $('#fore_man').prop("checked", false);
                             $('#pic_team_manager').prop("checked", false);
                         }
                     },
@@ -414,8 +437,9 @@
                         $('#smt_team_manager').prop("checked", false);
                         $('#fst_team_manager').prop("checked", false);
                         $('#group_leader').prop("checked", false);
-                        $('#guard').prop("checked", false);
+                        $('#guard-role').prop("checked", false);
                         $('#read_only').prop("checked", false);
+                        $('#fore_man').prop("checked", false);
                         $('#pic_team_manager').prop("checked", false);
                     }
                 });
@@ -425,10 +449,9 @@
 
         $('#txtEmployeeID').keyup(function () {
             var count = $('#txtEmployeeID').val().length;
-            if (count == 8) {
+            if (count == 7 || count == 8) {
                 _userBI.getUserBI();
             } else {
-
                 $('#txtFullNameBI').val("");
                 $('#txtPositionBI').val("");
                 $('#txtTeamBI').val("");

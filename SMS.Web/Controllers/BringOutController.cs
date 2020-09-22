@@ -35,13 +35,15 @@ namespace SMS.Web.Controllers
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpGet]
         public ActionResult Cancel(int id)
         {
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var bringout = dbContext.Bring_Out.FirstOrDefault(t => t.ID == id);
             bringout.Cancel = true;
-
+            bringout.ModifiedBy = user.EmpCode + "|" + user.FullName;
+            bringout.ModifiedDate = DateTime.Now;
             dbContext.SaveChanges();
 
             return Content("Success");
@@ -50,14 +52,17 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringOutData()
         {
-            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
-
             var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
 
-            var model = dbContext.Bring_In.Where(b => currentRole >= 4 || b.Team == tName).OrderByDescending(x => x.EstimatedDate).ToList();
+            var items = dbContext.Bring_Out_Items.ToList();
 
-            return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_Out.Count(), recordsFiltered = model.Count() });
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
+            var model = dbContext.Bring_Out.Where(b => currentRole >= 4 || b.Team == tName).OrderByDescending(x => x.EstimatedDate).ToList();
+
+            return Json(new { data = model, items, currentRole, recordsTotal = dbContext.Bring_Out.Count(), recordsFiltered = model.Count() });
         }
 
         /// <summary>
@@ -72,6 +77,9 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringOutApproveData(string name, int? from, int? to, string team = "", string empcode = "")
         {
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+
             var res = new List<Bring_Out>();
 
             if (name == "itt")
@@ -91,7 +99,7 @@ namespace SMS.Web.Controllers
             else
             {
                 res = dbContext.Bring_Out
-               .Where(bi => dbContext.Bring_Out_Items.Any(i => i.CatID == bi.ID && i.AssetType == 0 && i.ApprovedStatus == null))
+               .Where(bi => dbContext.Bring_Out_Items.Any(i => i.CatID == bi.ID && i.ApprovedStatus == null) && tName == bi.Team)
                .OrderByDescending(x => x.EstimatedDate)
                .ToList();
             }
@@ -118,9 +126,6 @@ namespace SMS.Web.Controllers
             {
                 res = res.Where(t => t.EmpCode.Contains(empcode)).ToList();
             }
-
-            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
 
             var isAdmin = (HttpContext.User as CustomPrincipal).PriorityRole >= 4;
 
@@ -160,7 +165,7 @@ namespace SMS.Web.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return Content("Dữ liệu nhập vào không đúng");
+                    return Content("Bạn cần nhập đầy đủ thông tin");
                 }
 
                 model.CreatedDate = DateTime.Now;
@@ -278,18 +283,18 @@ namespace SMS.Web.Controllers
         public ActionResult ApproveDetail(int id)
         {
             var BringOut = dbContext.Bring_Out.Find(id);
-            var BringOutItems = dbContext.Bring_Out_Items.Where(t => t.CatID == id && t.AssetType == 0).OrderByDescending(t => t.CreatedDate).ToList();
+            var BringOutItems = dbContext.Bring_Out_Items.Where(t => t.CatID == id).OrderByDescending(t => t.CreatedDate).ToList();
             BringOut.Bring_Out_Items = BringOutItems;
             return View(BringOut);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         public ActionResult Approve()
         {
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         [HttpPost]
         public ActionResult Approve(int id, int itemId, string remark, int status)
         {
@@ -331,13 +336,13 @@ namespace SMS.Web.Controllers
             return View(BringOut);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         public ActionResult ITTApprove()
         {
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         [HttpPost]
         public ActionResult ITTApprove(int id, int itemId, string remark, int status)
         {
@@ -369,7 +374,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(BringOutItems), "application/json");
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         //FST
         public ActionResult FSTApproveDetail(int id)
         {
@@ -385,7 +390,7 @@ namespace SMS.Web.Controllers
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         [HttpPost]
         public ActionResult FSTApprove(int id, int itemId, string remark, int status)
         {
@@ -422,20 +427,6 @@ namespace SMS.Web.Controllers
             var bringout = dbContext.Bring_Out.Find(id);
             var bringoutItems = dbContext.Bring_Out_Items.Where(t => t.CatID == id).ToList();
             bringout.Bring_Out_Items = bringoutItems;
-            return View(bringout);
-        }
-
-        public ActionResult SummaryBO()
-        {
-            var bringout = dbContext.Bring_Out.ToList();
-            var bos = dbContext.Bring_Out_Items.Where(b => b.Quantity != null && b.Item != null).ToList();
-
-            for (var b = 0; b < bringout.Count(); b++)
-            {
-                var bringoutItems = bos.Where(t => t.CatID == bringout[b].ID).ToList();
-                bringout[b].Bring_Out_Items = bringoutItems;
-            }
-
             return View(bringout);
         }
     }

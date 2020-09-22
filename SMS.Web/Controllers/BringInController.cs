@@ -19,6 +19,25 @@ namespace SMS.Web.Controllers
             dbContext = new SMSDbContext();
         }
 
+        //public bool isOver()
+        //{
+            
+        //    var items = dbContext.Bring_In_Items.ToList();
+        //    var bi = dbContext.Bring_In.ToList();
+        //    var res = bi.Where()
+        //    for (int i = 0; i < bi.Count; i++)
+        //    {
+        //        for (int j = 0; j < items.Count; j++)
+        //        {
+        //            if ()
+        //            {
+
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
+
         public ActionResult History()
         {
             return View();
@@ -31,14 +50,19 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringInData()
         {
+            var now = DateTime.Now.ToString("dd/MM/yyyy");
+
             var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
 
+            var items = dbContext.Bring_In_Items.ToList();
+
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+
             var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
 
             var model = dbContext.Bring_In.Where(b => currentRole >=4 || b.Team == tName).OrderByDescending(x => x.EstimatedDate).ToList();
 
-            return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
+            return Json(new { data = model, items, currentRole, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
         }
 
         /// <summary>
@@ -53,6 +77,8 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public ActionResult FetchBringInApproveData(string name, int? from, int? to, string team = "", string empcode = "")
         {
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
             var res = new List<Bring_In>();
 
             if (name == "itt")
@@ -72,7 +98,7 @@ namespace SMS.Web.Controllers
             else
             {
                 res = dbContext.Bring_In
-               .Where(bi => dbContext.Bring_In_Items.Any(i => i.CatID == bi.ID && i.AssetType == 0 && i.ApprovedStatus == null))
+               .Where(bi => dbContext.Bring_In_Items.Any(i => i.CatID == bi.ID && i.ApprovedStatus == null) && tName == bi.Team)
                .OrderByDescending(x => x.EstimatedDate)
                .ToList();
             }
@@ -92,7 +118,7 @@ namespace SMS.Web.Controllers
 
             if (!string.IsNullOrEmpty(team))
             {
-                res = res.Where(t => t.Team.Contains(team)).ToList();
+                res = res.Where(t => t.Team.Contains(team.ToLower())).ToList();
             }
 
             if (!string.IsNullOrEmpty(empcode))
@@ -100,8 +126,7 @@ namespace SMS.Web.Controllers
                 res = res.Where(t => t.EmpCode.Contains(empcode)).ToList();
             }
 
-            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-            var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
+            //////////////////////////
 
             var isAdmin = (HttpContext.User as CustomPrincipal).PriorityRole >= 4;
 
@@ -133,13 +158,13 @@ namespace SMS.Web.Controllers
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpPost]
         public ActionResult Create(Bring_In model)
         {
             if (!ModelState.IsValid)
             {
-                return Content("Dữ liệu nhập vào không đúng");
+                return Content("Bạn cần nhập đầy đủ các thông tin");
             }
 
             model.CreatedDate = DateTime.Now;
@@ -230,31 +255,36 @@ namespace SMS.Web.Controllers
             return Content("Success");
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 2)]
         [HttpGet]
         public ActionResult Cancel(int id)
         {
+            var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var bringin = dbContext.Bring_In.FirstOrDefault(t => t.ID == id);
             bringin.Cancel = true;
+            bringin.ModifiedBy = user.EmpCode + "|" + user.FullName;
+            bringin.ModifiedDate = DateTime.Now;
             dbContext.SaveChanges();
+
             return Content("Success");
         }
 
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult ApproveDetail(int id)
         {
             var bringin = dbContext.Bring_In.Find(id);
-            var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id && t.AssetType == 0).OrderByDescending(t => t.ID).ToList();
+            var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id).OrderByDescending(t => t.ID).ToList();
             bringin.Bring_In_Items = bringinItems;
             return View(bringin);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         public ActionResult Approve()
         {
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         [HttpPost]
         public ActionResult Approve(int id, int itemId, string remark, int status)
         {
@@ -287,6 +317,7 @@ namespace SMS.Web.Controllers
         }
 
         //ITT
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult ITTApproveDetail(int id)
         {
             var bringin = dbContext.Bring_In.Find(id);
@@ -295,13 +326,13 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         public ActionResult ITTApprove()
         {
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         [HttpPost]
         public ActionResult ITTApprove(int id, int itemId, string remark, int status)
         {
@@ -334,6 +365,7 @@ namespace SMS.Web.Controllers
         }
 
         //FST
+        [AuthorizeUser(AccessLevel = 3)]
         public ActionResult FSTApproveDetail(int id)
         {
             var bringin = dbContext.Bring_In.Find(id);
@@ -342,13 +374,13 @@ namespace SMS.Web.Controllers
             return View(bringin);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         public ActionResult FSTApprove()
         {
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         [HttpPost]
         public ActionResult FSTApprove(int id, int itemId, string remark, int status)
         {
@@ -385,20 +417,6 @@ namespace SMS.Web.Controllers
             var bringin = dbContext.Bring_In.Find(id);
             var bringinItems = dbContext.Bring_In_Items.Where(t => t.CatID == id).ToList();
             bringin.Bring_In_Items = bringinItems;
-            return View(bringin);
-        }
-
-        public ActionResult SummaryBI()
-        {
-            var bringin = dbContext.Bring_In.ToList();
-            var bis = dbContext.Bring_In_Items.Where(b => b.Quantity != null && b.Item != null).ToList();
-
-            for (var b = 0; b < bringin.Count(); b++)
-            {
-                var bringinItems = bis.Where(t => t.CatID == bringin[b].ID).ToList();
-                bringin[b].Bring_In_Items = bringinItems;
-            }
-
             return View(bringin);
         }
     }

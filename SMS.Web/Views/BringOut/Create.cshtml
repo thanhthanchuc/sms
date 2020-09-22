@@ -18,7 +18,7 @@
             <div class="form-group row-1 input-group">
                 <label class="control-label col-md-2 lb">Mã CNV <span class="red">(*)</span></label>
                 <div class="col-md-3 input-group input-group-sm">
-                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBO" maxlength="8" />
+                    <input class="form-control input-previous-button col-md-12" id="txtEmpCodeBO" maxlength="8" autocomplete = "off" />
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
             <div class="form-group input-group specific-date-pick">
                 <label class="col-2 top-space" for="EstimatedDate">Ngày đăng ký <span class="red">(*)</span></label>
                 <div class="col-3 input-group-sm">
-                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" autocomplete="off" />
+                    <input class="form-control input-previous-button datepicker" id="estimated_date" placeholder="Ngày" style="background: white" readonly autocomplete="off" />
                 </div>
                 <label class="top-space" for="EstimatedTime">Giờ đăng ký <span class="red">(*)</span></label>
                 <div class="col-2 input-group-sm">
@@ -118,13 +118,12 @@
                         </td>
                         <td class="input-group-sm">
                             <select class="form-control input-previous-button isReturn">
-                                <option>--Chọn--</option>
-                                <option value="true">Có</option>
+                                <option value="true" selected>Có</option>
                                 <option value="false">Không</option>
                             </select>
                         </td>
                         <td class="input-group-sm">
-                            <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off" />
+                            <input class="form-control datepicker returnDate" placeholder="Ngày" style="background: white" readonly autocomplete="off" />
                         </td>
                         <td class="input-group-sm">
                             <input class="form-control timepicker returnTime" placeholder="Giờ" type="time" />
@@ -180,7 +179,7 @@
                                     </select>
                                 </td>
                                 <td class="input-group-sm">
-                                    <input class="form-control datepicker returnDate" placeholder="Ngày" autocomplete="off"/>
+                                    <input class="form-control datepicker returnDate" placeholder="Ngày" style="background: white" readonly autocomplete="off"/>
                                 </td>
                                 <td class="input-group-sm">
                                     <input class="form-control timepicker returnTime" placeholder="Giờ" type="time"/>
@@ -195,15 +194,6 @@
             $("#BO-items").on("click", ".delete-items", function () {
                 $(this).closest(".row-items").remove();
             });
-
-            //$('.timepicker').timepicker({
-            //    timeFormat: 'h:mm p',
-            //    interval: 5,
-            //    startTime: '00:00',
-            //    dynamic: false,
-            //    dropdown: true,
-            //    scrollbar: true
-            //});
         });
 
         $('.datepicker, #estimated_date, .returnDate').datepicker({
@@ -216,7 +206,7 @@
 
         $('#txtEmpCodeBO').keyup(function () {
             var count = $('#txtEmpCodeBO').val().length;
-            if (count == 8) {
+            if (count == 7 || count == 8) {
                 _userBO.getUserBO();
             } else {
                 $('#txtFullNameBO').val("");

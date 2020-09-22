@@ -5,7 +5,7 @@
 }
 
 <div class="form-horizontal">
-    <div class="card-header py-3">
+    <div class="card-header">
         <h5 class="m-0 font-weight-bold text-primary">BẢO VỆ XÁC NHẬN KHÁCH MANG HÀNG VÀO - RA</h5>
     </div>
     <!--Cột bên trái dành cho form đăng ký-->
@@ -124,9 +124,12 @@
                     <td>@Model.KVPNo</td>
                     <td>@Model.FullName</td>
                     <td>
-                        <a class="btn btnDownloadFile btn-primary btn-standard" href="/Guard/GuestFileDownload?filename=@Model.FileRedirectURL" target="_blank" title="Tải danh sách khách">
-                            <i class="fas fa-download" style="margin-left:-3.5px;"></i>
-                        </a>
+                        @if (Model.FileRedirectURL != null)
+                        {
+                            <a class="btn btnDownloadFile btn-primary btn-standard" href="/Guard/GuestFileDownload?filename=@Model.FileRedirectURL" title="Tải danh sách khách">
+                                <i class="fas fa-download" style="margin-left:-3.5px;"></i>
+                            </a>
+                        }
                     </td>
                     <td>@Model.IDCard</td>
                     <td>@Model.Visa</td>
@@ -205,10 +208,10 @@
                     <th>Số lượng</th>
                     <th>Đơn vị</th>
                     <th>Loại hàng hóa</th>
-                    <th colspan="2">Thời gian đem trở ra</th>
                     <th colspan="4">SMT phê duyệt</th>
                     <th colspan="4">FST phê duyệt</th>
                     <th colspan="4">Bảo vệ xác nhận mang vào</th>
+                    <th colspan="2">Thời gian đem trở ra</th>
                     <th colspan="4">Bảo vệ xác nhận mang ra</th>
                 </tr>
             </thead>
@@ -235,17 +238,15 @@
                             }
                         </td>
                         <td>
-                            @if (item.IsReturn == true)
+                            @if (item.AssetType == 1 && item.ITT != null)
                             {
-                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                                @item.ITT
                             }
-                            else if (item.IsReturn == false)
+                            else if (item.AssetType == 1 && item.ITT == null)
                             {
-                                <i class="fas fa-times" style="color: red"></i>
+                                <i class="fas fa-question" title="Đang chờ Trưởng phòng ITT phê duyệt"></i>
                             }
                         </td>
-                        <td>@item.ReturnDate @item.ReturnTime</td>
-                        <td>@item.ITT</td>
                         <td>
                             @if (item.ITT_Status == 1)
                             {
@@ -258,7 +259,16 @@
                         </td>
                         <td>@item.ITT_Remark</td>
                         <td>@item.ITT_Date</td>
-                        <td>@item.FST</td>
+                        <td>
+                            @if (item.AssetType == 2 && item.FST != null)
+                            {
+                                @item.FST
+                            }
+                            else if (item.AssetType == 2 && item.FST == null)
+                            {
+                                <i class="fas fa-question" title="Đang chờ Trưởng phòng FST phê duyệt"></i>
+                            }
+                        </td>
                         <td>
                             @if (item.FST_Status == 1)
                             {
@@ -289,6 +299,13 @@
                         </td>
                         <td><input class="remark-@item.ID-in remark col-12" type="text" placeholder="Ghi chú..." value="@item.GuardRemarkIn" readonly="@(item.GuardStatusIn != null)" /></td>
                         <td>@item.GuardDateIn</td>
+                        <td>
+                            @if (item.IsReturn == true)
+                            {
+                                <i class="fas fa-check-square" style="color: dodgerblue"></i>
+                            }
+                        </td>
+                        <td>@item.ReturnDate @item.ReturnTime</td>
                         <td>@item.GuardOut</td>
                         <td>
                             @if (@item.GuardStatusOut == null)
@@ -313,6 +330,9 @@
         </table>
     </div>
     <div style="text-align: center">
+        <label class="btn-success btn top-space btn-sm" title="Thay đổi thông tin đăng ký" style="cursor: pointer">
+            <a href="/Guest/Edit/@Model.ID" style="text-decoration: none; color: white"><i class="fas fa-edit"></i>&nbsp; Thay đổi thông tin đăng ký</a>
+        </label>
         <label id="return-queue" class="btn-cancel btn top-space btn-sm" title="Trở lại" style="cursor: pointer">
             <i class="fas fa-arrow-left"></i>&nbsp; Trở lại
         </label>

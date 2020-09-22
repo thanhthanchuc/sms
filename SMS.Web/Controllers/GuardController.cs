@@ -1,7 +1,4 @@
-﻿using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
-using PagedList;
-using SMS.Models.DAO;
+﻿using Newtonsoft.Json;
 using SMS.Models.EF;
 using SMS.Web.Common;
 using SMS.Web.Models;
@@ -9,7 +6,6 @@ using SMS.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SMS.Web.Controllers
@@ -21,14 +17,64 @@ namespace SMS.Web.Controllers
         {
             dbcontext = new SMSDbContext();
         }
-        public ActionResult History(string employee = "", string guest = "", string company = "")
+
+        /// <summary>
+        /// Lịch sử
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <param name="guest"></param>
+        /// <param name="company"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public ActionResult History(string employee = "", string guest = "", string company = "", string from = null, string to = null)
         {
-            ViewBag.LeaveEarlies = dbcontext.Leave_Early.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
-            ViewBag.GoOuts = dbcontext.Go_Out.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
-            ViewBag.BringIns = dbcontext.Bring_In.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
-            ViewBag.BringOuts = dbcontext.Bring_Out.Where(t => (string.IsNullOrEmpty(employee) || t.FullName.ToLower().Contains(employee.ToLower()))).ToList();
-            var Guests = dbcontext.Guests.Where(t => ((string.IsNullOrEmpty(guest) || t.FullName.ToLower().Contains(guest.ToLower()))) &&
-                                                (string.IsNullOrEmpty(company) || t.Company.ToLower().Contains(company.ToLower()))).ToList();
+            ViewBag.from = from;
+            ViewBag.to = to;
+            ViewBag.employee = employee;
+            ViewBag.guest = guest;
+            ViewBag.company = company;
+
+            if (from == null || to == null)
+            {
+                from = DateTime.Now.ToString("dd/MM/yyyy");
+                to = DateTime.Now.ToString("dd/MM/yyyy");
+            }
+
+            var now = DateTime.Now.ToString("dd/MM/yyyy");
+
+            var le = dbcontext.Leave_Early.ToList();
+            ViewBag.LeaveEarlies = le.Where(t => (
+                                           DateTime.ParseExact(t.EstimatedDate, "dd/MM/yyyy", null) >= DateTime.ParseExact(from, "dd/MM/yyyy", null) &&
+                                           DateTime.ParseExact(t.EstimatedDate, "dd/MM/yyyy", null) <= DateTime.ParseExact(to, "dd/MM/yyyy", null) &&
+                                           t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+
+            var go = dbcontext.Go_Out.ToList();
+            ViewBag.GoOuts = go.Where(t => (
+                                           DateTime.ParseExact(t.EstimatedDateOut, "dd/MM/yyyy", null) >= DateTime.ParseExact(from, "dd/MM/yyyy", null) &&
+                                           DateTime.ParseExact(t.EstimatedDateReturn, "dd/MM/yyyy", null) <= DateTime.ParseExact(to, "dd/MM/yyyy", null) &&
+                                           t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+
+            var bi = dbcontext.Bring_In.ToList();
+            var bt = dbcontext.Bring_In_Items.ToList();
+            ViewBag.BringIns = bi.Where(t => (
+                                          DateTime.ParseExact(t.EstimatedDate, "dd/MM/yyyy", null) >= DateTime.ParseExact(from, "dd/MM/yyyy", null) &&
+                                          DateTime.ParseExact(t.EstimatedDate, "dd/MM/yyyy", null) <= DateTime.ParseExact(to, "dd/MM/yyyy", null) &&
+                                          t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+
+            var bo = dbcontext.Bring_Out.ToList();
+            ViewBag.BringOuts = bo.Where(t => (
+                                          DateTime.ParseExact(t.EstimatedDate, "dd/MM/yyyy", null) >= DateTime.ParseExact(from, "dd/MM/yyyy", null) &&
+                                          DateTime.ParseExact(t.EstimatedDate, "dd/MM/yyyy", null) <= DateTime.ParseExact(to, "dd/MM/yyyy", null) &&
+                                          t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+
+            var fill_guest = dbcontext.Guests.ToList();
+            var Guests = fill_guest.Where(t => (
+                                           DateTime.ParseExact(t.EstimatedDateIn, "dd/MM/yyyy", null) >= DateTime.ParseExact(from, "dd/MM/yyyy", null) &&
+                                           DateTime.ParseExact(t.EstimatedDateOut, "dd/MM/yyyy", null) <= DateTime.ParseExact(to, "dd/MM/yyyy", null) &&
+                                           (string.IsNullOrEmpty(guest) || t.FullName.ToLower().Contains(guest.ToLower()))) && (string.IsNullOrEmpty(company) || t.Company.ToLower().Contains(company.ToLower()))
+                                           ).ToList();
+
             var guest_no_items = new List<Guest>();
             var guest_has_items = new List<Guest>();
             var foreign_guest_no_items = new List<Guest>();
@@ -66,24 +112,63 @@ namespace SMS.Web.Controllers
             return View();
         }
 
-        public ActionResult Queue(string employee = "", string guest = "", string company = "")
+        /// <summary>
+        /// Chờ xử lý
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <param name="guest"></param>
+        /// <param name="company"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public ActionResult Queue(string employee = "", string guest = "", string company = "", string from = null, string to = null)
         {
-
+            ViewBag.from = from;
+            ViewBag.to = to;
             ViewBag.employee = employee;
             ViewBag.guest = guest;
             ViewBag.company = company;
-            ViewBag.LeaveEarlies = dbcontext.Leave_Early.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower())) && t.GuardStatus == null).ToList();
-            ViewBag.GoOuts = dbcontext.Go_Out.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower())) && t.GuardStatusReturn == null).ToList();
 
-            var bringIns = dbcontext.Bring_In.Where(t => (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+            if (from == null || to == null)
+            {
+                from = DateTime.Now.ToString("dd/MM/yyyy");
+                to = DateTime.Now.ToString("dd/MM/yyyy");
+            }
+
+            var le = dbcontext.Leave_Early.ToList();
+            ViewBag.LeaveEarlies = le.Where(t => (
+                                           DateTime.ParseExact(t.EstimatedDate, "dd/MM/yyyy", null) >= DateTime.ParseExact(from, "dd/MM/yyyy", null) &&
+                                           DateTime.ParseExact(t.EstimatedDate, "dd/MM/yyyy", null) <= DateTime.ParseExact(to, "dd/MM/yyyy", null) &&
+                                           t.EmpCode.ToLower().Contains(employee.ToLower()) &&
+                                           t.GuardStatus == null &&
+                                           t.ApprovedStatus != 4)).ToList();
+
+            var go = dbcontext.Go_Out.ToList();
+            ViewBag.GoOuts = go.Where(t => (
+                                           DateTime.ParseExact(t.EstimatedDateOut, "dd/MM/yyyy", null) >= DateTime.ParseExact(from, "dd/MM/yyyy", null) &&
+                                           DateTime.ParseExact(t.EstimatedDateReturn, "dd/MM/yyyy", null) <= DateTime.ParseExact(to, "dd/MM/yyyy", null) &&
+                                           t.EmpCode.ToLower().Contains(employee.ToLower()) &&
+                                           t.GuardStatusReturn == null &&
+                                           t.ApprovedStatus != 4)).ToList();
+
+            var bringIns = dbcontext.Bring_In.Where(t => t.Cancel != true && (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
             var bringInItems = dbcontext.Bring_In_Items.ToList();
+            ViewBag.BringInItems = bringInItems;
+            ViewBag.BringIns = bringIns.Where(b => bringInItems.Where(i => i.CatID == b.ID && i.GuardStatusOut == null).Count() != 0).ToList();
 
-            ViewBag.BringIns = bringIns.Where(b => bringInItems.Where(i => i.CatID == b.ID && (i.GuardStatusIn == null || i.GuardStatusOut == null)).Count() != 0);
+            var bringOuts = dbcontext.Bring_Out.Where(t => t.Cancel != true && (string.IsNullOrEmpty(employee) || t.EmpCode.ToLower().Contains(employee.ToLower()))).ToList();
+            var bringOutItems = dbcontext.Bring_Out_Items.ToList();
+            ViewBag.BringOutItems = bringOutItems;
+            ViewBag.BringOuts = bringOuts.Where(b => bringOutItems.Where(i => i.CatID == b.ID && i.GuardStatusReturn == null).Count() != 0).ToList();
 
-            ViewBag.BringOuts = dbcontext.Bring_Out.Where(b => dbcontext.Bring_Out_Items.Any(i => i.CatID == b.ID && (i.GuardStatusOut == null || i.GuardStatusReturn == null)));
+            var fill_guest = dbcontext.Guests.ToList();
+            var Guests = fill_guest.Where(t => (
+                                           DateTime.ParseExact(t.EstimatedDateIn, "dd/MM/yyyy", null) >= DateTime.ParseExact(from, "dd/MM/yyyy", null) &&
+                                           DateTime.ParseExact(t.EstimatedDateOut, "dd/MM/yyyy", null) <= DateTime.ParseExact(to, "dd/MM/yyyy", null) &&
+                                           (string.IsNullOrEmpty(guest) || t.FullName.ToLower().Contains(guest.ToLower()))) && 
+                                           (string.IsNullOrEmpty(company) || t.Company.ToLower().Contains(company.ToLower())) &&
+                                           t.GuardStatusOut == null).ToList();
 
-            var Guests = dbcontext.Guests.Where(t => ((string.IsNullOrEmpty(guest) || t.FullName.ToLower().Contains(guest.ToLower()))) &&
-                                                (string.IsNullOrEmpty(company) || t.Company.ToLower().Contains(company.ToLower())) && (t.GuardStatusIn == null || t.GuardStatusOut == null)).ToList();
             var guest_no_items = new List<Guest>();
             var guest_has_items = new List<Guest>();
             var foreign_guest_no_items = new List<Guest>();
@@ -118,6 +203,7 @@ namespace SMS.Web.Controllers
             ViewBag.GuestHasItems = guest_has_items;
             ViewBag.ForeignGuestNoItems = foreign_guest_no_items;
             ViewBag.ForeignGuestHasItems = foreign_guest_has_items;
+
             return View();
         }
 
@@ -332,6 +418,13 @@ namespace SMS.Web.Controllers
                 item.GuardStatusIn = status;
                 item.GuardRemarkIn = remark;
                 item.GuardDateIn = DateTime.Now;
+                if (item.IsReturn == false)
+                {
+                    item.GuardOut = null;
+                    item.GuardStatusOut = 0;
+                    item.GuardRemarkOut = null;
+                    item.GuardDateOut = null;
+                }
 
                 dbcontext.SaveChanges();
                 return Content(JsonConvert.SerializeObject(item), "application/json");
@@ -396,6 +489,13 @@ namespace SMS.Web.Controllers
                 item.GuardStatusOut = status;
                 item.GuardRemarkOut = remark;
                 item.GuardDateOut = DateTime.Now;
+                if (item.IsReturn == false)
+                {
+                    item.GuardReturn = null;
+                    item.GuardStatusReturn = 0;
+                    item.GuardRemarkReturn = null;
+                    item.GuardDateReturn = null;
+                }
 
                 dbcontext.SaveChanges();
                 return Content(JsonConvert.SerializeObject(item), "application/json");
@@ -552,8 +652,8 @@ namespace SMS.Web.Controllers
 
         public ActionResult GuestFileDownload(string filename)
         {
-            var file = Server.MapPath("~/Files") + filename;
-            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            var file = Server.MapPath("~/Files/") + filename;
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
         }
     }
 }

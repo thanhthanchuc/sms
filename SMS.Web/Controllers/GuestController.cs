@@ -26,24 +26,45 @@ namespace SMS.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Lịch sử khách vào ra
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="company"></param>
+        /// <param name="team"></param>
+        /// <param name="employee"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult FetchGuestDataHistory()
+        public ActionResult FetchGuestDataHistory(string from = null, string to = null, string company = "", string team = "", string employee = "")
         {
+            ViewBag.from = from;
+            ViewBag.to = to;
+            ViewBag.employee = employee;
+            ViewBag.team = team;
+            ViewBag.company = company;
+
+            if (from == null || to == null)
+            {
+                from = DateTime.Now.ToString("dd/MM/yyyy");
+                to = DateTime.Now.ToString("dd/MM/yyyy");
+            }
+
             var user = (UserLogin)Session[CommonConstants.USER_SESSION];
             var tName = dbContext.Users.Include(t => t.Team).First(u => u.ID == user.ID).Team.Name;
-
             var currentRole = (HttpContext.User as CustomPrincipal).PriorityRole;
+            var isGuard = (HttpContext.User as CustomPrincipal).RoleName == "Guard";
 
-            var category = 0;
-            if (tName == "SMT") category = 1;
-            else if (tName == "FST") category = 2;
+            var model = dbContext.Guests.Where(g => currentRole >= 4 || isGuard || g.Team == tName).OrderByDescending(x => x.EstimatedDateIn).ToList();
 
-            var model = dbContext.Guests.Where(g => currentRole >= 4 || dbContext.Guest_Item.Any(i => i.CatID == g.ID && i.AssetType == category)).OrderByDescending(x => x.CreatedDate).ToList();
-
-
-            return Json(new { data = model, currentRole, recordsTotal = dbContext.Bring_In.Count(), recordsFiltered = model.Count() });
+            return Json(new { data = model, currentRole, isGuard, recordsTotal = model.Count(), recordsFiltered = model.Count() });
         }
 
+        /// <summary>
+        /// Load danh sách phê duyệt hàng cho SMT, FST
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult FetchGuestData(string type)
         {
@@ -65,7 +86,7 @@ namespace SMS.Web.Controllers
                 model = dbContext.Guests
                    .Where(g => dbContext.Guest_Item.Any(i => i.CatID == g.ID && i.AssetType == 2 && i.FST_Status == null))
                    .OrderByDescending(x => x.CreatedDate).ToList();
-            } 
+            }
 
             if (type == "SMT" && currentRole < 4 && tName != "SMT")
             {
@@ -79,57 +100,6 @@ namespace SMS.Web.Controllers
 
             return Json(new { data = model, currentRole, recordsTotal = model.Count(), recordsFiltered = model.Count() });
         }
-
-        /// <summary>
-        /// Show danh sách phê duyệt cho TM, ITT, FST
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        /// <param name="team"></param>
-        /// <param name="empcode"></param>
-        /// <returns></returns>
-        //[HttpPost]
-        //public ActionResult FetchGuestApproveData(string name, int? from, int? to, string team = "", string empcode = "")
-        //{
-        //    var assetType = 1;
-        //    switch (name.ToLower().Trim())
-        //    {
-        //        case "fst":
-        //            assetType = 2;
-        //            break;
-        //    }
-
-        //    var res = dbContext.Guests
-        //        .Where(g => dbContext.Guest_Item.Any(i => i.CatID == g.ID && i.AssetType == assetType && i.ITT_Status == null))
-        //        .OrderByDescending(x => x.CreatedDate)
-        //        .ToList();
-
-        //    var recordNumber = dbContext.Guests.Count();
-
-        //    //filter theo tiêu chí
-        //    if (from != null)
-        //    {
-        //        res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() >= from).ToList();
-        //    }
-
-        //    if (to != null)
-        //    {
-        //        res = res.Where(t => ((DateTimeOffset)t.CreatedDate.Value).ToUnixTimeSeconds() <= to).ToList();
-        //    }
-
-        //    if (!string.IsNullOrEmpty(team))
-        //    {
-        //        res = res.Where(t => t.Team.Contains(team)).ToList();
-        //    }
-
-        //    if (!string.IsNullOrEmpty(empcode))
-        //    {
-        //        res = res.Where(t => t.EmployeeID.Contains(empcode)).ToList();
-        //    }
-
-        //    return Json(new { data = res, recordsTotal = dbContext.Guests.Count(), recordsFiltered = recordNumber });
-        //}
 
         /// <summary>
         /// Load view tạo mới
@@ -153,6 +123,7 @@ namespace SMS.Web.Controllers
         public ActionResult Create(Guest m)
         {
             var guest = Request.Form.Get("guest");
+            var excludeDate = Request.Form.Get("excludeDate");
             var model = JsonConvert.DeserializeObject<Guest>(guest);
 
             //file
@@ -174,7 +145,8 @@ namespace SMS.Web.Controllers
 
             var guests = new List<Guest>();
 
-            saveGuest(FormatDate(model.EstimatedDateIn), FormatDate(model.EstimatedDateOut), json, ref guests);
+            // Lưu khách nhiều ngày với định dạng dd/MM/yyyy
+            saveGuest(model.EstimatedDateIn, model.EstimatedDateOut, excludeDate, json, ref guests);
 
             dbContext.Guests.AddRange(guests);
 
@@ -190,42 +162,74 @@ namespace SMS.Web.Controllers
             return strs[1] + "/" + strs[0] + "/" + strs[2];
         }
 
-        private void saveGuest(string StartDate, string EndDate, string model, ref List<Guest> guests)
+        /// <summary>
+        /// Hàm lưu đăng ký khách (bao gồm cả ngắn hạn cả dài hạn)
+        /// </summary>
+        /// <param name="StartDate"></param>
+        /// <param name="EndDate"></param>
+        /// <param name="excludeDate"></param>
+        /// <param name="model"></param>
+        /// <param name="guests"></param>
+        private void saveGuest(string StartDate, string EndDate, string excludeDate, string model, ref List<Guest> guests)
         {
-            var startdate = DateTime.Parse(StartDate);
-            var enddate = DateTime.Parse(EndDate);
+            var newGuest = Newtonsoft.Json.JsonConvert.DeserializeObject<Guest>(model);
+
+            var startdate = DateTime.ParseExact(StartDate, "dd/MM/yyyy", null);
+
+            var enddate = DateTime.ParseExact(EndDate, "dd/MM/yyyy", null);
 
             var dateDiff = (enddate - startdate).TotalDays;
 
-            var newGuest = Newtonsoft.Json.JsonConvert.DeserializeObject<Guest>(model);
+            var excludeDates = excludeDate.Split(',');
 
-            var newStartDate = startdate.AddDays(1).ToShortDateString();
-
-            if (dateDiff >= 1)
+            if (excludeDates.Contains(StartDate))
             {
-                newGuest.EstimatedDateIn = StartDate;
-                newGuest.EstimatedDateOut = StartDate;
-                newGuest.CreatedDate = System.DateTime.Now;
-                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                newGuest.CreatedBy = user.EmpCode + "|" + user.FullName;
-                newGuest.Status = false;
-
-                guests.Add(newGuest);
-
-                saveGuest(newStartDate, EndDate, model, ref guests);
-            } else
-            {
-                newGuest.EstimatedDateIn = StartDate;
-                newGuest.EstimatedDateOut = StartDate;
-                newGuest.CreatedDate = System.DateTime.Now;
-                var user = (UserLogin)Session[CommonConstants.USER_SESSION];
-                newGuest.CreatedBy = user.EmpCode + "|" + user.FullName;
-                newGuest.Status = false;
-
-                guests.Add(newGuest);
+                if (StartDate == EndDate)
+                {
+                    return;
+                }
+                else
+                {
+                    var newStartDate = startdate.AddDays(1).ToString("dd/MM/yyyy");
+                    saveGuest(newStartDate, EndDate, excludeDate, model, ref guests);
+                }
             }
+            else
+            {
+                var newStartDate = startdate.AddDays(1).ToString("dd/MM/yyyy");
+
+                if(dateDiff >= 1)
+                {
+                    newGuest.EstimatedDateIn = StartDate;
+                    newGuest.EstimatedDateOut = Int32.Parse(newGuest.EstimatedTimeOut.Split(':')[0]) < 8 ? newStartDate : StartDate;
+                    newGuest.CreatedDate = System.DateTime.Now;
+                    var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                    newGuest.CreatedBy = user.EmpCode + "|" + user.FullName;
+                    newGuest.Status = false;
+
+                    guests.Add(newGuest);
+                    saveGuest(newStartDate, EndDate, excludeDate, model, ref guests);
+                }
+                else
+                {
+                    newGuest.EstimatedDateIn = StartDate;
+                    newGuest.EstimatedDateOut = StartDate;
+                    newGuest.CreatedDate = System.DateTime.Now;
+                    var user = (UserLogin)Session[CommonConstants.USER_SESSION];
+                    newGuest.CreatedBy = user.EmpCode + "|" + user.FullName;
+                    newGuest.Status = false;
+
+                    guests.Add(newGuest);
+                }
+            }
+
         }
 
+        /// <summary>
+        /// Hàm show thông tin chi tiết đăng ký khách
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Detail(int id)
         {
             var guest = dbContext.Guests.Find(id);
@@ -234,7 +238,12 @@ namespace SMS.Web.Controllers
             return View(guest);
         }
 
-        [AuthorizeUser(AccessLevel = 2)]
+        /// <summary>
+        /// Load view Sửa
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AuthorizeUser(AccessLevel = 1)]
         public ActionResult Edit(int id)
         {
             var guest = dbContext.Guests.Find(id);
@@ -243,7 +252,12 @@ namespace SMS.Web.Controllers
             return View(guest);
         }
 
-        [AuthorizeUser(AccessLevel = 2)]
+        /// <summary>
+        /// Thực thi Sửa
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        [AuthorizeUser(AccessLevel = 1)]
         [HttpPost]
         public ActionResult Edit(Guest m)
         {
@@ -365,8 +379,8 @@ namespace SMS.Web.Controllers
             return Content("Success");
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
-        //ITT
+        //Load view ITT phê duyệt đăng ký khách
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         public ActionResult ITTApproveDetail(int id)
         {
             var guest = dbContext.Guests.Find(id);
@@ -386,13 +400,25 @@ namespace SMS.Web.Controllers
             return View(guest);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        /// <summary>
+        /// Load view chi tiết ITT phê duyệt
+        /// </summary>
+        /// <returns></returns>
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         public ActionResult ITTApprove()
         {
             return View();
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        /// <summary>
+        /// Thực thi ITT phê duyệt
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="itemId"></param>
+        /// <param name="remark"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         [HttpPost]
         public ActionResult ITTApprove(int id, int itemId, string remark, int status)
         {
@@ -424,7 +450,7 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(guestItems), "application/json");
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         //FST
         public ActionResult FSTApproveDetail(int id)
         {
@@ -446,12 +472,13 @@ namespace SMS.Web.Controllers
             return View(guest);
         }
 
-        [AuthorizeUser(AccessLevel = 3)]
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         public ActionResult FSTApprove()
         {
             return View();
         }
 
+        [AuthorizeUser(AccessLevel = 3, ExceptRoleName = "FM")]
         [HttpPost]
         public ActionResult FSTApprove(int id, int itemId, string remark, int status)
         {
@@ -483,12 +510,39 @@ namespace SMS.Web.Controllers
             return Content(JsonConvert.SerializeObject(guestItems), "application/json");
         }
 
+        /// <summary>
+        /// In xác nhận gặp mặt khách
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult GuestReport(int id)
         {
             var guest = dbContext.Guests.Find(id);
             var guestItems = dbContext.Guest_Item.Where(t => t.CatID == id).ToList();
             guest.Guest_Item = guestItems;
             return View(guest);
+        }
+
+        /// <summary>
+        /// Dowload file đính kèm
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public ActionResult GuestFileDownload(string filename)
+        {
+            var file = Server.MapPath("~/Files/") + filename;
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
+        }
+
+        /// <summary>
+        /// Dowload template đăng ký khách
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TemplateGuest()
+        {
+            var file = Server.MapPath("~/Files/Form excel mẫu cho khách.xlsx");
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "File mẫu.xlsx");
+
         }
     }
 }
